@@ -1,0 +1,68 @@
+.page-footer {
+    background-color: $color-black;    
+    font-weight: 100;
+    font-size: 14px;
+   
+    .logo {
+        width: 140px;
+    }
+
+    .footer-link {
+        background-color: $color-darkblack;
+        color: rgba(255, 255, 255, 0.9);
+        .v-btn{            
+            font-weight: 300;
+            font-size: 16px;
+            background-color:$color-darkblack;
+            padding:20px;
+            
+            &:hover {
+                color: rgba(255, 255, 255, 1);
+                background-color: $color-black;
+            }
+            + .v-btn {
+                margin-left: 20px;
+            }
+        }
+    }
+
+    .footer-info{
+        max-width: $content-width;
+        padding: $section-padding;
+        p{
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .v-btn{
+            font-weight: 300;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+
+            &:hover {
+                color: rgba(255, 255, 255, 1);
+            }
+        }
+        .foot-info-cscenter{
+            color: rgba(255, 255, 255, 0.3);
+            p {
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 14px;
+            }
+
+            .color-primary{
+                color: $color-primary;
+            }
+        }
+    }
+
+    .footer-end {
+        border-top: 1px solid $color-darkborder;
+
+        .footer-end-inner{
+            max-width: $content-width;
+            padding: $section-padding;
+            margin:0 auto;
+            color: rgba(255, 255, 255, 0.9);
+        }
+    }
+}
