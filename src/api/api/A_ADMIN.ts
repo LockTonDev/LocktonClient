@@ -6,10 +6,10 @@ export default {
    *  ============================================================================
    */
   async setApplyInsurance(params: any) {
-    return await api.authService.post('/locktom_A/TAX/APPLY/set', { params });
+    return await api.authService.post('/ADM/TAX/APPLY/set', { params });
   },
   async getApplyInsurance(params: any) {
-    return await api.authService.post('/locktom_A/TAX/APPLY/get', { params });
+    return await api.authService.post('/ADM/TAX/APPLY/get', { params });
   },
 
   /** ============================================================================
@@ -17,10 +17,10 @@ export default {
    *  ============================================================================
    */
   async setUserRegNo(params: any) {
-    return await api.authService.post('/locktom_A/USER_REG_NO/set', { params });
+    return await api.authService.post('/ADM/USER_REG_NO/set', { params });
   },
   async getUserRegList(params: any) {
-    return await api.authService.post('/locktom_A/USER_REG_NO/gets', { params });
+    return await api.authService.post('/ADM/USER_REG_NO/gets', { params });
   },
 
   /** ============================================================================
@@ -28,23 +28,23 @@ export default {
    *  ============================================================================
    */
   async getBoardInfo(params: any) {
-    return await api.authService.post('/locktom_A/BOARD/get', { params });
+    return await api.authService.post('/ADM/BOARD/get', { params });
   },
   async getBoardList(params: any) {
-    return await api.authService.post('/locktom_A/BOARD/gets', { params });
+    return await api.authService.post('/ADM/BOARD/gets', { params });
   },
   async setInsertBoard(params: any) {
-    return await api.authService.post('/locktom_A/BOARD/ins', { params });
+    return await api.authService.post('/ADM/BOARD/ins', { params });
   },
   async setUpdateBoard(params: any) {
-    return await api.authService.post('/locktom_A/BOARD/udt', { params });
+    return await api.authService.post('/ADM/BOARD/udt', { params });
   },
   async setDeleteBoard(params: any) {
-    return await api.authService.post('/locktom_A/BOARD/del', { params });
+    return await api.authService.post('/ADM/BOARD/del', { params });
   },
 
   async setBoardInfo(params: any) {
-    return await api.authService.post('/locktom_A/BOARD/set', { params });
+    return await api.authService.post('/ADM/BOARD/set', { params });
   },
 
   /** ============================================================================
@@ -52,22 +52,22 @@ export default {
    *  ============================================================================
    */
   async setUserLoginBlockReset(params: any) {
-    return await api.authService.post('/locktom_A/USER/setUserLoginBlockReset', { params });
+    return await api.authService.post('/ADM/USER/setUserLoginBlockReset', { params });
   },
   async getUserInfo(params: any) {
-    return await api.authService.post('/locktom_A/USER/get', { params });
+    return await api.authService.post('/ADM/USER/get', { params });
   },
   async getUserList(params: any) {
-    return await api.authService.post('/locktom_A/USER/gets', { params });
+    return await api.authService.post('/ADM/USER/gets', { params });
   },
 
   async setUserInfo(params: any) {
-    return await api.authService.post('/locktom_A/USER/set', { params });
+    return await api.authService.post('/ADM/USER/set', { params });
   },
 
   //회원 엑셀 업로드
   async setUsersTemp(params: any) {
-    return await api.authService.post('/locktom_A/COM/setUsersTemp', { params });
+    return await api.authService.post('/ADM/COM/setUsersTemp', { params });
   },
 
   /** ============================================================================
@@ -75,34 +75,34 @@ export default {
    *  ============================================================================
    */
   async getTAXRate(params: any) {
-    return await api.authService.post('/locktom_A/TAX/rate', { params });
+    return await api.authService.post('/ADM/TAX/rate', { params });
   },
   async setTAX(params: any) {
-    return await api.authService.post('/locktom_A/TAX/set', { params });
+    return await api.authService.post('/ADM/TAX/set', { params });
   },
 
   async setACCSUser(params: any) {
-    return await api.authService.post('/locktom_A/ACC/renewal/sets', { params });
+    return await api.authService.post('/ADM/ACC/renewal/sets', { params });
   },
 
   async getTAX(params: any) {
-    return await api.authService.post('/locktom_A/TAX/get', { params });
+    return await api.authService.post('/ADM/TAX/get', { params });
   },
 
   async getTAXS(params: any) {
-    return await api.authService.post('/locktom_A/TAX/gets', { params });
+    return await api.authService.post('/ADM/TAX/gets', { params });
   },
 
   async getTAXExcel(params: any) {
-    return await api.authService.post('/locktom_A/TAX/EXCEL/get', { params });
+    return await api.authService.post('/ADM/TAX/EXCEL/get', { params });
   },
 
   async setTAX_TRX(params: any) {
-    return await api.authService.post('/locktom_A/TAX/TRX/set', { params });
+    return await api.authService.post('/ADM/TAX/TRX/set', { params });
   },
 
   async getTAX_TRX(params: any) {
-    return await api.authService.post('/locktom_A/TAX/TRX/get', { params });
+    return await api.authService.post('/ADM/TAX/TRX/get', { params });
   },
 
   /** ============================================================================
@@ -110,13 +110,13 @@ export default {
    *  ============================================================================
    */
   async setTAXRenewal(params: any) {
-    return await api.authService.post('/locktom_A/TAX/RENEWAL/set', { params });
+    return await api.authService.post('/ADM/TAX/RENEWAL/set', { params });
   },
   async getRenewal(params: any) {
-    return await api.authService.post('/locktom_A/TAX/RENEWAL/get', { params });
+    return await api.authService.post('/ADM/TAX/RENEWAL/get', { params });
   },
 
   async getRenewals(params: any) {
-    return await api.authService.post('/locktom_A/TAX/RENEWAL/gets', { params });
+    return await api.authService.post('/ADM/TAX/RENEWAL/gets', { params });
   }
 };

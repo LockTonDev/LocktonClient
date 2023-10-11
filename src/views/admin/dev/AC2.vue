@@ -626,7 +626,7 @@
                       <h3 class="font-weight-bold">세무사 명단</h3>
                       <p class="text-body-2 color-gray-shadow ml-4">
                         총
-                        <span class="color-primary">{{ insuranceDTO.cbr_data.length }}</span
+                        <span class="color-primary">{{ validUserCount }}</span
                         >명
                       </p>
                       <v-spacer />
@@ -768,6 +768,128 @@
               </v-col>
 
               <!--입금 처리-->
+              <v-col cols="12" class="pb-0" ref="refPage7">
+                <v-card>
+                  <v-card-title class="d-flex flex-wrap px-0 pt align-center">
+                    <h2 class="font-weight-bold">
+                      <svg class="mr-2" width="4" height="14" fill="#00AEEF"><rect width="100%" height="100%"></rect></svg>입금내역
+                    </h2>
+                    <p class="text-body-2 ml-3 pt-1">
+                      전체 <span class="color-primary font-weight-bold">{{ Number(insuranceDTO?.trx_data.length).toLocaleString() }}</span> 건
+                    </p>
+                    <div class="ml-auto">
+                      <v-btn variant="outlined" size="small" class="mr-1" type="file" @click="fnExcelUpload('IND')">개인엑셀 입금</v-btn>
+                      <v-btn variant="outlined" size="small" class="mr-1" type="file" @click="fnExcelUpload('COR')">법인엑셀 입금</v-btn>
+                      <v-btn variant="outlined" size="small" class="mr-1" @click="fnAutoTRX()">간편 입금</v-btn>
+                      <v-btn variant="outlined" size="small" @click="fnAdd()">신규 입금</v-btn>
+                      <input type="file" ref="fileInputIND" @change="handleFileUploadIND" style="display: none" />
+                      <input type="file" ref="fileInputCOR" @change="handleFileUploadCOR" style="display: none" />
+                    </div>
+                  </v-card-title>
+                  <v-card-text class="pa-0">
+                    <v-table class="v-board-table size-x-small">
+                      <colgroup>
+                        <col style="width: 40px" />
+                        <col style="width: 130px" />
+                        <col style="width: 150px" />
+                        <col style="width: 200px" />
+                        <col style="width: 180px" />
+                        <col style="width: auto" />
+                        <col style="width: 40px" />
+                      </colgroup>
+                      <thead>
+                      <tr>
+                        <th class="text-center">순번</th>
+                        <th class="text-center">구분</th>
+                        <th class="text-center">일자</th>
+                        <th class="text-center">금액</th>
+                        <th class="text-center">성명</th>
+                        <th class="text-center">비고</th>
+                        <th class="text-center"></th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr v-for="(row, index) in insuranceDTO.trx_data" :key="index" @click="selectedRowTRX = row" :class="{ selected: selectedRowTRX === row, 'cursor-pointer': true }">
+                        <td class="text-center">{{ index + 1 }}</td>
+                        <td>
+                          <VSelectWithValidation v-model="row.trx_cd" name="trx_cd" label="" :items="trxCdItems" density="compact" variant="outlined" single-line></VSelectWithValidation>
+                        </td>
+                        <td>
+                          <VTextFieldWithValidation v-model="row.trx_dt" name="trx_dt" label="" type="date" density="compact" color="primary" variant="outlined" single-line />
+                        </td>
+                        <td>
+                          <VTextFieldWithValidation v-model="row.trx_amt" name="trx_amt" label="" color="primary" density="compact" variant="outlined" suffix="원" type="number" single-line />
+                        </td>
+                        <td>
+                          <VTextFieldWithValidation v-model="row.acct_nm" name="acct_nm" label="" variant="outlined" density="compact" single-line />
+                        </td>
+                        <td><VTextFieldWithValidation v-model="row.rmk" name="rmk" label="" density="compact" color="primary" variant="outlined" single-line /></td>
+                        <td>
+                          <v-btn variant="elevated" color="white" @click="fnDel(index)" size="small" class="min-width-auto pa-0">
+                            <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle"></vue-feather>
+                          </v-btn>
+                        </td>
+                      </tr>
+                      <tr v-if="insuranceDTO.trx_data.length === 0">
+                        <td colspan="6" class="text-center">내용 없음</td>
+                      </tr>
+                      </tbody>
+                    </v-table>
+                  </v-card-text>
+                  <!-- 미납 영역 -->
+                  <v-card-text class="pa-0 mt-1 d-flex w-full" v-if="insuranceDTO.insr_tot_paid_amt == 0 || insuranceDTO.insr_tot_unpaid_amt > 0">
+                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
+                      <p class="text-12">최종보험료</p>
+                      <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_tot_amt).toLocaleString() }}원</p>
+                    </v-card>
+                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
+                      <p class="text-12">납입 보험료</p>
+                      <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_tot_paid_amt).toLocaleString() }}원</p>
+                    </v-card>
+                    <v-card class="py-2 px-6 bg-lighterror w-full mr-1">
+                      <p class="text-12">미납 보험료</p>
+                      <p class="text-h6 text-right text-error">{{ Number(insuranceDTO.insr_tot_unpaid_amt).toLocaleString() }}원</p>
+                    </v-card>
+                    <v-card class="py-2 px-6 bg-lighterror w-full mr-1">
+                      <p class="text-12">납입 상태</p>
+                      <p class="text-h6 text-right text-error">미납</p>
+                    </v-card>
+                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
+                      <p class="text-12">보험 상태</p>
+                      <p class="d-flex">
+                        <VSelectWithValidation v-model="insuranceDTO.status_cd" name="status_cd" label="" :items="statusCdItemsData" density="compact" variant="outlined" single-line :disabled="true" bg-color="white" class="size-x-small"></VSelectWithValidation>
+                        <v-btn variant="outlined" class="ml-1" size="small" @click="fnSave()">저장</v-btn>
+                      </p>
+                    </v-card>
+                  </v-card-text>
+
+                  <v-card-text class="pa-0 mt-1 d-flex w-full" v-if="insuranceDTO.insr_tot_paid_amt != 0 && insuranceDTO.insr_tot_unpaid_amt <= 0">
+                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
+                      <p class="text-12">최종보험료</p>
+                      <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_tot_amt).toLocaleString() }}원</p>
+                    </v-card>
+                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
+                      <p class="text-12">납입 보험료</p>
+                      <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_tot_paid_amt).toLocaleString() }}원</p>
+                    </v-card>
+                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
+                      <p class="text-12">미납 보험료</p>
+                      <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_tot_unpaid_amt).toLocaleString() }}원</p>
+                    </v-card>
+                    <v-card class="py-2 px-6 bg-light-blue-lighten-4 w-full mr-1">
+                      <p class="text-12">납입 상태</p>
+                      <p class="text-h6 text-right">{{ insuranceDTO.insr_tot_unpaid_amt < 0 ? '과입금' : '완납' }}</p>
+                    </v-card>
+                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
+                      <p class="text-12">보험 상태</p>
+                      <p class="d-flex">
+                        <VSelectWithValidation v-model="insuranceDTO.status_cd" name="status_cd" label="" :items="statusCdItemsData" density="compact" variant="outlined" single-line :disabled="true" bg-color="white" class="size-x-small"></VSelectWithValidation>
+                        <v-btn variant="outlined" class="ml-1" size="small" @click="fnDepositSave()">저장</v-btn>
+                      </p>
+                    </v-card>
+                  </v-card-text>
+                </v-card>
+              </v-col>
               <v-col cols="12" class="pb-0" ref="refPage7">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-7">
@@ -1075,6 +1197,8 @@ const messageBoxDTO = ref(new MessageBoxDTO());
 const dynamicComponentName1 = ref();
 const dynamicComponentName2 = ref();
 
+let validUserCount = ref(0);
+const statusCdItemsData = ref(['']);
 function getTrxCdTitle(trxCd) {
   try {
     // trxCd에 해당하는 title을 찾아 반환합니다.
@@ -1127,7 +1251,12 @@ async function fnSearchDtl(insurance_uuid: string) {
     insuranceDTO.value = new InsuranceDTO();
 
     Object.assign(insuranceDTO.value, resultData.data[0]);
+    console.log('insuranceDTO.value : ',insuranceDTO.value.cbr_data)
 
+    const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
+
+    validUserCount.value = filter1.length;
+    console.log('insuranceDTO.value length : ',filter1.length)
     fnSetInsuranceRateCombo();
     dynamicComponentName1.value = `V_T${insuranceDTO.value.business_cd}0030P20`;
     dynamicComponentName2.value = `V_T${insuranceDTO.value.business_cd}0030P30`;
@@ -1208,6 +1337,36 @@ async function fnSave() {
   }
 }
 
+async function fnDepositSave() {
+  let isRun = false;
+  fnCal();
+  await messageBoxDTO.value.setConfirm('확인', '저장 하시겠습니까?', null, (result, params) => {
+    isRun = result;
+  });
+  if (isRun) {
+    const resultData = await apiADMIN.setTAX_TRX([insuranceDTO.value]);
+
+    if (resultData.success) {
+      messageBoxDTO.value.setInfo('확인', '저장 되었습니다. (자동 재조회)');
+
+      fnSearch();
+    } else {
+      messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+    }
+  }
+}
+
+function fnCal() {
+  insuranceDTO.value.insr_tot_paid_amt = insuranceDTO.value.trx_data.reduce((total, item) => total + Number(item.trx_amt), 0);
+  insuranceDTO.value.insr_tot_unpaid_amt = Number(insuranceDTO.value.insr_tot_amt) - Number(insuranceDTO.value.insr_tot_paid_amt);
+
+  if (insuranceDTO.value.insr_tot_unpaid_amt > 0) {
+    insuranceDTO.value.status_cd = '10'; // 신청중
+  } else {
+    insuranceDTO.value.status_cd = '80'; // 정상
+  }
+}
+
 /**
  * 보험가입신청서 팝업호출
  * @param param
@@ -1283,6 +1442,9 @@ async function initPage() {
 
   insrYearCdItems.value = [];
   insrYearCdItems.value.unshift({ title: '전체', value: '%' });
+
+  statusCdItemsData.value = await CommonCode.getCodeList('COM030');
+
   for (let year = new Date().getFullYear(); year >= 2022; year--) {
     insrYearCdItems.value.push({ title: year.toString(), value: year.toString(), rmk: null });
   }
