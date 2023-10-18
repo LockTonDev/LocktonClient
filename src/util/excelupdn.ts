@@ -329,14 +329,10 @@ export const DOWNLOAD_EXCEL = async (searchParams: ParamsDTO, excelList: any[]) 
       // Assign columns
       worksheet.columns = headers;
 
-      console.log("headers",headers)
-      console.log("excelMapper", excelMapper)
       // Add rows to the sheet
       excelList.forEach((dataRow, index) => {
         dataRow.index = index;
-        console.log('dataRow',dataRow)
         let rows = rowMapper(excelMapper, dataRow);
-        console.log("rows",rows)
         rows.forEach(row => {
           worksheet.addRow(row);
         });
@@ -510,8 +506,6 @@ function mapperRow_TAX_COR(excelMapper: object, excelDataRow: any) {
       subRow[excelMapper.보험종료일] = insuranceDTO.cbr_data[i].insr_cncls_dt;
 
       try {
-        console.log('statusCdItems>>',statusCdItems)
-        console.log('status_cd>>',insuranceDTO.cbr_data[i].status_cd)
         subRow[excelMapper.상태] = statusCdItems.find(items => items.value === insuranceDTO.cbr_data[i].status_cd).title;
       } catch (e) {
         subRow[excelMapper.상태] = '';
