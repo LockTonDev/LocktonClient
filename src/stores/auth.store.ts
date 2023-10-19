@@ -46,7 +46,7 @@ export const useAuthStore = defineStore({
       //console.log('localStorage', localStorage);
       try {
         const retData = await apiUser.getAdminLogin(params);
-        console.log("retData : ",retData)
+
         if (retData.success) {
           this._AUTH_ADMIN = retData.data;
           localStorage.setItem('_AUTH_ADMIN', JSON.stringify(this._AUTH_ADMIN));
