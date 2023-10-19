@@ -54,7 +54,7 @@ function initPage() {
       }
     }, 1000);
   } catch(e) {
-    console.error(e)
+    console.error(e) 
   }
 }
 
