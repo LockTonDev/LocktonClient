@@ -6,11 +6,11 @@
   const props = defineProps({
     name: {
       type: String,
-      requird: true,
+      required: true,
     },
     items: {
       type: Array,
-      requird: true,
+      required: true,
     },
     label: {
       type: String,

@@ -332,6 +332,7 @@ export const DOWNLOAD_EXCEL = async (searchParams: ParamsDTO, excelList: any[]) 
       // Add rows to the sheet
       excelList.forEach((dataRow, index) => {
         dataRow.index = index;
+
         let rows = rowMapper(excelMapper, dataRow);
         rows.forEach(row => {
           worksheet.addRow(row);
@@ -345,7 +346,7 @@ export const DOWNLOAD_EXCEL = async (searchParams: ParamsDTO, excelList: any[]) 
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
       // Use FileSaver.js to save the file
-      saveAs(blob, `${searchParams.data.excel_filenm}_${dayjs().format('_YYYYMMDDHHmmss')}.xlsx`);
+      saveAs(blob, `${searchParams.data.excel_filenm}_${dayjs().format('YYYYMMDDHHmmss')}.xlsx`);
       resolve(excelList);
     } catch (e) {
       console.log(e);
@@ -456,6 +457,7 @@ function mapperRow_TAX_COR(excelMapper: object, excelDataRow: any) {
   row[excelMapper.보상한도_총한도] = insuranceDTO.insr_year_clm_lt_amt;
   row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt?.getValueBySplit(1);
   row[excelMapper.기준보험료] = insuranceDTO.insr_base_amt;
+  row[excelMapper.인원수] = insuranceDTO.cbr_cnt;
   row[excelMapper.인원수할인] = insuranceDTO.insr_pcnt_sale_rt;
   row[excelMapper.할인할증기준] = insuranceDTO.insr_sale_year;
   row[excelMapper.할인할증] = insuranceDTO.insr_sale_rt;
@@ -481,7 +483,6 @@ function mapperRow_TAX_COR(excelMapper: object, excelDataRow: any) {
   row[excelMapper.변경내용] = insuranceDTO.change_rmk;
 
   try {
-
     row[excelMapper.입금구분] = trxCdItems.find(item => item.value == insuranceDTO?.trx_data[0]?.trx_cd).title;
   } catch (e) {
     row[excelMapper.입금구분] = '';
@@ -496,17 +497,15 @@ function mapperRow_TAX_COR(excelMapper: object, excelDataRow: any) {
   rows.push(row);
 
   let maxLength = Math.max(insuranceDTO.cbr_data.length, insuranceDTO.trx_data.length);
-  let cbrCnt = 0;
 
   for (let i = 0; i < maxLength; i++) {
     let subRow = {};
-    if (insuranceDTO.cbr_data[i].status_cd=='80') cbrCnt++
     if (insuranceDTO.cbr_data[i]) {
       subRow[excelMapper.보험개시일] = insuranceDTO.cbr_data[i].insr_st_dt;
       subRow[excelMapper.보험종료일] = insuranceDTO.cbr_data[i].insr_cncls_dt;
 
       try {
-        subRow[excelMapper.상태] = statusCdItems.find(items => items.value === insuranceDTO.cbr_data[i].status_cd).title;
+        subRow[excelMapper.상태] = statusCdItems.find(items => items.value === '80').title;
       } catch (e) {
         subRow[excelMapper.상태] = '';
         // console.log(e);
@@ -533,9 +532,6 @@ function mapperRow_TAX_COR(excelMapper: object, excelDataRow: any) {
       subRow[excelMapper.비고] = insuranceDTO?.trx_data[i + 1]?.rmk;
       subRow[excelMapper.예금주명] = insuranceDTO?.trx_data[i + 1]?.acct_nm;
     }
-
-    row[excelMapper.인원수] = cbrCnt;
-
     rows.push(subRow);
   }
   return rows;

@@ -481,7 +481,6 @@ async function fnExcelDownload() {
       if (resultData.data.length == 0) {
         messageBoxDTO.value.setInfo('Excel', '데이타가 없습니다. 검색조건을 확인하세요.');
       } else {
-        console.log('resultData.data', resultData.data)
         DOWNLOAD_EXCEL(searchParams.value, resultData.data);
       }
     }

@@ -3,12 +3,15 @@ import { ref, watch, onMounted, onUnmounted } from 'vue';
 import jwt_decode from 'jwt-decode';
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
+import { MessageBoxDTO, ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, CBRDataDTO } from '@/model';
+import MessageBox from '@/components/MessageBox.vue';
 
+const warnTimeoutMin = 3
 const authStore = useAuthStore();
-const _AUTH_ADMIN = ref(JSON.parse(localStorage.getItem('_AUTH_ADMIN')));
+let _AUTH_ADMIN = ref(JSON.parse(localStorage.getItem('_AUTH_ADMIN')));
 
 const timeLeft = ref('');
-
+const messageBoxDTO = ref(new MessageBoxDTO());
 // 초를 분과 초로 변환하는 함수
 const convertSecondsToMinutes = seconds => {
   const minutes = Math.floor(seconds / 60);
@@ -16,28 +19,43 @@ const convertSecondsToMinutes = seconds => {
   return `${minutes}:${remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds}`;
 };
 
-let intervalId = null; 
+let intervalId = null;
 
-
+function extendTime() {
+    authStore.refreshAdminAccessToken().then(function(response) {
+      _AUTH_ADMIN.value = JSON.parse(localStorage.getItem('_AUTH_ADMIN'));
+      initPage()
+    })
+}
 function initPage() {
-
   // setInterval 중복실행 방지
   if (intervalId) {
-    clearInterval(intervalId); 
+    clearInterval(intervalId);
   }
-  const decoded = jwt_decode(_AUTH_ADMIN.value.accessToken);
-  const expiresAt = decoded.exp;
-  intervalId = setInterval(() => {
-    const currentTime = Math.floor(Date.now() / 1000);
-    const remainingSeconds = expiresAt - currentTime;
+  try {
 
-    if (remainingSeconds <= 0) {
-      clearInterval(intervalId);
-      authStore.adminLogout();
-    } else {
-      timeLeft.value = convertSecondsToMinutes(remainingSeconds);
-    }
-  }, 1000);
+    const decoded = jwt_decode(_AUTH_ADMIN.value.accessToken);
+    const expiresAt = decoded.exp;
+    intervalId = setInterval(() => {
+      const currentTime = Math.floor(Date.now() / 1000);
+      const remainingSeconds = expiresAt - currentTime;
+
+      if (remainingSeconds <= 0) {
+        clearInterval(intervalId);
+        authStore.adminLogout();
+      } else if(remainingSeconds == warnTimeoutMin * 60) {
+        messageBoxDTO.value.setConfirm('시간연장', '세션 종료까지 '+warnTimeoutMin+'분 남았습니다. 연장하시겠습니까?<br> 취소 시 연장 버튼을 통해서도 세션 연장이 가능합니다.', null, (result, params) => {
+          if (result) {
+            extendTime()
+          }
+        });
+      } else {
+        timeLeft.value = convertSecondsToMinutes(remainingSeconds);
+      }
+    }, 1000);
+  } catch(e) {
+    console.error(e)
+  }
 }
 
 // storage 이벤트를 사용해 localStorage 의 _AUTH_ADMIN 변경을 감지하고 스토어를 업데이트
@@ -81,7 +99,7 @@ onUnmounted(() => {
     <!-- ---------------------------------------------- -->
     <!---right part -->
     <!-- ---------------------------------------------- -->
-    <p class="mr-6 text-14"> {{ timeLeft }} &nbsp; | &nbsp; {{ _AUTH_ADMIN.userNm }} 님 반갑습니다.</p>
+    <p class="mr-6 text-14"> {{ timeLeft }} <button type="button" class="v-btn v-btn--flat v-theme--light bg-primary v-btn--density-default rounded-md v-btn--size-small v-btn--variant-flat"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!----><span class="v-btn__content" data-no-activator="" @click="extendTime()">연장</span><!----><!----></button>&nbsp; | &nbsp; {{ _AUTH_ADMIN.userNm }} 님 반갑습니다.</p>
     <div class="lnb d-flex align-center">
       <v-btn icon color="border" size="small" to="/lcksl-fr/lypts/sol01/dev/AT1">
         <vue-feather type="home" size="20"></vue-feather>
@@ -97,4 +115,5 @@ onUnmounted(() => {
       </v-btn>
     </div>
   </v-app-bar>
+  <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
 </template>

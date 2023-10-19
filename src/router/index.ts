@@ -82,7 +82,7 @@ router.beforeEach(async function (to, from, next) {
 
       // Add your IP blocking logic here
       if (!allowedIPs.includes(ipAddress)) {
-        next('/error');
+        next('/error'); 
         return;
       }
 

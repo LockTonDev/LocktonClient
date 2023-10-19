@@ -1,6 +1,7 @@
 import router from '@/router';
 import { defineStore } from 'pinia';
 import apiUser from '@/api/api/user.api';
+import jwt_decode from "jwt-decode";
 
 export const useAuthStore = defineStore({
   id: 'auth',
@@ -45,7 +46,7 @@ export const useAuthStore = defineStore({
       //console.log('localStorage', localStorage);
       try {
         const retData = await apiUser.getAdminLogin(params);
-
+        console.log("retData : ",retData)
         if (retData.success) {
           this._AUTH_ADMIN = retData.data;
           localStorage.setItem('_AUTH_ADMIN', JSON.stringify(this._AUTH_ADMIN));
@@ -103,6 +104,23 @@ export const useAuthStore = defineStore({
         this._AUTH_USER = null;
         localStorage.removeItem('_AUTH_USER');
 
+        return false;
+      }
+      return true;
+    },
+     async refreshAdminAccessToken() {
+      try {
+
+        let userInfo = JSON.parse(localStorage.getItem('_AUTH_ADMIN'));
+        const decoded = jwt_decode(userInfo.accessToken);
+        userInfo["userUuid"] = decoded.uuid
+        let retData = await apiUser.getRefreshLogin(userInfo);
+        if (retData.success) {
+          userInfo.accessToken = retData.data.accessToken
+          userInfo.refreshToken = retData.data.refreshToken
+          localStorage.setItem('_AUTH_ADMIN', JSON.stringify(userInfo));
+        }
+      } catch (error) {
         return false;
       }
       return true;
