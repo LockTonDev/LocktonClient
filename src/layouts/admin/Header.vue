@@ -6,7 +6,7 @@ import { useAuthStore } from '@/stores';
 import { MessageBoxDTO, ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, CBRDataDTO } from '@/model';
 import MessageBox from '@/components/MessageBox.vue';
 
-const warnTimeoutMin = 3
+const warnTimeoutMin = 28
 const authStore = useAuthStore();
 let _AUTH_ADMIN = ref(JSON.parse(localStorage.getItem('_AUTH_ADMIN')));
 
