@@ -18,8 +18,16 @@ async function initCode() {
   trxCdItems = await CommonCode.getCodeList('COM031');
 }
 
+const EXCEL_NUM_CELL_TAX_IND = ['G','I','O','R','AC','AD','AF','AK','AO','AP','AQ'];
+const EXCEL_NUM_CELL_TAX_COR = ['H','I','P','Q','S','V','W','AG','AH','AJ','AN','AO','AP','AQ'];
+
 // 초기 호출
 initCode();
+
+const EXCEL_NUM_MAPPERS = {
+  TAX_IND: EXCEL_NUM_CELL_TAX_IND,
+  TAX_COR: EXCEL_NUM_CELL_TAX_COR,
+};
 
 const EXCEL_MAPPERS = {
   TAX_IND: EXCEL_TAX_IND,
@@ -32,6 +40,7 @@ const ROW_MAPPERS = {
   TAX_COR: mapperRow_TAX_COR,
   ACC_IND: mapperRow_TAX_IND
 };
+
 
 /**
  * 세무사_개인 입금 엑셀업로드
@@ -242,18 +251,18 @@ export const UPLOAD_EXCEL_INSURANCE_ACC_IND_N = async (event: any) => {
         const workbook = new Workbook();
         workbook.xlsx.load(data).then(() => {
           const worksheet = workbook.getWorksheet(1);
-          
+
           worksheet.eachRow((row, index) => {
             if (index === 1) return;
             let insuranceDTO = new InsuranceDTO();
             let trxDataDTO1 = new TRXDataDTO();
             let trxDataDTO2 = new TRXDataDTO();
-            
+
             insuranceDTO.insurance_uuid = row.getCell(EXCEL_TAX_IND.보험식별번호).value;
             insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_TAX_IND.총입금액).value;
             insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_TAX_IND.차액).value;
             insuranceDTO.status_nm = row.getCell(EXCEL_ACC_IND.상태).value;
-            
+
             try {
               insuranceDTO.status_cd = statusCdItems.find(item => item.title == insuranceDTO.status_nm).value;
             } catch (e) {
@@ -322,8 +331,10 @@ export const DOWNLOAD_EXCEL = async (searchParams: ParamsDTO, excelList: any[]) 
       let worksheet = workbook.addWorksheet(sheetName);
       let mapperKey = `${searchParams.data.business_cd}_${searchParams.data.user_cd}`;
 
+      console.log("mapperKey",mapperKey)
       let excelMapper = EXCEL_MAPPERS[mapperKey];
       let rowMapper = ROW_MAPPERS[mapperKey];
+      let numMapper = EXCEL_NUM_MAPPERS[mapperKey];
       let headers = Object.keys(excelMapper).map(key => ({ header: key, key: excelMapper[key] }));
 
       // Assign columns
@@ -334,8 +345,21 @@ export const DOWNLOAD_EXCEL = async (searchParams: ParamsDTO, excelList: any[]) 
         dataRow.index = index;
         let rows = rowMapper(excelMapper, dataRow);
         rows.forEach(row => {
+          numMapper.forEach(target => {
+            if(row[target]!=undefined &&row[target]!='') row[target]=row[target]*1
+          })
           worksheet.addRow(row);
         });
+      });
+
+      worksheet.columns.forEach(col => {
+        numMapper.forEach(target => {
+          if(col.key == target){
+            col.eachCell(cell => {
+              cell.numFmt = '@'
+            })
+          }
+        })
       });
 
       // Write to the buffer
@@ -408,6 +432,7 @@ function mapperRow_TAX_IND(excelMapper: object, excelDataRow: any) {
   row[excelMapper.비고1] = insuranceDTO?.trx_data[0]?.rmk;
   row[excelMapper.예금주명1] = insuranceDTO?.trx_data[0]?.acct_nm;
 
+  // console.log('row[excelMapper.입금금액1]',row[excelMapper.입금금액1])
   try {
     row[excelMapper.입금구분2] = trxCdItems.find(item => item.value == insuranceDTO?.trx_data[1]?.trx_cd).title;
   } catch (e) {

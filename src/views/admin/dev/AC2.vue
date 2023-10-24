@@ -542,7 +542,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_base_amt" name="insr_sale_rt" label="" type="number" suffix="원" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_base_amt" name="insr_sale_rt" label="" type="number" suffix="원" readonly single-line />
                                 </div>
                               </v-col>
 
@@ -552,7 +552,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_amt" name="insr_amt" label="" type="number" suffix="원" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_amt" name="insr_amt" label="" type="number" suffix="원" readonly single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -561,7 +561,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_amt" name="insr_tot_amt" label="" type="number" suffix="원" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_amt" name="insr_tot_amt" label="" type="number" suffix="원" readonly single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -570,7 +570,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_paid_amt" name="insr_tot_paid_amt" label="" type="number" suffix="원" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_paid_amt" name="insr_tot_paid_amt" label="" type="number" suffix="원" readonly single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -579,7 +579,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_unpaid_amt" @change="changeTotUnpaidAmt(this)" name="insr_tot_unpaid_amt" label="" type="number" suffix="원" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_unpaid_amt" @change="changeTotUnpaidAmt(this)" name="insr_tot_unpaid_amt" label="" type="number" suffix="원" readonly single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -622,7 +622,7 @@
               <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.user_cd === 'COR'">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-4">
-                    <v-card-title>
+                    <v-card-title>단
                       <h3 class="font-weight-bold">세무사 명단</h3>
                       <p class="text-body-2 color-gray-shadow ml-4">
                         총
@@ -858,7 +858,7 @@
                       <p class="text-12">보험 상태</p>
                       <p class="d-flex">
                         <VSelectWithValidation v-model="insuranceDTO.status_cd" name="status_cd" label="" :items="statusCdItemsData" density="compact" variant="outlined" single-line :disabled="true" bg-color="white" class="size-x-small"></VSelectWithValidation>
-                        <v-btn variant="outlined" class="ml-1" size="small" @click="fnSave()">저장</v-btn>
+                        <v-btn variant="outlined" class="ml-1" size="small" @click="fnDepositSave()">저장</v-btn>
                       </p>
                     </v-card>
                   </v-card-text>
@@ -1228,9 +1228,7 @@ function fnCalTrx() {
   insuranceDTO.value.insr_tot_paid_amt = insuranceDTO.value.trx_data.reduce((total, item) => total + Number(item.trx_amt), 0);
   insuranceDTO.value.insr_tot_unpaid_amt = Number(insuranceDTO.value.insr_tot_amt) - Number(insuranceDTO.value.insr_tot_paid_amt);
 
-  if (insuranceDTO.value.insr_tot_unpaid_amt > 0) {
-    insuranceDTO.value.status_cd = '10'; // 신청중
-  } else {
+  if (insuranceDTO.value.insr_tot_unpaid_amt <= 0 && insuranceDTO.value.status_cd == '10') {
     insuranceDTO.value.status_cd = '80'; // 정상
   }
 }
@@ -1278,7 +1276,7 @@ async function fnSave() {
 
 async function fnDepositSave() {
   let isRun = false;
-  fnCal();
+  fnCalTrx();
   await messageBoxDTO.value.setConfirm('확인', '저장 하시겠습니까?', null, (result, params) => {
     isRun = result;
   });
@@ -1286,24 +1284,13 @@ async function fnDepositSave() {
     const resultData = await apiADMIN.setTAX_TRX([insuranceDTO.value]);
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', '저장 되었습니다. (자동 재조회)');
-
-     // fnSearch();
+      fnSearch();
     } else {
       messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
     }
   }
 }
 
-function fnCal() {
-  insuranceDTO.value.insr_tot_paid_amt = insuranceDTO.value.trx_data.reduce((total, item) => total + Number(item.trx_amt), 0);
-  insuranceDTO.value.insr_tot_unpaid_amt = Number(insuranceDTO.value.insr_tot_amt) - Number(insuranceDTO.value.insr_tot_paid_amt);
-
-  if (insuranceDTO.value.insr_tot_unpaid_amt > 0) {
-    insuranceDTO.value.status_cd = '10'; // 신청중
-  } else {
-    insuranceDTO.value.status_cd = '80'; // 정상
-  }
-}
 
 /**
  * 보험가입신청서 팝업호출
@@ -1343,7 +1330,8 @@ const onCalculateInsurance = async () => {
     if (insuranceDTO.value.cbr_data != undefined && insuranceDTO.value.user_cd !== 'IND') {
       for (var idx in insuranceDTO.value.cbr_data) {
         // 기본담보 보험료(할인할증적용)
-        totAmt += Number(insuranceDTO.value.cbr_data[idx].insr_amt, 0);
+        if(insuranceDTO.value.cbr_data[idx].status_cd=='80')
+          totAmt += Number(insuranceDTO.value.cbr_data[idx].insr_amt, 0);
       }
 
       insuranceDTO.value.insr_amt = totAmt;

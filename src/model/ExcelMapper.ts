@@ -47,8 +47,6 @@ const EXCEL_TAX_IND = {
   변경내용: 'AU'
 };
 
-
-
 const EXCEL_TAX_COR = {
   순번: 'A',
   보험식별번호: 'B',
