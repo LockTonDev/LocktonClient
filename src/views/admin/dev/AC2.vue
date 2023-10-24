@@ -1228,8 +1228,17 @@ function fnCalTrx() {
   insuranceDTO.value.insr_tot_paid_amt = insuranceDTO.value.trx_data.reduce((total, item) => total + Number(item.trx_amt), 0);
   insuranceDTO.value.insr_tot_unpaid_amt = Number(insuranceDTO.value.insr_tot_amt) - Number(insuranceDTO.value.insr_tot_paid_amt);
 
-  if (insuranceDTO.value.insr_tot_unpaid_amt <= 0 && insuranceDTO.value.status_cd == '10') {
+  if (insuranceDTO.value.insr_tot_unpaid_amt == 0 && insuranceDTO.value.status_cd == '10') {
     insuranceDTO.value.status_cd = '80'; // 정상
+
+    if (insuranceDTO.value.cbr_data != undefined && insuranceDTO.value.user_cd !== 'IND') {
+      for (var idx in insuranceDTO.value.cbr_data) {
+        // 기본담보 보험료(할인할증적용)
+       //console.log()
+        if(insuranceDTO.value.cbr_data[idx].status_cd=='10')
+          insuranceDTO.value.cbr_data[idx].status_cd='80'
+      }
+    }
   }
 }
 async function fnAddCBR(user_cd: string) {
