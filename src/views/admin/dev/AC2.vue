@@ -542,7 +542,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_base_amt" name="insr_sale_rt" label="" type="number" suffix="원" readonly single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_base_amt" name="insr_sale_rt" label="" type="number" suffix="원"  single-line />
                                 </div>
                               </v-col>
 
@@ -552,7 +552,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_amt" name="insr_amt" label="" type="number" suffix="원" readonly single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_amt" name="insr_amt" label="" type="number" suffix="원"  single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -561,7 +561,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_amt" name="insr_tot_amt" label="" type="number" suffix="원" readonly single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_amt" name="insr_tot_amt" label="" type="number" suffix="원"  single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
