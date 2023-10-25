@@ -96,8 +96,8 @@ class InsuranceDTO {
 
   user_cd: string;
   user_nm: string;
-  user_birth: string;
-  user_regno: string;
+  user_birth: number;
+  user_regno: number;
   user_hpno: string;
   user_email: string;
 
@@ -225,8 +225,8 @@ class InsuranceDTO {
     this.user_uuid = data.user_uuid || '';
     this.user_cd = data.user_cd || '';
     this.user_nm = data.user_nm || '';
-    this.user_birth = data.user_birth || '';
-    this.user_regno = data.user_regno || '';
+    this.user_birth = data.user_birth || 0;
+    this.user_regno = data.user_regno || 0;
     this.user_hpno = data.user_hpno || '';
     this.user_email = data.user_email || '';
     this.corp_type = data.corp_type || '';
