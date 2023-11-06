@@ -96,7 +96,7 @@
                 <td style="color: {{ row?.insr_tot_unpaid_amt < 0 ? 'text-error' : 'text-black' }}">
                   {{ Number(row?.insr_tot_unpaid_amt) === 0 ? '-' : Number(row?.insr_tot_unpaid_amt).toLocaleString() }}
                 </td>
-                <td>{{ row.status_nm }}</td>
+                <td :style='(row.status_cd =="30")?"color:#d6caca;":""'>{{ row.status_nm }}</td>
               </tr>
             </tbody>
             <tbody v-else>
@@ -402,11 +402,11 @@
                               </v-col>
                               <v-col cols="12" class="v-col">
                                 <div class="head-col">
-                                  <p>가입일자</p>
+                                  <p>신청일자</p>
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_reg_dt" name="insr_reg_dt" label="가입일자" type="date" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_reg_dt" name="insr_reg_dt" label="신청일자" type="date" single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -622,7 +622,7 @@
               <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.user_cd === 'COR'">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-4">
-                    <v-card-title>단
+                    <v-card-title>
                       <h3 class="font-weight-bold">세무사 명단</h3>
                       <p class="text-body-2 color-gray-shadow ml-4">
                         총
@@ -1293,7 +1293,12 @@ async function fnDepositSave() {
     const resultData = await apiADMIN.setTAX_TRX([insuranceDTO.value]);
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', '저장 되었습니다. (자동 재조회)');
-      fnSearch();
+
+      if (insuranceDTO.value.mode == 'U') {
+        fnSearchDtl(insuranceDTO.value.insurance_uuid);
+      } else {
+        fnSearch();
+      }
     } else {
       messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
     }
