@@ -18,7 +18,7 @@
 				</li>					
 				<li>
 				<span>피보험자<sup class="text-error ml-1">*</sup></span>
-				<v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" label="피보험자" @keyup.enter="fnSearch()"/>
+				<v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" placeholder="피보험자" @keyup.enter="fnSearch()"/>
 				</li>							
 				<li class="ml-auto">
 				<v-btn variant="flat" @click="fnSearch()">조회</v-btn>

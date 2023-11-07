@@ -6,7 +6,7 @@
   </script>
   
   <template>
-    <v-navigation-drawer app color="dark" class="admin-navi-wrap" width="200">
+    <v-navigation-drawer app color="dark" class="admin-navi-wrap" width="205">
       <!-- ---------------------------------------------- -->
       <!---Navigation -->
       <!-- ---------------------------------------------- -->

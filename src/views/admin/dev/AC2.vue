@@ -27,7 +27,7 @@
         </li>
         <li>
           <span>피보험자<sup class="text-error ml-1">*</sup></span>
-          <v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" label="피보험자" @keyup.enter="fnSearch()" />
+          <v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" placeholder="피보험자" @keyup.enter="fnSearch()" />
         </li>
         <li class="ml-auto">
           <v-btn variant="flat" @click="fnSearch()">조회</v-btn>
@@ -397,7 +397,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_year" name="insr_year" label="가입년도" suffix="년" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_year" name="insr_year" placeholder="가입년도" suffix="년" single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -924,7 +924,7 @@
                                 </div>
                               </td>
                               <td>
-                                <VTextFieldWithValidation v-model="insuranceDTO.erp_amt" name="erp_amt" label="ERP보험료" type="number" suffix="원" single-line variant="outlined" density="compact" />
+                                <VTextFieldWithValidation v-model="insuranceDTO.erp_amt" name="erp_amt" placeholder="ERP보험료" type="number" suffix="원" single-line variant="outlined" density="compact" />
                               </td>
                               <td>
                                 <VTextFieldWithValidation v-model="insuranceDTO.erp_dt" name="erp_dt" label="ERP납입일" type="date" single-line variant="outlined" density="compact" />
