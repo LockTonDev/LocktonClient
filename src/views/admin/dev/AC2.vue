@@ -600,28 +600,10 @@
                 </v-card>
               </v-col>
 
-              <!-- 메모 추가예정 -->
-              <v-col cols="12" class="pb-0" ref="refPage3">
+              <!--세무사 명단-->
+              <v-col cols="12" class="pb-0" ref="refPage3" v-if="insuranceDTO.user_cd === 'COR'">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-3">
-                    <v-card-title>
-                      <h3 class="font-weight-bold">메모</h3>
-                      <v-spacer />
-                      <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
-                    </v-card-title>
-                    <v-expansion-panel-text>
-                      <div class="data-col w-full">
-                        <v-textarea v-model="insuranceDTO.rmk" variant="outlined" counter class="mt-2 w-full" rows="5" no-resize></v-textarea>
-                      </div>
-                    </v-expansion-panel-text>
-                  </v-expansion-panel>
-                </v-card>
-              </v-col>
-
-              <!--세무사 명단-->
-              <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.user_cd === 'COR'">
-                <v-card>
-                  <v-expansion-panel elevation="0" value="panel-4">
                     <v-card-title>
                       <h3 class="font-weight-bold">세무사 명단</h3>
                       <p class="text-body-2 color-gray-shadow ml-4">
@@ -719,9 +701,9 @@
               </v-col>
 
               <!-- 변경정보 시작 -->
-              <v-col cols="12" class="pb-0" ref="refPage5">
+              <v-col cols="12" class="pb-0" ref="refPage4">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-5">
+                  <v-expansion-panel elevation="0" value="panel-4">
                     <v-card-title class="d-flex justify-space-between pa-0">
                       <h3 class="font-weight-bold">변경정보</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -754,9 +736,9 @@
               <!-- 변경정보 종료 -->
 
               <!-- 변경신청상세 추가예정 -->
-              <v-col cols="12" class="pb-0" ref="refPage6">
+              <v-col cols="12" class="pb-0" ref="refPage5">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-6">
+                  <v-expansion-panel elevation="0" value="panel-5">
                     <v-card-title>
                       <h3 class="font-weight-bold">변경신청상세</h3>
                       <v-spacer />
@@ -768,7 +750,7 @@
               </v-col>
 
               <!--입금 처리-->
-              <v-col cols="12" class="pb-0" ref="refPage7">
+              <v-col cols="12" class="pb-0" ref="refPage6">
                 <v-card>
                   <v-card-title class="d-flex flex-wrap px-0 pt align-center">
                     <h2 class="font-weight-bold">
@@ -892,9 +874,9 @@
               </v-col>
 
               <!-- ERP정보 시작 -->
-              <v-col cols="12" class="py-0" ref="refPage8">
+              <v-col cols="12" class="py-0" ref="refPage7">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-8">
+                  <v-expansion-panel elevation="0" value="panel-7">
                     <v-card-title class="d-flex justify-space-between pa-0">
                       <h3 class="font-weight-bold">ERP정보</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -940,9 +922,9 @@
               <!-- ERP정보 종료 -->
 
               <!--약관동의-->
-              <v-col cols="12" class="pb-0" ref="refPage9">
+              <v-col cols="12" class="pb-0" ref="refPage8">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-9">
+                  <v-expansion-panel elevation="0" value="panel-8">
                     <v-card-title>
                       <h3 class="font-weight-bold">약관 동의</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -978,6 +960,23 @@
                           </v-col>
                         </v-row>
                       </v-card-text>
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                </v-card>
+              </v-col>
+              <!-- 메모 추가예정 -->
+              <v-col cols="12" class="pb-0" ref="refPage9">
+                <v-card>
+                  <v-expansion-panel elevation="0" value="panel-9">
+                    <v-card-title>
+                      <h3 class="font-weight-bold">메모</h3>
+                      <v-spacer />
+                      <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
+                    </v-card-title>
+                    <v-expansion-panel-text>
+                      <div class="data-col w-full">
+                        <v-textarea v-model="insuranceDTO.rmk" variant="outlined" counter class="mt-2 w-full" rows="5" no-resize></v-textarea>
+                      </div>
                     </v-expansion-panel-text>
                   </v-expansion-panel>
                 </v-card>
@@ -1503,5 +1502,5 @@ onMounted(async () => {
  */
 
 // 조회결과 아코디언
-const panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-6', 'panel-7', 'panel-8']);
+const panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-7', 'panel-8', 'panel-9']);
 </script>
