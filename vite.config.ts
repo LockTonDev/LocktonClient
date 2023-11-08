@@ -55,5 +55,8 @@ export default defineConfig({
       scss: { charset: false },
       css: { charset: false }
     }
+  },
+  build: {
+    chunkSizeWarningLimit: 1600
   }
 });

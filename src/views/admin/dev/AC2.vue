@@ -402,11 +402,11 @@
                               </v-col>
                               <v-col cols="12" class="v-col">
                                 <div class="head-col">
-                                  <p>가입일자</p>
+                                  <p>신청일자</p>
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_reg_dt" name="insr_reg_dt" label="가입일자" type="date" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_reg_dt" name="insr_reg_dt" label="신청일자" @blur="chgDate(this)" type="date" single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -595,24 +595,6 @@
                           </v-col>
                         </v-row>
                       </v-card-text>
-                    </v-expansion-panel-text>
-                  </v-expansion-panel>
-                </v-card>
-              </v-col>
-
-              <!-- 메모 추가예정 -->
-              <v-col cols="12" class="pb-0" ref="refPage3">
-                <v-card>
-                  <v-expansion-panel elevation="0" value="panel-3">
-                    <v-card-title>
-                      <h3 class="font-weight-bold">메모</h3>
-                      <v-spacer />
-                      <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
-                    </v-card-title>
-                    <v-expansion-panel-text>
-                      <div class="data-col w-full">
-                        <v-textarea v-model="insuranceDTO.rmk" variant="outlined" counter class="mt-2 w-full" rows="5" no-resize></v-textarea>
-                      </div>
                     </v-expansion-panel-text>
                   </v-expansion-panel>
                 </v-card>
@@ -809,7 +791,8 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr v-for="(row, index) in insuranceDTO.trx_data" :key="index" @click="selectedRowTRX = row" :class="{ selected: selectedRowTRX === row, 'cursor-pointer': true }">
+                      <tr v-for="(row, index) in insuranceDTO.trx_data" :key="index" >-
+<!--                      <tr v-for="(row, index) in insuranceDTO.trx_data" :key="index" @click="selectedRowTRX = row" :class="{ selected: selectedRowTRX === row, 'cursor-pointer': true }">-->
                         <td class="text-center">{{ index + 1 }}</td>
                         <td>
                           <VSelectWithValidation v-model="row.trx_cd" name="trx_cd" label="" :items="trxCdItems" density="compact" variant="outlined" single-line></VSelectWithValidation>
@@ -888,6 +871,24 @@
                       </p>
                     </v-card>
                   </v-card-text>
+                </v-card>
+              </v-col>
+
+              <!-- 메모 추가예정 -->
+              <v-col cols="12" class="pb-0" ref="refPage3">
+                <v-card>
+                  <v-expansion-panel elevation="0" value="panel-3">
+                    <v-card-title>
+                      <h3 class="font-weight-bold">메모</h3>
+                      <v-spacer />
+                      <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
+                    </v-card-title>
+                    <v-expansion-panel-text>
+                      <div class="data-col w-full">
+                        <v-textarea v-model="insuranceDTO.rmk" variant="outlined" counter class="mt-2 w-full" rows="5" no-resize></v-textarea>
+                      </div>
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
                 </v-card>
               </v-col>
 
@@ -1126,7 +1127,7 @@ async function fnSearch() {
   if (InsuranceList.value.length == 0) {
     isNoData.value = true;
   } else {
-    // fSearchDtl(InsuranceList.value[0].insurance_uuid);
+    // fnSearchDtl(InsuranceList.value[0].insurance_uuid);
   }
 }
 
@@ -1161,12 +1162,25 @@ async function fnSearchDtl(insurance_uuid: string) {
     insuranceDTO.value = new InsuranceDTO();
 
     Object.assign(insuranceDTO.value, resultData.data[0]);
-    console.log('insuranceDTO.value : ',insuranceDTO.value.cbr_data)
+    console.log('insuranceDTO.value.cbr_data : ',insuranceDTO.value.cbr_data)
+
+    insuranceDTO.value.cbr_data.sort(function(a, b) {
+      if(a.status_cd=='90') {
+        return 1
+      }else if(b.status_cd=='90'){
+        return -1
+      }else{
+        return b.status_cd-a.status_cd
+      }
+    })
+    console.log("insuranceDTO sort ", insuranceDTO.value.cbr_data)
 
     const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
 
     validUserCount.value = filter1.length;
-    console.log('insuranceDTO.value length : ',filter1.length)
+    console.log('insuranceDTO.value length : ',filter1);
+
+
     fnSetInsuranceRateCombo();
     dynamicComponentName1.value = `V_T${insuranceDTO.value.business_cd}0030P20`;
     dynamicComponentName2.value = `V_T${insuranceDTO.value.business_cd}0030P30`;
@@ -1484,6 +1498,11 @@ async function fnAutoTRX() {
     fnSave();
   }
 }
+
+function chgDate(this){
+  console.log("chgDate",this)
+}
+
 /**
  * 페이지 로딩이 완료되면 실행하는 로직
  */
