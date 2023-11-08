@@ -1003,6 +1003,7 @@
       <!-- 계약 상세 조회 종료 -->
     </v-col>
   </v-row>
+  <p style="height:20px;"></p>
   <!--LAYER : 주소검색 -->
   <v-dialog persistent v-model="isDaumPostDialog" width="600">
     <v-card>
@@ -1160,6 +1161,10 @@ async function fnSearchDtl(insurance_uuid: string) {
     insuranceDTO.value = new InsuranceDTO();
 
     Object.assign(insuranceDTO.value, resultData.data[0]);
+    console.log('panel.value1 : ',panel.value)
+    //메모 데이타 있을 경우 panel 확장, 2023-11-08 By Moon
+    if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '') panel.value.push("panel-9")
+    console.log('panel.value2 : ',panel.value)
     console.log('insuranceDTO.value : ',insuranceDTO.value.cbr_data)
 
     const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
@@ -1502,5 +1507,5 @@ onMounted(async () => {
  */
 
 // 조회결과 아코디언
-const panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-7', 'panel-8', 'panel-9']);
+const panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-7', 'panel-8']);
 </script>
