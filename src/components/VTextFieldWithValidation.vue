@@ -6,7 +6,7 @@
   const props = defineProps({
     name: {
       type: String,
-      requird: true,
+      required: true,
     },
     type: {
       type: String,
@@ -35,8 +35,6 @@
     maskOption:{
       type: Object
     }
-    
-  
  
   });
   
@@ -77,5 +75,14 @@
       :maxlength="maxlength"
       variant="outlined"
       hide-details="auto"
+      class="suffixed-input"
     />
   </template>
+
+<style>
+.suffixed-input {
+  --v-input-control-height: 0;
+  --v-input-padding-top: 0;
+}
+
+</style>

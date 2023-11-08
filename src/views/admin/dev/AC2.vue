@@ -27,7 +27,7 @@
         </li>
         <li>
           <span>피보험자<sup class="text-error ml-1">*</sup></span>
-          <v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" label="피보험자" @keyup.enter="fnSearch()" />
+          <v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" placeholder="피보험자" @keyup.enter="fnSearch()" />
         </li>
         <li class="ml-auto">
           <v-btn variant="flat" @click="fnSearch()">조회</v-btn>
@@ -96,7 +96,7 @@
                 <td style="color: {{ row?.insr_tot_unpaid_amt < 0 ? 'text-error' : 'text-black' }}">
                   {{ Number(row?.insr_tot_unpaid_amt) === 0 ? '-' : Number(row?.insr_tot_unpaid_amt).toLocaleString() }}
                 </td>
-                <td>{{ row.status_nm }}</td>
+                <td :style='(row.status_cd =="30")?"color:#d6caca;":""'>{{ row.status_nm }}</td>
               </tr>
             </tbody>
             <tbody v-else>
@@ -397,7 +397,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_year" name="insr_year" label="가입년도" suffix="년" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_year" name="insr_year" placeholder="가입년도" suffix="년" single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -406,7 +406,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_reg_dt" name="insr_reg_dt" label="신청일자" @blur="chgDate(this)" type="date" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_reg_dt" name="insr_reg_dt" label="신청일자" @blur="chgDate(this)" type="date" single-line />\
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -601,10 +601,10 @@
               </v-col>
 
               <!--세무사 명단-->
-              <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.user_cd === 'COR'">
+              <v-col cols="12" class="pb-0" ref="refPage3" v-if="insuranceDTO.user_cd === 'COR'">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-4">
-                    <v-card-title>단
+                  <v-expansion-panel elevation="0" value="panel-3">
+                    <v-card-title>
                       <h3 class="font-weight-bold">세무사 명단</h3>
                       <p class="text-body-2 color-gray-shadow ml-4">
                         총
@@ -701,9 +701,9 @@
               </v-col>
 
               <!-- 변경정보 시작 -->
-              <v-col cols="12" class="pb-0" ref="refPage5">
+              <v-col cols="12" class="pb-0" ref="refPage4">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-5">
+                  <v-expansion-panel elevation="0" value="panel-4">
                     <v-card-title class="d-flex justify-space-between pa-0">
                       <h3 class="font-weight-bold">변경정보</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -736,9 +736,9 @@
               <!-- 변경정보 종료 -->
 
               <!-- 변경신청상세 추가예정 -->
-              <v-col cols="12" class="pb-0" ref="refPage6">
+              <v-col cols="12" class="pb-0" ref="refPage5">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-6">
+                  <v-expansion-panel elevation="0" value="panel-5">
                     <v-card-title>
                       <h3 class="font-weight-bold">변경신청상세</h3>
                       <v-spacer />
@@ -750,7 +750,7 @@
               </v-col>
 
               <!--입금 처리-->
-              <v-col cols="12" class="pb-0" ref="refPage7">
+              <v-col cols="12" class="pb-0" ref="refPage6">
                 <v-card>
                   <v-card-title class="d-flex flex-wrap px-0 pt align-center">
                     <h2 class="font-weight-bold">
@@ -893,9 +893,9 @@
               </v-col>
 
               <!-- ERP정보 시작 -->
-              <v-col cols="12" class="py-0" ref="refPage8">
+              <v-col cols="12" class="py-0" ref="refPage7">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-8">
+                  <v-expansion-panel elevation="0" value="panel-7">
                     <v-card-title class="d-flex justify-space-between pa-0">
                       <h3 class="font-weight-bold">ERP정보</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -925,7 +925,7 @@
                                 </div>
                               </td>
                               <td>
-                                <VTextFieldWithValidation v-model="insuranceDTO.erp_amt" name="erp_amt" label="ERP보험료" type="number" suffix="원" single-line variant="outlined" density="compact" />
+                                <VTextFieldWithValidation v-model="insuranceDTO.erp_amt" name="erp_amt" placeholder="ERP보험료" type="number" suffix="원" single-line variant="outlined" density="compact" />
                               </td>
                               <td>
                                 <VTextFieldWithValidation v-model="insuranceDTO.erp_dt" name="erp_dt" label="ERP납입일" type="date" single-line variant="outlined" density="compact" />
@@ -941,9 +941,9 @@
               <!-- ERP정보 종료 -->
 
               <!--약관동의-->
-              <v-col cols="12" class="pb-0" ref="refPage9">
+              <v-col cols="12" class="pb-0" ref="refPage8">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-9">
+                  <v-expansion-panel elevation="0" value="panel-8">
                     <v-card-title>
                       <h3 class="font-weight-bold">약관 동의</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -979,6 +979,23 @@
                           </v-col>
                         </v-row>
                       </v-card-text>
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                </v-card>
+              </v-col>
+              <!-- 메모 추가예정 -->
+              <v-col cols="12" class="pb-0" ref="refPage9">
+                <v-card>
+                  <v-expansion-panel elevation="0" value="panel-9">
+                    <v-card-title>
+                      <h3 class="font-weight-bold">메모</h3>
+                      <v-spacer />
+                      <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
+                    </v-card-title>
+                    <v-expansion-panel-text>
+                      <div class="data-col w-full">
+                        <v-textarea v-model="insuranceDTO.rmk" variant="outlined" counter class="mt-2 w-full" rows="5" no-resize></v-textarea>
+                      </div>
                     </v-expansion-panel-text>
                   </v-expansion-panel>
                 </v-card>
@@ -1307,7 +1324,12 @@ async function fnDepositSave() {
     const resultData = await apiADMIN.setTAX_TRX([insuranceDTO.value]);
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', '저장 되었습니다. (자동 재조회)');
-      fnSearch();
+
+      if (insuranceDTO.value.mode == 'U') {
+        fnSearchDtl(insuranceDTO.value.insurance_uuid);
+      } else {
+        fnSearch();
+      }
     } else {
       messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
     }
@@ -1517,5 +1539,5 @@ onMounted(async () => {
  */
 
 // 조회결과 아코디언
-const panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-6', 'panel-7', 'panel-8']);
+const panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-7', 'panel-8', 'panel-9']);
 </script>
