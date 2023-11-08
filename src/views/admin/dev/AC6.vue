@@ -36,26 +36,27 @@
             <caption class="d-none">조회 결과</caption>
             <colgroup>
               <col style="width:80px"/>
-              <col style="width:80px"/>
               <col style="width:auto"/>
               <col style="width:auto"/>
               <col style="width:auto"/>
               <col style="width:auto"/>
+              <col style="width:auto"/>
+              <col style="width:140px"/>
+              <col style="width:90px"/>
               <col style="width:110px"/>
-              <col style="width:110px"/>
-              <col style="width:110px"/>
-              <col style="width:80px"/>
+              <col style="width:70px"/>
             </colgroup>
             <thead>
               <tr>
                 <th>번호</th>
+                <th>신청일자</th>
                 <th>보험년도</th>
                 <th>피보험자</th>
-                <th>증권번호</th>
+<!--                <th>증권번호</th>-->
                 <th>변경구분</th>
-                <th>담당자명</th>
-                <th>신청일자</th>
                 <th>변경개시일자</th>
+                <th>연락처</th>
+                <th>담당자명</th>
                 <th>처리일자</th>
                 <th>처리상태</th>
               </tr>
@@ -68,13 +69,14 @@
                   :class="{ 'selected': selectedRow === row, 'cursor-pointer': true  }"
               >
                 <td>{{ dataList?.length - index }}</td>
+                <td>{{ row.apply_dt }}</td>
                 <td>{{ row.insr_year }}</td>
                 <td>{{ row.user_nm }}</td>
-                <td>{{ row.insr_insurance_no }}</td>
+<!--                <td>{{ row.insr_insurance_no }}</td>-->
                 <td>{{ row.apply_nm }}</td>
-                <td>{{ row.nm }}</td>
-                <td>{{ row.apply_dt }}</td>
                 <td>{{ row.apply_posted_dt }}</td>
+                <td>{{ row.tel }}</td>
+                <td>{{ row.nm }}</td>
                 <td>{{ row.proc_dt }}</td>
                 <td>{{ row.proc_nm }}</td>
               </tr>      
@@ -104,8 +106,8 @@
                   <div class="data-col">{{ dT0040ADTO.insurance_no }}</div>
                 </v-col>
                 <v-col cols="6">
-                  <div class="head-col">증권번호</div>
-                  <div class="data-col">{{ dT0040ADTO.insurance_no }}</div>
+                  <div class="head-col">피보험자</div>
+                  <div class="data-col">{{ dT0040ADTO.user_nm }}</div>
                 </v-col>
                 <v-col cols="6">
                   <div class="head-col">변경구분</div>
@@ -265,6 +267,7 @@ async function fnSave(mode:string) {
 };
 
 async function fnSearch() {
+  console.log('searchParams.value.data',searchParams.value.data)
   const resultData = await apiADMIN.getApplyInsurance(searchParams.value.data);
   dataList.value = resultData.data;
   if (dataList.value.length == 0) {

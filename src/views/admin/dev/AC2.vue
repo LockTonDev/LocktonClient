@@ -406,7 +406,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_reg_dt" name="insr_reg_dt" label="신청일자" @blur="chgDate(this)" type="date" single-line />\
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_reg_dt" name="insr_reg_dt" label="신청일자" type="date" single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -651,12 +651,12 @@
                             </tr>
                           </thead>
                           <tbody class="text-center">
-                            <tr v-for="(row, index) in insuranceDTO.cbr_data" >
+                            <tr v-for="(row, index) in insuranceDTO.cbr_data">
                               <td>{{ index + 1 }}</td>
-                              <td>
+                              <td :style="{color:row.isRed}">
                                 <VSelectWithValidation v-model="row.status_cd" name="status_cd" label="" color="primary" density="compact" :items="statusCdItems" variant="outlined" single-line></VSelectWithValidation>
                               </td>
-                              <td>
+                              <td :style="{color:row.isRed}">
                                 <VTextFieldWithValidation v-model="row.cbr_nm" name="cbr_nm" label="" density="compact" color="primary" variant="outlined" single-line />
                               </td>
                               <td>
@@ -871,24 +871,6 @@
                       </p>
                     </v-card>
                   </v-card-text>
-                </v-card>
-              </v-col>
-
-              <!-- 메모 추가예정 -->
-              <v-col cols="12" class="pb-0" ref="refPage3">
-                <v-card>
-                  <v-expansion-panel elevation="0" value="panel-3">
-                    <v-card-title>
-                      <h3 class="font-weight-bold">메모</h3>
-                      <v-spacer />
-                      <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
-                    </v-card-title>
-                    <v-expansion-panel-text>
-                      <div class="data-col w-full">
-                        <v-textarea v-model="insuranceDTO.rmk" variant="outlined" counter class="mt-2 w-full" rows="5" no-resize></v-textarea>
-                      </div>
-                    </v-expansion-panel-text>
-                  </v-expansion-panel>
                 </v-card>
               </v-col>
 
@@ -1189,6 +1171,9 @@ async function fnSearchDtl(insurance_uuid: string) {
       }else{
         return b.status_cd-a.status_cd
       }
+    })
+    insuranceDTO.value.cbr_data.map(item=>{
+      item.isRed = item.status_cd=='80'? 'black' : 'red'
     })
     console.log("insuranceDTO sort ", insuranceDTO.value.cbr_data)
 
