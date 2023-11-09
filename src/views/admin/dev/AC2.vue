@@ -1161,16 +1161,14 @@ async function fnSearchDtl(insurance_uuid: string) {
     insuranceDTO.value = new InsuranceDTO();
 
     Object.assign(insuranceDTO.value, resultData.data[0]);
-    console.log('panel.value1 : ',panel.value)
+
     //메모 데이타 있을 경우 panel 확장, 2023-11-08 By Moon
-    if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '') panel.value.push("panel-9")
-    console.log('panel.value2 : ',panel.value)
-    console.log('insuranceDTO.value : ',insuranceDTO.value.cbr_data)
+    if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '' && panel.value.length < 8 ) panel.value.push("panel-9")
+    else if((insuranceDTO.value.rmk == null || insuranceDTO.value.rmk == '') && panel.value.length > 7 ) panel.value.pop();
 
     const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
 
     validUserCount.value = filter1.length;
-    console.log('insuranceDTO.value length : ',filter1.length)
     fnSetInsuranceRateCombo();
     dynamicComponentName1.value = `V_T${insuranceDTO.value.business_cd}0030P20`;
     dynamicComponentName2.value = `V_T${insuranceDTO.value.business_cd}0030P30`;

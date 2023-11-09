@@ -220,6 +220,6 @@ onUnmounted(() => {
 </template>
 <style scoped>
   .font-size-8 {
-    font-size :0.4rem;
+    font-size :0.5rem;
   }
 </style>

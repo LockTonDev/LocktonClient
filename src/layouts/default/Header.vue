@@ -74,7 +74,7 @@ const height = ref({ max: "110", min:"64" });
 </template>
 <style scoped>
   .font-size-8 {
-    font-size :0.4rem;
+    font-size :0.5rem;
   }
   .main-wrap .v-app-bar.v-toolbar {
     background-image: linear-gradient(120deg, transparent 0%, transparent calc(50% + 400px), rgba(31, 35, 40) calc(50% + 400px));
