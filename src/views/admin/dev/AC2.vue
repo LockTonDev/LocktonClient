@@ -1346,7 +1346,7 @@ const onCalculateInsurance = async () => {
     if (insuranceDTO.value.cbr_data != undefined && insuranceDTO.value.user_cd !== 'IND') {
       for (var idx in insuranceDTO.value.cbr_data) {
         // 기본담보 보험료(할인할증적용)
-        if(insuranceDTO.value.cbr_data[idx].status_cd=='80')
+        //if(insuranceDTO.value.cbr_data[idx].status_cd=='80')
           totAmt += Number(insuranceDTO.value.cbr_data[idx].insr_amt, 0);
       }
 
