@@ -226,7 +226,7 @@
                   </v-card>
                 </v-dialog>
               </v-btn>
-                
+
             </v-window-item>
             <v-window-item value="option-2">
               <h4 class="text-body-1 font-weight-bold">배상청구기준증권</h4>
@@ -277,7 +277,7 @@
                               <td class="border-right-0">보험기간 만료 후 30일 이내에 서면 요청하여야 하며,<br/>보험조건은 전년도와 동일하게 가입(변경 불가)</td>
                             </tr>
                           </tbody>
-                        </table>                        
+                        </table>
                         <p class="mt-4">가입 및 기타 문의는 록톤(T. 02-2011-0300)으로 연락주시기 바랍니다.</p>
                       </v-card-text>
                     </v-card>
@@ -306,15 +306,15 @@
                     <td class="border-right-0">
                       보험기간 1년 동안 보상받을 수 있는 총 한도<br/>
                     </td>
-                  </tr>                  
+                  </tr>
                 </tbody>
               </table>
               <h4 class="text-body-1 font-weight-bold mt-10">자기부담금(공제금액)</h4>
-              <ul class="list-style-type-bull word-break-keep-all mt-6 ml-3">                
+              <ul class="list-style-type-bull word-break-keep-all mt-6 ml-3">
                 <li>피보험자 본인이 부담하는 금액으로 매 사고당 적용되며, 자기부담금 미만의 손해에 대해서는 보상되지 않습니다.</li>
                 <li class="mt-1">자기부담금을 초과하는 손해에 대해서는 산출손해배상액에서 자기부담금을 차감 후 1청구당 보상한도액 범위 내에서 보상합니다. <br/>(사고공동부담비율 선택한 경우 추가 공제 후 지급)</li>
                 <li class="mt-1"><span class="text-decoration-underline">동일회사</span>의 법인세, 종합소득세 등 신고 시 발생한 <span class="text-decoration-underline">동일한 업무상 과실에 기인한 사고</span>들은 그 과실이 연속된 귀속연도에 계속 반복되어 발생하였더라도 기간에 관계없이 <span class="text-decoration-underline">하나의 사고로 간주</span>하여 자기부담금을 적용합니다.</li>
-              </ul>          
+              </ul>
             </v-window-item>
             <v-window-item value="option-4">
               <h4 class="text-body-1 font-weight-bold word-break-keep-all">사고공동부담비율</h4>
@@ -409,7 +409,7 @@
               <dl class="ml-16">
                 <dt class="color-primary">가입/계약 정보 입력</dt>
                 <dd class="mt-1">가입 정보 / 계약 정보 입력 후 보험료 확인</dd>
-                <dd class="mt-1">    
+                <dd class="mt-1">
                   약관/개인정보처리동의 확인<br/>
                   <v-btn color="primary" variant="outlined" class="ml-2"> <span>약관 상세 </span>
                   <v-dialog persistent v-model="isDialogTermsOfPolicy2" activator="parent" scrollable max-width="1000">
@@ -514,7 +514,7 @@
                 </svg>
           </v-btn>
         </v-col>
-      </v-row>      
+      </v-row>
     </v-window-item>
 
     <v-window-item value="4">
@@ -532,7 +532,7 @@
                       <span class="mr-1">사고통보서 다운로드</span>
                       <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
                     </a>
-                                  
+
                 </dd>
               </dl>
             </li>
@@ -670,9 +670,8 @@
   import BaseCard from "@/components/BaseCard.vue";
   import V_TACC0030P10 from '../contract/ACC/V_TACC0030P10.vue';      // 보험료표
   import TermsOfPolicy from '../contract/ACC/V_TACC0030P01.vue';      // PDF 다운로드
-
+  import {storeToRefs} from "pinia";
   const route = useRoute();
-
   const mainTab = ref(1);
   const tab2 = ref("option-1");
   
@@ -687,14 +686,17 @@
 
   // 이전 route.params 값 저장을 위한 변수
   const prevParams = ref({});
-
   onBeforeUpdate(() => {
+
     if(JSON.stringify(prevParams.value) !== JSON.stringify(route.params)) {
       mainTab.value = route.params.mainTabIdx;
       prevParams.value = route.params;
     }
   });
 
+  onMounted(() =>{
+    mainTab.value = route.params.mainTabIdx;
+  })
 
 
 </script>
