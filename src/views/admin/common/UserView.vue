@@ -601,7 +601,15 @@ async function fnResetPassword() {
   });
 
   if (isRun) {
-    alert("구현예정");
+    userDTO.value.rmk = genPassword(10);
+
+    const resultData = await apiADMIN.setUserPassword(userDTO.value);
+
+    if (resultData.success) {
+      messageBoxDTO.value.setInfo('확인', '비밀번호는 비고에서 확인해주세요.');
+    } else {
+      messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+    }
   }
 }
 

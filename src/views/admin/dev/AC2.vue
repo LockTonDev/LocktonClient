@@ -66,43 +66,43 @@
               <col style="width: auto" />
             </colgroup>
             <thead>
-              <tr>
-                <th>번호</th>
-                <th>구분</th>
-                <th>보험년도</th>
-                <th>피보험자</th>
-                <th>등록번호</th>
-                <th>사업자번호</th>
-                <th>회원ID</th>
-                <th>보험기간</th>
-                <!-- <th>소속<br />지방회</th> -->
-                <th>총보험료</th>
-                <th>미납금액</th>
-                <th>상태</th>
-              </tr>
+            <tr>
+              <th>번호</th>
+              <th>구분</th>
+              <th>보험년도</th>
+              <th>피보험자</th>
+              <th>등록번호</th>
+              <th>사업자번호</th>
+              <th>회원ID</th>
+              <th>보험기간</th>
+              <!-- <th>소속<br />지방회</th> -->
+              <th>총보험료</th>
+              <th>미납금액</th>
+              <th>상태</th>
+            </tr>
             </thead>
             <tbody v-if="InsuranceList.length" class="">
-              <tr v-for="(row, index) in InsuranceList" :key="index" @click="selectedRow = row" @click.prevent="fnSearchDtl(row.insurance_uuid)" :class="{ selected: selectedRow === row, 'cursor-pointer': true }">
-                <td>{{ index + 1 }}</td>
-                <td>{{ row.user_cd_nm }}</td>
-                <td>{{ row.insr_year }}</td>
-                <td>{{ row.user_nm }}</td>
-                <td>{{ row.user_regno }}</td>
-                <td>{{ row.corp_cnno }}</td>
-                <td>{{ row.user_id }}</td>
-                <td>{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</td>
-                <!-- <td>{{ row.corp_region_nm }}</td> -->
-                <td>{{ Number(row?.insr_tot_amt).toLocaleString() }}</td>
-                <td style="color: {{ row?.insr_tot_unpaid_amt < 0 ? 'text-error' : 'text-black' }}">
-                  {{ Number(row?.insr_tot_unpaid_amt) === 0 ? '-' : Number(row?.insr_tot_unpaid_amt).toLocaleString() }}
-                </td>
-                <td :style='(row.status_cd =="30")?"color:#d6caca;":""'>{{ row.status_nm }}</td>
-              </tr>
+            <tr v-for="(row, index) in InsuranceList" :key="index" @click="selectedRow = row" @click.prevent="fnSearchDtl(row.insurance_uuid)" :class="{ selected: selectedRow === row, 'cursor-pointer': true }">
+              <td>{{ index + 1 }}</td>
+              <td>{{ row.user_cd_nm }}</td>
+              <td>{{ row.insr_year }}</td>
+              <td>{{ row.user_nm }}</td>
+              <td>{{ row.user_regno }}</td>
+              <td>{{ row.corp_cnno }}</td>
+              <td>{{ row.user_id }}</td>
+              <td>{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</td>
+              <!-- <td>{{ row.corp_region_nm }}</td> -->
+              <td>{{ Number(row?.insr_tot_amt).toLocaleString() }}</td>
+              <td style="color: {{ row?.insr_tot_unpaid_amt < 0 ? 'text-error' : 'text-black' }}">
+                {{ Number(row?.insr_tot_unpaid_amt) === 0 ? '-' : Number(row?.insr_tot_unpaid_amt).toLocaleString() }}
+              </td>
+              <td :style='(row.status_cd =="30")?"color:#d6caca;":""'>{{ row.status_nm }}</td>
+            </tr>
             </tbody>
             <tbody v-else>
-              <tr>
-                <td colspan="12" class="text-center align-middle">조회할 내용이 없습니다.</td>
-              </tr>
+            <tr>
+              <td colspan="12" class="text-center align-middle">조회할 내용이 없습니다.</td>
+            </tr>
             </tbody>
           </v-table>
         </v-card-text>
@@ -405,7 +405,7 @@
                                   <p>신청일자</p>
                                   <sup class="text-error">*</sup>
                                 </div>
-                                <div class="data-col">
+                                <div class="data-col" :style='(insuranceDTO.insr_reg_dt >= stockStartDt)?"color:blue;":"color:black"'>
                                   <VTextFieldWithValidation v-model="insuranceDTO.insr_reg_dt" name="insr_reg_dt" label="신청일자" type="date" single-line />
                                 </div>
                               </v-col>
@@ -414,7 +414,7 @@
                                   <p>보험시작일</p>
                                   <sup class="text-error">*</sup>
                                 </div>
-                                <div class="data-col">
+                                <div class="data-col" :style='(insuranceDTO.insr_st_dt >= stockStartDt)?"color:blue;":"color:black"'>
                                   <VTextFieldWithValidation v-model="insuranceDTO.insr_st_dt" name="insr_st_dt" label="보험시작일자" type="date" single-line />
                                 </div>
                               </v-col>
@@ -423,7 +423,7 @@
                                   <p>보험종료일</p>
                                   <sup class="text-error">*</sup>
                                 </div>
-                                <div class="data-col">
+                                <div class="data-col" :style='(insuranceDTO.insr_cncls_dt >= stockStartDt)?"color:blue;":"color:black"'>
                                   <VTextFieldWithValidation v-model="insuranceDTO.insr_cncls_dt" name="insr_cncls_dt" label="보험종료일자" type="date" single-line />
                                 </div>
                               </v-col>
@@ -433,7 +433,7 @@
                                   <p v-if="insuranceDTO.user_cd === 'COR'">법인 소급담보일</p>
                                   <sup class="text-error">*</sup>
                                 </div>
-                                <div class="data-col">
+                                <div class="data-col" :style='(insuranceDTO.insr_retr_dt >= stockStartDt)?"color:blue;":"color:black"'>
                                   <!-- {{ insuranceDTO.insr_retr_dt }} -->
                                   <VTextFieldWithValidation v-model="insuranceDTO.insr_retr_dt" name="insr_retr_dt" label="소급담보일" type="date" single-line />
                                 </div>
@@ -635,63 +635,63 @@
                             <col style="width: 40px" />
                           </colgroup>
                           <thead>
-                            <tr>
-                              <th>No</th>
-                              <th>상태</th>
-                              <th>성명</th>
-                              <th>생년월일</th>
-                              <th>등록번호</th>
-                              <th>소급<br />적용</th>
-                              <th>소급담보일</th>
-                              <th>보험기간</th>
-                              <th>할인할증기준</th>
-                              <th>할인할증</th>
-                              <th>1인당 보험료</th>
-                              <th></th>
-                            </tr>
+                          <tr>
+                            <th>No</th>
+                            <th>상태</th>
+                            <th>성명</th>
+                            <th>생년월일</th>
+                            <th>등록번호</th>
+                            <th>소급<br />적용</th>
+                            <th>소급담보일</th>
+                            <th>보험기간</th>
+                            <th>할인할증기준</th>
+                            <th>할인할증</th>
+                            <th>1인당 보험료</th>
+                            <th></th>
+                          </tr>
                           </thead>
                           <tbody class="text-center">
-                            <tr v-for="(row, index) in insuranceDTO.cbr_data" >
-                              <td>{{ index + 1 }}</td>
-                              <td>
-                                <VSelectWithValidation v-model="row.status_cd" name="status_cd" label="" color="primary" density="compact" :items="statusCdItems" variant="outlined" single-line></VSelectWithValidation>
-                              </td>
-                              <td>
-                                <VTextFieldWithValidation v-model="row.cbr_nm" name="cbr_nm" label="" density="compact" color="primary" variant="outlined" single-line />
-                              </td>
-                              <td>
-                                <VTextFieldWithValidation v-model="row.cbr_brdt" name="cbr_brdt" label="" density="compact" color="primary" variant="outlined" :maskOption="{ mask: '######' }" single-line />
-                              </td>
-                              <td>
-                                <VTextFieldWithValidation v-model="row.cbr_regno" name="cbr_regno" label="" color="primary" density="compact" variant="outlined" :maskOption="{ mask: '#######' }" single-line />
-                              </td>
-                              <td>
-                                <VCheckBoxWithValidation v-model="row.insr_retr_yn" name="insr_retr_yn" label="" class="d-inline-block" density="compact" />
-                              </td>
-                              <td>
-                                <VTextFieldWithValidation v-model="row.insr_retr_dt" name="insr_retr_dt" label="" type="date" color="primary" density="compact" variant="outlined" single-line />
-                              </td>
-                              <td>
-                                <div class="d-flex align-center">
-                                  <VTextFieldWithValidation v-model="row.insr_st_dt" name="insr_st_dt" label="" type="date" color="primary" density="compact" variant="outlined" single-line /><span class="mx-1">~</span
-                                  ><VTextFieldWithValidation v-model="row.insr_cncls_dt" name="insr_cncls_dt" label="" color="primary" density="compact" type="date" variant="outlined" single-line />
-                                </div>
-                              </td>
-                              <td>
-                                <VTextFieldWithValidation v-model="row.insr_sale_year" name="insr_sale_year" label="" density="compact" color="primary" variant="outlined" type="number" suffix="년" single-line />
-                              </td>
-                              <td>
-                                <VTextFieldWithValidation v-model="row.insr_sale_rt" name="insr_sale_rt" label="" density="compact" color="primary" variant="outlined" type="number" suffix="%" single-line />
-                              </td>
-                              <td>
-                                <VTextFieldWithValidation v-model="row.insr_amt" name="insr_amt" label="" density="compact" color="primary" variant="outlined" type="number" suffix="원" single-line />
-                              </td>
-                              <td>
-                                <v-btn variant="elevated" color="white" size="small" class="min-width-auto pa-0" @click="fnDelCBR(index)">
-                                  <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle"></vue-feather>
-                                </v-btn>
-                              </td>
-                            </tr>
+                          <tr v-for="(row, index) in insuranceDTO.cbr_data" >
+                            <td>{{ index + 1 }}</td>
+                            <td :style='(row.status_cd =="80")?"color:black;":"color:red"'>
+                              <VSelectWithValidation v-model="row.status_cd" name="status_cd" label="" color="primary" density="compact" :items="statusCdItems" variant="outlined" single-line></VSelectWithValidation>
+                            </td>
+                            <td :style='(row.status_cd =="80")?"color:black;":"color:red"'>
+                              <VTextFieldWithValidation v-model="row.cbr_nm" name="cbr_nm" label="" density="compact" color="primary" variant="outlined" single-line />
+                            </td>
+                            <td>
+                              <VTextFieldWithValidation v-model="row.cbr_brdt" name="cbr_brdt" label="" density="compact" color="primary" variant="outlined" :maskOption="{ mask: '######' }" single-line />
+                            </td>
+                            <td>
+                              <VTextFieldWithValidation v-model="row.cbr_regno" name="cbr_regno" label="" color="primary" density="compact" variant="outlined" :maskOption="{ mask: '#######' }" single-line />
+                            </td>
+                            <td>
+                              <VCheckBoxWithValidation v-model="row.insr_retr_yn" name="insr_retr_yn" label="" class="d-inline-block" density="compact" />
+                            </td>
+                            <td :style='(row.insr_retr_dt >= stockStartDt)?"color:blue;":"color:black"'>
+                              <VTextFieldWithValidation v-model="row.insr_retr_dt" name="insr_retr_dt" label="" type="date" color="primary" density="compact" variant="outlined" single-line />
+                            </td>
+                            <td :style='(row.insr_st_dt >= stockStartDt)?"color:blue;":"color:black"'>
+                              <div class="d-flex align-center">
+                                <VTextFieldWithValidation v-model="row.insr_st_dt" name="insr_st_dt" label="" type="date" color="primary" density="compact" variant="outlined" single-line /><span class="mx-1">~</span
+                              ><VTextFieldWithValidation v-model="row.insr_cncls_dt" name="insr_cncls_dt" label="" color="primary" density="compact" type="date" variant="outlined" single-line />
+                              </div>
+                            </td>
+                            <td>
+                              <VTextFieldWithValidation v-model="row.insr_sale_year" name="insr_sale_year" label="" density="compact" color="primary" variant="outlined" type="number" suffix="년" single-line />
+                            </td>
+                            <td>
+                              <VTextFieldWithValidation v-model="row.insr_sale_rt" name="insr_sale_rt" label="" density="compact" color="primary" variant="outlined" type="number" suffix="%" single-line />
+                            </td>
+                            <td>
+                              <VTextFieldWithValidation v-model="row.insr_amt" name="insr_amt" label="" density="compact" color="primary" variant="outlined" type="number" suffix="원" single-line />
+                            </td>
+                            <td>
+                              <v-btn variant="elevated" color="white" size="small" class="min-width-auto pa-0" @click="fnDelCBR(index)">
+                                <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle"></vue-feather>
+                              </v-btn>
+                            </td>
+                          </tr>
                           </tbody>
                         </v-table>
                       </v-card-text>
@@ -890,28 +890,28 @@
                             <col style="width: 33.3333%" />
                           </colgroup>
                           <thead>
-                            <tr>
-                              <th class="text-center">ERP기간</th>
-                              <th class="text-center">ERP보험료</th>
-                              <th class="text-center">ERP납입일</th>
-                            </tr>
+                          <tr>
+                            <th class="text-center">ERP기간</th>
+                            <th class="text-center">ERP보험료</th>
+                            <th class="text-center">ERP납입일</th>
+                          </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>
-                                <div class="d-flex justify-space-between align-center">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.erp_st_dt" name="erp_st_dt" label="ERP기간 시작일자" type="date" single-line variant="outlined" density="compact" />
-                                  <span class="mx-1">~</span>
-                                  <VTextFieldWithValidation v-model="insuranceDTO.erp_cncls_dt" name="erp_cncls_dt" label="ERP기간 종료일자" type="date" single-line variant="outlined" density="compact" />
-                                </div>
-                              </td>
-                              <td>
-                                <VTextFieldWithValidation v-model="insuranceDTO.erp_amt" name="erp_amt" placeholder="ERP보험료" type="number" suffix="원" single-line variant="outlined" density="compact" />
-                              </td>
-                              <td>
-                                <VTextFieldWithValidation v-model="insuranceDTO.erp_dt" name="erp_dt" label="ERP납입일" type="date" single-line variant="outlined" density="compact" />
-                              </td>
-                            </tr>
+                          <tr>
+                            <td>
+                              <div class="d-flex justify-space-between align-center">
+                                <VTextFieldWithValidation v-model="insuranceDTO.erp_st_dt" name="erp_st_dt" label="ERP기간 시작일자" type="date" single-line variant="outlined" density="compact" />
+                                <span class="mx-1">~</span>
+                                <VTextFieldWithValidation v-model="insuranceDTO.erp_cncls_dt" name="erp_cncls_dt" label="ERP기간 종료일자" type="date" single-line variant="outlined" density="compact" />
+                              </div>
+                            </td>
+                            <td>
+                              <VTextFieldWithValidation v-model="insuranceDTO.erp_amt" name="erp_amt" placeholder="ERP보험료" type="number" suffix="원" single-line variant="outlined" density="compact" />
+                            </td>
+                            <td>
+                              <VTextFieldWithValidation v-model="insuranceDTO.erp_dt" name="erp_dt" label="ERP납입일" type="date" single-line variant="outlined" density="compact" />
+                            </td>
+                          </tr>
                           </tbody>
                         </v-table>
                       </v-card-text>
@@ -1052,7 +1052,6 @@ import VTextFieldWithValidation from '@/components/VTextFieldWithValidation.vue'
 import VSelectWithValidation from '@/components/VSelectWithValidation.vue';
 import VCheckBoxWithValidation from '@/components/VCheckBoxWithValidation.vue';
 import apiADMIN from '@/api/api/A_ADMIN';
-import apiCOMMON from '@/api/api/A_COMMON';
 import {UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR, UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND} from "../../../util/excelupdn";
 import dayjs from "dayjs";
 
@@ -1098,6 +1097,7 @@ const isInsuranceFormDialog = ref(false);
 const isCertificatePrintFramDialog = ref(false);
 
 let InsuranceList = ref([]);
+let StockStartDtList = ref([]);
 const isInsrTableDialog = ref(false);
 const insuranceRateDTO = ref(new InsuranceRateDTO());
 const searchParams = ref(new ParamsDTO());
@@ -1109,6 +1109,8 @@ const dynamicComponentName2 = ref();
 
 let validUserCount = ref(0);
 const statusCdItemsData = ref(['']);
+
+let stockStartDt = ref('');
 function getTrxCdTitle(trxCd) {
   try {
     // trxCd에 해당하는 title을 찾아 반환합니다.
@@ -1161,6 +1163,18 @@ async function fnSearchDtl(insurance_uuid: string) {
     insuranceDTO.value = new InsuranceDTO();
 
     Object.assign(insuranceDTO.value, resultData.data[0]);
+    console.log('insuranceDTO.value.cbr_data : ',insuranceDTO.value.cbr_data)
+
+    insuranceDTO.value.cbr_data.sort(function(a, b) {
+      if(a.status_cd=='90') {
+        return 1
+      }else if(b.status_cd=='90'){
+        return -1
+      }else{
+        return b.status_cd-a.status_cd
+      }
+    })
+    console.log("insuranceDTO sort ", insuranceDTO.value.cbr_data)
 
     //메모 데이타 있을 경우 panel 확장, 2023-11-08 By Moon
     if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '' && panel.value.length < 8 ) panel.value.push("panel-9")
@@ -1236,7 +1250,7 @@ function fnCalTrx() {
     if (insuranceDTO.value.cbr_data != undefined && insuranceDTO.value.user_cd !== 'IND') {
       for (var idx in insuranceDTO.value.cbr_data) {
         // 기본담보 보험료(할인할증적용)
-       //console.log()
+        //console.log()
         if(insuranceDTO.value.cbr_data[idx].status_cd=='10')
           insuranceDTO.value.cbr_data[idx].status_cd='80'
       }
@@ -1347,7 +1361,7 @@ const onCalculateInsurance = async () => {
       for (var idx in insuranceDTO.value.cbr_data) {
         // 기본담보 보험료(할인할증적용)
         //if(insuranceDTO.value.cbr_data[idx].status_cd=='80')
-          totAmt += Number(insuranceDTO.value.cbr_data[idx].insr_amt, 0);
+        totAmt += Number(insuranceDTO.value.cbr_data[idx].insr_amt, 0);
       }
 
       insuranceDTO.value.insr_amt = totAmt;
@@ -1360,10 +1374,10 @@ const onCalculateInsurance = async () => {
 };
 
 watch(
-  () => route.params.business_cd,
-  newBusinessCd => {
-    initPage();
-  }
+    () => route.params.business_cd,
+    newBusinessCd => {
+      initPage();
+    }
 );
 
 function changeTotUnpaidAmt(){
@@ -1387,6 +1401,7 @@ function changeTotUnpaidAmt(){
  */
 async function initPage() {
   InsuranceList.value = [];
+  StockStartDtList.value = [];
   insuranceDTO.value = new InsuranceDTO();
   const businessCd = route.params.business_cd;
 
@@ -1402,6 +1417,13 @@ async function initPage() {
   insrYearCdItems.value.unshift({ title: '전체', value: '%' });
 
   statusCdItemsData.value = await CommonCode.getCodeList('COM030');
+  StockStartDtList.value = await apiADMIN.getStockStartDtALL();
+
+  StockStartDtList.value.data.forEach(item=>{
+    if(item.business_cd == businessCd) stockStartDt = item.start_dt
+  })
+
+  console.log("stockStartDt>>", stockStartDt)
 
   for (let year = new Date().getFullYear(); year >= 2022; year--) {
     insrYearCdItems.value.push({ title: year.toString(), value: year.toString(), rmk: null });

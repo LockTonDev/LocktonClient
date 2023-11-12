@@ -2,6 +2,7 @@ import apiCOMMON from '@/api/api/A_COMMON';
 
 export class CommonCode {
   private static CODE_CACHE_KEY = '_COMMON_CODES';
+  private static STOCK_START_DT = 'STOCK_START_DT';
 
   static async fetchCodeAll(): Promise<void> {
     try {

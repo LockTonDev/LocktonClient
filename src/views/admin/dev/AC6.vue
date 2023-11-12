@@ -7,23 +7,23 @@
   </div>
   <v-row>
     <v-col cols="12">
-			<ul class="v-search-box">								
-				<!-- <li>
-				<span>사이트 구분<sup class="text-error ml-1">*</sup></span>
-				<v-select v-model="searchParams.data['business_cd']" :items="businessCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
-				</li> -->
-				<li>
-				<span>처리상태<sup class="text-error ml-1">*</sup></span>
-					<v-select v-model="searchParams.data['proc_cd']" :items="procCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
-				</li>					
-				<li>
-				<span>피보험자<sup class="text-error ml-1">*</sup></span>
-				<v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" placeholder="피보험자" @keyup.enter="fnSearch()"/>
-				</li>							
-				<li class="ml-auto">
-				<v-btn variant="flat" @click="fnSearch()">조회</v-btn>
-				</li>	
-			</ul> 
+      <ul class="v-search-box">
+        <!-- <li>
+        <span>사이트 구분<sup class="text-error ml-1">*</sup></span>
+        <v-select v-model="searchParams.data['business_cd']" :items="businessCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
+        </li> -->
+        <li>
+          <span>처리상태<sup class="text-error ml-1">*</sup></span>
+          <v-select v-model="searchParams.data['proc_cd']" :items="procCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
+        </li>
+        <li>
+          <span>피보험자<sup class="text-error ml-1">*</sup></span>
+          <v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" placeholder="피보험자" @keyup.enter="fnSearch()"/>
+        </li>
+        <li class="ml-auto">
+          <v-btn variant="flat" @click="fnSearch()">조회</v-btn>
+        </li>
+      </ul>
     </v-col>
     <v-col cols="12">
       <v-card>
@@ -36,57 +36,59 @@
             <caption class="d-none">조회 결과</caption>
             <colgroup>
               <col style="width:80px"/>
-              <col style="width:80px"/>
               <col style="width:auto"/>
               <col style="width:auto"/>
               <col style="width:auto"/>
               <col style="width:auto"/>
+              <col style="width:auto"/>
+              <col style="width:140px"/>
+              <col style="width:90px"/>
               <col style="width:110px"/>
-              <col style="width:110px"/>
-              <col style="width:110px"/>
-              <col style="width:80px"/>
+              <col style="width:70px"/>
             </colgroup>
             <thead>
-              <tr>
-                <th>번호</th>
-                <th>보험년도</th>
-                <th>피보험자</th>
-                <th>증권번호</th>
-                <th>변경구분</th>
-                <th>담당자명</th>
-                <th>신청일자</th>
-                <th>변경개시일자</th>
-                <th>처리일자</th>
-                <th>처리상태</th>
-              </tr>
+            <tr>
+              <th>번호</th>
+              <th>신청일자</th>
+              <th>보험년도</th>
+              <th>피보험자</th>
+              <!--                <th>증권번호</th>-->
+              <th>변경구분</th>
+              <th>변경개시일자</th>
+              <th>연락처</th>
+              <th>담당자명</th>
+              <th>처리일자</th>
+              <th>처리상태</th>
+            </tr>
             </thead>
             <tbody v-if="dataList?.length" class="">
-              <tr v-for="(row, index) in dataList" 
-                  :key="index"
-                  @click="selectedRow = row" 
-                  @click.prevent="onPageView(row)"
-                  :class="{ 'selected': selectedRow === row, 'cursor-pointer': true  }"
-              >
-                <td>{{ dataList?.length - index }}</td>
-                <td>{{ row.insr_year }}</td>
-                <td>{{ row.user_nm }}</td>
-                <td>{{ row.insr_insurance_no }}</td>
-                <td>{{ row.apply_nm }}</td>
-                <td>{{ row.nm }}</td>
-                <td>{{ row.apply_dt }}</td>
-                <td>{{ row.apply_posted_dt }}</td>
-                <td>{{ row.proc_dt }}</td>
-                <td>{{ row.proc_nm }}</td>
-              </tr>      
+            <tr v-for="(row, index) in dataList"
+                :key="index"
+                @click="selectedRow = row"
+                @click.prevent="onPageView(row)"
+                :class="{ 'selected': selectedRow === row, 'cursor-pointer': true  }"
+            >
+              <td>{{ dataList?.length - index }}</td>
+              <td>{{ row.apply_dt }}</td>
+              <td>{{ row.insr_year }}</td>
+              <td>{{ row.user_nm }}</td>
+              <!--                <td>{{ row.insr_insurance_no }}</td>-->
+              <td>{{ row.apply_nm }}</td>
+              <td>{{ row.apply_posted_dt }}</td>
+              <td>{{ row.tel }}</td>
+              <td>{{ row.nm }}</td>
+              <td>{{ row.proc_dt }}</td>
+              <td>{{ row.proc_nm }}</td>
+            </tr>
             </tbody>
             <tbody v-else>
-              <tr>
-                  <td colspan="10" class="text-center align-middle">조회할 내용이 없습니다.</td>
-              </tr>
+            <tr>
+              <td colspan="10" class="text-center align-middle">조회할 내용이 없습니다.</td>
+            </tr>
             </tbody>
           </v-table>
         </v-card-text>
-      </v-card> 
+      </v-card>
     </v-col>
     <v-col cols="12">
       <v-card>
@@ -104,8 +106,8 @@
                   <div class="data-col">{{ dT0040ADTO.insurance_no }}</div>
                 </v-col>
                 <v-col cols="6">
-                  <div class="head-col">증권번호</div>
-                  <div class="data-col">{{ dT0040ADTO.insurance_no }}</div>
+                  <div class="head-col">피보험자</div>
+                  <div class="data-col">{{ dT0040ADTO.user_nm }}</div>
                 </v-col>
                 <v-col cols="6">
                   <div class="head-col">변경구분</div>
@@ -134,7 +136,7 @@
                 </v-col>
                 <v-col cols="12" >
                   <div class="head-col">변경상세</div>
-                  <div class="data-col"><v-textarea v-model="dT0040ADTO.apply_content" variant="outlined" counter class="h-200 my-1px" rows="20" no-resize readonly hide-details></v-textarea></div>         
+                  <div class="data-col"><v-textarea v-model="dT0040ADTO.apply_content" variant="outlined" counter class="h-200 my-1px" rows="20" no-resize readonly hide-details></v-textarea></div>
                 </v-col>
               </v-row>
             </v-col>
@@ -146,11 +148,11 @@
                 </v-col>
                 <v-col cols="6">
                   <div class="head-col">처리상태</div>
-                  <div class="data-col"><VSelectWithValidation v-model="dT0040ADTO.proc_cd" name="proc_cd" label="선택하세요." :items="procCdItemsData"  single-line density="compact"></VSelectWithValidation></div>                
+                  <div class="data-col"><VSelectWithValidation v-model="dT0040ADTO.proc_cd" name="proc_cd" label="선택하세요." :items="procCdItemsData"  single-line density="compact"></VSelectWithValidation></div>
                 </v-col>
                 <v-col cols="12">
                   <div class="head-col">처리내용</div>
-                  <div class="data-col"><v-textarea v-model="dT0040ADTO.proc_content" variant="outlined" counter class="h-200 my-1px" rows="20" no-resize hide-details></v-textarea></div>         
+                  <div class="data-col"><v-textarea v-model="dT0040ADTO.proc_content" variant="outlined" counter class="h-200 my-1px" rows="20" no-resize hide-details></v-textarea></div>
                 </v-col>
               </v-row>
             </v-col>
@@ -204,36 +206,36 @@ const selectedRow = ref();
 const dT0040ADTO = ref(new D_T0040ADTO());
 let dataList = ref([]);
 
-	const page = ref({
-      title: "계약변경",
-    });
-	const breadcrumbs = ref([
-		{
-			text: "계약관리",
-			disabled: false,
-			href: "/",
-		},
-		{
-			text: "계약변경",
-			disabled: true,
-			href: "/",
-		},
-  ]);
-  
-  const indItems = [
-        { title: '조건변경', value: 'I10' },
-        { title: '법인전환', value: 'I20' },
-        { title: '해지(폐업/휴업)', value: 'I30' },
-        { title: '기타', value: 'I90' }
-  ];
+const page = ref({
+  title: "계약변경",
+});
+const breadcrumbs = ref([
+  {
+    text: "계약관리",
+    disabled: false,
+    href: "/",
+  },
+  {
+    text: "계약변경",
+    disabled: true,
+    href: "/",
+  },
+]);
 
-  const corItems = [
-        { title: '조건변경', value: 'C10' },
-        { title: '구성원 변동(추가/해지)', value: 'C20' },
-        { title: '타법인전환', value: 'C30' },
-        { title: '개인전환', value: 'C40' },
-        { title: '기타', value: 'C90' }
-  ];        
+const indItems = [
+  { title: '조건변경', value: 'I10' },
+  { title: '법인전환', value: 'I20' },
+  { title: '해지(폐업/휴업)', value: 'I30' },
+  { title: '기타', value: 'I90' }
+];
+
+const corItems = [
+  { title: '조건변경', value: 'C10' },
+  { title: '구성원 변동(추가/해지)', value: 'C20' },
+  { title: '타법인전환', value: 'C30' },
+  { title: '개인전환', value: 'C40' },
+  { title: '기타', value: 'C90' }
+];
 
 
 
@@ -244,14 +246,14 @@ const onPageView = (row) => {
 async function fnSave(mode:string) {
   let isRun = false;
 
-  
+
   // 삭제처리
   await messageBoxDTO.value.setConfirm('저장', '저장 하시겠습니까?', null, (result, params) => {
-      isRun = result;
+    isRun = result;
   });
 
   if (isRun) {
-    
+
     const resultData = await apiADMIN.setApplyInsurance(dT0040ADTO.value);
     console.log(resultData);
 
@@ -265,6 +267,7 @@ async function fnSave(mode:string) {
 };
 
 async function fnSearch() {
+  console.log('searchParams.value.data',searchParams.value.data)
   const resultData = await apiADMIN.getApplyInsurance(searchParams.value.data);
   dataList.value = resultData.data;
   if (dataList.value.length == 0) {
@@ -274,14 +277,14 @@ async function fnSearch() {
     selectedRow.value = dataList.value[0];
   }
   onPageView(selectedRow.value);
-  
+
 }
 
 watch(
-  () => route.params.business_cd,
-  (newBusinessCd) => {
-    initPage();
-  }
+    () => route.params.business_cd,
+    (newBusinessCd) => {
+      initPage();
+    }
 );
 
 
@@ -311,8 +314,8 @@ async function initPage() {
 /**
  * 페이지 로딩이 완료되면 실행하는 로직
  */
-onMounted(async () => {    
-  
+onMounted(async () => {
+
   // 로딩시 초기 데이터 셋팅
   initPage();
 
