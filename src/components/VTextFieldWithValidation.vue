@@ -34,7 +34,11 @@
     },
     maskOption:{
       type: Object
-    }
+    },
+    suffix:{
+      type: String,
+      default: '',
+    },
  
   });
   
@@ -48,8 +52,7 @@
     min = props.min;
     max = props.max;
   }
-
-  </script>
+ </script>
   
   <template>
     <v-text-field
@@ -62,7 +65,22 @@
       v-if="maskOption"
       v-maska:[props.maskOption]
     />
-
+    <!--
+    <v-date-picker v-else-if="type == 'date'" v-model="value" no-title @blur="handleBlur">
+    </v-date-picker>
+--> <v-text-field
+      v-else-if="suffix ==''"
+      v-model="value"
+      @blur="handleBlur"
+      :label="label"
+      :error-messages="errors"
+      :type="type"
+      :min="min"
+      :max="max"
+      :maxlength="maxlength"
+      variant="outlined"
+      hide-details="auto"
+  />
     <v-text-field
       v-else
       v-model="value"

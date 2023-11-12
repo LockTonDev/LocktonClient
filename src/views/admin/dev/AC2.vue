@@ -1004,6 +1004,7 @@
       <!-- 계약 상세 조회 종료 -->
     </v-col>
   </v-row>
+  <p style="height:20px;"></p>
   <!--LAYER : 주소검색 -->
   <v-dialog persistent v-model="isDaumPostDialog" width="600">
     <v-card>
@@ -1161,6 +1162,7 @@ async function fnSearchDtl(insurance_uuid: string) {
     insuranceDTO.value = new InsuranceDTO();
 
     Object.assign(insuranceDTO.value, resultData.data[0]);
+<<<<<<< HEAD
     console.log('insuranceDTO.value.cbr_data : ',insuranceDTO.value.cbr_data)
 
     insuranceDTO.value.cbr_data.sort(function(a, b) {
@@ -1176,13 +1178,22 @@ async function fnSearchDtl(insurance_uuid: string) {
       item.isRed = item.status_cd=='80'? 'black' : 'red'
     })
     console.log("insuranceDTO sort ", insuranceDTO.value.cbr_data)
+=======
+
+    //메모 데이타 있을 경우 panel 확장, 2023-11-08 By Moon
+    if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '' && panel.value.length < 8 ) panel.value.push("panel-9")
+    else if((insuranceDTO.value.rmk == null || insuranceDTO.value.rmk == '') && panel.value.length > 7 ) panel.value.pop();
+>>>>>>> 5a0c35a2fb9e1aebe281915764e6a4c7bbbcd15b
 
     const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
 
     validUserCount.value = filter1.length;
+<<<<<<< HEAD
     console.log('insuranceDTO.value length : ',filter1);
 
 
+=======
+>>>>>>> 5a0c35a2fb9e1aebe281915764e6a4c7bbbcd15b
     fnSetInsuranceRateCombo();
     dynamicComponentName1.value = `V_T${insuranceDTO.value.business_cd}0030P20`;
     dynamicComponentName2.value = `V_T${insuranceDTO.value.business_cd}0030P30`;
@@ -1360,7 +1371,7 @@ const onCalculateInsurance = async () => {
     if (insuranceDTO.value.cbr_data != undefined && insuranceDTO.value.user_cd !== 'IND') {
       for (var idx in insuranceDTO.value.cbr_data) {
         // 기본담보 보험료(할인할증적용)
-        if(insuranceDTO.value.cbr_data[idx].status_cd=='80')
+        //if(insuranceDTO.value.cbr_data[idx].status_cd=='80')
           totAmt += Number(insuranceDTO.value.cbr_data[idx].insr_amt, 0);
       }
 
@@ -1524,5 +1535,5 @@ onMounted(async () => {
  */
 
 // 조회결과 아코디언
-const panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-7', 'panel-8', 'panel-9']);
+const panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-7', 'panel-8']);
 </script>

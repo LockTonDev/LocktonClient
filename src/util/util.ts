@@ -130,3 +130,20 @@ export const genYearItems = (str: string): any => {
 
   return insrYearCdItems;
 };
+
+export const dateCompareWithNow = (endDate : string) =>{
+  let today = new Date();
+  let gap = new Date(endDate +" 23:59:59").getTime() - today;
+/*
+  let diffDay = String(Math.floor(gap / (1000 * 60 * 60 * 24)));
+  let diffHour = String(Math.floor((gap / (1000 * 60 * 60)) % 24));
+  let diffMin = String(Math.floor((gap / (1000 * 60)) % 60));
+  let diffSec = String(Math.floor((gap / 1000) % 60));
+
+  diffDay = diffDay >= 10 ? diffDay : "0" + diffDay;
+  diffHour = diffHour >= 10 ? diffHour : "0" + diffHour;
+  diffMin = diffMin >= 10 ? diffMin : "0" + diffMin;
+  diffSec = diffSec >= 10 ? diffSec : "0" + diffSec;
+*/
+  return (gap >= 0) ?true:false
+}

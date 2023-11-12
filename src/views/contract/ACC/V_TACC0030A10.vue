@@ -53,12 +53,12 @@
             <td class="text-center text-body-1">{{ row.status_cd !== '91' ? row.insurance_no : '' }}</td>
             <td class="text-center text-body-1">{{ row.user_nm }}</td>
             <td class="text-center text-body-1">
-              <div v-if="row.insr_year === '2022'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
-              <div v-if="row.insr_year !== '2022'" class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
+              <div v-if="row.insr_year !== currentYear.toString()">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
+              <div v-if="row.insr_year === currentYear.toString()" class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
             <td class="text-center text-body-1">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">
-              <v-icon v-if="row.insr_year !== '2022'"
+              <v-icon v-if="row.insr_year === currentYear.toString()"
                 small
                 class="text-primary cursor-pointer"
                 title="신청서 출력"
@@ -76,7 +76,7 @@
                 >mdi-printer</v-icon
                 >
               </td>
-            <td class="text-center text-body-1">{{row.status_nm}}
+            <td class="text-center text-body-1"><span v-if="dateCompareWithNow(row.insr_cncls_dt)">{{row.status_nm}}</span><span v-else class="color-gray font-italic">기간종료</span>
             </td>
           </tr>
         </tbody>
@@ -129,6 +129,7 @@
   import router from "@/router";
   import { storeToRefs } from 'pinia';
   import { useAuthStore } from '@/stores';
+  import {dateCompareWithNow} from '../../../util/util';
 
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
@@ -139,7 +140,10 @@
   const isInsuranceFormDialog = ref(false);
   const insuranceUUID = ref("");
   const newInsrYN = ref("");
-  const renewalInsrUUID= ref(""); 
+  const renewalInsrUUID= ref("");
+
+  const curDate = new Date()
+  const currentYear = curDate.getFullYear();
 
   // 초기정보 설정
   const messageBoxDTO = ref(new MessageBoxDTO());

@@ -274,7 +274,7 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
   /**
    * ID/비밀번호 찾기
    */
-  const toFind = () => { 
+  const toFind = () => {
     router.push('/user/find/'+ businessInfo.value.value);
   }
 

@@ -381,8 +381,7 @@ async function isVerifyUserIND() {
       messageBoxDTO.value.setWarning("입력확인", "휴대폰번호는 필수입력값 입니다.");
       return false;
     }
-
-    const params = { user_nm: userDTO.value.user_nm, user_birth: userDTO.value.user_birth, user_hpno: userDTO.value.user_hpno};
+    const params = { business_cd : businessCd, user_cd:userDTO.value.user_cd, user_nm: userDTO.value.user_nm, user_birth: userDTO.value.user_birth, user_hpno: userDTO.value.user_hpno};
     const userData = await apiUser.isVerifyUser(params);
 
     if (userData.success) {
