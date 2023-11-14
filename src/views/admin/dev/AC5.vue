@@ -367,7 +367,12 @@ async function fnSave() {
     isRun = result;
   });
   if (isRun) {
-    const resultData = await apiADMIN.setTAX_TRX([insuranceDTO.value]);
+    let resultData;
+    if(route.params.business_cd=='ADV') {
+      resultData = await apiADMIN.setADV_TRX([insuranceDTO.value]);
+    } else {
+      resultData = await apiADMIN.setTAX_TRX([insuranceDTO.value]);
+    }
 
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', '저장 되었습니다. (자동 재조회)');
@@ -410,7 +415,12 @@ function fnAdd() {
 
 async function fnSearch() {
   InsuranceList.value = [];
-  const resultData = await apiADMIN.getTAX_TRX(searchParams.value.data);
+  let resultData;
+  if(route.params.business_cd=='ADV') {
+    resultData = await apiADMIN.getADV_TRX(searchParams.value.data);
+  } else {
+    resultData = await apiADMIN.getTAX_TRX(searchParams.value.data);
+  }
   InsuranceList.value = resultData.data;
   if (InsuranceList.value.length == 0) {
     isNoData.value = true;
@@ -424,8 +434,14 @@ const fileInputCOR = ref(null);
 
 async function handleFileUploadIND(event) {
   try {
-    const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND(event);
-    const resultData = await apiADMIN.setTAX_TRX(excelList);
+    let resultData;
+    if(route.params.business_cd=='ADV') {
+      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND(event);
+      resultData = await apiADMIN.setADV_TRX(excelList);
+    } else {
+      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND(event);
+      resultData = await apiADMIN.setTAX_TRX(excelList);
+    }
 
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
@@ -441,9 +457,16 @@ async function handleFileUploadIND(event) {
 
 async function handleFileUploadCOR(event) {
   try {
-    const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR(event);
-    console.log(excelList);
-    const resultData = await apiADMIN.setTAX_TRX(excelList);
+    let resultData;
+    if(route.params.business_cd=='ADV') {
+      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR(event);
+      console.log(excelList);
+      resultData = await apiADMIN.setADV_TRX(excelList);
+    } else {
+      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR(event);
+      console.log(excelList);
+      resultData = await apiADMIN.setTAX_TRX(excelList);
+    }
 
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
@@ -475,7 +498,13 @@ async function fnExcelDownload() {
 
   try {
     if (isRun) {
-      const resultData = await apiADMIN.getTAXExcel(searchParams.value.data);
+      let resultData;
+      if(route.params.business_cd=='ADV') {
+        resultData = await apiADMIN.getADVExcel(searchParams.value.data);
+      } else {
+        resultData = await apiADMIN.getTAXExcel(searchParams.value.data);
+      }
+      console.log(resultData)
       searchParams.value.data['excel_filenm'] = fileNm;
 
       if (resultData.data.length == 0) {

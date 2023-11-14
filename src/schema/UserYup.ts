@@ -16,6 +16,10 @@ const 회원가입_공통_아이디_법인 = yup.object({
   user_id: yup.string().matches(/^[0-9]{3}-[0-9]{2}-[0-9]{5}$/, '아이디(사업자 번호)를 정확히 입력하세요.')
 });
 
+const 회원가입_공통_아이디_합동 = yup.object({
+  user_id: yup.string().matches(/^[0-9]{3}-[0-9]{2}-[0-9]{5}$/, '아이디(사업자 번호)를 정확히 입력하세요.')
+});
+
 const 회원가입_공통_비밀번호 = yup.object({
   user_pwd: yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/, '비밀번호는 8 ~ 20자 이하 영어, 숫자, 특수문자(@$!%*#?&) 조합으로 입력하세요.'),
   user_pwd_chk: yup
@@ -66,6 +70,13 @@ const 회원가입_공통_법인 = yup.object({
   corp_bnno: yup.string().matches(/^[0-9]{6}-[0-9]{7}$/, '법인번호를 정확히 입력하세요.')
 });
 
+const 회원가입_공통_합동 = yup.object({
+  user_id: yup.string().required('아이디를 입력해주세요.'),
+  user_nm: yup.string().required('법인명을 입력해주세요.'),
+  corp_ceo_nm: yup.string().required('대표자명을 입력해주세요'),
+  corp_bnno: yup.string().matches(/^[0-9]{6}-[0-9]{7}$/, '법인번호를 정확히 입력하세요.')
+});
+
 
 
 const 회원수정_공통_사무소정보 = yup.object({
@@ -100,6 +111,26 @@ const 회원수정_세무사_법인 = yup.object({
  */
 
 
+/** =======================================================================
+ *    회원가입 변호사
+ *  ========================================================================
+ */
+const 회원가입_변호사_개인 = yup.object({
+  corp_region_cd: yup.string().required('소속 지방회를 입력해주세요.')
+});
+
+const 회원가입_변호사_합동 = yup.object({
+  corp_region_cd: yup.string().required('소속 지방회를 입력해주세요.')
+});
+
+const 회원수정_변호사_개인 = yup.object({
+  corp_region_cd: yup.string().required('소속 지방회를 입력해주세요.')
+});
+
+const 회원수정_변호사_합동 = yup.object({
+  corp_region_cd: yup.string().required('소속 지방회를 입력해주세요.')
+});
+
 const UserUpdateYup = yup.object({});
 
 export const UserYup = {
@@ -117,6 +148,10 @@ export const UserYup = {
   VALID_USER_ID_COR: yup.object().shape({
     ...회원가입_공통_아이디_법인.fields
   }),
+  VALID_USER_ID_JNT: yup.object().shape({
+    ...회원가입_공통_아이디_합동.fields
+  }),
+
 
   VALID_EMAIL: yup.object().shape({
     ...회원가입_공통_이메일.fields
@@ -173,6 +208,40 @@ export const UserYup = {
   }),
 
   MODIFY_ACC_IND: yup.object().shape({
+    ...회원수정_공통_사무소정보.fields,
+    ...회원가입_공통_이메일.fields
+  }),
+
+  /** ============================================================================
+   *  사이트 : 변호사
+   *  ============================================================================
+   */
+  INSERT_ADV_IND_STEP1: yup.object().shape({
+    ...회원가입_공통_약관동의.fields
+  }),
+  INSERT_ADV_IND_STEP2: yup.object().shape({
+    ...회원가입_공통_사무소정보.fields,
+    ...회원가입_공통_이메일.fields,
+    ...회원가입_공통_비밀번호.fields,
+    ...회원가입_공통_개인.fields
+  }),
+
+  MODIFY_ADV_IND: yup.object().shape({
+    ...회원수정_공통_사무소정보.fields,
+    ...회원가입_공통_이메일.fields
+  }),
+
+  INSERT_ADV_JNT_STEP1: yup.object().shape({
+    ...회원가입_공통_약관동의.fields
+  }),
+  INSERT_ADV_JNT_STEP2: yup.object().shape({
+    ...회원가입_공통_사무소정보.fields,
+    ...회원가입_공통_이메일.fields,
+    ...회원가입_공통_비밀번호.fields,
+    ...회원가입_공통_합동.fields
+  }),
+
+  MODIFY_ADV_JNT: yup.object().shape({
     ...회원수정_공통_사무소정보.fields,
     ...회원가입_공통_이메일.fields
   })

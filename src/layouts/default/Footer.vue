@@ -9,6 +9,7 @@
       <v-btn v-if="businessCd ==='CAA'" color="footerbackground" size="" rounded="0" href="http://www.krcaa.or.kr" target="_blank">한국관세사회</v-btn>
       <v-btn v-if="businessCd ==='ACC'" color="footerbackground" size="" rounded="0" href="http://www.cpas.or.kr" target="_blank">한국공인회계사 감사반연합회</v-btn>
       <v-btn v-if="businessCd ==='TAX'" color="footerbackground" size="" rounded="0" href="https://www.kacpta.or.kr" target="_blank">한국세무사회</v-btn>
+      <v-btn v-if="businessCd ==='ADV'" color="footerbackground" size="" rounded="0" href="https://www.koreanbar.or.kr/" target="_blank">대한변호사협회</v-btn>
     </v-row>
     <v-row class="footer-info w-100 ma-0 pt-10 pb-10">
       <v-col cols="2" class="pa-0">
@@ -20,7 +21,8 @@
         <p class="text-body-2 mb-2">록톤컴퍼니즈코리아손해보험중개(주)</p>
         <p class="text-body-2">대표자: 손방의</p>
         <p class="text-body-2">사업자등록번호 : 220-81-20652<span class="mx-2 text-10 vertical-align-top">|</span>통신판매신고번호 : 제2023-서울종로-0230호</p>
-        <p class="text-body-2">주소 : (04520) 서울시 중구 세종대로 136, 서울파이낸스센터 13층<span class="mx-2 text-10 vertical-align-top">|</span>대표전화 : 02-2011-0300</p>
+        <p class="text-body-2">주소 : (04520) 서울특별시 중구 세종대로 136, 13층 (태평로 1가, 파이낸스빌딩)</p>
+        <p class="text-body-2">대표전화 : 02-2011-0300</p>
       </v-col>
       <v-col cols="4" class="pa-0">
         <v-row>

@@ -349,7 +349,7 @@
                   <!-- 개인 종료 -->
                   
                   <!-- 법인 시작-->
-                  <v-row class="v-box pa-10"  v-if="userDTO.user_cd === 'COR'">
+                  <v-row class="v-box pa-10"  v-if="userDTO.user_cd === 'COR' || userDTO.user_cd === 'JNT'">
                     <v-col cols="12">
                       <v-row class="v-board-table">
                         <v-col cols="12" sm="12" class="v-col">

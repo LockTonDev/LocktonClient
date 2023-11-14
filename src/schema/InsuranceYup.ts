@@ -1,4 +1,5 @@
 import yup from '../config/yupConfig';
+import insurance from "../router/insurance";
 
 const 보험가입_공통가입정보 = yup.object({
   corp_telno1: yup.string().matches(/^\d{2,3}$/, '사무소 전화를 입력해주세요.'),
@@ -19,6 +20,18 @@ const 보험가입_공통보험계약 = yup.object({
   insr_pblc_brdn_rt: yup.string().required('공동보험을 선택해주세요.'),
   insr_clm_lt_amt: yup.string().required('보상한도를 선택해주세요.'),
   insr_psnl_brdn_amt: yup.string().required('자기부담금을 선택해주세요.')
+});
+
+const 보험가입_변호사개인보험계약 = yup.object({
+  insr_st_dt: yup.string().required('보험시작일자를 입력해주세요.'),
+  insr_cncls_dt: yup.string().required('보험시작일자를 입력해주세요.'),
+  insr_take_amt: yup.string().required('매출액을 입력해주세요.'),
+  insr_clm_lt_amt: yup.string().required('보상한도를 선택해주세요.'),
+  insr_psnl_brdn_amt: yup.string().required('자기부담금을 선택해주세요.')
+});
+
+const 보험가입_변호사특약보험계약 = yup.object({
+  spct_join_yn: yup.string().required('특약을 선택해주세요.')
 });
 
 const 보험가입_공통약관동의 = yup.object({
@@ -60,7 +73,10 @@ const 보험가입_가입정보_회계사_개인 = yup.object({
   corp_nm: yup.string().required('사무소명을 입력해주세요.')
 });
 
-
+const 보험가입_가입정보_변호사_개인 = yup.object({
+  corp_nm: yup.string().required('사무소명을 입력해주세요.'),
+  corp_region_cd: yup.string().required('소속 지방회를 입력해주세요.')
+});
 
 const 보험변경_신청정보 = yup.object({
   apply_cd: yup.string().required('변경구분을 입력해주세요.'),
@@ -120,6 +136,38 @@ export const InsuranceYup = {
     ...보험가입_공통보험계약.fields
   }),
   ACC_IND_TAB3: yup.object().shape({
+    ...보험가입_공통약관동의.fields
+  }),
+
+  /** ============================================================================
+   *  사이트 : 변호사
+   *  ============================================================================
+   */
+  ADV_IND_TAB1: yup.object().shape({
+    ...보험가입_공통가입정보.fields,
+    ...보험가입_가입정보_변호사_개인.fields
+  }),
+  ADV_IND_TAB2: yup.object().shape({
+    ...보험가입_변호사개인보험계약.fields
+  }),
+  ADV_IND_TAB3: yup.object().shape({
+    ...보험가입_변호사특약보험계약.fields
+  }),
+  ADV_IND_TAB4: yup.object().shape({
+    ...보험가입_공통약관동의.fields
+  }),
+
+  ADV_JNT_TAB1: yup.object().shape({
+    ...보험가입_공통가입정보.fields,
+    ...보험가입_가입정보_변호사_개인.fields
+  }),
+  ADV_JNT_TAB2: yup.object().shape({
+    ...보험가입_변호사개인보험계약.fields
+  }),
+  ADV_JNT_TAB3: yup.object().shape({
+    ...보험가입_변호사특약보험계약.fields
+  }),
+  ADV_JNT_TAB4: yup.object().shape({
     ...보험가입_공통약관동의.fields
   })
 };

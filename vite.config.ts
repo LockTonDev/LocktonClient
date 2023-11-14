@@ -5,7 +5,7 @@ import vuetify from 'vite-plugin-vuetify';
 import cors from 'cors';
 
 // import { fs } from 'fs';
-// const domain = 'localhost'; // add it
+const domain = 'localhost'; // add it
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -25,6 +25,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
+        //target: 'http://13.209.15.41:3000',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, ''),
         secure: false,
@@ -36,7 +37,12 @@ export default defineConfig({
       'Cross-Origin-Embedder-Policy': 'unsafe-none',
       'Cross-Origin-Resource-Policy': 'same-site',
       'Access-Control-Allow-Origin': '*'
-    }
+    },
+    host: domain,
+    hmr: {
+      host: domain
+    },
+    cors : true,
   },
 
   // server: {

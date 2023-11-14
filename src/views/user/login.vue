@@ -70,6 +70,7 @@
                             <v-tabs v-model="userCd" fixed-tabs color="primary">
                               <v-tab value="IND">개인 회원</v-tab>
                               <v-tab value="two" v-if="businessInfo.value === 'CAA'">법인/합동사무소 회원</v-tab>
+                              <v-tab value="JNT" v-if="businessInfo.value === 'ADV'">합동사무소 회원</v-tab>
                               <v-tab value="COR" v-if="businessInfo.value === 'TAX'">법인 회원</v-tab>
                             </v-tabs>
                             <v-divider class="mt-0"/>
@@ -95,7 +96,19 @@
                                     :maskOption="{ mask: '###-##-#####' }"
                                   />
                                   <VTextFieldWithValidation name="COR_user_pwd" label="비밀번호" type="password" maxlength="16" class="mt-4"/>
-                                  
+                              </v-window-item>
+                              <v-window-item value="JNT">
+                                <div class="my-4 login-subtext">
+                                  <p v-if="businessInfo.value === 'ADV'">합동사무소 회원은 하나의 아이디만 부여되며 본점, 지점별로 중복가입 되지 않습니다.</p>
+                                </div>
+                                <VTextFieldWithValidation
+                                    name="COR_user_id"
+                                    label="사업자번호"
+                                    density="comfortable"
+                                    single-line
+                                    :maskOption="{ mask: '###-##-#####' }"
+                                />
+                                <VTextFieldWithValidation name="COR_user_pwd" label="비밀번호" type="password" maxlength="16" class="mt-4"/>
                               </v-window-item>
                             </v-window>
                           </v-card-text>
@@ -158,7 +171,7 @@
                 <v-spacer />
                 아이디, 비밀번호를 발급 받고 로그인 한 후 회원가입 하시기 바랍니다.
                 <v-spacer />
-                ( Fax 0503-8379-2008 ) 
+                ( Fax 0503-8379-2008 )
               </v-card-text>
               <v-card-actions class="justify-end">
                 <v-btn text @click="isDialogSignup = false"> 닫기 </v-btn>
@@ -264,7 +277,7 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
   /**
    * 회원가입
    */
-  const toSignup = () => { 
+  const toSignup = () => {
     if(userCd.value=='IND') {
       router.push('/user/register/'+ businessInfo.value.value);
     }else {
@@ -287,12 +300,20 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
    */
 	async function onSubmit(values:any) {
     loginErrorMessage.value = '';
-
+    let user_id = ''
+    let user_pwd = ''
+    if (userCd.value === 'JNT' || userCd.value == 'COR'){
+      user_id = 'COR_user_id'
+      user_pwd = 'COR_user_pwd'
+    }else {
+      user_id = 'IND_user_id'
+      user_pwd = 'IND_user_pwd'
+    }
     const params = {
       business_cd: values.businessInfo.value,
       user_cd: userCd.value,
-      [`user_id`]: values[`${userCd.value}_user_id`],
-      [`user_pwd`]: values[`${userCd.value}_user_pwd`]
+      [`user_id`]: values[user_id],
+      [`user_pwd`]: values[user_pwd]
     };
     const authStore = useAuthStore();
     const result = await authStore.login(params);
@@ -300,7 +321,7 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
     if (result.success) {
       loginErrorMessage.value = "";
       // 법인 신규가입인경우 수정페이지 표출
-      if (result.data.statusCd === '20' && result.data.userCd === 'COR') {
+      if (result.data.statusCd === '20' && (result.data.userCd === 'COR' || result.data.userCd === 'JNT')   ) {
         router.push(`/user/register/${result.data.businessCd}`);
       // 3개월 비밀번호 변경
       }else if (result.data.statusCd == '31') {

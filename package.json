@@ -2,7 +2,7 @@
   "name": "lockton",
   "version": "0.0.1",
   "scripts": {
-    "dev": "vite --port 4000",
+    "dev": "vite --port 4000 --host",
     "build": "vite build"
   },
   "dependencies": {

@@ -21,6 +21,10 @@ export default [
       {
         title: `회계사`,
         to: `/${adminPath}/dev/AC2/ACC`
+      },
+      {
+        title: `변호사`,
+        to: `/${adminPath}/dev/AC2/ADV`
       }
     ]
   },
@@ -38,6 +42,10 @@ export default [
       {
         title: `회계사`,
         to: `/${adminPath}/dev/AC4/ACC`
+      },
+      {
+        title: `변호사`,
+        to: `/${adminPath}/dev/AC4/ADV`
       }
     ]
   },
@@ -56,6 +64,10 @@ export default [
       {
         title: `회계사`,
         to: `/${adminPath}/dev/AC5/ACC`
+      },
+      {
+        title: `변호사`,
+        to: `/${adminPath}/dev/AC5/ADV`
       }
     ]
   },
@@ -73,6 +85,10 @@ export default [
       {
         title: `회계사`,
         to: `/${adminPath}/dev/AC6/ACC`
+      },
+      {
+        title: `변호사`,
+        to: `/${adminPath}/dev/AC6/ADV`
       }
     ]
   },

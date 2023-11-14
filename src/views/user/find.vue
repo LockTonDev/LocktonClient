@@ -13,8 +13,9 @@
           <!-- 개인 아이디 찾기-->
           <v-window-item value="tab1-one">
             <v-card-text v-if="isViewIDStep0">
-              <h2 class="text-h5 font-weight-light" v-if="businessCd !== 'ACC'">개인회원 또는 법인회원을<br/>선택해 주세요.</h2>                      
-              <h2 class="text-h5 font-weight-light" v-if="businessCd === 'ACC'">개인회원을 선택해 주세요.</h2>                      
+              <h2 class="text-h5 font-weight-light" v-if="onlyIND.includes(businessCd)">개인회원을 선택해 주세요.</h2>
+              <h2 class="text-h5 font-weight-light" v-else>개인회원 또는 법인회원을<br/>선택해 주세요.</h2>
+
               <div class="mt-10">
                 <v-divider />
                 <v-btn variant="text" @click="userDTO.user_cd = 'IND';setViewIdStep(false, true, false, false)" color="black" size="x-large" class="py-6 h-auto w-100 d-block" >
@@ -24,7 +25,7 @@
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
                 <v-divider />
-                <v-btn variant="text" @click="userDTO.user_cd = 'IND'; fnFindIdCOR()" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="businessCd !== 'ACC'">
+                <v-btn variant="text" @click="userDTO.user_cd = 'IND'; fnFindIdCOR()" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="!onlyIND.includes(businessCd)">
                   <div class="text-left font-weight-light w-100">
                     <p>법인회원</p>
                   </div>
@@ -115,8 +116,8 @@
           <v-window-item value="tab1-two"> 
             <!--회원 구분 선택-->
             <v-card-text v-if="isViewPWStep0">
-              <h2 class="text-h5 font-weight-light" v-if="businessCd !== 'ACC'">개인회원 또는 법인회원을<br/>선택해 주세요.</h2>                      
-              <h2 class="text-h5 font-weight-light" v-if="businessCd === 'ACC'">개인회원을 선택해 주세요.</h2>   
+              <h2 class="text-h5 font-weight-light" v-if="onlyIND.includes(businessCd)">개인회원을 선택해 주세요.</h2>
+              <h2 class="text-h5 font-weight-light" v-else>개인회원 또는 법인회원을<br/>선택해 주세요.</h2>
               <div class="mt-10">
                 <v-divider />
                 <v-btn @click="userDTO.user_cd = 'IND'; setViewPwStep(false, true, false, false);" variant="text" color="black" size="x-large" class="py-6 h-auto w-100 d-block">
@@ -126,7 +127,7 @@
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
                 <v-divider />
-                <v-btn @click="userDTO.user_cd = 'COR'; setViewPwStep(false, false, true, false);" variant="text" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="businessCd !== 'ACC'">
+                <v-btn @click="userDTO.user_cd = 'COR'; setViewPwStep(false, false, true, false);" variant="text" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="!onlyIND.includes(businessCd)">
                   <div class="text-left font-weight-light w-100">
                     <p>법인회원</p>
                   </div>
@@ -235,6 +236,7 @@ const isViewPWWithHpAuth = ref(false);
 
 const userDTO = ref(new UserDTO());
 const messageBoxDTO = ref(new MessageBoxDTO());
+const onlyIND = ['ADV', 'ACC']
 
 
 async function isVerifyEMailAuthCode() {

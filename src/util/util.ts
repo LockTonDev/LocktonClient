@@ -36,10 +36,10 @@ export const getDateDiff = (sSDt: string, sEDt: string, maxDays:number) => {
  * @returns
  */
 export const calByString = (amount: string, num: number, maxAmt: number) => {
-  if (amount == null || amount == undefined) return '';
+  const koreanRegex = /[ㄱ-ㅎ가-힣]/;
+  if (amount == null || amount == undefined || !koreanRegex.test(amount)) return '';
   if (num == 0 || num == null || num == undefined) num = 1;
   if (maxAmt == 0 || maxAmt == null || maxAmt == undefined) maxAmt = 0;
-
   const amtNumber = parseInt(amount);
   const amtHangul = amount.match(/[ㄱ-ㅎㅏ-ㅣ가-힣]+/g).join(''); // 한글만 추출하여 문자열로 변환
 

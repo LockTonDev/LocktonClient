@@ -64,7 +64,9 @@ router.beforeEach(async function (to, from, next) {
     '/lcksl-fr/lypts/sol01/login'
   ];
 
-  const userPages = ['/', '/error', '/device/mobile', '/introduce', '/user/login', '/user/find', '/user/find/ACC', '/user/find/TAX', '/user/register/CAA', '/user/register/TAX', '/user/register/ACC'];
+  const userPages = ['/', '/error', '/device/mobile', '/introduce', '/user/login',
+    '/user/find', '/user/find/ACC', '/user/find/TAX', '/user/find/ADV',
+    '/user/register/CAA', '/user/register/TAX', '/user/register/ACC', , '/user/register/ADV'];
 
   const authUserRequired = !userPages.includes(to.path);
   const authAdminRequired = !adminPages.includes(to.path);
@@ -78,7 +80,7 @@ router.beforeEach(async function (to, from, next) {
       const response = await axios.get('https://api.ip.pe.kr/json');
       const ipAddress = response.data.ip;
 
-      const allowedIPs = ['110.9.11.206','121.137.148.62'];
+      const allowedIPs = ['110.9.11.206','121.137.148.62', '110.35.173.2'];
 
       // Add your IP blocking logic here
       // if (!allowedIPs.includes(ipAddress)) {
