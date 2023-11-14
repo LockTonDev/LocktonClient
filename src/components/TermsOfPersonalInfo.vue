@@ -327,7 +327,7 @@
                         <li>• 개인정보 보호담당자
                             <ul>        
                                 <li>부서: GPFR 팀</li>
-                                <li>성명 : 이윤아 주임</li>
+                                <li>성명 : 이채은 주임</li>
                                 <li>전화 : 02-2011-0300</li>
                                 <li>이메일 : help@locktonpi.com</li>
                             </ul>

@@ -125,7 +125,7 @@ onUnmounted(() => {
             <ul v-if="!item.children">
               <li class="single-item">
                 <router-link :to="item.to">
-                  <span>{{ item.title }}</span>
+                  <span>{{ item.title }} - {{i}}</span>
                 </router-link>
               </li>
             </ul>
@@ -220,6 +220,6 @@ onUnmounted(() => {
 </template>
 <style scoped>
   .font-size-8 {
-    font-size :0.4rem;
+    font-size :0.5rem;
   }
 </style>

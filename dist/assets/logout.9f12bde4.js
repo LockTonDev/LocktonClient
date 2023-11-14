@@ -1,0 +1,1 @@
+import{_ as o}from"./BaseCard.vue_vue_type_script_setup_true_lang.d42a12cf.js";import{d as t,c as s,e as _,w as e,V as c,f as a,q as n}from"./index.e103830c.js";const p=t({__name:"logout",setup(r){return(u,l)=>(s(),_(c,null,{default:e(()=>[a(n,{cols:"12",sm:"12"},{default:e(()=>[a(o,{heading:"\uB85C\uADF8\uC544\uC6C3"})]),_:1})]),_:1}))}});export{p as default};

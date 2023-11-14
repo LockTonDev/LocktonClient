@@ -118,5 +118,20 @@ export default {
 
   async getRenewals(params: any) {
     return await api.authService.post('/ADM/TAX/RENEWAL/gets', { params });
+  },
+
+  /** ============================================================================
+   *  [증권시작일조회]
+   *  ============================================================================
+   */
+  async getStockStartDtALL() {
+    return await api.authService.post('/ADM/COM/getStockStartDtInfo');
+  },
+  /** ============================================================================
+   *  [비밀번호 초기화]
+   *  ============================================================================
+   */
+  async setUserPassword(params: any) {
+    return await api.authService.post('/ADM/USER/setUserPassword', { params });
   }
 };

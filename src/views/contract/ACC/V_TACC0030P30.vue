@@ -104,7 +104,7 @@
                 <th>보험종목</th>
                 <td colspan="2" class="line-height-1-4">회계사배상책임보험<br />(Accountants' Professional Liability Insurance)</td>
                 <th>증권번호</th>
-                <td>14090-6488</td>
+                <td>{{ insuranceDTO.insurance_no }}</td>
               </tr>
               <tr>
                 <th colspan="2">보험기간</th>

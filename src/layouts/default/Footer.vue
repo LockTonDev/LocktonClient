@@ -20,7 +20,7 @@
         <p class="text-body-2 mb-2">록톤컴퍼니즈코리아손해보험중개(주)</p>
         <p class="text-body-2">대표자: 손방의</p>
         <p class="text-body-2">사업자등록번호 : 220-81-20652<span class="mx-2 text-10 vertical-align-top">|</span>통신판매신고번호 : 제2023-서울종로-0230호</p>
-        <p class="text-body-2">주소 : (03187) 서울시 종로구 청계천로 11, 청계한국빌딩 17층<span class="mx-2 text-10 vertical-align-top">|</span>대표전화 : 02-2011-0300</p>
+        <p class="text-body-2">주소 : (04520) 서울시 중구 세종대로 136, 서울파이낸스센터 13층<span class="mx-2 text-10 vertical-align-top">|</span>대표전화 : 02-2011-0300</p>
       </v-col>
       <v-col cols="4" class="pa-0">
         <v-row>
