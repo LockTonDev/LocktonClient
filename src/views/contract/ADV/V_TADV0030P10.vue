@@ -33,7 +33,7 @@ onMounted(async () => {
   if (_AUTH_USER.value.userCd == 'IND') {
     fileName.value = '/assets/doc/insr_table/변호사_개인_보험료표_' + INSR_INFO.value.base_year + '.pdf';
   } else if (_AUTH_USER.value.userCd == 'JNT') {
-    fileName.value = '/assets/doc/insr_table/변호사_법인_보험료표_' + INSR_INFO.value.base_year + '.pdf';
+    fileName.value = '/assets/doc/insr_table/변호사_복수_보험료표_' + INSR_INFO.value.base_year + '.pdf';
   }
 });
 </script>

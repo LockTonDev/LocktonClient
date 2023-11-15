@@ -394,11 +394,11 @@
                         </v-col>
                         <v-col cols="12" sm="6" class="v-col">
                           <div class="head-col">
-                            <p>대표자 성명</p>
+                            <p>사무소 형태</p>
                             <sup class="text-error">*</sup>
                           </div>
                           <div class="data-col">
-                            <VTextFieldWithValidation v-model="userDTO.corp_ceo_nm"  name="corp_ceo_nm" label="대표자 성명" single-line density="comfortable" />
+                            <VSelectWithValidation v-model="userDTO.corp_type" name="corp_type" label="사무소 형태" :items="corpTypeItem" class="w-200" single-line density="comfortable"></VSelectWithValidation>
                           </div>
                         </v-col>
                         
@@ -431,6 +431,7 @@
                                 :maskOption="{ mask: '######-#######' }"
                                 single-line
                                 density="comfortable"
+                                :disabled="userDTO.corp_type !== '002'"
                               />
                           </div>
                         </v-col>
@@ -733,6 +734,22 @@ const messageBoxDTO = ref(new MessageBoxDTO());
 
 const businessCd = route.params.business_cd;
 
+const corpTypeItem = [
+  {
+    title: '법률사무소',
+    rmk: '법률사무소',
+    value: '001'
+  },{
+    title: '법무법인',
+    rmk: '법무법인',
+    value: '002'
+  },{
+    title: '합동법률',
+    rmk: '합동법률',
+    value: '003'
+  },
+]
+
 const regionCdItems = [
   {
     title: '서울',
@@ -969,7 +986,7 @@ async function onSubmit(params: any) {
   if (!await checkValidation()) return false;
   let result = null;
 
-  if (userDTO.value.user_cd === 'COR') {
+  if (userDTO.value.user_cd === 'COR' || userDTO.value.user_cd === 'JNT') {
     // 사용자 등록
     userDTO.value.ignore_chk_pw = true;
     result = await apiUser.setUserInfo(userDTO.value);
@@ -1061,7 +1078,11 @@ onMounted(() => {
     // 최초가입시 사업자번호를 아이디값으로 설정한다.
     userDTO.value.corp_cnno = userDTO.value.user_id;
     page.value.title = '회원가입';
-    page.value.subtitle = '법인회원';
+    if(_AUTH_USER.value.userCd==="COR") {
+      page.value.subtitle = '법인회원';
+    }else if(_AUTH_USER.value.userCd==="JNT") {
+      page.value.subtitle = '복수회원';
+    }
 
   } else {
     // 최초가입시 하드코딩 추후 변경예정

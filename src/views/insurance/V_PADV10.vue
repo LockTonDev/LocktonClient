@@ -208,7 +208,7 @@
                       <td class="border-right-0">결과적 책임 / 간접손해 (Consequential Loss Exclusion Clause)</td>
                     </tr>
                     <tr>
-                      <td class="border-right-0">고용직원의 고의 등 행위 부담보(고용직원 부정직행위 담보 특별약관 가입 시 예외</td>
+                      <td class="border-right-0">고용직원의 고의 등 행위 부담보(고용직원 부정직행위 담보 특별약관 가입 시 예외)</td>
                     </tr>
                     <tr>
                       <td class="border-right-0">선의의 피보험자 조항 적용 안함</td>
@@ -229,10 +229,17 @@
                   <td class="border-right-0">할인 및 할증 적용 : 이 보험은 무사고 기간에 따른 할인 및 사고 할증을 적용하며, 보상한도 공유 복수가입 시 인원수에 따른 할인율이 추가됩니다.</td>
                 </tr>
                 <tr>
-                  <td class="border-right-0">복수가입 시 총 보상한도 : 변호사 3인 이상 복수가입 시에는 연간 총 보상한도액 2배수를 적용합니다. (단, 2명 복수가입 시에는 1배수 적용)</td>
+                  <td class="border-right-0">복수가입 시 총 보상한도 : 변호사 3인 이상 복수가입 시에는 연간 총 보상한도액 2배수를 적용합니다. <br/>(단, 2명 복수가입 시에는 1배수 적용)</td>
                 </tr>
                 <tr>
-                  <td class="border-right-0">사고자 보험료 할증 : 보험금 수령 시 수령보험금 규모에 따라 3개년 할증이 적용됩니다. (사고조사 진행 중 갱신 시 10% 할증 적용)</td>
+                  <td class="border-right-0">사고자 보험료 할증 : 보험금 수령 시 수령보험금 규모에 따라 3개년 할증이 적용됩니다. <br/>(사고조사 진행 중 갱신 시 10% 할증 적용) <br/>
+                    <v-btn
+                        variant="outlined"
+                        color="primary"
+                        class="mt-2 flex-grow-0"
+                        @click="isInsrTableDialog = true"
+                    >보험료표 보기</v-btn
+                    ></td>
                 </tr>
                 </tbody>
               </table>
@@ -242,6 +249,12 @@
                   <v-dialog persistent v-model="isDialogTermsOfPolicy1" activator="parent" scrollable max-width="1000">
                     <v-btn variant="outlined" color="dark" @click="isDialogTermsOfPolicy1 = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
                     <TermsOfPolicy></TermsOfPolicy>
+                  </v-dialog>
+                </v-btn>
+                <v-btn color="primary" variant="outlined" class="ml-2">특별약관 보기
+                  <v-dialog persistent v-model="isDialogTermsOfPolicy3" activator="parent" scrollable max-width="1000">
+                    <v-btn variant="outlined" color="dark" @click="isDialogTermsOfPolicy3 = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
+                    <TermsOfPolicy2></TermsOfPolicy2>
                   </v-dialog>
                 </v-btn>
               </div>
@@ -259,7 +272,7 @@
                     </v-card-title>
                     <v-divider class="mb-0"/>
                     <v-card-text class="pa-0">
-                      <iframe src="/assets/doc/ADV/세무사_예상질문에_대한_답변서.pdf" width="100%" height="800px"></iframe>
+                      <iframe src="/assets/doc/ADV/변호사_예상질문에_대한_답변서.pdf" width="100%" height="800px"></iframe>
                     </v-card-text>
                   </v-card>
                 </v-dialog>
@@ -350,15 +363,15 @@
               <h4 class="text-body-1 font-weight-bold mt-10">자기부담금(공제금액)</h4>
               <ul class="list-style-type-bull word-break-keep-all mt-6 ml-3">                
                 <li>피보험자 본인이 부담하는 금액으로 매 사고당 적용되며, 자기부담금 미만의 손해에 대해서는 보상되지 않습니다.</li>
-                <li>자기부담금을 초과하는 손해에 대해서는 산출손해배상액에서 자기부담금을 차감 후 청구당 보상한도액 범위 내에서 보상됩니다</li>
+                <li>자기부담금을 초과하는 손해에 대해서는 산출손해배상액에서 자기부담금을 차감 후 청구당 보상한도액 범위 내에서 보상됩니다.</li>
                 <!--<li class="mt-1"><span class="text-decoration-underline">동일회사</span>의 법인세, 종합소득세 등 신고 시 발생한 <span class="text-decoration-underline">동일한 업무상 과실에 기인한 사고</span>들은 그 과실이 연속된 귀속연도에 계속 반복되어 발생하였더라도 기간에 관계없이 <span class="text-decoration-underline">하나의 사고로 간주</span>하여 자기부담금을 적용합니다.</li>-->
               </ul>
             </v-window-item>
             <v-window-item value="option-4">
-              <h4 class="text-body-1 font-weight-bold">사무원부정직행위담보특별약관<span class="font-weight-normal">(추가보험료발생)</span></h4>
+              <h4 class="text-body-1 font-weight-bold">고용직원 부정직행위 담보 특별약관<span class="font-weight-normal">(추가보험료발생)</span></h4>
               <p class="mt-6  word-break-keep-all">
                 변호사가 고용한 직원의 부정직(또는 사기행위)의 직접적인 결과로 보험기간 중에 발견된 금전적인 손실을 보상 받을 수 있는 특별 약관(Dishonesty Extension) 입니다.<br/>
-                고의적이고 명백한 의도에 의한 직접 결과이거나 혹은 고용한 사무원이 관세사를 대신하여 전문서비스 업무를 수행하는 동안 사무원 자신의 경제적인 이득을 취할 목적으로 단독/타인과 공모하여 행한 부정 행위 또는 사기행위에 기인한 것을 전제로 합니다.
+                고의적이고 명백한 의도에 의한 직접 결과이거나 혹은 고용한 사무원이 변호사를 대신하여 전문서비스 업무를 수행하는 동안 사무원 자신의 경제적인 이득을 취할 목적으로 단독/타인과 공모하여 행한 부정 행위 또는 사기행위에 기인한 것을 전제로 합니다.
               </p>
               <table class="normal-table mt-6">
                 <colgroup>
@@ -370,14 +383,14 @@
                   <th>보상한도액</th>
                   <td class="border-right-0">
                     2천5백만원 / 5천만원 / 1억원 중 선택<br/>
-                    <span class="color-gray">(사무원 1인당 적용되는 보상 한도액 이 아닌 1청구당/연간 총 한도액입니다.)</span>
+                    <span class="color-gray">(고용직원 1인당 적용되는 보상 한도액 이 아닌 1청구당/연간 총 한도액입니다.)</span>
                   </td>
                 </tr>
                 <tr>
                   <th class="border-left-0">가입조건 </th>
                   <td class="border-right-0">
-                    - 기본담보의 50%적용을 원칙으로 함. <br/>
-                    - 각 지방 변호사회에 사무원으로 등록된 전 직원의 일괄가입이 조건임 (변호사 유자격자 제외)
+                    - 기본담보의 50%적용을 원칙으로 함 <br/>
+                    - 각 지방 변호사회에 사무원으로 등록된 전 직원의 일괄가입이 조건임 <br/>(변호사 유자격자 제외)
                   </td>
                 </tr>
                 <tr>
@@ -722,7 +735,8 @@
   import { useRoute } from 'vue-router'
   import BaseBreadcrumb from "@/components/BaseBreadcrumb.vue";
   import V_TADV0030P10 from '../contract/ADV/V_TADV0030P10.vue';      // 보험료표
-  import TermsOfPolicy from '../contract/ADV/V_TADV0030P01.vue';      // PDF 다운로드
+  import TermsOfPolicy from '../contract/ADV/V_TADV0030P01.vue';      // PDF 다운로드 (약관)
+  import TermsOfPolicy2 from '../contract/ADV/V_TADV0030P04.vue';      // PDF 다운로드 (특별약관)
 
   import { storeToRefs } from 'pinia';
   import { useAuthStore } from '@/stores';
@@ -742,6 +756,7 @@
   });
   const isDialogTermsOfPolicy1 = ref(false);
   const isDialogTermsOfPolicy2 = ref(false);
+  const isDialogTermsOfPolicy3 = ref(false);
   const isDialogFAQ = ref(false);
   const dialogERP = ref(false);
   const isInsrTableDialog = ref(false);

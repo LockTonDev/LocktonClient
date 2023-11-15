@@ -96,7 +96,7 @@
           <v-col cols="12">
             <div class="head-col">변경상세<sup class="text-error ml-1">*</sup></div>
             <div class="data-col w-full">
-              <p class="w-full text-gray">* 변경되는 세무사의 성명/생년월일/등록번호/사유(추가 또는 해지)</p>
+              <p class="w-full text-gray">* 변경되는 변호사의 성명/생년월일/등록번호/사유(추가 또는 해지)</p>
               <v-textarea v-model="d_TADV0040A.apply_content" variant="outlined" counter class="mt-2 w-full" rows="10" no-resize></v-textarea>
             </div>
           </v-col>

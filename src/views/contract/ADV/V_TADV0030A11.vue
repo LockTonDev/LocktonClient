@@ -1,4 +1,4 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
   <BaseBreadcrumb
     :title="page.title"
     :subtitle="page.subtitle"
@@ -300,11 +300,11 @@
               <!-- 개인 끝-->
 
               <!-- 법인/합동 시작-->
-              <v-col cols="12 mt-10" v-if="insuranceDTO.user_cd != 'IND'">
+              <v-col cols="12 mt-10" v-if="insuranceDTO.user_cd == 'JNT'">
                 <v-row class="v-board-table">
                   <v-col cols="12" sm="6" class="v-col">
                     <div class="head-col">
-                      <p>법인명</p>
+                      <p>사무소명</p>
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col">
@@ -622,25 +622,27 @@
                     </div>
                   </v-col>
                   <v-col
+                      cols="12"
+                      class="v-col"
+                      v-if="insuranceDTO.user_cd === 'JNT'"
+                  >
+                    <div class="head-col">
+                      <p>피보험자</p>
+                    </div>
+                    <div class="data-col">
+                      {{ insuranceDTO.corp_ceo_nm }} 외 {{insuranceDTO.cbr_cnt}}명
+                    </div>
+                  </v-col>
+                  <v-col
                     cols="12"
-                    :sm="insuranceDTO.user_cd === 'JNT' ? 12 : 6"
+                    sm="12"
                     class="v-col"
                   >
                     <div class="head-col">
-                      <p v-if="insuranceDTO.user_cd === 'IND'">소급담보일</p>
-                      <p v-if="insuranceDTO.user_cd === 'JNT'">합동<br/>소급담보일</p>
+                      <p>소급담보일</p>
                     </div>
-                    <div class="data-col"> {{ insuranceDTO.insr_retr_dt }}
-                      <!-- <VTextFieldWithValidation
-                        v-model="insuranceDTO.insr_retr_dt"
-                        name="insr_retr_dt"
-                        label=""
-                        type="date"
-                        single-line
-                        density="comfortable"
-                        disabled
-                      /> -->
-                    </div>
+                    <div class="data-col" v-if="insuranceDTO.user_cd === 'IND'" > {{ insuranceDTO.insr_retr_dt }}</div>
+                    <div class="data-col" v-if="insuranceDTO.user_cd === 'JNT'">개인별 적용</div>
                   </v-col>
                   <v-col
                     cols="12"
@@ -662,28 +664,20 @@
                       /> -->
                     </div>
                   </v-col>
-                  <v-col cols="12" sm="6" class="v-col">
+                  <v-col cols="12" :sm="insuranceDTO.user_cd === 'JNT'? 6 : 12" class="v-col">
                     <div class="head-col">
-                      <p v-if="insuranceDTO.user_cd == 'IND'">
+                      <p>
                         무사고 할인 /<br />사고 할증
                       </p>
-                      <p v-if="insuranceDTO.user_cd != 'IND'">무사고 할인</p>
                     </div>
-                    <div class="data-col text-center" >{{ insuranceDTO.insr_sale_rt }} %
-                      <!-- <VTextFieldWithValidation
-                        v-model="insuranceDTO.insr_sale_rt"
-                        name="insr_sale_rt"
-                        label=""
-                        single-line
-                        density="comfortable"
-                        disabled
-                      /> -->
-                    </div>
+                    <div class="data-col text-center" v-if="insuranceDTO.user_cd === 'IND'">{{ insuranceDTO.insr_sale_rt }} %</div>
+                    <div class="data-col text-center" v-if="insuranceDTO.user_cd === 'JNT'">개인별 적용</div>
                   </v-col>
 
                   <v-col cols="12" sm="12" class="v-col">
                     <div class="head-col">
-                      <p>매출액</p>
+                      <p v-if="insuranceDTO.user_cd === 'IND'">매출액</p>
+                      <p v-if="insuranceDTO.user_cd === 'JNT'">1인당 매출액</p>
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col w-100">
@@ -691,16 +685,17 @@
                       <p
                         class="text-caption font-weight-light  color-gray flex-grow-1"
                       >
-                        <v-text-field
-                            name="insr_take_amt"
-                            v-model="insr_take_amt"
-                            @input="changeTakeAmount"
-                            variant="outlined"
-                            hide-details="auto"
-                            @keydown.enter.prevent
-                          />
+                        <div class="data-col">   <v-text-field
+                              name="insr_take_amt"
+                              v-model="insr_take_amt"
+                              @input="changeTakeAmount"
+                              variant="outlined"
+                              hide-details="auto"
+                              @keydown.enter.prevent
+                    /><p style="font-size: 18px; margin-left: 10px">원</p>
+                    </div>
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
-                        >부과세과세표준증명 또는 손익계산서상의 매출액 기재요망<br/>
+                        >부과세 또는 손익계산서상의 매출액 기재요망 (전년도 1.1 ~ 12월말까지 매출)<br/>
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
                         >전년 매출이 없는 경우 1년 예상 매출액 기재
                       </p>
@@ -814,7 +809,7 @@
                       </v-btn-toggle>
                       <p class="text-caption font-weight-light color-gray mt-2">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>1
-                        청구당 / 연간총보상한도
+                        청구당 / 연간총보상한도(3명 이상 가입시 연간 총 보상한도는 2배수 적용)
                       </p>
                       <v-divider class="border-0" />
                       <!-- 법인인 경우 문구 표기 시작 -->
@@ -863,27 +858,223 @@
                       </p>
                     </div>
                   </v-col>
-                  <v-col cols="12" sm="12" class="v-col" v-if="userDTO.user_cd === 'JNT'">
-                    <div class="head-col">
-                      <p>사무원 수</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <v-text-field
-                          name="insr_people"
-                          v-model="insuranceDTO.cbr_cnt"
-                          variant="outlined"
-                          hide-details="auto"
-                      />명
-                      <p class="text-caption font-weight-light mt-2">
-                        <i class="mdi mdi-alert-circle-outline mr-2"></i>
-                        각 지방 변호사회에 사무원으로 등록된 전 직원의 일괄가입 조건이며, 변호사 유자격자는 제외.<br/>
-                        <i class="mdi mdi-alert-circle-outline mr-2"></i>
-                        직원수 10명 초과시 개별 문의
-                      </p>
-                    </div>
-                  </v-col>
                 </v-row>
+              </v-col>
+              <!-- 변호사 명단 시작 -->
+              <v-col cols="12" sm="12" class="py-0 px-14 mb-10" v-if="insuranceDTO.user_cd != 'IND'">
+                <div class="d-flex align-center mb-4 mt-6">
+                  <svg width="8" height="12" fill="none" stroke-width="3" class="mr-2">
+                    <line x1="7" y1="5" x2="0" y2="12" stroke="#222222"></line>
+                    <line x1="0" y1="0" x2="8" y2="7" stroke="#00AEEF"></line>
+                  </svg>
+                  <p class="text-body-1 font-weight-bold">변호사 명단</p>
+                  <p class="text-body-2 color-gray-shadow ml-4">
+                    총
+                    <span class="color-primary">{{ insuranceDTO.cbr_data.length }}</span>명
+                  </p>
+                  <div class="ml-auto">
+                    <v-btn variant="outlined" @click="resetCBRData()" size="small" class="min-width-auto px-1 mr-1">
+                      초기화<v-icon icon="mdi-autorenew"></v-icon>
+                    </v-btn>
+                    <v-btn variant="elevated" color="white" @click="addCBR(insuranceDTO)" size="small" class="min-width-auto pa-0">
+                      <vue-feather type="plus-square" class="text-primary">
+                      </vue-feather>
+                    </v-btn>
+                  </div>
+                </div>
+                <v-table class="v-board-table size-small">
+                  <colgroup>
+                    <col style="width: 50px" />
+                    <col style="width: 80px" />
+                    <col style="width: 80px" />
+                    <col style="width: 80px" />
+                    <col style="width: auto" />
+                    <!-- <col style="width: 82px" />
+                    <col style="width: 82px" /> -->
+                    <col style="width: 40px" />
+                    <col style="width: auto" />
+                    <col style="width: 30px" />
+                  </colgroup>
+                  <thead>
+                  <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-left">&nbsp;성명</th>
+                    <th class="text-left">생년월일</th>
+                    <th class="text-left">등록번호</th>
+                    <!-- <th class="text-center">보험시작일</th>
+                    <th class="text-center">보험종료일</th> -->
+                    <th class="text-center">소급담보일 / 보험시작일</th>
+                    <th class="text-center">할인 할증</th>
+                    <th class="text-center">1인당 보험료</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                  <tr v-for="(row, index) in insuranceDTO.cbr_data">
+                    <td class="text-center">{{ index + 1 }}</td>
+                    <td>
+                      <VTextFieldWithValidation
+                          v-model="row.cbr_nm"
+                          name="cbr_nm"
+                          label="홍길동"
+                          density="compact"
+                          color="primary"
+                          variant="underlined"
+                          single-line
+                          :disabled="row.isCheck"
+                      />
+                    </td>
+                    <td>
+                      <VTextFieldWithValidation
+                          v-model="row.cbr_brdt"
+                          name="cbr_brdt"
+                          label="781213"
+                          density="compact"
+                          color="primary"
+                          variant="underlined"
+                          :maskOption="{ mask: '######' }"
+                          single-line
+                          :disabled="row.isCheck"
+                      />
+                    </td>
+                    <td>
+                      <VTextFieldWithValidation
+                          v-model="row.cbr_regno"
+                          name="cbr_regno"
+                          label="1234567"
+                          color="primary"
+                          density="compact"
+                          variant="underlined"
+                          :maskOption="{ mask: '#######' }"
+                          single-line
+                          :disabled="row.isCheck"
+                      />
+                      <!-- <v-text-field v-model="row.cbr_regno" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="1234567"  :disabled="row.isCheck"/> -->
+                    </td>
+                    <!-- <td><v-text-field v-model="row.insr_st_dt" :min="insuranceDTO.insr_st_dt"  :max="insuranceDTO.insr_cncls_dt" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date"  :disabled="row.isCheck || true" /></td>
+                    <td>{{row.insr_cncls_dt}}</td> -->
+                    <td>{{row.insr_retr_dt}} / {{row.insr_st_dt}}</td>
+                    <td v-if="row.isCheck">{{row.insr_sale_rt}}%</td>
+                    <td v-if="row.isCheck">
+                      {{ Number(row.insr_amt).toLocaleString() }}원
+                    </td>
+                    <td colspan="2" v-if="!row.isCheck"><v-btn variant="outlined" @click="chkSaleRtCOR(insuranceDTO, index)">인증</v-btn></td>
+                    <td>
+                      <v-btn variant="elevated" color="white" @click="delCBR(insuranceDTO, index)" size="small" class="min-width-auto pa-0" v-if="!isReadOnlyAll">
+                        <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle"></vue-feather>
+                      </v-btn>
+                    </td>
+                  </tr>
+
+
+
+                  <!-- <tr>
+                    <td>1</td>
+                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="홍길동" disabled/></td>
+                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="820101" disabled/></td>
+                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="1234567" disabled/></td>
+                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date" disabled/></td>
+                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date" disabled/></td>
+                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date" disabled/></td>
+                    <td>2%</td>
+                    <td>
+                      12,000원
+                      <v-btn variant="outlined" class="d-none">인증</v-btn>
+                    </td>
+                    <td>
+                      <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle" v-if="!isReadOnlyAll">
+                        <v-btn variant="none" @click="delCBR(insuranceDTO, index)"></v-btn>
+                      </vue-feather>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="홍길동"/></td>
+                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="820101"/></td>
+                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="1234567"/></td>
+                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date"/></td>
+                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date"/></td>
+                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date"/></td>
+                    <td>0%</td>
+                    <td>
+
+                      <v-btn variant="outlined" class="">인증</v-btn>
+                    </td>
+                    <td>
+                      <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle" v-if="!isReadOnlyAll">
+                        <v-btn variant="none" @click="delCBR(insuranceDTO, index)"></v-btn>
+                      </vue-feather>
+                    </td>
+                  </tr>
+                  <tr v-for="(row, index) in insuranceDTO.cbr_data">
+                    <td class="text-center">{{ index + 1 }}</td>
+                    <td class="text-center">
+                      <v-text-field
+                        v-model="row.cbr_nm"
+                        name="cbr_nm"
+                        variant="outlined"
+                        hide-details="auto"
+                        density="compact"
+                        class="text-body-2"
+                        single-line
+                        label="홍길동"
+                        :disabled="row.isCheck"
+
+                      />
+                    </td>
+                    <td class="text-center">
+                      <v-text-field
+                        v-model="row.cbr_brdt"
+                        name="cbr_brdt"
+                        variant="outlined"
+                        hide-details="auto"
+                        density="compact"
+                        class="text-body-2"
+                        single-line
+                        label="820101"
+                        :disabled="row.isCheck"
+
+                      />
+                    </td>
+                    <td class="text-center">
+                      <v-text-field
+                        v-model="row.cbr_regno"
+                        name="cbr_regno"
+                        variant="outlined"
+                        hide-details="auto"
+                        density="compact"
+                        class="text-body-2"
+                        single-line
+                        label="1234567"
+                        :disabled="row.isCheck"
+                      />
+                    </td>
+                    <td>
+                      <v-text-field
+                        type="date"
+                        name=""
+                        variant="outlined"
+                        hide-details="auto"
+                        density="compact"
+                        class="text-body-2"
+                        single-line
+                        label=""
+                      />
+                    </td>
+                    <td class="text-center">{{ row.insr_retr_dt }}</td>
+                    <td class="text-center">{{ row.insr_sale_rt }}%</td>
+                    <td class="text-center">
+                      {{ Number(row.insr_amt).toLocaleString() }}원
+                    </td>
+                    <td class="text-center">
+
+
+                    </td>
+                  </tr> -->
+                  </tbody>
+                </v-table>
+                <!-- <p class="text-14 color-error font-weight-light mt-2"><i class="mdi mdi-alert-circle-outline mr-1"></i>세무사를 인증해주세요.</p> -->
               </v-col>
 
             </v-row>
@@ -938,7 +1129,7 @@
                           single-line
                           class="w-100 readonly"
                           density="comfortable"
-                      >사무원의 횡령 등 부정직행위 담보 특별약관(Dishonesty
+                      >고용 직원의 횡령 등 부정직행위 담보 특별약관(Dishonesty
                         Extension)</v-text-field
                       >
                     </div>
@@ -954,6 +1145,7 @@
                           divided
                           variant="outlined"
                           class="w-100"
+                          style="min-width: 450px"
                           density="comfortable"
                           :disabled="isReadOnlyAll"
                       >
@@ -964,11 +1156,8 @@
                         >특약 가입</v-btn
                         >
                       </v-btn-toggle>
-                      <p class="text-caption font-weight-light mt-2">
-                        <i class="mdi mdi-alert-circle-outline mr-2"></i>기본
-                        담보 보상한도 2천만원 이상 선택한 경우만 특약 가입 가능
-                      </p>
                     </div>
+
                   </v-col>
                   <v-col
                       cols="12"
@@ -1063,10 +1252,12 @@
                     <div class="data-col">
                       <v-text-field
                           name="insr_spct_cnt"
-                          v-model="insuranceDTO.spct_data.cbr_cnt"
+                          v-model="spct_cnt"
                           variant="outlined"
+                          type="number"
+                          @input="validateSpctNum"
                           hide-details="auto"
-                      />명
+                      /> <p style="margin-left: 4px">명</p>
                       <p class="text-caption font-weight-light mt-2">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>
                         각 지방 변호사회에 사무원으로 등록된 전 직원의 일괄가입 조건이며, 변호사 유자격자는 제외.<br/>
@@ -1353,6 +1544,9 @@
             <v-col cols="12" class="mb-1">
               <p class="font-weight-medium">보험계약정보</p>
             </v-col>
+            <v-col cols="12" class="mb-2">
+              <p class="font-weight-medium">- 기본담보</p>
+            </v-col>
             <v-col cols="12">
               <p class="text-body-2 color-gray-shadow">보험기간</p>
               <p class="text-body-2 text-right">
@@ -1399,13 +1593,13 @@
 
             <!-- 법인만 보여주는 영역 시작 -->
             <v-col cols="12" v-if="insuranceDTO.user_cd != 'IND'">
-              <p class="text-body-2 color-gray-shadow">사무원 수</p>
+              <p class="text-body-2 color-gray-shadow">변호사 인원수</p>
               <p class="text-body-2 text-right">
                 {{ insuranceDTO.cbr_cnt }} 명
               </p>
             </v-col>
             <v-col cols="12" v-if="insuranceDTO.user_cd != 'IND'">
-              <p class="text-body-2 color-gray-shadow">사무원 수 할인율</p>
+              <p class="text-body-2 color-gray-shadow">인원수 할인율</p>
               <p class="text-body-2 text-right">
                 {{ insuranceDTO.insr_pcnt_sale_rt }} %
               </p>
@@ -1544,7 +1738,7 @@
             기재하여 송금해주시기 바랍니다.
           </p>
           <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'JNT'">
-            <i class="mdi mdi-alert-circle-outline mr-1"></i><span class="color-primary">합동명으로 일괄
+            <i class="mdi mdi-alert-circle-outline mr-1"></i><span class="color-primary">법인 및 사무소명으로 일괄
             송금</span>하여 주시기 바랍니다.
           </p>
 
@@ -1690,6 +1884,7 @@ const insr_take_sec = ref('0|1억이하');
 
 const INSR_RATE_TABLE = ref([]);
 const INSR_RATE_MAX_DAYS = ref(0);
+const spct_cnt = ref(1);
 
 
 // 초기정보 설정
@@ -2263,7 +2458,11 @@ function showMessageBoxByInsrDt() {
   );
 }
 
-
+function validateSpctNum() {
+  if (spct_cnt.value > 10) {
+    spct_cnt.value = 10
+  }
+}
 
 
 async function checkValidation() {
@@ -2465,12 +2664,14 @@ watch(
     () => [
       insuranceDTO.value.spct_data.insr_clm_lt_amt,
       insuranceDTO.value.spct_data.insr_psnl_brdn_amt,
-      insuranceDTO.value.spct_data.cbr_cnt
+      spct_cnt.value,
     ],
     (newValue, oldValue) => {
       // 읽기전용일 경우 해당로직 제외
       if (isReadOnlyAll.value) return false;
       if ( insuranceDTO.value.spct_join_yn != 'Y') return false;
+
+      insuranceDTO.value.spct_data.cbr_cnt = spct_cnt.value
 
       insuranceDTO.value.spct_data.insr_base_amt = getInsrSpctAmt(
           null,

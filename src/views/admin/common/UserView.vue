@@ -142,7 +142,8 @@
           <h3 class="font-weight-bold">기본 정보 {{ userDTO.user_cd === 'IND' ? '[ 개인 ]' : userDTO.user_cd === 'COR' ? '[ 법인 ]' : '' }}</h3> 
           <div class="ml-auto">
             <v-btn variant="outlined" size="small" @click="fnAdd('IND')" class="mr-1">개인 신규</v-btn> 
-            <v-btn variant="outlined" size="small" @click="fnAdd('COR')" class="mr-1" v-if="userDTO.business_cd !== 'ACC'">법인 신규</v-btn> 
+            <v-btn variant="outlined" size="small" @click="fnAdd('COR')" class="mr-1" v-if="userDTO.business_cd !== 'ACC'">법인 신규</v-btn>
+            <v-btn variant="outlined" size="small" @click="fnAdd('JNT')" class="mr-1">복수 신규</v-btn>
             <v-btn variant="flat" size="small" @click="fnSave()">저장</v-btn> 
           </div>
         </v-card-title>
@@ -305,8 +306,16 @@
           <!-- 개인 끝-->
     
           <!-- 법인/합동 시작-->
-          <v-row class="v-board-table size-x-small" v-if="userDTO.user_cd === 'COR'">
-            
+          <v-row class="v-board-table size-x-small" v-if="userDTO.user_cd === 'COR' ||userDTO.user_cd === 'JNT' ">
+            <v-col cols="12" sm="12" class="v-col">
+              <div class="head-col">
+                <p>전문인 유형</p>
+                <sup class="text-error">*</sup>
+              </div>
+              <div class="data-col">
+                <VSelectWithValidation v-model="userDTO.business_cd" name="corp_region_cd" label="" :items="businessCdItems" class="w-200" single-line density="comfortable"></VSelectWithValidation>
+              </div>
+            </v-col>
               <v-col cols="12" sm="12" class="v-col">
                 <div class="head-col">
                   <p>아이디</p>
@@ -539,7 +548,7 @@ const verifyEMail = ref({ success: false, message: '', code: '' });
 const radios = ref('radio1');
 const regionCdItems = ref([]);
 const statusCdItems = ref([]);
-
+const businessCdItems = ref([]);
 
 watch(
   () => props.pageViewData,
@@ -568,7 +577,7 @@ function fnAdd(user_cd:string) {
   userDTO.value.mode = 'C';
   userDTO.value.business_cd = 'TAX';
   userDTO.value.user_cd = user_cd;
-  userDTO.value.status_cd = (user_cd === 'COR' ? '20' : '30');
+  userDTO.value.status_cd = ((user_cd === 'COR' || user_cd === 'JNT') ? '20' : '30');
   userDTO.value.rmk = genPassword(10);
 }
 
@@ -707,7 +716,8 @@ async function initPage() {
   // businessCdItems.value = await CommonCode.getCodeList('COM001');
   statusCdItems.value = await CommonCode.getCodeList('COM010');
   // statusCdItems.value.unshift({ title: '전체', value: '%' });/
-  
+  businessCdItems.value = await CommonCode.getCodeList('COM001');
+  console.log(businessCdItems.value)
 
 }
 

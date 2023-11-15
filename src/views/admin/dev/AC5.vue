@@ -315,7 +315,12 @@ import MessageBox from '@/components/MessageBox.vue';
 import apiADMIN from '@/api/api/A_ADMIN';
 import apiCOMMON from '@/api/api/A_COMMON';
 import dayjs from 'dayjs';
-import { UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND, UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR, DOWNLOAD_EXCEL } from '../../../util/excelupdn';
+import {
+  UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND,
+  UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR,
+  DOWNLOAD_EXCEL,
+  UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND
+} from '../../../util/excelupdn';
 
 const authStore = useAuthStore();
 const { _AUTH_ADMIN } = storeToRefs(authStore);
@@ -436,7 +441,7 @@ async function handleFileUploadIND(event) {
   try {
     let resultData;
     if(route.params.business_cd=='ADV') {
-      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND(event);
+      const excelList = await UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND(event);
       resultData = await apiADMIN.setADV_TRX(excelList);
     } else {
       const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND(event);

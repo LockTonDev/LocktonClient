@@ -1,7 +1,7 @@
 @mixin font-face($font-name,$file-name,$weight: normal,$style: normal,$support-legacy: false) {
   @font-face {
     font-family: quote($font-name);
-    src: url('../assets/fonts/' + $file-name + '.woff') format('woff');
+    src: url('../assets/fonts/' + $file-name + '.woff') format('woff'), url('../assets/fonts/' + $file-name + '.ttf') format('truetype');
     font-style: $style;
     font-weight: $weight;
   }
@@ -14,3 +14,7 @@
 @include font-face('NotoSansKR-Hestia', 'NotoSansKR-DemiLight-Hestia', 300);
 @include font-face('NotoSansKR-Hestia', 'NotoSansKR-Light-Hestia', 200);
 @include font-face('NotoSansKR-Hestia', 'NotoSansKR-Thin-Hestia', 100);
+
+@include font-face('NanumMyeongjo', 'NanumMyeongjo', 100);
+@include font-face('NanumMyeongjo', 'NanumMyeongjoBold', 200);
+@include font-face('NanumMyeongjo', 'NanumMyeongjoExtaBold', 300);

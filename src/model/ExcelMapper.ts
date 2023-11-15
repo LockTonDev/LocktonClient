@@ -163,7 +163,7 @@ const EXCEL_ADV_IND = {
   기준보험료: 'N',
   할인할증기준: 'O',
   할인할증: 'P',
-  공동보험: 'Q',
+  매출액구간: 'Q',
   최종보험료: 'R',
   전화: 'S',
   팩스: 'T',
@@ -216,7 +216,7 @@ const EXCEL_ADV_JNT = {
   인원수할인: 'R',
   할인할증기준: 'S',
   할인할증: 'T',
-  공동보험: 'U',
+  매출액구간: 'U',
   보험료: 'V',
   최종보험료: 'W',
   전화: 'X',
@@ -244,4 +244,4 @@ const EXCEL_ADV_JNT = {
   //----------------------
 };
 
-export { EXCEL_TAX_IND, EXCEL_TAX_COR, EXCEL_ACC_IND };
+export { EXCEL_TAX_IND, EXCEL_TAX_COR, EXCEL_ACC_IND, EXCEL_ADV_IND, EXCEL_ADV_JNT };
