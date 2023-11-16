@@ -139,7 +139,7 @@
     <v-col cols="6">
       <v-card>
         <v-card-title class="d-flex flex-wrap px-0 pt align-center">
-          <h3 class="font-weight-bold">기본 정보 {{ userDTO.user_cd === 'IND' ? '[ 개인 ]' : userDTO.user_cd === 'COR' ? '[ 법인 ]' : '' }}</h3> 
+          <h3 class="font-weight-bold">기본 정보 {{ userDTO.user_cd === 'IND' ? '[ 개인 ]' : userDTO.user_cd === 'COR' ? '[ 법인 ]' :  userDTO.user_cd === 'JNT' ? '[ 복수 ]' : '' }}</h3>
           <div class="ml-auto">
             <v-btn variant="outlined" size="small" @click="fnAdd('IND')" class="mr-1">개인 신규</v-btn> 
             <v-btn variant="outlined" size="small" @click="fnAdd('COR')" class="mr-1" v-if="userDTO.business_cd !== 'ACC'">법인 신규</v-btn>
@@ -376,6 +376,18 @@
               </v-col>
               <!-- 관세사 추가 사항 종료 -->
 
+            <!-- 변호사 추가 사항 시작 -->
+            <v-col cols="12" sm="12" class="v-col" v-if="userDTO.business_cd === 'ADV'">
+              <div class="head-col">
+                <p>사무소 형태</p>
+                <sup class="text-error">*</sup>
+              </div>
+              <div class="data-col">
+                <VSelectWithValidation v-model="userDTO.corp_type" name="corp_type" label="" :items="corpTypeItems" class="w-200" single-line density="comfortable"></VSelectWithValidation>
+              </div>
+            </v-col>
+            <!-- 변호사 추가 사항 종료 -->
+
               <v-col cols="12" sm="12" class="v-col">
                 <div class="head-col">
                   <p>법인번호</p>
@@ -389,6 +401,7 @@
                       :maskOption="{ mask: '######-#######' }"
                       single-line
                       density="comfortable"
+                      :disabled="userDTO.business_cd === 'ADV' && userDTO.corp_type !== '003'"
                     />
                 </div>
               </v-col>
@@ -549,6 +562,8 @@ const radios = ref('radio1');
 const regionCdItems = ref([]);
 const statusCdItems = ref([]);
 const businessCdItems = ref([]);
+const corpTypeItems = ref([]);
+
 
 watch(
   () => props.pageViewData,
@@ -558,6 +573,14 @@ watch(
     }
   },
   { immediate: true }
+);
+
+watch(
+    () => userDTO.value.corp_type,
+    () => {
+      userDTO.value.corp_bnno = ''
+    },
+    { immediate: true }
 );
 
 const genPassword = length => {
@@ -717,7 +740,7 @@ async function initPage() {
   statusCdItems.value = await CommonCode.getCodeList('COM010');
   // statusCdItems.value.unshift({ title: '전체', value: '%' });/
   businessCdItems.value = await CommonCode.getCodeList('COM001');
-  console.log(businessCdItems.value)
+  corpTypeItems.value = await CommonCode.getCodeList('COM050');
 
 }
 

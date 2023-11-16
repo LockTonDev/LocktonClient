@@ -12,7 +12,7 @@
       <v-divider class="mb-0" />
       <v-card-text class="px-10 pt-8 pb-14">
         <div class="d-flex justify-space-between align-center">
-          <h3 class="text-display-2 font-weight-bold">현대해상화재보험주식회사 귀중</h3>
+          <h3 class="text-display-2 font-weight-bold">DB손해보험㈜ 귀중</h3>
           <p class="text-14 color-gray-shadow">각 동의란에 체크 하십시오</p>
         </div>
         <div class="v-board-table mt-4">
@@ -172,7 +172,7 @@
             </li>
           </ul>
           <p>※거래종료일:1)보험계약 만기, 해지, 취소, 철회일 또는 소멸일 및 2)보험금청구권 소멸시효 완성일, 채권채무관계 소멸일 중 가장 나중에 도래한 사유를 기준으로 판단</p>
-          <p>※각 제공대상기관 및 이용목적의 구체적인 정보는 당사 홈페이지[http://www.hi.co.kr]에서 확인할 수 있습니다.</p>
+          <p>※각 제공대상기관 및 이용목적의 구체적인 정보는 당사 홈페이지[http://www.idbins.com]에서 확인할 수 있습니다.</p>
         </div>
         <p class="font-weight-medium mt-4 word-break-keep-all">※ 본인은 「개인정보보호법」및 「신용정보의 이용 및 보호에 관한 법률」에 따라 귀사가 본인의
           개인(신용)정보를 상기 내용과 같이 처리하는 것에 동의 합니다.</p>

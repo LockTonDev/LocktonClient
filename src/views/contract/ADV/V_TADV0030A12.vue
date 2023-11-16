@@ -18,8 +18,9 @@
             show-arrows
           >
             <v-tab value="1" class="flex-grow-1">가입정보</v-tab>
-            <v-tab value="2" class="flex-grow-1">보험계약</v-tab>
-            <v-tab value="3" class="flex-grow-1">약관동의</v-tab>
+            <v-tab value="2" class="flex-grow-1">보험계약 [기본담보]</v-tab>
+            <v-tab value="3" class="flex-grow-1">보험계약 [특약]</v-tab>
+            <v-tab value="4" class="flex-grow-1">약관동의</v-tab>
           </v-tabs>
         </div>
       </v-col>
@@ -306,16 +307,17 @@
                   </div>
                   <v-spacer />
                   <v-btn
-                    variant="outlined"
-                    color="primary"
-                    class="ml-auto flex-grow-0"
-                    @click="isInsrTableDialog = true"
-                    >보험료표 보기</v-btn
+                      variant="outlined"
+                      color="primary"
+                      class="ml-auto flex-grow-0"
+                      @click="isInsrTableDialog = true"
+                  >보험료표 보기</v-btn
                   >
                 </div>
                 <p class="text-body-2 color-gray-shadow">
                   <sup class="text-error">*</sup>는 필수 입력입니다.
                 </p>
+                <p class="text-body-2 color-gray-shadow" v-if="renewalYN == 'Y'">직전년도 가입조건이 자동 표시되며, 변경 가능합니다.</p> <!--갱신자의 경우 문구 노출-->
               </v-col>
               <v-col cols="12" sm="12" class="py-0 px-14 mt-10">
                 <v-row class="v-board-table">
@@ -325,83 +327,180 @@
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col justify-space-between date">
-                      {{ insuranceDTO.insr_st_dt  }}
+                      <VTextFieldWithValidation
+                          v-model="insuranceDTO.insr_st_dt"
+                          name="insr_st_dt"
+                          label="보험시작일자"
+                          type="date"
+                          single-line
+                          density="comfortable"
+                          :min="insuranceDTO.insr_st_dt"
+                          :max="insuranceDTO.insr_cncls_dt"
+                          :readonly="isReadOnlyAll"
+                      />
                       <p class="mx-2">00:01 부터</p>
-                      {{ insuranceDTO.insr_cncls_dt  }}
+                      <VTextFieldWithValidation
+                          v-model="insuranceDTO.insr_cncls_dt"
+                          name="insr_cncls_dt"
+                          label="보험종료일자"
+                          type="date"
+                          single-line
+                          density="comfortable"
+                          readonly
+                      />
                       <p class="ml-2">00:01 까지</p>
                     </div>
                   </v-col>
                   <v-col
-                    cols="12"
-                    :sm="insuranceDTO.user_cd === 'JNT' ? 12 : 6"
-                    class="v-col"
+                      cols="12"
+                      class="v-col"
+                      v-if="insuranceDTO.user_cd === 'JNT'"
                   >
                     <div class="head-col">
-                        <p v-if="insuranceDTO.user_cd === 'IND'">소급담보일</p>
-                        <p v-if="insuranceDTO.user_cd === 'JNT'">합동<br/>소급담보일</p>
+                      <p>피보험자</p>
                     </div>
                     <div class="data-col">
-                      {{ insuranceDTO.insr_retr_dt  }}
+                      <p v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}}명</p>
                     </div>
                   </v-col>
                   <v-col
-                    cols="12"
-                    sm="6"
-                    class="v-col"
-                    v-if="insuranceDTO.user_cd === 'JNT'"
+                      cols="12"
+                      sm="12"
+                      class="v-col"
+                  >
+                    <div class="head-col">
+                      <p>소급담보일</p>
+                    </div>
+                    <div class="data-col" v-if="insuranceDTO.user_cd === 'IND'" > {{ insuranceDTO.insr_retr_dt }}</div>
+                    <div class="data-col" v-if="insuranceDTO.user_cd === 'JNT'">개인별 적용</div>
+                  </v-col>
+                  <v-col
+                      cols="12"
+                      sm="6"
+                      class="v-col"
+                      v-if="insuranceDTO.user_cd === 'JNT'"
                   >
                     <div class="head-col">
                       <p>인원수 할인</p>
                     </div>
-                    <div class="data-col">
-                      {{ insuranceDTO.insr_pcnt_sale_rt  }} %
+                    <div class="data-col">{{ insuranceDTO.insr_pcnt_sale_rt }} %
+                      <!-- <VTextFieldWithValidation
+                        v-model="insuranceDTO.insr_pcnt_sale_rt"
+                        name="insr_pcnt_sale_rt"
+                        label=""
+                        single-line
+                        density="comfortable"
+                        disabled
+                      /> -->
                     </div>
                   </v-col>
-                  <v-col cols="12" sm="6" class="v-col">
+                  <v-col cols="12" :sm="insuranceDTO.user_cd === 'JNT'? 6 : 12" class="v-col">
                     <div class="head-col">
-                      <p v-if="insuranceDTO.user_cd == 'IND'">
+                      <p>
                         무사고 할인 /<br />사고 할증
                       </p>
-                      <p v-if="insuranceDTO.user_cd != 'IND'">무사고 할인</p>
                     </div>
-                    <div class="data-col">
-                      {{ insuranceDTO.insr_sale_rt  }} %
-                    </div>
+                    <div class="data-col text-center" v-if="insuranceDTO.user_cd === 'IND'">{{ insuranceDTO.insr_sale_rt }} %</div>
+                    <div class="data-col text-center" v-if="insuranceDTO.user_cd === 'JNT'">개인별 적용</div>
                   </v-col>
 
                   <v-col cols="12" sm="12" class="v-col">
                     <div class="head-col">
-                      <p>공동보험</p>
+                      <p v-if="insuranceDTO.user_cd === 'IND'">매출액</p>
+                      <p v-if="insuranceDTO.user_cd === 'JNT'">1인당 매출액</p>
+                      <sup class="text-error">*</sup>
+                    </div>
+                    <div class="data-col w-100">
+
+                      <p
+                          class="text-caption font-weight-light  color-gray flex-grow-1"
+                      >
+                      <div class="data-col">   <v-text-field
+                          name="insr_take_amt"
+                          v-model="insuranceDTO.insr_take_amt"
+                          variant="outlined"
+                          hide-details="auto"
+                          @keydown.enter.prevent
+                          :disabled="isReadOnlyAll"
+                      /><p style="font-size: 18px; margin-left: 10px">원</p>
+                      </div>
+                      <i class="mdi mdi-alert-circle-outline mr-2"></i
+                      >부과세 또는 손익계산서상의 매출액 기재요망 (전년도 1.1 ~ 12월말까지 매출)<br/>
+                      <i class="mdi mdi-alert-circle-outline mr-2"></i
+                      >전년 매출이 없는 경우 1년 예상 매출액 기재
+                      </p>
+                    </div>
+                  </v-col>
+                  <v-col cols="12" sm="12" class="v-col">
+                    <div class="head-col">
+                      <p>매출액구간</p>
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col w-100">
                       <v-btn-toggle
-                        v-model="insuranceDTO.insr_pblc_brdn_rt"
-                        name="insr_pblc_brdn_rt"
-                        divided
-                        variant="outlined"
-                        density="comfortable"
-                        class="w-100"
-                        :disabled="isReadOnlyAll"
+                          v-model="insuranceDTO.insr_take_sec"
+                          divided
+                          variant="outlined"
+                          density="comfortable"
+                          class="align-stretch w-100"
+                          disabled="true"
                       >
                         <v-btn
-                          color="primary"
-                          class="flex-grow-1"
-                          value="0|공동보험 적용"
-                          >공동보험 적용</v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            style="font-size: x-small"
+                            value="0|1억이하"
+                        >1억이하</v-btn
                         >
                         <v-btn
-                          color="primary"
-                          class="flex-grow-1"
-                          value="50|공동보험 미적용"
-                          >공동보험 미적용</v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            style="font-size: x-small"
+                            value="1|1억5천이하"
+                        >1억5천이하</v-btn
+                        >
+                        <v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            style="font-size: x-small"
+                            value="2|2억이하"
+                        >2억이하</v-btn
+                        >
+                        <v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            style="font-size: x-small"
+                            value="3|3억이하"
+                        >3억이하</v-btn
+                        >
+                        <v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            style="font-size: x-small"
+                            value="4|4억이하"
+                        >4억이하</v-btn
+                        >
+                        <v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            style="font-size: x-small"
+                            value="5|5억이하"
+                        >5억이하</v-btn
+                        >
+
+                        <v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            style="font-size: x-small"
+                            value="6|5억초과"
+                        >5억초과</v-btn
                         >
                       </v-btn-toggle>
                       <p
-                        class="text-caption font-weight-light mt-2 flex-grow-1"
+                          class="text-caption font-weight-light  color-gray mt-2 flex-grow-1"
                       >
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
-                        >공동보험 미적용 선택 시 기준보험료 50% 할증 (보험료표 참조)
+                        >전년도 부가세과세표준증명 또는 손익계산서상의 매출액 확인요망
                       </p>
                     </div>
                   </v-col>
@@ -412,46 +511,39 @@
                     </div>
                     <div class="data-col w-100">
                       <v-btn-toggle
-                        v-model="insuranceDTO.insr_clm_lt_amt"
-                        name="insr_clm_lt_amt"
-                        divided
-                        variant="outlined"
-                        class="align-stretch w-100"
-                        :disabled="isReadOnlyAll"
+                          v-model="insuranceDTO.insr_clm_lt_amt"
+                          name="insr_clm_lt_amt"
+                          divided
+                          variant="outlined"
+                          class="align-stretch w-100"
+                          :disabled="isReadOnlyAll"
                       >
                         <v-btn
-                          color="primary"
-                          class="flex-grow-1"
-                          value="30000000|3천만원"
-                          >3천만원</v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            value="50000000|5천만원"
+                        >5천만원</v-btn
                         >
                         <v-btn
-                          color="primary"
-                          class="flex-grow-1"
-                          value="50000000|5천만원"
-                          >5천만원</v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            value="100000000|1억원"
+                        >1억원</v-btn
                         >
                         <v-btn
-                          color="primary"
-                          class="flex-grow-1"
-                          value="100000000|1억원"
-                          >1억원</v-btn
-                        >
-                        <v-btn
-                          v-if="insuranceDTO.user_cd === 'IND'"
-                          color="primary"
-                          class="flex-grow-1"
-                          value="200000000|2억원"
-                          >2억원</v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            value="200000000|2억원"
+                        >2억원</v-btn
                         >
                       </v-btn-toggle>
-                      <p class="text-caption font-weight-light mt-2">
+                      <p class="text-caption font-weight-light color-gray mt-2">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>1
-                        청구당 / 연간총보상한도
+                        청구당 / 연간총보상한도(3명 이상 가입시 연간 총 보상한도는 2배수 적용)
                       </p>
                       <v-divider class="border-0" />
                       <!-- 법인인 경우 문구 표기 시작 -->
-                      <p class="text-caption font-weight-light mt-2" v-if="insuranceDTO.user_cd === 'JNT'">
+                      <p class="text-caption font-weight-light color-gray" v-if="insuranceDTO.user_cd === 'JNT'">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>연간 총 보상한도는 10억원을 초과하지 못함
                       </p>
                       <!-- 법인인 경우 문구 표기 끝 -->
@@ -464,52 +556,33 @@
                     </div>
                     <div class="data-col w-100">
                       <v-btn-toggle
-                        v-model="insuranceDTO.insr_psnl_brdn_amt"
-                        name="insr_psnl_brdn_amt"
-                        divided
-                        variant="outlined"
-                        class="align-stretch w-100"
-                        :disabled="isReadOnlyAll"
+                          v-model="insuranceDTO.insr_psnl_brdn_amt"
+                          name="insr_psnl_brdn_amt"
+                          divided
+                          variant="outlined"
+                          class="align-stretch w-100"
+                          :disabled="isReadOnlyAll"
                       >
                         <v-btn
-                          v-if="insuranceDTO.user_cd === 'IND'"
-                          color="primary"
-                          class="flex-grow-1"
-                          value="1000000|1백만원"
-                          >1백만원</v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            value="3000000|3백만원"
+                        >3백만원</v-btn
                         >
                         <v-btn
-                          color="primary"
-                          class="flex-grow-1"
-                          value="2000000|2백만원"
-                          >2백만원</v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            value="5000000|5백만원"
+                        >5백만원</v-btn
                         >
                         <v-btn
-                          color="primary"
-                          class="flex-grow-1"
-                          value="3000000|3백만원"
-                          >3백만원</v-btn
-                        >
-                        <v-btn
-                          color="primary"
-                          class="flex-grow-1"
-                          value="5000000|5백만원"
-                          >5백만원</v-btn
-                        >
-                        <v-btn
-                          color="primary"
-                          class="flex-grow-1"
-                          value="7000000|7백만원"
-                          >7백만원</v-btn
-                        >
-                        <v-btn
-                          color="primary"
-                          class="flex-grow-1"
-                          value="10000000|1천만원"
-                          >1천만원</v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            value="10000000|1천만원"
+                        >1천만원</v-btn
                         >
                       </v-btn-toggle>
-                      <p class="text-caption font-weight-light mt-2">
+                      <p class="text-caption font-weight-light color-gray mt-2">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>1
                         청구당
                       </p>
@@ -517,8 +590,6 @@
                   </v-col>
                 </v-row>
               </v-col>
-
-              <!-- 세무사 명단 시작 -->
               <v-col
                 cols="12"
                 sm="12"
@@ -536,7 +607,7 @@
                     <line x1="7" y1="5" x2="0" y2="12" stroke="#222222"></line>
                     <line x1="0" y1="0" x2="8" y2="7" stroke="#00AEEF"></line>
                   </svg>
-                  <p class="text-body-1 font-weight-bold">세무사 명단</p>
+                  <p class="text-body-1 font-weight-bold">변호사 명단</p>
                   <p class="text-body-2 color-gray-shadow ml-4">
                     총
                     <span class="color-primary">{{ insuranceDTO.cbr_data.filter(item => item.status_cd === "80").length  }}</span
@@ -645,8 +716,203 @@
           </v-window-item>
           <!-- 보험가입 종료 -->
 
-          <!-- 약관동의 시작 -->
+          <!-- 보험가입 [특약]  시작 -->
           <v-window-item value="3" :disabled="isReadOnlyAll">
+            <v-row class="v-box-table px-14 py-10">
+              <v-col cols="12" class="v-col">
+                <div class="d-flex align-center">
+                  <h3 class="text-h6 font-weight-bold">보험 계약</h3>
+                  <h3 class="text-body-1 font-weight-bold text-primary ml-3">
+                    특약
+                  </h3>
+                </div>
+                <p class="text-body-2 color-gray-shadow mt-2">
+                  <sup class="text-error">*</sup>는 필수 입력입니다.
+                </p>
+              </v-col>
+              <v-col cols="12" class="mt-10">
+                <v-row class="v-board-table">
+                  <v-col cols="12" sm="12" class="v-col">
+                    <div class="head-col">
+                      <p>특약명</p>
+                    </div>
+                    <div class="data-col">
+                      <v-text-field
+                          variant="outlined"
+                          disabled
+                          hide-details="auto"
+                          single-line
+                          class="w-100 readonly"
+                          density="comfortable"
+                      >고용 직원의 횡령 등 부정직행위 담보 특별약관(Dishonesty
+                        Extension)</v-text-field
+                      >
+                    </div>
+                  </v-col>
+                  <v-col cols="12" sm="12" class="v-col">
+                    <div class="head-col">
+                      <p>특약 선택</p>
+                      <sup class="text-error">*</sup>
+                    </div>
+                    <div class="data-col">
+                      <v-btn-toggle
+                          v-model="insuranceDTO.spct_join_yn"
+                          divided
+                          variant="outlined"
+                          class="w-100"
+                          style="min-width: 450px"
+                          density="comfortable"
+                          :disabled="isReadOnlyAll"
+                      >
+                        <v-btn color="primary" class="flex-grow-1" value="N"
+                        >가입 안함</v-btn
+                        >
+                        <v-btn color="primary" class="flex-grow-1" value="Y"
+                        >특약 가입</v-btn
+                        >
+                      </v-btn-toggle>
+                    </div>
+
+                  </v-col>
+                  <v-col
+                      cols="12"
+                      sm="12"
+                      class="v-col"
+                      v-if="insuranceDTO.spct_join_yn == 'Y'"
+                  >
+                    <div class="head-col">
+                      <p>보상 한도</p>
+                      <sup class="text-error">*</sup>
+                    </div>
+                    <div class="data-col">
+                      <v-btn-toggle
+                          v-model="insuranceDTO.spct_data.insr_clm_lt_amt"
+                          divided
+                          variant="outlined"
+                          class="w-100"
+                          density="comfortable"
+                          :disabled="isReadOnlyAll"
+                      >
+                        <v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            value="25000000|2천5백만원"
+                            :disabled="insuranceDTO?.insr_clm_lt_amt?.getValueBySplit(0)<50000000"
+                        >2천5백만원</v-btn
+                        >
+                        <v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            value="50000000|5천만원"
+                            :disabled="insuranceDTO?.insr_clm_lt_amt?.getValueBySplit(0)<100000000"
+                        >5천만원</v-btn
+                        >
+                        <v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            value="100000000|1억원"
+                            :disabled="insuranceDTO?.insr_clm_lt_amt?.getValueBySplit(0)<200000000"
+                        >1억원</v-btn
+                        >
+                      </v-btn-toggle>
+                      <p class="text-caption font-weight-light mt-2">
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1
+                        청구당 / 연간총보상한도<br/>
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>
+                        보상한도는 기본담보의 50% 적용을 원칙으로 함.
+                      </p>
+                    </div>
+                  </v-col>
+                  <v-col
+                      cols="12"
+                      sm="12"
+                      class="v-col"
+                      v-if="insuranceDTO.spct_join_yn == 'Y'"
+                  >
+                    <div class="head-col">
+                      <p>자기부담금</p>
+                      <sup class="text-error">*</sup>
+                    </div>
+                    <div class="data-col">
+                      <v-btn-toggle
+                          v-model="insuranceDTO.spct_data.insr_psnl_brdn_amt"
+                          divided
+                          variant="outlined"
+                          class="w-100"
+                          density="comfortable"
+                          :disabled="true"
+                      >
+                        <v-btn
+                            color="primary"
+                            class="flex-grow-1"
+                            value="5000000|5백만원"
+                        >5백만원</v-btn
+                        >
+                      </v-btn-toggle>
+                      <p class="text-caption font-weight-light mt-2">
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1
+                        청구당
+                      </p>
+                    </div>
+                  </v-col>
+                  <v-col
+                      cols="12"
+                      sm="12"
+                      class="v-col"
+                      v-if="insuranceDTO.spct_join_yn == 'Y'"
+                  >
+                    <div class="head-col">
+                      <p>사무원 수</p>
+                      <sup class="text-error">*</sup>
+                    </div>
+                    <div class="data-col">
+                      <v-text-field
+                          name="insr_spct_cnt"
+                          v-model="insuranceDTO.spct_data.cbr_cnt"
+                          variant="outlined"
+                          type="number"
+                          @input="validateSpctNum"
+                          hide-details="auto"
+                          :disabled="isReadOnlyAll"
+                      /> <p style="margin-left: 4px">명</p>
+                      <p class="text-caption font-weight-light mt-2">
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>
+                        각 지방 변호사회에 사무원으로 등록된 전 직원의 일괄가입 조건이며, 변호사 유자격자는 제외.<br/>
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>
+                        직원수 10명 초과시 개별 문의
+                      </p>
+                    </div>
+                  </v-col>
+                </v-row>
+
+                <div></div>
+              </v-col>
+            </v-row>
+            <v-row class="mt-10">
+              <v-col class="pa-0 d-flex justify-center">
+                <v-btn
+                    size="x-large"
+                    variant="outlined"
+                    color="dark"
+                    v-if="tab > 1 && tab < 4"
+                    @click="onPrevPage()"
+                    class="mr-4"
+                >이전</v-btn
+                >
+                <v-btn
+                    size="x-large"
+                    variant="flat"
+                    color="dark"
+                    @click="onNextPage()"
+                >다음</v-btn
+                >
+              </v-col>
+            </v-row>
+          </v-window-item>
+          <!-- 보험가입 [특약]  종료 -->
+
+          <!-- 약관동의 시작 -->
+          <v-window-item value="4" :disabled="isReadOnlyAll">
             <v-row class="v-box-table">
               <v-col cols="12" class="px-16 py-10">
                 <h3 class="text-h6 font-weight-bold">약관 동의</h3>
@@ -796,7 +1062,7 @@
                   class="list-style-size-small list-style-type-disc text-14 mt-8 pl-5"
                 >
                   <li>
-                    이 보험상품은 한국세무사회를 단체계약자, 가입 회원을
+                    이 보험상품은 대한변호사협회를 단체계약자, 가입 회원을
                     피보험자로 하는 단체계약 프로그램입니다.
                   </li>
                   <li>
@@ -841,9 +1107,12 @@
                   </p>
                   <p class="text-body-2 mt-2">
                     피보험자 :
-                    <span class="d-inline-block w-sm-min-110 px-4 py-1">{{
-                      insuranceDTO.user_nm
-                    }}</span>
+                    <span class="d-inline-block w-sm-min-110 px-4 py-1" v-if="insuranceDTO.user_cd=='IND'">
+                      {{ insuranceDTO.user_nm }}
+                    </span>
+                    <span class="d-inline-block w-sm-min-110 px-4 py-1" v-if="insuranceDTO.cbr_data.length>0 && insuranceDTO.user_cd=='JNT'">
+                      v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}}명
+                    </span>
                   </p>
                 </div>
                 <div class="d-flex justify-space-between align-center">
@@ -896,6 +1165,9 @@
             <v-col cols="12" class="mb-1">
               <p class="font-weight-medium">보험계약정보</p>
             </v-col>
+            <v-col cols="12" class="mb-2">
+              <p class="font-weight-medium">- 기본담보</p>
+            </v-col>
             <v-col cols="12">
               <p class="text-body-2 color-gray-shadow">보험기간</p>
               <p class="text-body-2 text-right">
@@ -903,9 +1175,9 @@
               </p>
             </v-col>
             <v-col cols="12">
-              <p class="text-body-2 color-gray-shadow">공동보험</p>
+              <p class="text-body-2 color-gray-shadow">매출액구간</p>
               <p class="text-body-2 text-right">
-                {{ insuranceDTO?.insr_pblc_brdn_rt?.getValueBySplit(1) }}
+                {{ insuranceDTO.insr_take_sec.getValueBySplit(1) }}
               </p>
             </v-col>
             <v-col cols="12">
@@ -935,21 +1207,20 @@
             <v-col cols="12" v-if="insuranceDTO.user_cd == 'IND'">
               <p class="text-body-2 color-gray-shadow">할인 및 할증율</p>
               <p class="text-body-2 text-right">
-                {{ insuranceDTO.insr_sale_rt }} % 적용
+                {{ insuranceDTO.insr_sale_rt }}% 적용
               </p>
             </v-col>
             <!-- 개인만 보여주는 영역 끝 -->
 
             <!-- 법인만 보여주는 영역 시작 -->
             <v-col cols="12" v-if="insuranceDTO.user_cd != 'IND'">
-              <p class="text-body-2 color-gray-shadow">세무사 인원수</p>
+              <p class="text-body-2 color-gray-shadow">변호사 인원수</p>
               <p class="text-body-2 text-right">
-                <!-- {{ insuranceDTO.cbr_data.length }} 명 -->
-                {{ insuranceDTO.cbr_data.filter(item => item.status_cd === "80").length  }} 명
+                {{ insuranceDTO.cbr_cnt }} 명
               </p>
             </v-col>
             <v-col cols="12" v-if="insuranceDTO.user_cd != 'IND'">
-              <p class="text-body-2 color-gray-shadow">세무사 인원수 할인율</p>
+              <p class="text-body-2 color-gray-shadow">인원수 할인율</p>
               <p class="text-body-2 text-right">
                 {{ insuranceDTO.insr_pcnt_sale_rt }} %
               </p>
@@ -964,6 +1235,92 @@
             </v-col>
             <!-- 합동/법인만 보여주는 영역 끝 -->
           </v-row>
+
+          <!-- 보험계약 기본담보 시작 -->
+          <v-row class="mx-10 py-6 border-top-lightgray-1">
+            <v-col cols="12">
+              <p class="text-body-1 font-weight-medium">
+                <vue-feather type="plus" class="vertical-align-middle" /> 산출
+                보험료
+              </p>
+              <!-- <p class="text-body-1 font-weight-medium text-right">{{(insuranceDTO.insr_amt + insuranceDTO.cons_data.insr_amt)?.toLocaleString()}}원</p> -->
+              <p class="text-body-1 font-weight-medium text-right">
+                {{ Number(insuranceDTO?.insr_premium_amt)?.toLocaleString() }}원
+              </p>
+            </v-col>
+          </v-row>
+          <!-- 보험계약 기본담보 끝 -->
+
+          <!-- 특약 요약정보 시작 -->
+          <v-row
+              class="mx-10 py-6 border-top-lightgray-1"
+              v-if="insuranceDTO.spct_join_yn == 'Y'"
+          >
+            <v-col cols="12" class="mb-2">
+              <p class="font-weight-medium">- 특약</p>
+            </v-col>
+            <v-col cols="12" class="flex-wrap">
+              <p class="text-body-2 color-gray-shadow">특약명</p>
+              <p class="text-body-2 text-right">
+                고용 직원 부정직행위 담보 특별약관<br/>(Dishonesty Extension)
+              </p>
+            </v-col>
+            <v-col cols="12">
+              <p class="text-body-2 color-gray-shadow">
+                보상한도(1청구당/연간총)
+              </p>
+              <p class="text-body-2 text-right">
+                {{
+                  insuranceDTO?.spct_data?.insr_clm_lt_amt?.getValueBySplit(1)
+                }}
+                <span class="text-body-2 text-right" v-if="insuranceDTO?.spct_data?.insr_clm_lt_amt?.getValueBySplit(1) !== '2천5백만원'">/ {{ insuranceDTO?.spct_data?.insr_year_clm_lt_amt }}</span>
+              </p>
+            </v-col>
+            <v-col cols="12">
+              <p class="text-body-2 color-gray-shadow">자기부담금(1청구당)</p>
+              <p class="text-body-2 text-right">
+                {{
+                  insuranceDTO?.spct_data?.insr_psnl_brdn_amt?.getValueBySplit(
+                      1
+                  )
+                }}
+              </p>
+            </v-col>
+            <v-col cols="12">
+              <p class="text-body-2 color-gray-shadow">기준보험료</p>
+              <p class="text-body-2 text-right">
+                {{
+                  Number(
+                      insuranceDTO?.spct_data?.insr_base_amt
+                  ).toLocaleString()
+                }}
+                원
+              </p>
+            </v-col>
+            <v-col cols="12">
+              <p class="text-body-2 color-gray-shadow">사무원 수</p>
+              <p class="text-body-2 text-right">
+                {{ insuranceDTO?.spct_data?.cbr_cnt }} 명
+              </p>
+            </v-col>
+          </v-row>
+          <v-row
+              class="mx-10 py-6 border-top-lightgray-1"
+              v-if="insuranceDTO.spct_join_yn == 'Y'"
+          >
+            <v-col cols="12">
+              <p class="text-body-1 font-weight-medium">
+                <vue-feather type="plus" class="vertical-align-middle" /> 산출
+                보험료
+              </p>
+              <p class="text-body-1 font-weight-medium text-right">
+                {{
+                  Number(insuranceDTO?.spct_data?.insr_amt).toLocaleString()
+                }}원
+              </p>
+            </v-col>
+          </v-row>
+          <!-- 특약 요약정보 끝 -->
 
           <v-row class="px-10 py-6 border-top-lightgray-1">
             <v-col cols="12">
@@ -998,11 +1355,11 @@
           </p>
           <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'IND'">
             <i class="mdi mdi-alert-circle-outline mr-1"></i
-            ><span class="color-primary">세무사 성명과 등록번호</span>를 함께
+            ><span class="color-primary">변호사 성명과 등록번호</span>를 함께
             기재하여 송금해주시기 바랍니다.
           </p>
           <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'JNT'">
-            <i class="mdi mdi-alert-circle-outline mr-1"></i><span class="color-primary">합동명으로 일괄
+            <i class="mdi mdi-alert-circle-outline mr-1"></i><span class="color-primary">법인 및 사무소명으로 일괄
             송금</span>하여 주시기 바랍니다.
           </p>
 
@@ -1109,7 +1466,6 @@ import { useAuthStore } from '@/stores';
 import router from '@/router';
 import dayjs from 'dayjs'
 
-import { isLeapYear, calByString } from '../../../util/util';
 import { MessageBoxDTO } from '@/model';
 import MessageBox from '@/components/MessageBox.vue';
 
@@ -1149,7 +1505,7 @@ const messageBoxDTO = ref(new MessageBoxDTO());
 // 오늘일자
 let today = dayjs().format('YYYY-MM-DD');
 
-const tab = ref(1);
+const tab = ref('1');
 
 const page = ref({
   title: '전문인배상책임보험 가입',

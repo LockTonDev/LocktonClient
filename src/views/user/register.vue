@@ -304,7 +304,7 @@
                               <VTextFieldWithValidation v-model="userDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line density="comfortable" maxlength="20" />
                             </div>
                           </v-col>
-                          <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd == 'TAX'">
+                          <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd != 'ACC'">
                             <div class="head-col">
                               <p>소속 지방회</p>
                               <sup class="text-error">*</sup>
@@ -398,7 +398,7 @@
                             <sup class="text-error">*</sup>
                           </div>
                           <div class="data-col">
-                            <VSelectWithValidation v-model="userDTO.corp_type" name="corp_type" label="사무소 형태" :items="corpTypeItem" class="w-200" single-line density="comfortable"></VSelectWithValidation>
+                            <VSelectWithValidation v-model="userDTO.corp_type" name="corp_type" label="사무소 형태" :items="corpTypeItems" class="w-200" single-line density="comfortable"></VSelectWithValidation>
                           </div>
                         </v-col>
                         
@@ -431,7 +431,7 @@
                                 :maskOption="{ mask: '######-#######' }"
                                 single-line
                                 density="comfortable"
-                                :disabled="userDTO.corp_type !== '002'"
+                                :disabled="userDTO.business_cd==='ADV' && userDTO.corp_type !== '003'"
                               />
                           </div>
                         </v-col>
@@ -716,7 +716,7 @@ import TermsOfPersonalInfo from '@/components/TermsOfPersonalInfo.vue';
 import TermsOfMarketing from '@/components/TermsOfMarketing.vue';
 import TermsOfCreditInfo from '@/components/TermsOfCreditInfo.vue';
 
-import { MessageBoxDTO } from '@/model';
+import { MessageBoxDTO, CommonCode } from '@/model';
 import MessageBox from '@/components/MessageBox.vue';
 
 
@@ -734,60 +734,9 @@ const messageBoxDTO = ref(new MessageBoxDTO());
 
 const businessCd = route.params.business_cd;
 
-const corpTypeItem = [
-  {
-    title: '법률사무소',
-    rmk: '법률사무소',
-    value: '001'
-  },{
-    title: '법무법인',
-    rmk: '법무법인',
-    value: '002'
-  },{
-    title: '합동법률',
-    rmk: '합동법률',
-    value: '003'
-  },
-]
 
-const regionCdItems = [
-  {
-    title: '서울',
-    rmk: '서울',
-    value: '010'
-  },
-  {
-    title: '중부',
-    rmk: '중부',
-    value: '020'
-  },
-  {
-    title: '인천',
-    rmk: '인천',
-    value: '030'
-  },
-  {
-    title: '부산',
-    rmk: '부산',
-    value: '040'
-  },
-  {
-    title: '대구',
-    rmk: '대구',
-    value: '050'
-  },
-  {
-    title: '광주',
-    rmk: '광주',
-    value: '060'
-  },
-  {
-    title: '대전',
-    rmk: '대전',
-    value: '070'
-  }
-];
-
+const regionCdItems = ref([]);
+const corpTypeItems = ref([]);
 const radios = ref('radio1');
 const isDaumPostDialog = ref(false);
 
@@ -890,6 +839,7 @@ async function isVerifyUserRegNo() {
     switch (userDTO.value.business_cd) {
       case 'TAX': message = '세무사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 세무사는 세무사등록증을 먼저 록톤으로 보내 세무사회원 확인 후 가입 진행되니 세무사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
       case 'ACC': message = '회계사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 회계사는 회계사등록증을 먼저 록톤으로 보내 회계사회원 확인 후 가입 진행되니 회계사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
+      case 'ADV': message = '변호사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 변호사는 변호사등록증을 먼저 록톤으로 보내 변호사회원 확인 후 가입 진행되니 회계사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
       default: message = '인증에 실패하였습니다.';
     }
     messageBoxDTO.value.setInfo( '인증 실패', message);
@@ -1062,9 +1012,13 @@ function onTermsOfMarketingClose(agrs: any) {
   termsOfMarketing.value = false;
   userDTO.value.agr3_yn = agrs.value;
 }
-  
+async function InitCode(){
+  regionCdItems.value = await CommonCode.getCodeList('TAX001');
+  corpTypeItems.value = await CommonCode.getCodeList('COM050');
+}
 // 초기 로딩
 onMounted(() => {
+  InitCode();
   // 상태 정상
   userDTO.value.status_cd = '30';
 

@@ -128,10 +128,12 @@
           <div class="ml-auto">
             <v-btn variant="outlined" size="small" class="mr-1" type="file" @click="fnExcelUpload('IND')">개인엑셀 입금</v-btn>
             <v-btn variant="outlined" size="small" class="mr-1" type="file" @click="fnExcelUpload('COR')">법인엑셀 입금</v-btn>
+            <v-btn variant="outlined" size="small" class="mr-1" type="file" @click="fnExcelUpload('JNT')">복수엑셀 입금</v-btn>
             <v-btn variant="outlined" size="small" class="mr-1" @click="fnAutoTRX()">간편 입금</v-btn>
             <v-btn variant="outlined" size="small" @click="fnAdd()">신규 입금</v-btn>
             <input type="file" ref="fileInputIND" @change="handleFileUploadIND" style="display: none" />
             <input type="file" ref="fileInputCOR" @change="handleFileUploadCOR" style="display: none" />
+            <input type="file" ref="fileInputJNT" @change="handleFileUploadJNT" style="display: none" />
           </div>
         </v-card-title>
         <v-card-text class="pa-0">
@@ -319,7 +321,9 @@ import {
   UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND,
   UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR,
   DOWNLOAD_EXCEL,
-  UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND
+  UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND,
+  UPLOAD_EXCEL_INSURANCE_ADV_TRE_JNT
+
 } from '../../../util/excelupdn';
 
 const authStore = useAuthStore();
@@ -436,6 +440,7 @@ async function fnSearch() {
 
 const fileInputIND = ref(null);
 const fileInputCOR = ref(null);
+const fileInputJNT = ref(null);
 
 async function handleFileUploadIND(event) {
   try {
@@ -463,20 +468,39 @@ async function handleFileUploadIND(event) {
 async function handleFileUploadCOR(event) {
   try {
     let resultData;
-    if(route.params.business_cd=='ADV') {
-      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR(event);
-      console.log(excelList);
-      resultData = await apiADMIN.setADV_TRX(excelList);
-    } else {
+    if(route.params.business_cd!='ADV') {
       const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR(event);
       console.log(excelList);
       resultData = await apiADMIN.setTAX_TRX(excelList);
+      if (resultData.success) {
+        messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
+      } else {
+        messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+      }
     }
+  } catch (e) {
+    messageBoxDTO.value.setWarning('오류', `오류가 발생하였습니다.<br/>${e}`);
+  } finally {
+    event.target.value = '';
+  }
+}
 
-    if (resultData.success) {
-      messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
-    } else {
-      messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+async function handleFileUploadJNT(event) {
+  try {
+    console.log('here')
+    let resultData;
+    if(route.params.business_cd=='ADV') {
+      console.log('here2')
+      const excelList = await UPLOAD_EXCEL_INSURANCE_ADV_TRE_JNT(event);
+      console.log('here3')
+      console.log(excelList);
+      resultData = await apiADMIN.setADV_TRX(excelList);
+
+      if (resultData.success) {
+        messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
+      } else {
+        messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+      }
     }
   } catch (e) {
     messageBoxDTO.value.setWarning('오류', `오류가 발생하였습니다.<br/>${e}`);
@@ -488,6 +512,7 @@ async function handleFileUploadCOR(event) {
 async function fnExcelUpload(user_cd: string) {
   if (user_cd === 'IND') fileInputIND.value.click();
   if (user_cd === 'COR') fileInputCOR.value.click();
+  if (user_cd === 'JNT') fileInputJNT.value.click();
 }
 
 async function fnExcelDownload() {

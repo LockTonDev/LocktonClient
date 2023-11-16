@@ -321,7 +321,7 @@ export const UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND = async (event: any) => {
  * @param event
  * @returns
  */
-export const UPLOAD_EXCEL_INSURANCE_ADV_TRE_COR = async (event: any) => {
+export const UPLOAD_EXCEL_INSURANCE_ADV_TRE_JNT = async (event: any) => {
   return new Promise(async (resolve, reject) => {
     let excelList = [];
 
@@ -340,14 +340,14 @@ export const UPLOAD_EXCEL_INSURANCE_ADV_TRE_COR = async (event: any) => {
           worksheet.eachRow((row, index) => {
             if (index === 1) return;
 
-            if (getEmpty(row.getCell(EXCEL_TAX_COR.보험식별번호).value) !== '') {
+            if (getEmpty(row.getCell(EXCEL_ADV_JNT.보험식별번호).value) !== '') {
               insuranceDTO = new InsuranceDTO();
 
-              insuranceDTO.insurance_uuid = row.getCell(EXCEL_TAX_COR.보험식별번호).value;
-              insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_TAX_COR.총입금액).value;
-              insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_TAX_COR.차액).value;
+              insuranceDTO.insurance_uuid = row.getCell(EXCEL_ADV_JNT.보험식별번호).value;
+              insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_ADV_JNT.총입금액).value;
+              insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_ADV_JNT.차액).value;
 
-              insuranceDTO.status_nm = row.getCell(EXCEL_TAX_COR.상태).value;
+              insuranceDTO.status_nm = row.getCell(EXCEL_ADV_JNT.상태).value;
               try {
                 insuranceDTO.status_cd = statusCdItems.find(item => item.title == insuranceDTO.status_nm).value;
               } catch (e) {
@@ -355,14 +355,14 @@ export const UPLOAD_EXCEL_INSURANCE_ADV_TRE_COR = async (event: any) => {
                 // console.log(e);
               }
 
-              if (getEmpty(row.getCell(EXCEL_TAX_COR.입금구분).value) !== '') {
+              if (getEmpty(row.getCell(EXCEL_ADV_JNT.입금구분).value) !== '') {
                 let trxDataDTO = new TRXDataDTO();
 
-                trxDataDTO.trx_nm = row.getCell(EXCEL_TAX_COR.입금구분).value;
-                trxDataDTO.trx_amt = row.getCell(EXCEL_TAX_COR.입금금액).value;
-                trxDataDTO.trx_dt = dayjs(row.getCell(EXCEL_TAX_COR.처리일자).value).format('YYYY-MM-DD');
-                trxDataDTO.rmk = row.getCell(EXCEL_TAX_COR.비고).value;
-                trxDataDTO.acct_nm = row.getCell(EXCEL_TAX_COR.예금주명).value;
+                trxDataDTO.trx_nm = row.getCell(EXCEL_ADV_JNT.입금구분).value;
+                trxDataDTO.trx_amt = row.getCell(EXCEL_ADV_JNT.입금금액).value;
+                trxDataDTO.trx_dt = dayjs(row.getCell(EXCEL_ADV_JNT.처리일자).value).format('YYYY-MM-DD');
+                trxDataDTO.rmk = row.getCell(EXCEL_ADV_JNT.비고).value;
+                trxDataDTO.acct_nm = row.getCell(EXCEL_ADV_JNT.예금주명).value;
 
                 try {
                   trxDataDTO.trx_cd = trxCdItems.find(item => item.title == trxDataDTO.trx_nm).value;
@@ -377,13 +377,13 @@ export const UPLOAD_EXCEL_INSURANCE_ADV_TRE_COR = async (event: any) => {
 
               excelList.push(insuranceDTO);
             } else {
-              if (getEmpty(row.getCell(EXCEL_TAX_COR.입금구분).value) !== '') {
+              if (getEmpty(row.getCell(EXCEL_ADV_JNT.입금구분).value) !== '') {
                 let trxDataDTO = new TRXDataDTO();
-                trxDataDTO.trx_nm = row.getCell(EXCEL_TAX_COR.입금구분).value;
-                trxDataDTO.trx_amt = row.getCell(EXCEL_TAX_COR.입금금액).value;
-                trxDataDTO.trx_dt = dayjs(row.getCell(EXCEL_TAX_COR.처리일자).value).format('YYYY-MM-DD');
-                trxDataDTO.rmk = row.getCell(EXCEL_TAX_COR.비고).value;
-                trxDataDTO.acct_nm = row.getCell(EXCEL_TAX_COR.예금주명).value;
+                trxDataDTO.trx_nm = row.getCell(EXCEL_ADV_JNT.입금구분).value;
+                trxDataDTO.trx_amt = row.getCell(EXCEL_ADV_JNT.입금금액).value;
+                trxDataDTO.trx_dt = dayjs(row.getCell(EXCEL_ADV_JNT.처리일자).value).format('YYYY-MM-DD');
+                trxDataDTO.rmk = row.getCell(EXCEL_ADV_JNT.비고).value;
+                trxDataDTO.acct_nm = row.getCell(EXCEL_ADV_JNT.예금주명).value;
 
                 try {
                   trxDataDTO.trx_cd = trxCdItems.find(item => item.title == trxDataDTO.trx_nm).value;

@@ -12,7 +12,7 @@
         <div class="text-h6 font-weight-medium">
           보험가입신청서
           <span class="text-20 text-red ml-2" v-if="isPdf && insuranceDTO.user_cd === 'IND' && !isAdmin && !isNotAuth"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 생년월일(6자리) 입니다.</span>
-          <span class="text-20 text-red ml-2" v-if="isPdf && insuranceDTO.user_cd === 'COR' && !isAdmin && !isNotAuth"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 사업자번호 뒤 5자리 입니다.</span>
+          <span class="text-20 text-red ml-2" v-if="isPdf && insuranceDTO.user_cd === 'JNT' && !isAdmin && !isNotAuth"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 사업자번호 뒤 5자리 입니다.</span>
         </div>
 
         <div class="d-flex justify-end" >
@@ -40,7 +40,7 @@
         <div :class="isPdf?'d-none':''">
           <div id="printDiv">
             <!-- 개인 가입정보 시작-->
-            <div class="insuranceForm-wrap" v-if="insuranceDTO.user_cd === 'IND'">
+            <div class="insuranceForm-wrap" v-if="insuranceDTO.user_cd === 'IND' && insuranceDTO.spct_join_yn === 'Y'">
               <div :class="isPdf?'print-wrap':''">
                 <!--header-->
                 <header>
@@ -256,7 +256,7 @@
                         <v-col cols="12">
                           <div class="head-col">특약명</div>
                           <div class="data-col">
-                            사무원의 횡령 등 부정직행위 담보 특별약관(Dishonesty
+                            고용 직원 부정직행위 담보 특별약관(Dishonesty
                             Extension)
                           </div>
                         </v-col>
@@ -264,9 +264,7 @@
                           <div class="head-col flex-wrap">보상한도</div>
                           <div class="data-col">
                             {{
-                              insuranceDTO?.spct_data?.insr_clm_lt_amt?.getValueBySplit(
-                                  1
-                              )
+                              insuranceDTO?.spct_data?.insr_clm_lt_amt?.getValueBySplit(1)
                             }}
                             / {{ insuranceDTO?.spct_data?.insr_year_clm_lt_amt
                             }}<span class="text-10 color-gray ml-2"
@@ -307,14 +305,14 @@
                   <!-- 보험 요약 종료 -->
 
                   <!--최종 보험료 시작-->
-                  <div class="mt-4">
+                  <div class="mt-4" v-if="insuranceDTO.spct_join_yn == 'Y'">
                     <p class="font-weight-bold text-14 mb-2">총 납입보험료 정보</p>
                     <div class="table pa-4 text-center">
                       <span class="text-12 mx-4">기본 보험료</span>
                       <span class="text-14 mx-4 font-weight-medium"
                       >{{
                           Number(
-                              insuranceDTO?.insr_amt + insuranceDTO?.cons_data?.insr_amt
+                              insuranceDTO?.insr_amt
                           ).toLocaleString()
                         }}원</span
                       >
@@ -353,7 +351,7 @@
                   <!--최종 보험료 종료-->
 
                   <!-- 변경 정보 시작 -->
-                  <div class="mt-4" v-if="insuranceDTO.change_dt">
+                  <div class="mt-1" v-if="insuranceDTO.change_dt">
                     <p class="font-weight-bold text-14 mb-2 line-height-1-0"><span class="color-primary">&#x275A;</span>&nbsp;변경정보</p>
                     <v-row class="table">
                       <v-col cols="12" class="v-col">
@@ -537,9 +535,384 @@
                 <!--//footer-->
               </div>
             </div>
+            <div class="insuranceForm-wrap" v-if="insuranceDTO.user_cd === 'IND' && insuranceDTO.spct_join_yn === 'N'">
+              <div :class="isPdf?'print-wrap':''">
+                <!--header-->
+                <header>
+                  <h1 class="text-center">
+                    <p class="text-20 font-weight-bold color-primary line-height-1-2">
+                      전문직업배상책임보험
+                    </p>
+                    <p class="text-20 font-weight-bold line-height-1-2">
+                      보험가입신청서
+                    </p>
+                  </h1>
+                  <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
+                    본 보험은 대한변호사협회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 변호사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
+                  </p>
+                </header>
+                <!--//header-->
+
+                <main>
+                  <!-- 가입자 정보 시작 -->
+                  <div class="mt-4">
+                    <p class="font-weight-bold text-14 mb-2 line-height-1-0">
+                      <span class="color-primary">&#x275A;</span>&nbsp;계약자/피보험자 정보
+                    </p>
+                    <v-row class="table">
+                      <v-col cols="6" class="v-col">
+                        <div class="head-col">
+                          <p>보험계약자</p>
+                        </div>
+                        <div class="data-col">
+                          대한변호사협회
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="v-col">
+                        <div class="head-col">
+                          <p>보험기간</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.base_insr_st_dt }}(00:01) ~ {{ insuranceDTO.base_insr_cncls_dt }}(00:01)
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="v-col">
+                        <div class="head-col">
+                          <p>피보험자</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.user_nm }}
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="v-col">
+                        <div class="head-col">
+                          <p>생년월일</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.user_birth }}
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="v-col">
+                        <div class="head-col">
+                          <p>등록번호</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.user_regno }}
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="v-col">
+                        <div class="head-col">
+                          <p>소속 지방회</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.corp_region_nm }}
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="v-col">
+                        <div class="head-col">
+                          <p>사무소명</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.corp_nm }}
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="v-col">
+                        <div class="head-col">
+                          <p>사업자번호</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.corp_cnno }}
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="v-col">
+                        <div class="head-col">
+                          <p>사무소 전화</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.corp_telno }}
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="v-col">
+                        <div class="head-col">
+                          <p>사무소 팩스</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.corp_faxno }}
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="v-col">
+                        <div class="head-col">
+                          <p>담당자 성명</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.corp_cust_nm }}
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="v-col">
+                        <div class="head-col">
+                          <p>휴대 전화</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.corp_cust_hpno }}
+                        </div>
+                      </v-col>
+                      <v-col cols="12" class="v-col">
+                        <div class="head-col">
+                          <p>이메일</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.corp_cust_email }}
+                        </div>
+                      </v-col>
+                      <v-col cols="12" class="v-col">
+                        <div class="head-col">
+                          <p>사무소 주소</p>
+                        </div>
+                        <div class="data-col">
+                          ({{ insuranceDTO.corp_post }}) {{ insuranceDTO.corp_addr }} {{ insuranceDTO.corp_addr_dtl }}
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </div>
+                  <!-- 가입자 정보 종료 -->
+
+                  <!-- 보험 요약 시작 -->
+                  <div class="mt-4">
+                    <p class="font-weight-bold text-14 mb-2 line-height-1-0">
+                      <span class="color-primary">&#x275A;</span>&nbsp;보험 가입 상세
+                    </p>
+                    <!--기본담보 시작-->
+                    <div class="mt-1">
+                      <p class="text-12 font-weight-bold mb-1">
+                        <span class="color-primary">&#x275A;</span>&nbsp;기본담보
+                      </p>
+
+                      <v-row class="table">
+                        <v-col cols="6">
+                          <div class="head-col">보험기간</div>
+                          <div class="data-col">
+                            {{ insuranceDTO.insr_st_dt }}(00:01) ~
+                            {{ insuranceDTO.insr_cncls_dt }}(00:01)
+                          </div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div class="head-col">소급담보일</div>
+                          <div class="data-col">{{ insuranceDTO.insr_retr_dt }}</div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div class="head-col flex-wrap">보상한도</div>
+                          <div class="data-col">
+                            {{ insuranceDTO?.insr_clm_lt_amt?.getValueBySplit(1) }} /
+                            {{ insuranceDTO?.insr_year_clm_lt_amt
+                            }}<span class="text-10 color-gray ml-2"
+                          >(1청구당/연간총)</span
+                          >
+                          </div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div class="head-col flex-wrap">자기부담금</div>
+                          <div class="data-col">
+                            {{ insuranceDTO?.insr_psnl_brdn_amt?.getValueBySplit(1) }}
+                            <span class="text-10 color-gray ml-2">(1청구당)</span>
+                          </div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div class="head-col">매출액구간</div>
+                          <div class="data-col">
+                            {{ insuranceDTO?.insr_take_sec?.getValueBySplit(1) }}
+                          </div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div class="head-col">기준보험료</div>
+                          <div class="data-col">
+                            {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
+                          </div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div class="head-col">할인 및 할증률</div>
+                          <div class="data-col">
+                            {{ insuranceDTO.insr_sale_rt }}% 적용
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="point">
+                          <div class="head-col">산출보험료</div>
+                          <div class="data-col">
+                            {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <ul
+                        class="list-style-size-small list-style-type-disc text-11 pl-4 mt-2"
+                    >
+                      <li class="text-11">
+                        <p>
+                          보험료 입금 계좌번호 :
+                          <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                          <span class="text-10 mx-3">|</span>예금주 :
+                          <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
+                        </p>
+                      </li>
+                      <li class="color-error line-height-1-2">
+                        변호사 성명과 등록번호를 함께 기재하여 송금하여 주시기 바랍니다.
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- 보험 요약 종료 -->
+
+                  <!--최종 보험료 종료-->
+
+                  <!-- 변경 정보 시작 -->
+                  <div class="mt-1" v-if="insuranceDTO.change_dt">
+                    <p class="font-weight-bold text-14 mb-2 line-height-1-0"><span class="color-primary">&#x275A;</span>&nbsp;변경정보</p>
+                    <v-row class="table">
+                      <v-col cols="12" class="v-col">
+                        <div class="head-col">
+                          <p>변경일자</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.change_dt }}
+                        </div>
+                      </v-col>
+                      <v-col cols="12" class="v-col">
+                        <div class="head-col">
+                          <p>상세내용</p>
+                        </div>
+                        <div class="data-col">
+                          {{ insuranceDTO.change_rmk }}
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </div>
+                  <!-- 변경 정보 종료 -->
+                  <!-- 약관동의 시작 -->
+                  <div class="mt-4" v-if=isPdf>
+                    <p class="font-weight-bold text-14 mb-2 line-height-1-0">
+                      <span class="color-primary">&#x275A;</span>&nbsp;약관 동의
+                    </p>
+                    <v-row class="table vertical">
+                      <v-col cols="6" class="bg-background">
+                        <div class="w-70 pl-4 pr-2">신청내용 확인</div>
+                        <div class="w-30 px-1 bg-white">
+                          <VCheckBoxWithValidation
+                              v-model="insuranceDTO.agr10_yn"
+                              name="agr10_yn"
+                              label="확인함 (필수)"
+                              density="compact"
+                              class="v-checkbox flex-grow-0 ml-auto"
+                              readolny
+                          />
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="bg-background">
+                        <div class="w-70 pl-4 pr-2">보험약관 확인</div>
+                        <div class="w-30 px-1 bg-white">
+                          <VCheckBoxWithValidation
+                              v-model="insuranceDTO.agr20_yn"
+                              name="agr20_yn"
+                              label="확인함 (필수)"
+                              density="compact"
+                              class="v-checkbox flex-grow-0 ml-auto"
+                              readolny
+                          />
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="bg-background">
+                        <div class="w-70 pl-4 letter-spacing-030">계약 체결·이행 등을 위한 개인(신용)정보 처리 동의</div>
+                        <div class="w-30 px-1 bg-white">
+                          <VCheckBoxWithValidation
+                              v-model="insuranceDTO.agr30_yn"
+                              name="agr30_yn"
+                              label="확인함 (필수)"
+                              density="compact"
+                              class="v-checkbox flex-grow-0 ml-auto"
+                              readolny
+                          />
+                        </div>
+                      </v-col>
+                      <v-col cols="6" class="bg-background">
+                        <div class="w-70 pl-4 pr-2">상품설명확인서 확인</div>
+                        <div class="w-30 px-1 bg-white">
+                          <VCheckBoxWithValidation
+                              v-model="insuranceDTO.agr40_yn"
+                              name="agr40_yn"
+                              label="확인함 (필수)"
+                              density="compact"
+                              class="v-checkbox flex-grow-0 ml-auto"
+                              readolny
+                          />
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </div>
+                  <!-- 종료 -->
+
+                  <!--최종확인서명 시작-->
+                  <div class="mt-4" v-if=isPdf>
+                    <v-row class="table">
+                      <v-col cols="12" class="border-bottom-gray-1 px-8 py-4">
+                        <div class="w-80">
+                          <p class="text-11 line-height-1-4 word-break-keep-all">
+                            상기와 같이 보험계약사항을 확인하고 전문직업배상책임보험
+                            가입을 신청합니다. <br />피보험자는 동 웹사이트 회원가입,
+                            로그인 후 작성한 가입 신청 문서확인/개인정보처리 동의 사항
+                            인증절차를 승인함으로써 피보험자 서명에 갈음한 것으로
+                            동의하며 이를 확인합니다.
+                          </p>
+                        </div>
+                        <div class="w-20 d-flex justify-end">
+                          <VCheckBoxWithValidation
+                              v-model="insuranceDTO.agr50_yn"
+                              name="agr50_yn"
+                              label="확인함 (필수)"
+                              density="compact"
+                              class="v-checkbox flex-grow-0"
+                          />
+                        </div>
+                      </v-col>
+                      <v-col cols="6">
+                        <div class="head-col py-2">
+                          <p class="text-12">가입신청일</p>
+                        </div>
+                        <div class="data-col py-2 justify-end pr-8">
+                          <p class="text-12">{{ insuranceDTO.insr_reg_dt }}</p>
+                        </div>
+                      </v-col>
+                      <v-col cols="6">
+                        <div class="head-col py-2">
+                          <p class="text-12">피보험자</p>
+                        </div>
+                        <div class="data-col py-2 justify-end pr-8">
+                          <p class="text-12">{{ insuranceDTO.user_nm }}</p>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </div>
+                  <!--최종확인서명 종료-->
+                </main>
+
+                <!--footer-->
+                <footer v-if="isPdf">
+                  <v-divider class="border-0 mt-6" />
+                  <v-row justify="space-between" align="center">
+                    <v-col class="text-12">
+                      <span>문의처 : 록톤컴퍼니즈코리아손해보험중개㈜</span
+                      ><span class="mx-4 text-10">|</span
+                    ><span>대표전화 : 02.2011.0300</span>
+                    </v-col>
+                    <v-col class="flex-grow-0">
+                      <div style="width: 70px">
+                        <img src="/assets/Lockton_Logo_Black_simbol.png" class="w-100" />
+                      </div>
+                    </v-col>
+                  </v-row>
+                </footer>
+                <!--//footer-->
+              </div>
+            </div>
 
             <!-- 복수 가입정보 시작-->
-            <div class="insuranceForm-wrap" v-if="insuranceDTO.user_cd === 'JNT'">
+            <div class="insuranceForm-wrap" v-if="insuranceDTO.user_cd === 'JNT' && insuranceDTO.spct_join_yn === 'Y'">
               <div :class="isPdf?'print-wrap':''">
                 <!--header-->
                 <header>
@@ -602,7 +975,7 @@
                           <p>피보험자</p>
                         </div>
                         <div class="data-col">
-                          {{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}} 명
+                          <p v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}} 명</p>
                         </div>
                       </v-col>
                       <v-col cols="6" class="v-col">
@@ -723,7 +1096,6 @@
                         <v-col cols="6">
                           <div class="head-col flex-wrap">무사고 할인</div>
                           <div class="data-col">개인별 적용</div>
-                          <div class="data-col">{{ insuranceDTO.insr_sale_rt }} %</div>
                         </v-col>
                         <v-col cols="6">
                           <div class="head-col flex-wrap">인원수 할인</div>
@@ -875,8 +1247,8 @@
                   <!--최종 보험료 종료-->
   
                   <!-- 변경 정보 시작 -->
-                  <div class="mt-4" v-if="insuranceDTO.change_dt">
-                    <p class="font-weight-bold text-14 mb-2 line-height-1-0"><span class="color-primary">&#x275A;</span>&nbsp;변경 내역</p>
+                  <div class="mt-1" v-if="insuranceDTO.change_dt">
+                    <p class="font-weight-bold text-14 mb-2 line-height-1-0"><span class="color-primary">&#x275A;</span>&nbsp;변경정보</p>
                     <v-row class="table">
                       <v-col cols="12" class="v-col">
                         <div class="head-col">
@@ -1060,6 +1432,407 @@
                 </footer>
                 <!--//footer-->
               </div>
+            </div>
+
+              <!-- 복수 가입정보 시작-->
+              <div class="insuranceForm-wrap" v-if="insuranceDTO.user_cd === 'JNT' && insuranceDTO.spct_join_yn === 'N'">
+                <div :class="isPdf?'print-wrap':''">
+                  <!--header-->
+                  <header>
+                    <h1 class="text-center">
+                      <p class="text-20 font-weight-bold color-primary line-height-1-2">
+                        전문직업배상책임보험
+                      </p>
+                      <p class="text-20 font-weight-bold line-height-1-2">
+                        보험가입신청서
+                      </p>
+                    </h1>
+                    <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
+                      본 보험은 대한변호사협회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 변호사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
+                    </p>
+                  </header>
+                  <!--//header-->
+
+                  <main>
+
+                    <!-- 가입자 정보 시작 -->
+                    <div class="mt-4">
+                      <p class="font-weight-bold text-14 mb-2 line-height-1-0">
+                        <span class="color-primary">&#x275A;</span>&nbsp;계약자/피보험자 정보
+                      </p>
+                      <v-row class="table">
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>보험계약자</p>
+                          </div>
+                          <div class="data-col">
+                            대한변호사협회
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>보험기간</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.base_insr_st_dt }}(00:01) ~ {{ insuranceDTO.base_insr_cncls_dt }}(00:01)
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>사무소명</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.user_nm }}
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>대표자 성명</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.corp_ceo_nm }}
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>피보험자</p>
+                          </div>
+                          <div class="data-col">
+                            <p v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}} 명</p>
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>사업부 형태</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.corp_type }}
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>사업자번호</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.corp_cnno }}
+                            <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_cnno"  name="corp_cnno" label="사업자번호" single-line density="comfortable" readonly/> -->
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>법인번호</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.corp_bnno }}
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>사무소 전화</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.corp_telno }}
+                            <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_telno"  name="corp_telno" label="사무소 팩스" single-line density="comfortable"/> -->
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>사무소 팩스</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.corp_faxno }}
+                            <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_faxno" name="corp_taxno" label="사무소 팩스" single-line density="comfortable"/> -->
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>소속 지방회</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.corp_region_nm }}
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>담당자 성명</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.corp_cust_nm }}
+                            <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line density="comfortable"/> -->
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>휴대 전화</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.corp_cust_hpno }}
+                            <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_hpno" name="corp_cust_hpno" label="휴대 전화" single-line density="comfortable"/> -->
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="v-col">
+                          <div class="head-col">
+                            <p>이메일</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.corp_cust_email }}
+                            <!-- <VTextFieldWithValidation v-mod-el="insuranceDTO.corp_cust_email" name="corp_cust_email" label="이메일" single-line density="comfortable"/> -->
+                            <!-- <v-select :items="selectbox1" variant="outlined" hide-details="auto" label="도메인 선택" single-line density="comfortable" class="ml-2"></v-select> -->
+                          </div>
+                        </v-col>
+                        <v-col cols="12" class="v-col">
+                          <div class="head-col">
+                            <p>사무소 주소</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.corp_addr }}&nbsp;{{
+                              insuranceDTO.corp_addr_dtl
+                            }}
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <!-- 가입자 정보 종료 -->
+
+                    <!-- 보험 요약 시작 -->
+                    <div class="mt-2">
+                      <p class="font-weight-bold text-14 mb-1 line-height-1-0">
+                        <span class="color-primary">&#x275A;</span>&nbsp;보험 가입 상세
+                      </p>
+                      <!--기본담보 시작-->
+                      <div class="mt-1">
+                        <p class="text-12 font-weight-bold mb-1">
+                          <span class="color-primary">&#x275A;</span>&nbsp;기본담보
+                        </p>
+                        <v-row class="table">
+                          <v-col cols="6">
+                            <div class="head-col">보험기간</div>
+                            <div class="data-col">
+                              {{ insuranceDTO.insr_st_dt }}(00:01) ~
+                              {{ insuranceDTO.insr_cncls_dt }}(00:01)
+                            </div>
+                          </v-col>
+                          <v-col cols="6">
+                            <div class="head-col flex-wrap">소급담보일</div>
+                            <div class="data-col">개인별 적용</div>
+                          </v-col>
+                          <v-col cols="6">
+                            <div class="head-col flex-wrap">무사고 할인</div>
+                            <div class="data-col" >개인별 적용</div>
+                          </v-col>
+                          <v-col cols="6">
+                            <div class="head-col flex-wrap">인원수 할인</div>
+                            <div class="data-col">{{ insuranceDTO.insr_pcnt_sale_rt }} %</div>
+                          </v-col>
+                          <v-col cols="6">
+                            <div class="head-col flex-wrap">보상한도</div>
+                            <div class="data-col">
+                              {{ insuranceDTO?.insr_clm_lt_amt?.getValueBySplit(1) }} /
+                              {{ insuranceDTO?.insr_year_clm_lt_amt }}
+                              <span class="text-10 color-gray ml-2">(1청구당/연간총)</span>
+                            </div>
+                          </v-col>
+                          <v-col cols="6">
+                            <div class="head-col flex-wrap">자기부담금</div>
+                            <div class="data-col">
+                              {{ insuranceDTO?.insr_psnl_brdn_amt?.getValueBySplit(1) }}
+                              <span class="text-10 color-gray ml-2">(1청구당)</span>
+                            </div>
+                          </v-col>
+                          <v-col cols="6">
+                            <div class="head-col">매출액구간</div>
+                            <div class="data-col">
+                              {{ insuranceDTO?.insr_take_sec?.getValueBySplit(1) }}
+                            </div>
+                          </v-col>
+                          <v-col cols="6">
+                            <div class="head-col">기준보험료</div>
+                            <div class="data-col">
+                              {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
+                            </div>
+                          </v-col>
+                          <v-col cols="6">
+                            <div class="head-col">변호사 인원수</div>
+                            <div class="data-col">
+                              <!-- {{ insuranceDTO.cbr_data.length }} 명 -->
+                              {{ insuranceDTO.cbr_cnt  }} 명
+                            </div>
+                          </v-col>
+                          <v-col cols="6" class="point">
+                            <div class="head-col">산출 보험료</div>
+                            <div class="data-col">
+                              {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
+                            </div>
+                          </v-col>
+                        </v-row>
+                      </div>
+                      <ul
+                          class="list-style-size-small list-style-type-disc text-11 pl-4 mt-1"
+                      >
+                        <li>
+                          보험료 입금 계좌번호 :
+                          <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                          <span class="text-10 mx-3">|</span>예금주 :
+                          <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
+                        </li>
+                        <li class="color-error line-height-1-2">
+                          법인명으로 일괄 송금하여 주시기 바랍니다.
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- 보험 요약 종료 -->
+
+
+                    <!-- 변경 정보 시작 -->
+                    <div class="mt-1" v-if="insuranceDTO.change_dt">
+                      <p class="font-weight-bold text-14 mb-2 line-height-1-0"><span class="color-primary">&#x275A;</span>&nbsp;변경정보</p>
+                      <v-row class="table">
+                        <v-col cols="12" class="v-col">
+                          <div class="head-col">
+                            <p>일자</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.change_dt }}
+                          </div>
+                        </v-col>
+                        <v-col cols="12" class="v-col">
+                          <div class="head-col">
+                            <p>상세</p>
+                          </div>
+                          <div class="data-col">
+                            {{ insuranceDTO.change_rmk }}
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <!-- 변경 정보 종료 -->
+
+                    <!-- 약관동의 시작 -->
+                    <div class="mt-4" v-if=isPdf>
+                      <p class="font-weight-bold text-14 mb-2 line-height-1-0">
+                        <span class="color-primary">&#x275A;</span>&nbsp;약관 동의
+                      </p>
+                      <v-row class="table vertical">
+                        <v-col cols="6" class="bg-background">
+                          <div class="w-70 pl-4 pr-2">신청내용 확인</div>
+                          <div class="w-30 px-1 bg-white">
+                            <VCheckBoxWithValidation
+                                v-model="insuranceDTO.agr10_yn"
+                                name="agr10_yn"
+                                label="확인함 (필수)"
+                                density="compact"
+                                class="v-checkbox flex-grow-0 ml-auto"
+                                readolny
+                            />
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="bg-background">
+                          <div class="w-70 pl-4 pr-2">보험약관 확인</div>
+                          <div class="w-30 px-1 bg-white">
+                            <VCheckBoxWithValidation
+                                v-model="insuranceDTO.agr20_yn"
+                                name="agr20_yn"
+                                label="확인함 (필수)"
+                                density="compact"
+                                class="v-checkbox flex-grow-0 ml-auto"
+                                readolny
+                            />
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="bg-background">
+                          <div class="w-70 pl-4 letter-spacing-030">계약 체결·이행 등을 위한 개인(신용)정보 처리 동의</div>
+                          <div class="w-30 px-1 bg-white">
+                            <VCheckBoxWithValidation
+                                v-model="insuranceDTO.agr30_yn"
+                                name="agr30_yn"
+                                label="확인함 (필수)"
+                                density="compact"
+                                class="v-checkbox flex-grow-0 ml-auto"
+                                readolny
+                            />
+                          </div>
+                        </v-col>
+                        <v-col cols="6" class="bg-background">
+                          <div class="w-70 pl-4 pr-2">상품설명확인서 확인</div>
+                          <div class="w-30 px-1 bg-white">
+                            <VCheckBoxWithValidation
+                                v-model="insuranceDTO.agr40_yn"
+                                name="agr40_yn"
+                                label="확인함 (필수)"
+                                density="compact"
+                                class="v-checkbox flex-grow-0 ml-auto"
+                                readolny
+                            />
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <!-- 약관동의 종료 -->
+
+
+                    <!--최종확인서명 시작-->
+                    <div class="mt-4" v-if=isPdf>
+                      <v-row class="table">
+                        <v-col cols="12" class="border-bottom-gray-1 px-8 py-4">
+                          <div class="w-80">
+                            <p class="text-11 line-height-1-4 word-break-keep-all">
+                              상기와 같이 보험계약사항을 확인하고 전문직업배상책임보험
+                              가입을 신청합니다. <br />피보험자는 동 웹사이트 회원가입,
+                              로그인 후 작성한 가입 신청 문서확인/개인정보처리 동의 사항
+                              인증절차를 승인함으로써 피보험자 서명에 갈음한 것으로
+                              동의하며 이를 확인합니다.
+                            </p>
+                          </div>
+                          <div class="w-20 d-flex justify-end">
+                            <VCheckBoxWithValidation
+                                v-model="insuranceDTO.agr50_yn"
+                                name="agr50_yn"
+                                label="확인함 (필수)"
+                                density="compact"
+                                class="v-checkbox flex-grow-0"
+                            />
+                          </div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div class="head-col py-2">
+                            <p class="text-12">가입신청일</p>
+                          </div>
+                          <div class="data-col py-2 justify-end pr-8">
+                            <p class="text-12">{{ insuranceDTO.insr_reg_dt }}</p>
+                          </div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div class="head-col py-2">
+                            <p class="text-12">피보험자</p>
+                          </div>
+                          <div class="data-col py-2 justify-end pr-8">
+                            <p class="text-12" v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}} 명</p>
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <!--최종확인서명 종료-->
+                  </main>
+
+                  <!--footer-->
+                  <footer v-if="isPdf">
+                    <v-divider class="border-0 mt-4" />
+                    <v-row justify="space-between" align="center">
+                      <v-col class="text-12">
+                      <span>문의처 : 록톤컴퍼니즈코리아손해보험중개㈜</span
+                      ><span class="mx-4 text-10">|</span
+                      ><span>대표전화 : 02.2011.0300</span>
+                      </v-col>
+                      <v-col class="flex-grow-0">
+                        <div style="width: 70px">
+                          <img src="/assets/Lockton_Logo_Black_simbol.png" class="w-100" />
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </footer>
+                  <!--//footer-->
+                </div>
+
               <div class="html2pdf__page-break"></div>
 
               <!-- 가입자명단 (PDF용)-->

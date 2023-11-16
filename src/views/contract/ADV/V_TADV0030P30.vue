@@ -18,178 +18,204 @@
         <!-- PDF 출력 영역 시작-->
         <div :class="isPdf ? 'd-none' : ''">
           <div id="printDiv" class="certificatePrintFrame-wrap">
-            <!--가입증명서-->
-            <div>
-              <div class="print-wrap page1">
-                <header>
-                  <img src="../../../assets/images/db-join-logo.png" class="w-100" alt="" />
-                </header>
-                <main>
-                  <table class="table_db w-100">
-                    <colgroup>
-                      <col style="width: 30%" />
-                      <col style="width: auto" />
-                    </colgroup>
-                    <tbody>
-                    <tr>
-                      <th>피 보 험 자 :</th>
-                      <td>
-                        <p style="font-weight: bold; display: inline; margin-right: 60px">{{ insuranceDTO.user_nm }}</p>             변호사
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>증 권 번 호 :</th>
-                      <td>{{ insuranceDTO.insurance_no }}</td>
-                    </tr>
-                    <tr>
-                      <th>보 험 기 간 :</th>
-                      <td>{{ insuranceDTO.insr_st_dt }}(00:01) ~ {{ insuranceDTO.insr_cncls_dt }}</td>
-                    </tr>
-                    <tr>
-                      <th>보상한도액 :</th>
-                      <td>
-                        <p style="font-weight: bold; display: inline; margin-right: 30px">{{ insuranceDTO.insr_clm_lt_amt.getValueBySplit(1) }} / {{ insuranceDTO.insr_year_clm_lt_amt }} </p> (1청구당 / 총보상한도)
-                      </td>
-                    </tr>
-                    </tbody>
-                  </table>
-                  <p class="text-34 mt-14 px-2 py-1 text-center">변호사 배상책임보험<br/>가입업체임을 증명함.</p>
-                  <p class="text-21 mt-14 px-2 py-1 text-left">
-                    &nbsp;&nbsp;&nbsp;귀사 (하)는 「변호사배상책임보험」 에 가입하였으므로 상기 보험종목의<br/>
-                    보상하는 손해로 인하여 타인에 대한 법률상 배상책임이 발생한 경우<br/> 보험약관에 의거 당사가 이를 보상하여 드립니다.
-                  </p>
-                  <p class="text-15 line-height-1-4 mt-2 ml-16 mr-16">
-                    ※ 보험기간이 종료되었거나 보험료 미납으로 인해 계약이 해지된 경우에는 보험자의<br/>보상책임이 발생하지 않습니다.
-                  </p>
-
-                  <p class="text-15 mt-10 text-right mr-14">발행일 : {{today}}</p>
-                  <div class="w-100 d-flex justify-end mt-5">
-                    <img src="../../../assets/images/db-join-bottom1.png" class="w-48" alt="" />
-                  </div>
-                </main>
-                <footer>
-                </footer>
-              </div>
-            </div>
-            <div class="html2pdf__page-break"></div>
             <!--가입조건안내-->
             <div>
               <div class="print-wrap page1">
-                <header>
-                  <img src="../../../assets/images/db-join-logo2.png" class="w-100" alt="" />
+                <header class="position-relative">
+                  <img src="../../../assets/images/d-join-logo.png" alt="" />
+                  <h1 class="position-absolute bottom-0 left-130 pb-4 color-white">가입증명서</h1>
                 </header>
                 <main>
-                  <div class="position-relative" style="height: 30px">
-                    <p class="text-16 px-1 py-1 bg-background d-flex text-left position-absolute w-100 ml-3 pl-10">계약자 / 피보험자 관련사항</p>
-                    <img src="../../../assets/images/num1.png" class="position-absolute" style="height: 35px" alt="" />
-                  </div>
-                  <table class="normal-table2 w-100 mt-4" style="font-size: 15px">
+                  <dl class="d-flex flex-wrap w-70 ma-auto my-16 text-18">
+                    <dt class="my-1 w-20">피 보 험 자 :</dt>
+                    <dd class="my-1 w-80" v-if="insuranceDTO.user_cd === 'JNT' && insuranceDTO.cbr_data.length > 0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 변호사 외 {{ insuranceDTO.cbr_cnt - 1 }} 명</dd>
+                    <dd class="my-1 w-80" v-if="insuranceDTO.user_cd === 'IND'">{{ insuranceDTO.user_nm }} </dd>
+                    <dt class="my-1 w-20">증 권 번 호 :</dt>
+                    <dd class="my-1 w-80">{{ insuranceDTO.insurance_no }}</dd>
+                    <dt class="my-1 w-20">보 험 기 간 :</dt>
+                    <dd class="my-1 w-80">{{ insuranceDTO.insr_st_dt }}(00:01) ~ {{ insuranceDTO.insr_cncls_dt }}(00:01)</dd>
+                    <dt class="my-1 w-20">보상한도액 :</dt>
+                    <dd class="my-1 w-80">{{ insuranceDTO.insr_clm_lt_amt.getValueBySplit(1) }} / {{ insuranceDTO.insr_year_clm_lt_amt }} (1청구당/보상한도액)</dd>
+                  </dl>
+                  <h2 class="text-center my-16 py-8 text-34">변호사 배상책임보험<br />가입업체임을 증명함.</h2>
+                  <p class="w-80 ma-auto word-break-keep-all text-18">귀 사(하)는 「변호사배상책임보험」에 가입하였으므로 상기 보험종목 의 보상하는 손해로 인하여 타인에 대한 법률상배상책임이 발생한 경우 보험약관에 의거 당사가 이를 보상하여 드립니다.</p>
+                  <p class="w-70 ma-auto mt-8 word-break-keep-all text-16 color-gray">※ 보험기간이 종료되었거나 보험료 미납으로 인해 계약이 해지된 경우에는 보험자의 보상책임이 발생하지 않습니다.</p>
+                </main>
+                <footer class="">
+                  <p class="text-right mb-4 mr-4">
+                    발행일 :
+                    <span>{{ today }}</span>
+                  </p>
+                  <img src="../../../assets/images/d-join-bottom1.png" alt="" />
+                </footer>
+              </div>
+              <div class="html2pdf__page-break"></div>
+              <div class="print-wrap page2">
+                <header class="position-relative">
+                  <img src="../../../assets/images/d-join-logo.png" alt="" />
+                  <h1 class="position-absolute text-center bottom-0 w-100 pb-3 color-white">변호사배상책임보험 가입조건 안내</h1>
+                </header>
+                <main>
+                  <h2 class="title-wrap">
+                    <p class="h5 circle">1</p>
+                    <p class="h6 title">계약자 / 피보험자 관련사항</p>
+                  </h2>
+                  <table class="table">
                     <colgroup>
-                      <col style="width: 16.6666%"/>
+                      <col style="width: 20%" />
                       <col style="width: auto" />
-                      <col style="width: 16.6666%"/>
+                      <col style="width: 20%" />
                       <col style="width: auto" />
                     </colgroup>
                     <tbody>
-                      <tr>
-                        <th>계약자</th>
-                        <td>대한변호사협회</td>
-                        <th>사업자등록번호</th>
-                        <td>{{ insuranceDTO.corp_cnno }}</td>
-                      </tr>
-                      <tr>
-                        <th>피보험자</th>
-                        <td>{{  insuranceDTO.user_nm }} 변호사</td>
-                        <th>등록번호</th>
-                        <td>{{ insuranceDTO.user_regno }}</td>
-                      </tr>
-                      <tr>
-                        <th>주소</th>
-                        <td colspan="3">{{ insuranceDTO.corp_addr }}</td>
-                      </tr>
+                    <tr>
+                      <th>계약자</th>
+                      <td>대한변호사협회</td>
+                      <th>사업자등록번호</th>
+                      <td>{{ insuranceDTO.corp_cnno }}</td>
+                    </tr>
+                    <tr>
+                      <th>피보험자</th>
+                      <td colspan="3" v-if="insuranceDTO.user_cd === 'JNT' && insuranceDTO.cbr_data.length > 0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 변호사 외 {{ insuranceDTO.cbr_cnt - 1 }} 명 </td>
+                      <td v-if="insuranceDTO.user_cd === 'IND'">{{ insuranceDTO.user_nm }} </td>
+                      <th v-if="insuranceDTO.user_cd === 'IND'">등록번호</th>
+                      <td v-if="insuranceDTO.user_cd === 'IND'">{{ insuranceDTO.user_regno }}</td>
+                    </tr>
+                    <tr>
+                      <th>사무소 주소</th>
+                      <td colspan="3">{{ insuranceDTO.corp_addr }},&nbsp;{{ insuranceDTO.corp_addr_dtl }}</td>
+                    </tr>
                     </tbody>
                   </table>
-                  <div class="position-relative" style="margin-top: 20px; height: 30px">
-                    <p class="text-16 px-1 py-1 bg-background d-flex text-left position-absolute w-100 ml-3 pl-10">보험가입 관련사항</p>
-                    <img src="../../../assets/images/num2.png" class="position-absolute" style="height: 35px" alt="" />
-                  </div>
-                  <table class="normal-table2 w-100 mt-4" style="font-size: 15px">
+                  <h2 class="title-wrap">
+                    <p class="h5 circle">2</p>
+                    <p class="h6 title">보험가입 관련사항</p>
+                  </h2>
+                  <table class="table" v-if="insuranceDTO.spct_join_yn === 'Y'">
+                    <colgroup>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                      <th colspan="2">증권번호</th>
+                      <td colspan="3">{{ insuranceDTO.insurance_no }}</td>
+                      <th colspan="2">보험기간</th>
+                      <td colspan="8">{{ insuranceDTO.insr_st_dt }} ~ {{ insuranceDTO.insr_cncls_dt }}</td>
+                    </tr>
+                    <tr>
+                      <th colspan="2">보험종목</th>
+                      <td colspan="8" class="line-height-1-4">변호사배상책임보험(Lawyers Professional Liability Insurance)</td>
+                      <th colspan="2">소급담보일</th>
+                      <td v-if="insuranceDTO.user_cd === 'JNT'" colspan="3">피보험자명단 별첨</td>
+                      <td v-if="insuranceDTO.user_cd === 'IND'" colspan="3">{{ insuranceDTO.insr_retr_dt }} </td>
+                    </tr>
+                    <tr>
+                      <th colspan="5">보상한도 (1청구당 / 연간총)</th>
+                      <th colspan="5">자기부담금(1청구당)</th>
+                      <th colspan="5">납입보험료</th>
+                    </tr>
+                    <tr>
+                      <td colspan="5">{{ insuranceDTO.insr_clm_lt_amt.getValueBySplit(1) }} / {{ insuranceDTO.insr_year_clm_lt_amt }}</td>
+                      <td colspan="5">{{ insuranceDTO.insr_psnl_brdn_amt.getValueBySplit(1) }}</td>
+                      <td colspan="5">{{ Number(insuranceDTO.insr_amt).toLocaleString() }}원</td>
+                    </tr>
+                    <tr>
+                      <th colspan="2">보험종목</th>
+                      <td colspan="8" class="line-height-1-4">고용직원의 부정직(또는 사기행위) 확장 조항 (Dishonesty Extension)</td>
+                      <th colspan="2">소급담보일</th>
+                      <td colspan="3">{{ insuranceDTO.spct_data.insr_retr_dt }} </td>
+                    </tr>
+                    <tr>
+                      <th colspan="5">보상한도 (1청구당 / 연간총)</th>
+                      <th colspan="5">자기부담금(1청구당)</th>
+                      <th colspan="5">납입보험료</th>
+                    </tr>
+                    <tr>
+                      <td colspan="5">{{ insuranceDTO.spct_data.insr_clm_lt_amt.getValueBySplit(1) }} / {{ insuranceDTO.spct_data.insr_year_clm_lt_amt }}</td>
+                      <td colspan="5">{{ insuranceDTO.spct_data.insr_psnl_brdn_amt.getValueBySplit(1) }}</td>
+                      <td colspan="5">{{ Number(insuranceDTO.spct_data.insr_amt).toLocaleString() }}원</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <table class="table w-50 ml-auto" v-if="insuranceDTO.spct_join_yn === 'Y'">
+                    <tr>
+                      <th>총 납입보험료</th>
+                      <td>{{insuranceDTO.insr_tot_amt}} 원</td>
+                    </tr>
+                  </table>
+                  <table class="table" v-if="insuranceDTO.spct_join_yn !== 'Y'">
                     <colgroup>
                     </colgroup>
                     <tbody>
                     <tr>
                       <th colspan="3">보험종목</th>
-                      <td colspan="9">변호사배상책임보험 (Lawyers Professional Liability Insurance)</td>
+                      <td colspan="12" class="line-height-1-4">변호사배상책임보험(Lawyers Professional Liability Insurance)</td>
                     </tr>
                     <tr>
-                      <th colspan="1">증권번호</th>
+                      <th colspan="2">증권번호</th>
                       <td colspan="2">{{ insuranceDTO.insurance_no }}</td>
                       <th colspan="2">보험기간</th>
-                      <td colspan="3">{{ insuranceDTO.insr_st_dt }} ~ {{ insuranceDTO.insr_cncls_dt }}</td>
+                      <td colspan="4">{{ insuranceDTO.insr_st_dt }} ~ {{ insuranceDTO.insr_cncls_dt }}</td>
                       <th colspan="2">소급담보일</th>
-                      <td colspan="2">{{ insuranceDTO.insr_retr_dt }}</td>
+                      <td v-if="insuranceDTO.user_cd === 'JNT'" colspan="3">피보험자명단 별첨</td>
+                      <td v-if="insuranceDTO.user_cd === 'IND'" colspan="3">{{ insuranceDTO.insr_retr_dt }} </td>
                     </tr>
                     <tr>
-                      <th colspan="4">보상한도(1청구당/연간총)</th>
-                      <th colspan="4">자기부담금 (1청구당)</th>
-                      <th colspan="4">납입보험료</th>
+                      <th colspan="5">보상한도 (1청구당 / 연간총)</th>
+                      <th colspan="5">자기부담금(1청구당)</th>
+                      <th colspan="5">납입보험료</th>
                     </tr>
                     <tr>
-                      <td colspan="4">{{ insuranceDTO.insr_clm_lt_amt.getValueBySplit(1) }} / {{ insuranceDTO.insr_year_clm_lt_amt }}</td>
-                      <td colspan="4">{{ insuranceDTO.insr_psnl_brdn_amt.getValueBySplit(1) }}</td>
-                      <td colspan="4">{{ insuranceDTO.insr_tot_amt }} 원</td>
+                      <td colspan="5">{{ insuranceDTO.insr_clm_lt_amt.getValueBySplit(1) }} / {{ insuranceDTO.insr_year_clm_lt_amt }}</td>
+                      <td colspan="5">{{ insuranceDTO.insr_psnl_brdn_amt.getValueBySplit(1) }}</td>
+                      <td colspan="5">{{ Number(insuranceDTO.insr_tot_amt).toLocaleString() }}원</td>
                     </tr>
                     </tbody>
                   </table>
-                  <div class="position-relative" style="margin-top: 20px; height: 30px">
-                    <p class="text-16 px-1 py-1 bg-background d-flex text-left position-absolute w-100 ml-3 pl-10">보험조건</p>
-                    <img src="../../../assets/images/num3.png" class="position-absolute" style="height: 35px" alt="" />
-                  </div>
-                  <table class="normal-table2 w-100 mt-4" style="font-size: 15px">
-                    <colgroup>
-                    </colgroup>
-                    <tbody>
+                  <h2 class="title-wrap">
+                    <p class="h5 circle">3</p>
+                    <p class="h6 title">보험조건</p>
+                  </h2>
+                  <table class="table">
                     <tr>
-                      <td class="text-left ml-3 py-1">
-                        1) LawyersProfessional Liability Insurance Policy (Claims-made Basis)<br/>
-                        (변호사전문직업배상책임보험 보통약관 - 배상청구기준)<br/>
-                        2) Punitive Damage Exclusion Clause (징벌적 손해 부담보 특별약관)<br/>
-                        3) Nuclear Energy Liability Exclusion Clause (원자력위험 부담보 특별약관)<br/>
-                        4) All Costs & Expenses are included within the Limit of Liability (모든 비용은 보상한도액내 포함)<br/>
-                        5) Contractual Liability Excluded (계약상의 가중책임 부담보)<br/>
-                        6) Consequential Loss Excluded (결과적 손해 부담보)<br/>
-                        7) Unless covered by the Dishonesty Extension, notwithstanding any provision of the Policy Wording including, but not limited to, the Provision of the “Innocent Insured”, any claims or loss arising out of any dishonest, any intentional, dishonest, malicious, criminal or illegal act by the Insured shall not be covered. (고용직원의 부정직 (또는 사기행위) 확장조항을 추가하지 않는 한, 보통약관의 담보조항에도 불구하고 (‘선의의 피보험자’조항 등) 본 증권은 피보험자 또는 피보험자의 종업원에 의한 고의, 부정직, 악의, 범죄, 불법행위에 기인한 배상책임은 담보되지 아니함)<br/>
-                        8) War & Terrorism Exclusion Clause (전쟁 및 테러위험 부담보 특별약관)<br/>
-                        9) Millennium Exclusion Clause (서기 2천년 부담보 추가약관)<br/>
-                        10) Automatic Extended Reporting Period : 70 days (자동보고연장기간 : 70일)<br/>
-                        11) Claims Co-operation Clause (손해사고처리협조 특별약관)<br/>
-                        12)  Dishonesty Extension (Lawyer's Professional Liability) 고용직원의 부정직(또는 사기행위) 확장 조항 : 선택가입<br/>
-                        13)  기타 보험조건은 영문약관 및 요율안내서에 따름<br/>
+                      <td class="text-left pl-8 py-2">
+                        <ol class="list-style-type-demical">
+                          <li> LawyersProfessional Liability Insurance Policy (Claims-made Basis) <br/>(변호사전문직업배상책임보험 보통약관 - 배상청구기준)</li>
+                          <li> Punitive Damage Exclusion Clause (징벌적 손해 부담보 특별약관)</li>
+                          <li> Nuclear Energy Liability Exclusion Clause (원자력위험 부담보 특별약관)</li>
+                          <li> All Costs & Expenses are included within the Limit of Liability (모든 비용은 보상한도액내 포함)</li>
+                          <li> Contractual Liability Excluded (계약상의 가중책임 부담보)</li>
+                          <li> Consequential Loss Excluded (결과적 손해 부담보)</li>
+                          <li> Unless covered by the Dishonesty Extension, notwithstanding any provision of the Policy Wording including, but     not limited to, the Provision of the “Innocent Insured”, any claims or loss arising out of any dishonest, any intentional, dishonest, malicious, criminal or illegal act by the Insured shall not be covered. (고용직원의 부정직 (또는 사기행위) 확장조항을 추가하지 않는 한, 보통약관의 담보조항에도 불구하고 (‘선의의 피보험자’조항 등) 본 증권은 피보험자 또는 피보험자의 종업원에 의한 고의, 부정직, 악의, 범죄, 불법행위에 기인한 배상책임은 담보되지 아니함)</li>
+                          <li> War & Terrorism Exclusion Clause (전쟁 및 테러위험 부담보 특별약관)</li>
+                          <li> Millennium Exclusion Clause (서기 2천년 부담보 추가약관)</li>
+                          <li> Automatic Extended Reporting Period : 70 days (자동보고연장기간 : 70일)</li>
+                          <li> Claims Co-operation Clause (손해사고처리협조 특별약관)</li>
+                          <li>  Dishonesty Extension (Lawyer's Professional Liability) (고용직원의 부정직(또는 사기행위) 확장 조항 : 선택가입</li>
+                          <li> 기타 보험조건은 영문약관 및 요율안내서에 따름</li>
+                        </ol>
                       </td>
                     </tr>
-                    </tbody>
                   </table>
                 </main>
                 <footer>
-                  <p class="text-13 line-height-1-4 mt-2">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
-                  <div class="mt-5">
-                    <img src="../../../assets/images/h-join-bottom.png" alt="" />
-                  </div>
-                  <p class="text-13 color-gray">※ 사고발생시 모든 보상은 해당 계약의 보험가입조건과 약관내용에 따라 결정됩니다.</p>
+                  <div class="mt-2 text-12 line-height-1-4 text-center color-gray">※ 상품 및 보상관련 문의 : 록톤컴퍼니즈코리아손해보험중개㈜ 02) 2011-0300</div>
+                  <div class="mt-2 pa-2 text-center text-12 bg-d-join color-white line-height-1-0"></div>
                 </footer>
               </div>
               <div class="html2pdf__page-break"></div>
 
               <template v-for="(chunk, chunkIndex) in chunkedData" :key="chunkIndex">
-                <div class="print-wrap page2">
-                  <header>
-                    <img src="../../../assets/images/h-join-logo.png" alt="" />
-                    <h1 class="text-26 font-weight-bold line-height-1-3 color-deep-navy text-center mt-2">보 험 가 입 증 명 서</h1>
-                    <h2 class="text-16 font-weight-bold line-height-1-3 color-deep-navy text-center">INSURANCE CERTIFICATE</h2>
+                <div class="print-wrap page3">
+                  <header class="position-relative">
+                    <img src="../../../assets/images/d-join-logo.png" alt="" />
+                    <h1 class="position-absolute text-center bottom-0 w-100 pb-3 color-white">변호사배상책임보험 가입조건 안내</h1>
                   </header>
                   <main>
-                    <h3 class="text-16 px-2 py-1 bg-amber color-deep-navy mt-6">1. 피보험자(변호사) 명단</h3>
-                    <table class="table2 mt-1">
+                    <h2 class="title-wrap">
+                      <p class="h5 circle">4</p>
+                      <p class="h6 title">피보험자명단</p>
+                    </h2>
+                    <table class="table mt-3" style="font-size: 15px">
                       <thead>
                         <tr>
                           <th>성명</th>
@@ -203,7 +229,7 @@
 
                       <tbody v-if="chunk.length">
                         <template v-for="(row, index) in chunk">
-                          <tr v-if="index % 2 === 0">
+                          <tr v-if="index % 2 === 0" >
                             <td>{{ row.cbr_nm }}</td>
                             <td>{{ row.cbr_regno }}</td>
                             <td>{{ row.insr_retr_dt }}</td>
@@ -223,12 +249,9 @@
                       </tbody>
                     </table>
                   </main>
-                  <footer>
-                    <p class="text-13 line-height-1-4 mt-2">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
-                    <div class="mt-5">
-                      <img src="../../../assets/images/h-join-bottom.png" alt="" />
+                  <footer><div class="mt-5">
+                      <img src="../../../assets/images/db-join-bottom2.png" alt="" />
                     </div>
-                    <p class="text-13 color-gray">※ 사고발생시 모든 보상은 해당 계약의 보험가입조건과 약관내용에 따라 결정됩니다.</p>
                   </footer>
                 </div>
               </template>
@@ -279,7 +302,7 @@ const props = defineProps({
     type: Boolean,
     required: false
   }
-  
+
 });
 
 const today = dayjs().format('YYYY-MM-DD');
@@ -314,7 +337,7 @@ const onExportPDF = (viewType: string) => {
 
   if (insuranceDTO.value.user_cd === 'IND') {
     pdfPassword = insuranceDTO.value.user_birth;
-  } else if (insuranceDTO.value.user_cd === 'COR') {
+  } else if (insuranceDTO.value.user_cd === 'JNT') {
     pdfPassword = insuranceDTO.value.corp_cnno.slice(-5);
   }
 
@@ -368,6 +391,7 @@ const onExportPDF = (viewType: string) => {
 };
 
 onMounted(async () => {
+
   isPdf.value = props.isPdf;
   if (props.insurance_uuid) {
     const params = { insurance_uuid: props.insurance_uuid };
@@ -377,47 +401,8 @@ onMounted(async () => {
     // console.log(insuranceDTO.value);
   } else {
   }
-
   if (isPdf.value) {
     onExportPDF('view');
   }
 });
 </script>
-
-<style scoped>
-table_db {
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 0px;
-}
-
-table_db, th, td {
-  border: none;
-  text-align: center;
-  font-style: normal;
-  font-size: 20px;
-  font-weight: normal;
-  white-space: nowrap;
-  font-family: "NanumMyeongjo";
-}
-
-.normal-table2 {
-  border-collapse: collapse;
-  table-layout: fixed;
-  border-spacing: 0;
-  width: 100%;
-}
-.normal-table2 th {
-  text-align: center;
-  background-color: #fafafa;
-  font-weight: normal;
-  border:1px solid #000000;
-  font-size: 14px;
-}
-.normal-table2 td {
-  text-align: center;
-  border:1px solid #000000;
-  font-size: 14px;
-}
-
-</style>

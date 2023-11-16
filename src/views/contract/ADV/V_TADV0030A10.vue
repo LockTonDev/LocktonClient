@@ -51,7 +51,10 @@
         <tbody v-if="InsuranceList.length">
           <tr v-for="(row, index) in InsuranceList">
              <td class="text-center text-body-1">{{ row.status_cd !== '91' ? row.insurance_no : '' }}</td>
-            <td class="text-center text-body-1">{{ row.user_nm }}</td>
+            <td class="text-center text-body-1">
+              <p v-if="row.user_cd == 'IND'">{{ row.user_nm }}</p>
+              <p v-if="row.user_cd == 'JNT' && row.cbr_data.length > 0">{{ row.cbr_data[0].cbr_nm }} 외 {{row.cbr_cnt - 1}} 명</p>
+            </td>
             <td class="text-center text-body-1">
               <div v-if="row.insr_year === '2022'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
               <div v-if="row.insr_year !== '2022'" class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
@@ -243,11 +246,12 @@
   onMounted(async () => {    
       const params = ref([]);
       const resultData = await apiADV0030a.getDBSelList(params);
-      InsuranceList.value = resultData.data;
-      //newInsrYN.value = resultData.data.newInsrYN.data;
-      //renewalInsrUUID.value = resultData.data.renewalInsrUUID.data;
 
-      if(InsuranceList.value.length == 0) {// && newInsrYN.value == 'Y' && renewalInsrUUID.value == null) {
+      InsuranceList.value = resultData.data.list;
+      newInsrYN.value = resultData.data.newInsrYN[0].data;
+      renewalInsrUUID.value = resultData.data.renewalInsrUUID[0].data;
+
+      if(InsuranceList.value.length == 0 && newInsrYN.value == 'Y' && renewalInsrUUID.value == null) {
         isNoData.value = true;
       }
   });
