@@ -277,7 +277,9 @@
     d_TADV0040A.value.user_cd = _AUTH_USER.value.userCd;
     d_TADV0040A.value.business_cd = _AUTH_USER.value.businessCd;
 
-    const {data} = await apiA_TADV0030A.getDBSelStatus();
+    let {data} = await apiA_TADV0030A.getDBSelStatus();
+
+    data = data.filter(item => item.status_cd === '80');
     
     if(data.length > 0) {
       d_TADV0040A.value.insurance_no = data[0].insurance_no;

@@ -94,7 +94,8 @@
                     <v-row class="v-board-table">
                         <v-col cols="12" sm="6" class="v-col">
                           <div class="head-col">
-                            <p>법인명</p><sup class="text-error">*</sup>
+                            <p v-if="userDTO.user_cd === 'COR'">법인명</p>
+                            <p v-if="userDTO.user_cd === 'JNT'">사무소 명</p><sup class="text-error">*</sup>
                           </div>
                           <div class="data-col">
                             {{ userDTO.user_nm }}
@@ -131,7 +132,15 @@
                             {{ userDTO.user_id }}
                           </div>
                         </v-col> -->
-
+                      <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd === 'ADV'">
+                        <div class="head-col">
+                          <p>사무소 형태</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VSelectWithValidation v-model="userDTO.corp_type" name="corp_type" label="사무소 형태" :items="corpTypeItems" class="w-200" single-line density="comfortable" disabled="true"></VSelectWithValidation>
+                        </div>
+                      </v-col>
                       <v-col cols="12" sm="6" class="v-col">
                         <div class="head-col">
                           <p>법인번호</p><sup class="text-error">*</sup>
@@ -963,6 +972,7 @@ const authStore = useAuthStore();
 const { _AUTH_USER } = storeToRefs(authStore);
 
 const regionCdItems = ref([]);
+const corpTypeItems = ref([]);
 
 const userDTO = ref(new UserDTO());
 const messageBoxDTO = ref(new MessageBoxDTO());
@@ -1227,6 +1237,7 @@ watch(
 
 onMounted(async () => {
   regionCdItems.value = await CommonCode.getCodeList('TAX001');
+  corpTypeItems.value = await CommonCode.getCodeList('COM050');
   userDTO.value.is_user_email = true;
 });
 

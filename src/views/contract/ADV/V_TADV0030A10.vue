@@ -41,7 +41,7 @@
               <v-tooltip activator="parent" location="top">
                 가입증명서<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
                 <v-divider class="my-1"/>
-                개시일인 6월 30일 이후 영업일 기준 3일 후부터 출력 가능합니다.<br/>
+                개시일인 12월 1일 이후 영업일 기준 3일 후부터 출력 가능합니다.<br/>
                 중도 가입자의 경우에는 보험료 입금 익일 오후부터 출력 가능합니다.
               </v-tooltip>
             </th>
@@ -56,8 +56,8 @@
               <p v-if="row.user_cd == 'JNT' && row.cbr_data.length > 0">{{ row.cbr_data[0].cbr_nm }} 외 {{row.cbr_cnt - 1}} 명</p>
             </td>
             <td class="text-center text-body-1">
-              <div v-if="row.insr_year === '2022'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
-              <div v-if="row.insr_year !== '2022'" class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
+              <div v-if="row.insr_year === '2022' && row.status_cd !== 10">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
+              <div v-else class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
             <td class="text-center text-body-1">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">

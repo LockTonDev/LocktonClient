@@ -343,7 +343,8 @@
               </v-col>
               <v-col cols="12" sm="12" class="v-col">
                 <div class="head-col">
-                  <p>법인명</p>
+                  <p v-if="userDTO.user_cd === 'COR'">법인명</p>
+                  <p v-if="userDTO.user_cd === 'JNT'">사무소 명</p>
                   <sup class="text-error">*</sup>
                 </div>
                 <div class="data-col">

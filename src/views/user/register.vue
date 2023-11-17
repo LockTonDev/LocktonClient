@@ -383,7 +383,31 @@
                             <VTextFieldWithValidation v-model="userDTO.user_pwd_chk" name="user_pwd_chk" label="비밀번호 확인" type="password" single-line density="comfortable" maxlength="16" />
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="6" class="v-col">
+                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd ==='ADV'">
+                          <div class="head-col">
+                            <p>사무소 명</p>
+                            <sup class="text-error">*</sup>
+                          </div>
+                          <div class="data-col">  {{ userDTO.user_nm }}
+                            <!-- <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="" single-line density="comfortable" maxlength="25"/> -->
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd ==='ADV'">
+                          <div class="head-col">
+                            <p>대표자 성명</p>
+                            <sup class="text-error">*</sup>
+                          </div>
+                          <div class="data-col">
+                            <VTextFieldWithValidation
+                                v-model="userDTO.corp_ceo_nm"
+                                name="corp_ceo_nm"
+                                label="대표자 성명"
+                                single-line
+                                density="comfortable"
+                            />
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd!=='ADV'">
                           <div class="head-col">
                             <p>법인명</p>
                             <sup class="text-error">*</sup>
@@ -392,13 +416,14 @@
                             <!-- <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="" single-line density="comfortable" maxlength="25"/> -->
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="6" class="v-col">
+                        <v-col cols="12" sm="12" class="v-col" v-if="userDTO.business_cd === 'ADV'">
                           <div class="head-col">
                             <p>사무소 형태</p>
                             <sup class="text-error">*</sup>
                           </div>
                           <div class="data-col">
-                            <VSelectWithValidation v-model="userDTO.corp_type" name="corp_type" label="사무소 형태" :items="corpTypeItems" class="w-200" single-line density="comfortable"></VSelectWithValidation>
+                            <VSelectWithValidation v-model="userDTO.corp_type" name="corp_type" label="사무소 형태" :items="corpTypeItems" class="w-200" single-line density="comfortable"
+                            ></VSelectWithValidation>
                           </div>
                         </v-col>
                         
@@ -799,6 +824,17 @@ watch(
     userDTO.value.is_user_email = false;
   }
 );
+
+watch(
+    () => userDTO.value.corp_type,
+    (newValue, oldValue) => {
+      if(newValue !== '003'){
+        userDTO.value.corp_bnno = ''
+      }
+    }
+);
+
+
 
 function onComplete_DaumPost(result: VueDaumPostcodeCompleteResult) {
   userDTO.value.corp_post = result.zonecode;

@@ -49,7 +49,8 @@ export const calByString = (amount: string, num: number, maxAmt: number) => {
     천만원: 10000000,
     억원: 100000000
   };
-  const totalAmount = numbe * double * unit[amtHangul];
+
+  const totalAmount = amtNumber * num * unit[amtHangul];
   const units = Object.entries(unit).reverse();
 
   let result = '';

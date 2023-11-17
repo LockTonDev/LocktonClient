@@ -236,7 +236,7 @@ const isViewPWWithHpAuth = ref(false);
 
 const userDTO = ref(new UserDTO());
 const messageBoxDTO = ref(new MessageBoxDTO());
-const onlyIND = ['ADV', 'ACC']
+const onlyIND = ['ACC']
 
 
 async function isVerifyEMailAuthCode() {

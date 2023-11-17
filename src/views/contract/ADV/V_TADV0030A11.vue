@@ -687,7 +687,7 @@
                   <v-col cols="12" sm="12" class="v-col">
                     <div class="head-col">
                       <p v-if="insuranceDTO.user_cd === 'IND'">매출액</p>
-                      <p v-if="insuranceDTO.user_cd === 'JNT'">1인당 매출액</p>
+                      <p v-if="insuranceDTO.user_cd === 'JNT'">변호사 1인당<br/>평균 매출액</p>
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col w-100">
@@ -707,6 +707,8 @@
                     </div>
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
                         >부가세 또는 손익계산서상의 매출액 기재요망 (전년도 1.1 ~ 12월말까지 매출)<br/>
+                      <i class="mdi mdi-alert-circle-outline mr-2"></i
+                      >법무법인, 합동사무소의 연간총매출액을 변호사 수로 나눠 1인당 평균 매출액 기재<br/>
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
                         >전년 매출이 없는 경우 1년 예상 매출액 기재
                       </p>
@@ -970,7 +972,7 @@
                     <td v-if="row.isCheck">
                       {{ Number(row.insr_amt).toLocaleString() }}원
                     </td>
-                    <td colspan="2" v-if="!row.isCheck"><v-btn variant="outlined" @click="chkSaleRtCOR(insuranceDTO, index)">인증</v-btn></td>
+                    <td colspan="2" v-if="!row.isCheck"><v-btn variant="outlined" @click="chkSaleRtJNT(insuranceDTO, index)">인증</v-btn></td>
                     <td>
                       <v-btn variant="elevated" color="white" @click="delCBR(insuranceDTO, index)" size="small" class="min-width-auto pa-0" v-if="!isReadOnlyAll">
                         <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle"></vue-feather>
@@ -1895,7 +1897,7 @@ const isDuplication = ref(false);
 const renewalYN = ref('N');
 const insuranceUUID = ref('');
 const insr_take_amt = ref(0);
-const insr_take_sec = ref('0|1억이하');
+const insr_take_sec = ref('');
 
 const INSR_RATE_TABLE = ref([]);
 const INSR_RATE_MAX_DAYS = ref(0);
@@ -1956,7 +1958,6 @@ function isReadonlyByInsrStDt()
    * 2. 개인이면서 신규이면 항상 보험기간을 변경할 수 있게 한다
    * 3. 기준_보험시작일자가 소금담보일보다 작으면 갱신으로 판단하여 수정불가
    */
-  if (insuranceDTO.value.user_cd === 'JNT') return true;
   if (insuranceDTO.value.user_cd === 'IND' && renewalYN.value !== 'Y') return false;
   if (insuranceDTO.value.base_insr_st_dt < insuranceDTO.value.insr_retr_dt) {
     return false;
@@ -2057,7 +2058,7 @@ function onInsuranceFormClose() {
     nInitAmt = INSR_RATE_TABLE.value.기본담보.보험료.filter(data => data.key === sKey)[0].amt;
   
     // 기본 보험 계산식(합동)  기본금액 * 할인 할증 * 인원수 할인 * 기간일수 / 365
-    nTotAmt = (nInitAmt *  (nDCnt / INSR_RATE_MAX_DAYS.value)) * (1 - discountRate / 100) * nPCnt  * (1 + nRate / 100);
+    nTotAmt = (nInitAmt *  (nDCnt / INSR_RATE_MAX_DAYS.value)) * (1 + discountRate / 100) * (1 + nRate / 100);
 
     // 10원단위 절사
     nTotAmt = Math.floor(nTotAmt / 10) * 10;
@@ -2150,11 +2151,11 @@ const calInsrAmt = (data: any) => {
     for (var idx in data.cbr_data) {
       // data.cbr_data[idx].insr_st_dt = insuranceDTO.value.insr_st_dt;
       
-      // // 수기처리가 아니면 기초셋팅
-      // if(data.cbr_data[idx].insr_retr_yn !== 'Y') {
-      //   data.cbr_data[idx].insr_retr_dt = data.cbr_data[idx].insr_st_dt;
-      //   data.cbr_data[idx].insr_sale_rt = insuranceDTO.value.insr_sale_rt;
-      // }
+      // 수기처리가 아니면 기초셋팅
+      /*if( data.cbr_data[idx].insr_retr_yn !== 'Y') {
+        data.cbr_data[idx].insr_retr_dt = data.cbr_data[idx].insr_st_dt;
+        data.cbr_data[idx].insr_sale_rt = insuranceDTO.value.insr_sale_rt;
+      }*/
       
       // 연간 보험료 (365일 기준)
       data.cbr_data[idx].insr_base_amt = getInsrAmt(
@@ -2175,7 +2176,7 @@ const calInsrAmt = (data: any) => {
         data.insr_clm_lt_amt,
         data.insr_psnl_brdn_amt,
         data.cbr_data[idx].insr_sale_rt,
-        1
+        data.cbr_data.length
       );
       // 기본담보 보험료(할인할증적용)
       totAmt += data.cbr_data[idx].insr_amt;
@@ -2259,7 +2260,7 @@ function delCBR(list: any, rowIdx: number) {
  * 1. 법인 -> 법인
  * 2. 개인 -> 법인
  */
-async function chkSaleRtCOR(list: any, rowIdx: number) {
+async function chkSaleRtJNT(list: any, rowIdx: number) {
 
   // const nDupCnt = checkDuplicateData(insuranceDTO.value.cbr_data);
   // if (nDupCnt) {
@@ -2449,6 +2450,7 @@ function onCancel() {
 }
 
 async function onNextPage(values: any) {
+  console.log(insr_take_sec)
   if (!await checkValidation()) return false;
   if (isDuplication.value) return false;
   let tabiValue = parseInt(tab.value);
@@ -2919,7 +2921,9 @@ onMounted(async () => {
     insuranceDTO.value.insr_retr_yn = 'N'; // 소금담보수기보정 X
     insuranceDTO.value.insr_pcnt_sale_rt = 0; // 초기값
     insuranceDTO.value.insr_take_amt = 0;
-    insuranceDTO.value.insr_take_sec = '0|1억이하';
+    insuranceDTO.value.insr_take_sec = '';
+    insr_take_sec.value = '';
+    insr_take_amt.value = 0;
 
     insuranceDTO.value.spct_join_yn = 'N';
     insuranceDTO.value.insurance_no = insuranceRateDTO.value.insurance_no;
@@ -2982,7 +2986,10 @@ function changeTakeAmount() {
   if (num_insr_take_amt.startsWith('0') && num_insr_take_amt.length > 1){
     num_insr_take_amt =  num_insr_take_amt.replace(/^0+/, '');
   }
-  if (num_insr_take_amt <= 100000000){
+  if(num_insr_take_amt == 0) {
+    insr_take_sec.value = ''
+  }
+  else if (num_insr_take_amt <= 100000000){
     insr_take_sec.value = '0|1억이하'
   }else if (num_insr_take_amt <= 150000000){
     insr_take_sec.value = '1|1억5천이하'

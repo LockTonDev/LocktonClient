@@ -26,6 +26,7 @@ const 보험가입_변호사기본보험계약 = yup.object({
   insr_st_dt: yup.string().required('보험시작일자를 입력해주세요.'),
   insr_cncls_dt: yup.string().required('보험시작일자를 입력해주세요.'),
   insr_take_amt: yup.string().required('매출액을 입력해주세요.'),
+  insr_take_sec: yup.string().required('매출액을 입력해주세요.'),
   insr_clm_lt_amt: yup.string().required('보상한도를 선택해주세요.'),
   insr_psnl_brdn_amt: yup.string().required('자기부담금을 선택해주세요.')
 });
@@ -70,7 +71,7 @@ const 세무사_법인_보험계약 = yup.object({
 });
 
 const 보험사_복수_보험계약 = yup.object({
-  cbr_data: yup.array().of(
+  cbr_data: yup.array().min(1, `보험사 명단은 최소 1개 이상 입력해주세요.`).of(
       yup.object({
         cbr_nm: yup.string().required('보험사 명단 성명을 입력해주세요.'),
         cbr_brdt: yup.string().matches(/^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, '보험사 명단 생년월일 입력해주세요.'),
@@ -89,6 +90,7 @@ const 보험가입_가입정보_변호사_개인 = yup.object({
   corp_region_cd: yup.string().required('소속 지방회를 입력해주세요.')
 });
 const 보험가입_가입정보_변호사_복수 = yup.object({
+  corp_ceo_nm: yup.string().required('대표자명을 입력해주세요'),
   corp_region_cd: yup.string().required('소속 지방회를 입력해주세요.')
 });
 

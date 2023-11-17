@@ -983,7 +983,7 @@
                           <p>사업부 형태</p>
                         </div>
                         <div class="data-col">
-                          {{ insuranceDTO.corp_type }}
+                          {{ corpTypeItems.find(item => item.value ==  insuranceDTO.corp_type)?.title }}
                         </div>
                       </v-col>
                       <v-col cols="6" class="v-col">
@@ -1432,6 +1432,148 @@
                 </footer>
                 <!--//footer-->
               </div>
+              <div class="html2pdf__page-break"></div>
+
+              <!-- 가입자명단 (PDF용)-->
+              <template v-if="isPdf" v-for="chunkIndex in chunkedDivCount">
+                <div :class="isPdf ? 'print-wrap' : ''">
+                  <!-- header 영역 시작-->
+                  <header v-if="isPdf">
+                    <h1 class="text-center">
+                      <p class="text-20 font-weight-bold color-primary line-height-1-2">
+                        전문직업배상책임보험
+                      </p>
+                      <p class="text-20 font-weight-bold line-height-1-2">
+                        보험가입신청서
+                      </p>
+                    </h1>
+                  </header>
+                  <!-- header 영역 종료-->
+
+                  <main>
+                    <!--가입자 명단 시작-->
+                    <div class="mt-4">
+                      <p class="font-weight-bold text-14"><span class="color-primary">&#x275A;</span>&nbsp;가입자 명단</p>
+                      <div class="mt-1">
+                        <table class="table v2 mb-1">
+                          <colgroup>
+                            <col style="width: 40px" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                          </colgroup>
+                          <thead>
+                          <tr>
+                            <th class="text-center">No</th>
+                            <th class="text-center">성명</th>
+                            <th class="text-center">생년월일</th>
+                            <th class="text-center">등록번호</th>
+                            <th class="text-center">소급담보일</th>
+                            <th class="text-center">할인할증</th>
+                            <th class="text-center">1인당 보험료</th>
+                            <th class="text-center">상태</th>
+                          </tr>
+                          </thead>
+
+                          <tbody v-for="(row, index) in getCurrentChunkData(chunkIndex)" :key="index">
+                          <tr>
+                            <td>{{ ((chunkIndex - 1 ) * chunkSize) +  index + 1 }}</td>
+                            <td>{{ row.cbr_nm }}</td>
+                            <td>{{ row.cbr_brdt }}</td>
+                            <td>{{ row.cbr_regno }}</td>
+                            <td>{{ row.insr_retr_dt }}</td>
+                            <td>{{ row.insr_sale_rt }} %</td>
+                            <td>
+                              {{ Number(row?.insr_amt)?.toLocaleString() }}원
+                            </td>
+                            <td v-if="insuranceDTO.status_cd !== '10'"> {{  statusCdItems.find(code => code.value ==  row.status_cd)?.title}}</td>
+                            <td v-else></td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <!--가입자 명단 종료 -->
+                  </main>
+
+                  <!-- footer 영역 시작-->
+                  <footer v-if="isPdf">
+                    <v-divider class="border-0 mt-4" />
+                    <v-row justify="space-between" align="center">
+                      <v-col class="text-12">
+                          <span>문의처 : 록톤컴퍼니즈코리아손해보험중개㈜</span
+                          ><span class="mx-4 text-10">|</span
+                      ><span>대표전화 : 02.2011.0300</span>
+                      </v-col>
+                      <v-col class="flex-grow-0">
+                        <div style="width: 70px">
+                          <img src="/assets/Lockton_Logo_Black_simbol.png" class="w-100" />
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </footer>
+                  <!-- footer 영역 종료-->
+                </div>
+              </template>
+
+              <!-- 가입자명단 (신청보기용)-->
+              <template v-if="!isPdf">
+                <div :class="isPdf?'print-wrap':''">
+                  <main>
+                    <div class="mt-4">
+                      <p class="font-weight-bold text-14"><span class="color-primary">&#x275A;</span>&nbsp;가입자 명단</p>
+                      <div class="table mt-1">
+                        <table class="table v2 mb-1">
+                          <colgroup>
+                            <col style="width: 40px" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                            <col style="width: auto" />
+                          </colgroup>
+                          <thead>
+                          <tr>
+                            <th class="text-center">No</th>
+                            <th class="text-center">성명</th>
+                            <th class="text-center">생년월일</th>
+                            <th class="text-center">등록번호</th>
+                            <th class="text-center">소급담보일</th>
+                            <th class="text-center">할인할증</th>
+                            <th class="text-center">1인당 보험료</th>
+                          </tr>
+                          </thead>
+                          <tbody v-if="insuranceDTO.cbr_data.length">
+                          <tr v-for="(row, index) in insuranceDTO.cbr_data">
+                            <td>{{ index + 1 }}</td>
+                            <td>{{ row.cbr_nm }}</td>
+                            <td>{{ row.cbr_brdt }}</td>
+                            <td>{{ row.cbr_regno }}</td>
+                            <td>{{ row.insr_retr_dt }}</td>
+                            <td>{{ row.insr_sale_rt }} %</td>
+                            <td>
+                              {{ row?.insr_amt?.toLocaleString() }}원
+                            </td>
+                          </tr>
+                          </tbody>
+                          <tbody v-else>
+                          <tr>
+                            <td colspan="7" class="text-center">내용 없음</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </main>
+
+                </div>
+              </template>
+              <!-- 가입자명단 (가입신청서)-->
             </div>
 
               <!-- 복수 가입정보 시작-->
@@ -1482,7 +1624,7 @@
                             <p>사무소명</p>
                           </div>
                           <div class="data-col">
-                            {{ insuranceDTO.user_nm }}
+                            {{ insuranceDTO.corp_nm }}
                           </div>
                         </v-col>
                         <v-col cols="6" class="v-col">
@@ -1503,10 +1645,10 @@
                         </v-col>
                         <v-col cols="6" class="v-col">
                           <div class="head-col">
-                            <p>사업부 형태</p>
+                            <p>사무소 형태</p>
                           </div>
                           <div class="data-col">
-                            {{ insuranceDTO.corp_type }}
+                            {{ corpTypeItems.find(item => item.value ==  insuranceDTO.corp_type)?.title }}
                           </div>
                         </v-col>
                         <v-col cols="6" class="v-col">
@@ -2055,6 +2197,7 @@ const isNotAuth = ref(false);
 const isOpenDialog = ref(true);
 
 const statusCdItems = ref([""]);
+const corpTypeItems = ref([]);
 
 const emit = defineEmits(['close']);
 
@@ -2158,6 +2301,8 @@ const onExportPDF = (viewType: string) => {
 
 onMounted(async () => {
   statusCdItems.value = await CommonCode.getCodeList('COM030');
+  corpTypeItems.value = await CommonCode.getCodeList('COM050');
+  console.log(corpTypeItems.value)
 
   isPdf.value = props.isPdf;
   isNotAuth.value = props.isNotAuth;

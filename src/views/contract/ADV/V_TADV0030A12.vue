@@ -407,7 +407,7 @@
                   <v-col cols="12" sm="12" class="v-col">
                     <div class="head-col">
                       <p v-if="insuranceDTO.user_cd === 'IND'">매출액</p>
-                      <p v-if="insuranceDTO.user_cd === 'JNT'">1인당 매출액</p>
+                      <p v-if="insuranceDTO.user_cd === 'JNT'">변호사 1인당<br/>평균 매출액</p>
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col w-100">
@@ -426,6 +426,8 @@
                       </div>
                       <i class="mdi mdi-alert-circle-outline mr-2"></i
                       >부과세 또는 손익계산서상의 매출액 기재요망 (전년도 1.1 ~ 12월말까지 매출)<br/>
+                      <i class="mdi mdi-alert-circle-outline mr-2"></i
+                      >법무법인, 합동사무소의 연간총매출액을 변호사 수로 나눠 1인당 평균 매출액 기재<br/>
                       <i class="mdi mdi-alert-circle-outline mr-2"></i
                       >전년 매출이 없는 경우 1년 예상 매출액 기재
                       </p>
