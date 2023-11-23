@@ -11,7 +11,8 @@ const 보험가입_공통가입정보 = yup.object({
   corp_cust_nm: yup.string().required('담당자 성명을 입력해주세요.'),
   //corp_cust_email: yup.string().matches(/^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, '이메일을 정확히 입력하세요.'),
   corp_post: yup.string().required('사무소 우편번호를 입력해주세요.'),
-  corp_addr: yup.string().required('사무소 주소를 입력해주세요.')
+  corp_addr: yup.string().required('사무소 주소를 입력해주세요.'),
+  corp_addr_dtl: yup.string().required('사무소 상세 주소를 입력해주세요.'),
 });
 
 const 보험가입_공통보험계약 = yup.object({
@@ -32,7 +33,15 @@ const 보험가입_변호사기본보험계약 = yup.object({
 });
 
 const 보험가입_변호사특약보험계약 = yup.object({
-  spct_join_yn: yup.string().required('특약을 선택해주세요.')
+  spct_join_yn: yup.string().required('특약을 선택해주세요.'),
+  spct_data: yup.object().when('spct_join_yn', {
+    is: (value) => value === 'Y',
+    then: yup.object().shape({
+      insr_clm_lt_amt: yup.string().required('보상한도를 선택해주세요.'),
+      insr_psnl_brdn_amt: yup.string().required('자기부담금을 선택해주세요.'),
+      cbr_cnt: yup.string().required('사무원 수 입력해주세요.')
+    })
+  })
 });
 
 const 보험가입_공통약관동의 = yup.object({
@@ -70,13 +79,13 @@ const 세무사_법인_보험계약 = yup.object({
   )
 });
 
-const 보험사_복수_보험계약 = yup.object({
-  cbr_data: yup.array().min(1, `보험사 명단은 최소 1개 이상 입력해주세요.`).of(
+const 변호사_복수_보험계약 = yup.object({
+  cbr_data: yup.array().min(1, `변호사 명단은 최소 1개 이상 입력해주세요.`).of(
       yup.object({
-        cbr_nm: yup.string().required('보험사 명단 성명을 입력해주세요.'),
-        cbr_brdt: yup.string().matches(/^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, '보험사 명단 생년월일 입력해주세요.'),
-        cbr_regno: yup.string().matches(/^\d{3,7}$/, '보험사 명단 등록번호 입력해주세요.'),
-        isCheck: yup.boolean().oneOf([true], '보험사 명단 인증해주세요.').required()
+        cbr_nm: yup.string().required('변호사 명단 성명을 입력해주세요.'),
+        cbr_brdt: yup.string().matches(/^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, '변호사 명단 생년월일 입력해주세요.'),
+        cbr_regno: yup.string().matches(/^\d{3,7}$/, '변호사 명단 등록번호 입력해주세요.'),
+        isCheck: yup.boolean().oneOf([true], '변호사 명단 인증해주세요.').required()
       })
   )
 });
@@ -179,7 +188,7 @@ export const InsuranceYup = {
   }),
   ADV_JNT_TAB2: yup.object().shape({
     ...보험가입_변호사기본보험계약.fields,
-    ...보험사_복수_보험계약.fields
+    ...변호사_복수_보험계약.fields
   }),
   ADV_JNT_TAB3: yup.object().shape({
     ...보험가입_변호사특약보험계약.fields

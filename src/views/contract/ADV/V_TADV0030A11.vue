@@ -25,8 +25,8 @@
             
           >
             <v-tab value="1" class="flex-grow-1" :disabled="true">가입정보</v-tab>
-            <v-tab value="2" class="flex-grow-1" :disabled="true">보험계약 [기본담보] {{ renewalYN == 'Y'?'(갱신)':'' }}</v-tab>
-            <v-tab value="3" class="flex-grow-1" :disabled="true">보험계약 [특약] {{ renewalYN == 'Y'?'(갱신)':'' }}</v-tab>
+            <v-tab value="2" class="flex-grow-1" :disabled="true">보험계약 [기본담보] {{ renewalYN === 'Y'?'(갱신)':'' }}</v-tab>
+            <v-tab value="3" class="flex-grow-1" :disabled="true">보험계약 [특약] {{ renewalYN === 'Y'?'(갱신)':'' }}</v-tab>
             <v-tab value="4" class="flex-grow-1" :disabled="true">약관동의</v-tab>
           </v-tabs>
         </div>
@@ -486,7 +486,7 @@
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col">
-                      <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" class="w-200"  single-line density="comfortable"></VSelectWithValidation>
+                      <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" class="w-200"  single-line density="comfortable" ></VSelectWithValidation>
                     </div>
                   </v-col>
                   
@@ -686,7 +686,7 @@
 
                   <v-col cols="12" sm="12" class="v-col">
                     <div class="head-col">
-                      <p v-if="insuranceDTO.user_cd === 'IND'">매출액</p>
+                      <p v-if="insuranceDTO.user_cd === 'IND'">연 매출액</p>
                       <p v-if="insuranceDTO.user_cd === 'JNT'">변호사 1인당<br/>평균 매출액</p>
                       <sup class="text-error">*</sup>
                     </div>
@@ -706,9 +706,10 @@
                     /><p style="font-size: 18px; margin-left: 10px">원</p>
                     </div>
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
-                        >부가세 또는 손익계산서상의 매출액 기재요망 (전년도 1.1 ~ 12월말까지 매출)<br/>
+                        >전년도 부가세과세표준증명 또는 손익계산서상의 매출액 기재 (전년도 1.1 ~ 12월말까지 매출)<br/>
+                      <span v-if="insuranceDTO.user_cd=='JNT'">
                       <i class="mdi mdi-alert-circle-outline mr-2"></i
-                      >법무법인, 합동사무소의 연간총매출액을 변호사 수로 나눠 1인당 평균 매출액 기재<br/>
+                      >법무법인, 합동사무소의 연간총매출액을 변호사 수로 나눠 1인당 평균 매출액 기재<br/></span>
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
                         >전년 매출이 없는 경우 1년 예상 매출액 기재
                       </p>
@@ -779,12 +780,6 @@
                         >5억초과</v-btn
                         >
                       </v-btn-toggle>
-                      <p
-                          class="text-caption font-weight-light  color-gray mt-2 flex-grow-1"
-                      >
-                        <i class="mdi mdi-alert-circle-outline mr-2"></i
-                        >전년도 부가세과세표준증명 또는 손익계산서상의 매출액 확인요망
-                      </p>
                     </div>
                   </v-col>
                   <v-col cols="12" sm="12" class="v-col">
@@ -825,11 +820,6 @@
                         청구당 / 연간총보상한도<span v-if="insuranceDTO.user_cd === 'JNT'">(3명 이상 가입시 연간 총 보상한도는 2배수 적용)</span>
                       </p>
                       <v-divider class="border-0" />
-                      <!-- 법인인 경우 문구 표기 시작 -->
-                      <p class="text-caption font-weight-light color-gray" v-if="insuranceDTO.user_cd === 'JNT'">
-                        <i class="mdi mdi-alert-circle-outline mr-2"></i>연간 총 보상한도는 10억원을 초과하지 못함
-                      </p>
-                      <!-- 법인인 경우 문구 표기 끝 -->
                     </div>
                   </v-col>
                   <v-col cols="12" sm="12" class="v-col">
@@ -916,7 +906,7 @@
                     <th class="text-left">등록번호</th>
                     <!-- <th class="text-center">보험시작일</th>
                     <th class="text-center">보험종료일</th> -->
-                    <th class="text-center">소급담보일 / 보험시작일</th>
+                    <th class="text-center">소급담보일 / 보험개시일</th>
                     <th class="text-center">할인 할증</th>
                     <th class="text-center">1인당 보험료</th>
                     <th></th>
@@ -1142,7 +1132,7 @@
                           single-line
                           class="w-100 readonly"
                           density="comfortable"
-                      >고용 직원의 횡령 등 부정직행위 담보 특별약관(Dishonesty
+                      >고용 직원의 부정직행위 담보 특별약관(Dishonesty
                         Extension)</v-text-field
                       >
                     </div>
@@ -1171,6 +1161,17 @@
                       </v-btn-toggle>
                     </div>
 
+                  </v-col>
+                  <v-col
+                      cols="12"
+                      sm="12"
+                      class="v-col"
+                      v-if="insuranceDTO.spct_join_yn == 'Y'"
+                  >
+                    <div class="head-col">
+                      <p>소급담보일</p>
+                    </div>
+                    <div class="data-col" > {{ insuranceDTO.spct_data.insr_retr_dt }} </div>
                   </v-col>
                   <v-col
                       cols="12"
@@ -1895,14 +1896,14 @@ const isSubmit = ref(false);
 const isReadOnlyAll = ref(false);
 const isDuplication = ref(false);
 const renewalYN = ref('N');
+const renewalUpdateYN = ref('N');
 const insuranceUUID = ref('');
 const insr_take_amt = ref(0);
 const insr_take_sec = ref('');
+const spct_cnt = ref(1);
 
 const INSR_RATE_TABLE = ref([]);
 const INSR_RATE_MAX_DAYS = ref(0);
-const spct_cnt = ref(1);
-
 
 // 초기정보 설정
 const userDTO = ref(new UserDTO());
@@ -1910,6 +1911,7 @@ const insuranceDTO = ref(new InsuranceDTO());
 const insuranceRateDTO = ref(new InsuranceRateDTO());
 const insuranceDTOBackup = ref(new InsuranceDTO());
 const messageBoxDTO = ref(new MessageBoxDTO());
+const isSpctNew = ref(false)
 
 // 오늘일자
 let TODAY = dayjs().format('YYYY-MM-DD');
@@ -1954,16 +1956,16 @@ function isReadonlyByInsrStDt()
   // console.log(insuranceDTO.value.base_insr_st_dt + ":" + TODAY + ":" + renewalYN.value + ":" + insuranceDTO.value.insr_retr_yn);///
 
   /**
-   * 1. 법인은 보험시작일자를 변경 할 수 없다.
-   * 2. 개인이면서 신규이면 항상 보험기간을 변경할 수 있게 한다
-   * 3. 기준_보험시작일자가 소금담보일보다 작으면 갱신으로 판단하여 수정불가
+   * 1. 신규이면 항상 보험기간을 변경할 수 있게 한다
+   * 2. 기준_보험시작일자가 소금담보일보다 작으면 갱신으로 판단하여 수정불가
    */
-  if (insuranceDTO.value.user_cd === 'IND' && renewalYN.value !== 'Y') return false;
-  if (insuranceDTO.value.base_insr_st_dt < insuranceDTO.value.insr_retr_dt) {
-    return false;
+  if (insuranceDTO.value.user_cd === 'JNT') return true;
+  if (renewalYN.value === 'Y') return true;
+  if (new Date(insuranceDTO.value.base_insr_st_dt) > new Date(insuranceDTO.value.insr_retr_dt)) {
+    return true;
   }
   
-  return true;
+  return false;
 }
 
 function onTermsOfContractClose(agrs: any) {
@@ -2016,7 +2018,6 @@ function onInsuranceFormClose() {
   nRate: number,
   nPCnt: number
 ) => {
-
   if (!sKey1 || !sKey2 || !sKey3) return 0;
 
   let nTotAmt = 0;
@@ -2027,6 +2028,13 @@ function onInsuranceFormClose() {
 
   // 인원수별 할인구간
   let discountRanges = [
+      {range: [15, Infinity], rate: -42},
+      {range: [14, 14], rate: -41},
+      {range: [13, 13], rate: -40},
+      {range: [12, 12], rate: -39},
+      {range: [11, 11], rate: -37},
+      {range: [10, 10], rate: -35},
+      {range: [9, 9], rate: -33},
       {range: [8, 8], rate: -30},
       {range: [7, 7], rate: -27},
       {range: [6, 6], rate: -24},
@@ -2053,6 +2061,8 @@ function onInsuranceFormClose() {
   try {
     // 기간 계산
     nDCnt = getDateDiff(sSDt, sEDt, INSR_RATE_MAX_DAYS.value);
+
+    if (nDCnt > INSR_RATE_MAX_DAYS.value) nDCnt = INSR_RATE_MAX_DAYS.value;
 
     // 기본보험료 조회
     nInitAmt = INSR_RATE_TABLE.value.기본담보.보험료.filter(data => data.key === sKey)[0].amt;
@@ -2100,17 +2110,9 @@ const getInsrSpctAmt = (
 
   try {
     // 연간보험료 계산
-    if (sSDt == null || sEDt == null) {
-      nDCnt = 365;
-
-      // 보험료 계산(기간별)
-    } else {
-      nDCnt = getDateDiff(sSDt, sEDt);
-    }
-
+    nDCnt = getDateDiff(sSDt, sEDt, INSR_RATE_MAX_DAYS.value);
     // 365일을 넘지 않도록 한다.
-    if (nDCnt > 365) nDCnt = 365;
-
+    if (nDCnt > INSR_RATE_MAX_DAYS.value) nDCnt = INSR_RATE_MAX_DAYS.value;
     // 기본보험료 조회
     //nInitAmt =  (eval("INSR_RATE_TABLE.value['특약']['" + sKey1 + "']['"+ sKey2 + "']"));
     nInitAmt = INSR_RATE_TABLE.value.특약담보.보험료.filter(
@@ -2118,14 +2120,14 @@ const getInsrSpctAmt = (
     )[0].amt;
 
     // 보험 계산식
-    nTotAmt = Math.floor((nInitAmt * (nDCnt / 365)) / 10) * 10 * nPCnt;
+    nTotAmt = Math.floor((nInitAmt * (nDCnt / INSR_RATE_MAX_DAYS.value)) / 10) * 10 * nPCnt;
   } catch (err) {
     console.log(err);
     nTotAmt = 0;
   }
-
   // 계산불가 일 경우 0으로 설정
   if (isNaN(nTotAmt)) nTotAmt = 0;
+
   return nTotAmt;
 };
 
@@ -2192,7 +2194,7 @@ const calInsrAmt = (data: any) => {
     }
 
     data.insr_amt = totAmt;
-    data.insr_tot_amt = totAmt;
+    data.insr_premium_amt = totAmt;
   }
 };
 
@@ -2203,29 +2205,16 @@ const calInsrAmt = (data: any) => {
  * @param data 보험 명단 데이터
  */
 const calInsrSpctAmt = (data: any) => {
-  let totAmt = 0;
 
-  if (data.cbr_data != undefined && data.cbr_data.length > 0) {
-    for (var idx in data.cbr_data) {
-      // 소급담보일이 수기등록이 아니면 보험 시작일자로 변경
-      if (data.cbr_data[idx].insr_retr_yn != 'Y') {
-        data.cbr_data[idx].insr_retr_dt = insuranceDTO.value.insr_st_dt;
-      }
 
-      data.cbr_data[idx].insr_amt = getInsrSpctAmt(
-          data.cbr_data[idx].insr_retr_dt,
-          insuranceDTO.value.insr_cncls_dt,
-          data.insr_clm_lt_amt,
-          data.insr_psnl_brdn_amt,
-          1
-      );
+  data.insr_amt = getInsrSpctAmt(
+      data.insr_st_dt,
+      insuranceDTO.value.insr_cncls_dt,
+      data.insr_clm_lt_amt,
+      data.insr_psnl_brdn_amt,
+      data.cbr_cnt,
+  );
 
-      totAmt += data.cbr_data[idx].insr_amt;
-    }
-
-    data.insr_amt = totAmt;
-  }
-  // console.log("calInsrSpctAmt >> 호출");
 };
 
 function addCBR(list: any) {
@@ -2267,6 +2256,15 @@ async function chkSaleRtJNT(list: any, rowIdx: number) {
   //   messageBoxDTO.value.setWarning( '입력확인', '이미 입력하신 회원입니다.');
   //   return false;
   // }
+
+  if (insuranceDTO.value.cbr_data != null) {
+    const existValue = insuranceDTO.value.cbr_data.filter(item => item.cbr_nm === list.cbr_data[rowIdx].cbr_nm || item.cbr_regno === list.cbr_data[rowIdx].cbr_regno)
+    if(existValue.length > 1) {
+      messageBoxDTO.value.setWarning( '중복입력', '이미 명단에 포함된 회원입니다.');
+      return false
+    }
+  }
+
 
   const params = { insr_year: insuranceDTO.value.insr_year, business_cd: _AUTH_USER.value.businessCd, user_nm: list.cbr_data[rowIdx].cbr_nm, user_birth: list.cbr_data[rowIdx].cbr_brdt, user_regno: list.cbr_data[rowIdx].cbr_regno };
   const result = await apiADV0030a.getSaleRtNDupInfo(params);
@@ -2315,15 +2313,9 @@ async function chkSaleRtJNT(list: any, rowIdx: number) {
        * 2. 할인 가져오기
        *  - 법인 할인 가져온다.
        */
-      if (insr_sale_year >= 1000 || insr_sale_rt > 0) {
-        // 전환 대상자의 할증을 가져온다.
-        list.cbr_data[rowIdx].insr_sale_rt = insr_sale_rt;
-      } else {
-        // 현재 법인 할인율을 가져온다
-        list.cbr_data[rowIdx].insr_sale_rt = insuranceDTO.value.insr_sale_rt;
-      }
-
+      list.cbr_data[rowIdx].insr_sale_rt = insr_sale_rt;
       calInsrAmt(list);
+
     } else {
 
       // 신규회원
@@ -2350,7 +2342,6 @@ async function chkSaleRtJNT(list: any, rowIdx: number) {
  * 1. 법인 -> 개인
  */
 async function chkSaleRtIND() {
-  return true;
   const params = { insr_year: insuranceDTO.value.insr_year, business_cd: _AUTH_USER.value.businessCd, user_nm: insuranceDTO.value.user_nm, user_birth: insuranceDTO.value.user_birth, user_regno: insuranceDTO.value.user_regno };
   const result = await apiADV0030a.getSaleRtNDupInfo(params);
 
@@ -2368,8 +2359,6 @@ async function chkSaleRtIND() {
     }
 
     if (result.data.renewal.length > 0) {
-
-
       const insr_sale_year = Number(result.data.renewal[0].insr_sale_year);
       const insr_sale_rt = Number(result.data.renewal[0].insr_sale_rt);
       const insr_retr_dt = result.data.renewal[0].insr_retr_dt;
@@ -2406,8 +2395,8 @@ async function chkSaleRtIND() {
         }
 
         messageBoxDTO.value.setWarning(
-          '법인 갱신대상 이력이 조회됩니다.',
-          '개인으로 신규가입시, 법인 가입 때의 소급담보일을 인정해드리고 있으니 참고 바랍니다.'
+          '복수 갱신대상 이력이 조회됩니다.',
+          '개인으로 신규가입시, 복수 가입 때의 소급담보일을 인정해드리고 있으니 참고 바랍니다.'
         );
       }
     }
@@ -2450,7 +2439,6 @@ function onCancel() {
 }
 
 async function onNextPage(values: any) {
-  console.log(insr_take_sec)
   if (!await checkValidation()) return false;
   if (isDuplication.value) return false;
   let tabiValue = parseInt(tab.value);
@@ -2490,6 +2478,7 @@ async function checkValidation() {
     })
     .catch(error => {
       // 유효성 검사 실패
+      console.log(error.errors)
       console.log(error.inner)
       messageBoxDTO.value.setWarning( '입력확인', error.inner[0].message);
       return false;
@@ -2522,8 +2511,6 @@ async function onSubmit(params: any) {
   if(result.success) {
     isSubmit.value = true;
   }else {
-    console.log();
-   
     if (result.message === "DUPLICATION_FAILED") {
       messageBoxDTO.value.setWarning(
         '가입 이력이 있습니다.',
@@ -2599,7 +2586,30 @@ async function getUserInfoToSetUserInfoByInsurance() {
   }
 
 }
-
+/* 소속 지방회*/
+  watch(() => [
+    insuranceDTO.value.corp_region_cd,
+  ], (newValue, oldValue) => {
+    if (regionCdItems.value.length > 0 && newValue[0]!=null) {
+      insuranceDTO.value.corp_region_nm = regionCdItems.value.filter(item => item.value == newValue[0])[0].title
+    }
+  })
+/* 소속 팩스번호*/
+watch(() => [
+  insuranceDTO.value.corp_faxno1,
+  insuranceDTO.value.corp_faxno2,
+  insuranceDTO.value.corp_faxno3,
+], (newValue) => {
+  insuranceDTO.value.corp_faxno = newValue[0] + '-' + newValue[1] + '-' + newValue[2]
+})
+/* 소속 전화번호*/
+watch(() => [
+  insuranceDTO.value.corp_telno1,
+  insuranceDTO.value.corp_telno2,
+  insuranceDTO.value.corp_telno3,
+], (newValue) => {
+  insuranceDTO.value.corp_telno = newValue[0] + '-' + newValue[1] + '-' + newValue[2]
+})
 
 /**
  * 보험계약 - 보험료 계산
@@ -2616,9 +2626,16 @@ async function getUserInfoToSetUserInfoByInsurance() {
     insuranceDTO.value.cbr_cnt
   ],
   (newValue, oldValue) => {
-
     // 읽기전용일 경우 해당로직 제외
     if (isReadOnlyAll.value) return false;
+
+    if (newValue[3] !== oldValue[3]){
+      if(insuranceDTO.value.spct_data && insuranceDTO.value.spct_data?.insr_clm_lt_amt != ''){
+        if(Number(insuranceDTO.value.spct_data?.insr_clm_lt_amt?.getValueBySplit(0)) > Number(insuranceDTO.value.insr_clm_lt_amt.getValueBySplit(0)) / 2){
+          insuranceDTO.value.spct_data.insr_clm_lt_amt = '';
+        }
+      }
+    }
 
     // 기준보험료 계산
     insuranceDTO.value.insr_base_amt = getInsrAmt(
@@ -2653,7 +2670,7 @@ async function getUserInfoToSetUserInfoByInsurance() {
     } else {
       calInsrAmt(insuranceDTO.value);
 
-      insuranceDTO.value.insr_amt = getInsrAmt(
+      /*insuranceDTO.value.insr_amt = getInsrAmt(
           insuranceDTO.value.insr_st_dt,
           insuranceDTO.value.insr_cncls_dt,
           insuranceDTO.value.insr_take_sec,
@@ -2661,13 +2678,14 @@ async function getUserInfoToSetUserInfoByInsurance() {
           insuranceDTO.value.insr_psnl_brdn_amt,
           insuranceDTO.value.insr_sale_rt,
           insuranceDTO.value.cbr_cnt
-      );
+      );*/
     }
+
     // 기본담보 - 보상한도(연보험)
-    insuranceDTO.value.insr_year_clm_lt_amt = calByString_ADV(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1), insuranceDTO.value?.cbr_data?.length, 1000000000);
+    //insuranceDTO.value.insr_year_clm_lt_amt = calByString_ADV(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1), insuranceDTO.value?.cbr_data?.length, 1000000000);
     insuranceDTO.value.insr_premium_amt = insuranceDTO.value?.insr_amt;
     // 최종보험료
-    insuranceDTO.value.insr_tot_amt = insuranceDTO.value?.insr_amt;
+    //insuranceDTO.value.insr_tot_amt = insuranceDTO.value?.insr_amt;
 
   }
 );
@@ -2682,6 +2700,7 @@ watch(
       spct_cnt.value,
     ],
     (newValue, oldValue) => {
+
       // 읽기전용일 경우 해당로직 제외
       if (isReadOnlyAll.value) return false;
       insuranceDTO.value.spct_data.cbr_cnt = spct_cnt.value
@@ -2695,8 +2714,8 @@ watch(
       );
 
       insuranceDTO.value.spct_data.insr_amt = getInsrSpctAmt(
-          insuranceDTO.value.insr_st_dt,
-          insuranceDTO.value.insr_cncls_dt,
+          insuranceDTO.value.spct_data.insr_st_dt,
+          insuranceDTO.value.spct_data.insr_cncls_dt,
           insuranceDTO.value.spct_data.insr_clm_lt_amt,
           insuranceDTO.value.spct_data.insr_psnl_brdn_amt,
           insuranceDTO.value.spct_data.cbr_cnt
@@ -2718,6 +2737,20 @@ watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
   // console.log(insuranceDTO.value.insr_retr_yn);
   // console.log(renewalYN.value);
   // console.log(insuranceDTO.value.cbr_data );
+  if(!isSpctNew.value && insuranceDTO.value.spct_data.insr_retr_dt != null && insuranceDTO.value.spct_data.insr_retr_dt !== TODAY ){
+    insuranceDTO.value.spct_data.insr_st_dt = insuranceDTO.value.spct_data.insr_retr_dt
+  }else {
+    if(renewalYN.value === 'Y'){
+      if(insuranceDTO.value.spct_data.insr_retr_dt)
+        insuranceDTO.value.spct_data.insr_retr_dt = insuranceDTO.value.spct_data.insr_retr_dt
+      else {
+        insuranceDTO.value.spct_data.insr_retr_dt = TODAY
+      }
+    }else {
+      insuranceDTO.value.spct_data.insr_retr_dt = insuranceDTO.value.insr_st_dt
+    }
+    insuranceDTO.value.spct_data.insr_st_dt = insuranceDTO.value.spct_data.insr_retr_dt
+  }
 
   // 소급담보일이 수기수정일 경우에는 갱신으로 판단하기에 해당 로직에서 제외된다.
   if (insuranceDTO.value.insr_retr_yn === 'Y') {
@@ -2727,7 +2760,7 @@ watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
   }
 
   // 과거일자로는 변경 불가, 원복시킨다.
-  if (TODAY > newValue[0]) {
+  if (TODAY > newValue[0] && renewalYN === 'N') {
     insuranceDTO.value.insr_st_dt = TODAY;
     insuranceDTO.value.insr_retr_dt = TODAY;
     showMessageBoxByInsrDt();
@@ -2778,11 +2811,13 @@ watch(
         insuranceDTO.value.spct_data.cbr_cnt = 0
         insuranceDTO.value.spct_data.insr_year_clm_lt_amt =''
         spct_cnt.value = 0
-
       } else {
-        insuranceDTO.value.spct_data.insr_psnl_brdn_amt = '5000000|5백만원';
-        insuranceDTO.value.spct_data.cbr_cnt = 1
-        spct_cnt.value = 1
+        if (oldValue === 'N') {
+          insuranceDTO.value.spct_data.insr_psnl_brdn_amt = '5000000|5백만원';
+          insuranceDTO.value.spct_data.cbr_cnt = 1
+          spct_cnt.value = 1
+        }
+        calInsrSpctAmt(insuranceDTO.value.spct_data);
       }
     }
 );
@@ -2808,7 +2843,7 @@ watch(
       // 최종보험료
       insuranceDTO.value.insr_tot_amt =
           insuranceDTO.value?.insr_amt +
-          (insuranceDTO.value?.spct_data?.insr_amt?insuranceDTO.value?.spct_data?.insr_amt:0);
+          insuranceDTO.value?.spct_data?.insr_amt;
     }
 );
 
@@ -2818,7 +2853,7 @@ watch(
 onMounted(async () => {
   renewalYN.value = route.query.renewal;
   insuranceUUID.value = route.params.insuranceUUID;
-
+  renewalUpdateYN.value = route.query.renewalUpdate;
   /**
    * 코드 조회 
    * 
@@ -2869,26 +2904,50 @@ onMounted(async () => {
   if(renewalYN.value === 'Y' && insuranceUUID.value !== '') {
     const params = { renewal:renewalYN.value, insurance_uuid: insuranceUUID.value };
     const renewalData = await apiADV0030a.getDBSel(params);
+    let isIndtoInd = renewalData.data[0].user_cd === _AUTH_USER.value.userCd
 
     if (renewalData.data.length == 0) {
       messageBoxDTO.value.setWarning('조회오류', '보험갱신 데이타를 조회 할 수 없습니다.');
       onCancel();
     } else {
-      Object.assign(insuranceDTO.value, renewalData.data[0]);
-    }
 
+      if(isIndtoInd) {
+        Object.assign(insuranceDTO.value, renewalData.data[0]);
+        insuranceDTO.value.insr_take_amt = 0;
+        insuranceDTO.value.insr_take_sec = '';
+        if(insuranceDTO.value.spct_join_yn === 'N'){
+          isSpctNew.value = true
+          insuranceDTO.value.spct_data.insr_st_dt = TODAY
+        }else {
+          spct_cnt.value = insuranceDTO.value.spct_data.cbr_cnt;
+        }
+        insuranceDTO.value.spct_data.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
+      }else {
+        insuranceDTO.value.insr_year = renewalData.data[0].insr_year
+
+        insuranceDTO.value.spct_data.insr_cncls_dt = renewalData.data[0].insr_cncls_dt;
+      }
+    }
     // 사용자 정보 재설정
     await getUserInfoToSetUserInfoByInsurance();
 
     insuranceDTO.value.status_cd = '10'     // 신청
     insuranceDTO.value.insurance_uuid = ''; // 초기값
     insuranceDTO.value.insurance_no = insuranceRateDTO.value.insurance_no;
-    insuranceDTO.value.spct_join_yn = 'N';
+    if(insuranceDTO.value.spct_join_yn == null)
+      insuranceDTO.value.spct_join_yn = 'N';
     insuranceDTO.value.base_insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
+    if (insuranceDTO.value.insr_take_amt != null)
+      insr_take_amt.value = insuranceDTO.value.insr_take_amt
+    else
+      insr_take_amt.value = 0;
+    insr_take_sec.value = insuranceDTO.value.insr_take_sec
+    if(insuranceDTO.value.spct_data && insuranceDTO.value.spct_data != null)
+      spct_cnt.value = insuranceDTO.value.spct_data.cbr_cnt
 
     // 갱신자는 인증처리 완료
     insuranceDTO.value.cbr_data.forEach(function (data) {
@@ -2924,7 +2983,9 @@ onMounted(async () => {
     insuranceDTO.value.insr_take_sec = '';
     insr_take_sec.value = '';
     insr_take_amt.value = 0;
-
+    isSpctNew.value = true;
+    insuranceDTO.value.base_insr_st_dt = insuranceRateDTO.value.insr_st_dt;
+    insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.spct_join_yn = 'N';
     insuranceDTO.value.insurance_no = insuranceRateDTO.value.insurance_no;
     insuranceDTO.value.insr_year = insuranceRateDTO.value.base_year;
@@ -2932,7 +2993,8 @@ onMounted(async () => {
     insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
-
+    insuranceDTO.value.spct_data.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
+    insuranceDTO.value.spct_data.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
     
     // 갱신후 : 오늘일자로 설정 / 오늘일자 > [보험료표DB]_보험시작일자  
@@ -2964,20 +3026,31 @@ onMounted(async () => {
       router.push('/404');
     } else {
       Object.assign(insuranceDTO.value, resultData.data[0]);
-      insr_take_amt.value = insuranceDTO.value.insr_take_amt.toString()
+      insuranceDTO.value.base_insr_st_dt = insuranceRateDTO.value.insr_st_dt;
+      insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
+      isSpctNew.value = true;
+      if (insuranceDTO.value.insr_take_amt != null)
+        insr_take_amt.value = insuranceDTO.value.insr_take_amt.toString()
+      else
+        insr_take_amt.value = '0';
+      if(insuranceDTO.value.spct_data && insuranceDTO.value.spct_data != null)
+        spct_cnt.value = insuranceDTO.value.spct_data.cbr_cnt
       changeTakeAmount();
       getUserInfoToSetUserInfoByInsurance();
 
     }
   }
   // 재계산
+  if(renewalUpdateYN.value || renewalUpdateYN.value === 'Y') {
+    renewalYN.value = renewalUpdateYN.value;
+  }
   calInsrAmt(insuranceDTO.value);
     insuranceDTOBackup.value = JSON.parse(JSON.stringify(insuranceDTO.value));
   // console.log(insuranceDTOBackup.value);
   // 초기화용 백업
  // Object.assign(insuranceDTOBackup.value, insuranceDTO.value);
   onLoading.value = true;
-  
+
 });
 
 function changeTakeAmount() {

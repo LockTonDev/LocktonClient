@@ -14,7 +14,8 @@
           <v-window-item value="tab1-one">
             <v-card-text v-if="isViewIDStep0">
               <h2 class="text-h5 font-weight-light" v-if="onlyIND.includes(businessCd)">개인회원을 선택해 주세요.</h2>
-              <h2 class="text-h5 font-weight-light" v-else>개인회원 또는 법인회원을<br/>선택해 주세요.</h2>
+              <h2 class="text-h5 font-weight-light" v-else-if="['TAX'].includes(businessCd)">개인회원 또는 법인회원을<br/>선택해 주세요.</h2>
+              <h2 class="text-h5 font-weight-light" v-else-if="['ADV'].includes(businessCd)">개인회원 또는 복수가입회원을<br/>선택해 주세요.</h2>
 
               <div class="mt-10">
                 <v-divider />
@@ -25,9 +26,16 @@
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
                 <v-divider />
-                <v-btn variant="text" @click="userDTO.user_cd = 'IND'; fnFindIdCOR()" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="!onlyIND.includes(businessCd)">
+                <v-btn variant="text" @click="userDTO.user_cd = 'COR'; fnFindIdCOR()" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="['TAX'].includes(businessCd)">
                   <div class="text-left font-weight-light w-100">
                     <p>법인회원</p>
+                  </div>
+                  <v-icon>mdi-chevron-right</v-icon>
+                </v-btn>
+                <v-divider />
+                <v-btn variant="text" @click="userDTO.user_cd = 'JNT'; fnFindIdCOR()" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="['ADV'].includes(businessCd)">
+                  <div class="text-left font-weight-light w-100">
+                    <p>복수가입회원</p>
                   </div>
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
@@ -117,7 +125,8 @@
             <!--회원 구분 선택-->
             <v-card-text v-if="isViewPWStep0">
               <h2 class="text-h5 font-weight-light" v-if="onlyIND.includes(businessCd)">개인회원을 선택해 주세요.</h2>
-              <h2 class="text-h5 font-weight-light" v-else>개인회원 또는 법인회원을<br/>선택해 주세요.</h2>
+              <h2 class="text-h5 font-weight-light" v-else-if="['TAX'].includes(businessCd)">개인회원 또는 법인회원을<br/>선택해 주세요.</h2>
+              <h2 class="text-h5 font-weight-light" v-else-if="['ADV'].includes(businessCd)">개인회원 또는 복수가입회원을<br/>선택해 주세요.</h2>
               <div class="mt-10">
                 <v-divider />
                 <v-btn @click="userDTO.user_cd = 'IND'; setViewPwStep(false, true, false, false);" variant="text" color="black" size="x-large" class="py-6 h-auto w-100 d-block">
@@ -127,9 +136,16 @@
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
                 <v-divider />
-                <v-btn @click="userDTO.user_cd = 'COR'; setViewPwStep(false, false, true, false);" variant="text" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="!onlyIND.includes(businessCd)">
+                <v-btn @click="userDTO.user_cd = 'COR'; setViewPwStep(false, false, true, false);" variant="text" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="['TAX'].includes(businessCd)">
                   <div class="text-left font-weight-light w-100">
                     <p>법인회원</p>
+                  </div>
+                  <v-icon>mdi-chevron-right</v-icon>
+                </v-btn>
+                <v-divider />
+                <v-btn @click="userDTO.user_cd = 'JNT'; setViewPwStep(false, false, true, false);" variant="text" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="['ADV'].includes(businessCd)">
+                  <div class="text-left font-weight-light w-100">
+                    <p>복수가입회원</p>
                   </div>
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
@@ -156,14 +172,22 @@
 
             <!--법인회원 이메일 인증-->
             <v-card-text v-if="isViewPWStep2">
-              <h2 class="text-h5 font-weight-light">등록된 법인정보로<br/>비밀번호를 찾습니다.</h2>
+              <h2 class="text-h5 font-weight-light">등록된 가입정보로<br/>비밀번호를 찾습니다.</h2>
               <div class="mt-10">
                   <VTextFieldWithValidation v-model="userDTO.user_id" name="user_id" label="아이디" :maskOption="{ mask: '###-##-#####' }" />
-                  <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="법인명" class="mt-2" maxlength="30"/>
-                  <div class="d-flex align-center">
-                    <VTextFieldWithValidation v-model="userDTO.corp_bnno" name="corp_bnno" class="mt-2" label="법인번호" :maskOption="{ mask: '######-#######' }" />
-                    <v-btn variant="outlined" @click="sendVerifyEMail()" color="primary" size="large" class="ml-2" :disabled="isSendEMail">인증메일 받기</v-btn >
-                  </div>
+                  <template v-if="route.params.business_cd == 'TAX'">
+                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="법인명" class="mt-2" maxlength="30"/>
+                    <div class="d-flex align-center">
+                      <VTextFieldWithValidation v-model="userDTO.corp_bnno" name="corp_bnno" class="mt-2" label="법인번호" :maskOption="{ mask: '######-#######' }" />
+                      <v-btn variant="outlined" @click="sendVerifyEMailCOR()" color="primary" size="large" class="ml-2" :disabled="isSendEMail">인증메일 받기</v-btn >
+                    </div>
+                  </template>
+                  <template v-if="route.params.business_cd == 'ADV'">
+                    <div class="d-flex align-center">
+                      <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="사무소 명" class="mt-2" maxlength="30"/>
+                      <v-btn variant="outlined" @click="sendVerifyEMailJNT()" color="primary" size="large" class="ml-2" :disabled="isSendEMail">인증메일 받기</v-btn >
+                    </div>
+                </template>
                 <VTextFieldWithValidation  v-model="userDTO.auth_code" name="auth_code" label="인증번호" placeholder="숫자 6자리" :maskOption="{ mask: '######' }" maxlength="6" class="mt-2"/>
               </div>
               <div class="d-flex justify-center mt-8">
@@ -251,7 +275,7 @@ async function isVerifyEMailAuthCode() {
   }
 }
 
-async function sendVerifyEMail() {
+async function sendVerifyEMailCOR() {
     // userDTO.value.user_id = "316-88-02895";
     // userDTO.value.user_nm = "세무법인 명성";
     // userDTO.value.corp_bnno = "134171-0014405";
@@ -278,6 +302,31 @@ async function sendVerifyEMail() {
     } else {
       messageBoxDTO.value.setWarning('아이디/비밀번호 찾기', '입력하신 정보를 다시 확인하세요');
     }
+}
+
+async function sendVerifyEMailJNT() {
+  // userDTO.value.user_id = "316-88-02895";
+  // userDTO.value.user_nm = "세무법인 명성";
+  // userDTO.value.corp_bnno = "134171-0014405";
+
+  if (!userDTO.value.user_id) {
+    messageBoxDTO.value.setWarning("입력확인", "아이디는 필수입력값 입니다.");
+    return false;
+  }
+  if (!userDTO.value.user_nm) {
+    messageBoxDTO.value.setWarning("입력확인", "사무소 명은 필수입력값 입니다.");
+    return false;
+  }
+
+  const params = { user_id: userDTO.value.user_id, user_nm: userDTO.value.user_nm};
+  const userData = await apiUser.findJNTUserNSendEMail(params);
+  console.log(userData);
+  if (userData.success) {
+    isSendEMail.value = true;
+    messageBoxDTO.value.setWarning('아이디/비밀번호 찾기', '인증메일이 발송되었습니다.');
+  } else {
+    messageBoxDTO.value.setWarning('아이디/비밀번호 찾기', '입력하신 정보를 다시 확인하세요');
+  }
 }
 
 async function onUserUpdatePassword() {
@@ -316,6 +365,7 @@ function fnMoveLogin() {
 function fnFindIdCOR() {
   messageBoxDTO.value.setInfo("아이디 찾기", "최초 등록된 사업자번호를 확인하여 주시기 바랍니다.");
 }
+
 function setViewIdStep(isStep0: boolean, isStep1: boolean, isStep2: boolean, isStep3: boolean) {
   isViewIDStep3.value = isStep3;
   isViewIDStep2.value = isStep2;

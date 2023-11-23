@@ -238,7 +238,10 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="userDTO.user_pwd_chk" name="user_pwd_chk" label="비밀번호 확인" type="password" single-line density="comfortable" maxlength="16" />
+                              <VTextFieldWithValidation v-model="userDTO.user_pwd_chk" name="user_pwd_chk" label="비밀번호 확인" type="password" single-line density="comfortable" maxlength="16" @change="checkPassword"/>
+                              <p :class=" verifyPasswordChk.success ? 'text-info' : 'text-error'">
+                                &nbsp;&nbsp;{{ verifyPasswordChk.message }}
+                              </p>
                             </div>
                           </v-col>
                           <v-col cols="12" sm="6" class="v-col">
@@ -380,7 +383,10 @@
                             <sup class="text-error">*</sup>
                           </div>
                           <div class="data-col">
-                            <VTextFieldWithValidation v-model="userDTO.user_pwd_chk" name="user_pwd_chk" label="비밀번호 확인" type="password" single-line density="comfortable" maxlength="16" />
+                            <VTextFieldWithValidation v-model="userDTO.user_pwd_chk" name="user_pwd_chk" label="비밀번호 확인" type="password" single-line density="comfortable" maxlength="16" @change="checkPassword"/>
+                            <p :class=" verifyPasswordChk.success ? 'text-info' : 'text-error'">
+                              &nbsp;&nbsp;{{ verifyPasswordChk.message }}
+                            </p>
                           </div>
                         </v-col>
                         <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd ==='ADV'">
@@ -767,6 +773,7 @@ const isDaumPostDialog = ref(false);
 
 const verifyUserCostoms = ref({ success: false, message: '' });
 const verifyUser = ref({ success: false, message: '' });
+const verifyPasswordChk = ref({ success: false, message: '' });
 const verifyEMail = ref({ success: false, message: '', code: '' });
 const verifyHp = ref({ success: false, message: '', code: '' });
 
@@ -875,7 +882,7 @@ async function isVerifyUserRegNo() {
     switch (userDTO.value.business_cd) {
       case 'TAX': message = '세무사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 세무사는 세무사등록증을 먼저 록톤으로 보내 세무사회원 확인 후 가입 진행되니 세무사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
       case 'ACC': message = '회계사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 회계사는 회계사등록증을 먼저 록톤으로 보내 회계사회원 확인 후 가입 진행되니 회계사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
-      case 'ADV': message = '변호사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 변호사는 변호사등록증을 먼저 록톤으로 보내 변호사회원 확인 후 가입 진행되니 회계사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
+      case 'ADV': message = '변호사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 변호사는 변호사등록증을 먼저 록톤으로 보내 변호사회원 확인 후 가입 진행되니 변호사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
       default: message = '인증에 실패하였습니다.';
     }
     messageBoxDTO.value.setInfo( '인증 실패', message);
@@ -1027,6 +1034,17 @@ async function isVerifyUserHpWithUser(imp_uid: string) {
       verifyHp.value.success = result.success;
       verifyHp.value.message = result.message;
     }
+  }
+}
+
+function checkPassword(){
+  console.log(userDTO.user_pwd, userDTO.user_pwd_chk)
+  if(userDTO.value.user_pwd !== userDTO.value.user_pwd_chk){
+    verifyPasswordChk.value.success = false;
+    verifyPasswordChk.value.message = '비밀번호가 일치하지 않습니다.';
+  }else {
+    verifyPasswordChk.value.success = true;
+    verifyPasswordChk.value.message = '비밀번호가 일치합니다.';
   }
 }
 
