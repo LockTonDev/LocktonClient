@@ -100,7 +100,12 @@
                               <v-window-item value="JNT">
                                 <div class="my-4 login-subtext">
                                   <p v-if="businessInfo.value === 'ADV'">복수가입(보상한도 공유가입)회원은 사무소 또는 법인명으로 하나의 아이디만 부여되며 본점, 지점별로 중복가입 되지 않습니다.
-                                    <i class="mdi mdi-help-circle-outline mr-2" :onclick="toQuestion"></i>
+                                    <v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
+                                    <v-tooltip activator="parent" location="top">
+                                      복수가입 안내<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
+                                      <v-divider class="my-1"/>
+                                      복수가입 시, 보험의 피보험자는 보상한도를 공유하여 가입하는 각 변호사가 되며, <br/>사무소 또는 법인이 피보험자가 되지 않습니다.
+                                    </v-tooltip>
                                   </p>
 
                                 </div>
@@ -163,27 +168,12 @@
 
         <!-- 법인 회원가입 메세지 팝업 시작 -->
         <div class="text-center">
-          <v-dialog persistent v-model="isDialogQuestion" width="550" hide-overlay>
-            <v-card>
-              <v-card-title class="text-h6 font-weight-medium">복수가입 안내</v-card-title>
-              <v-divider></v-divider>
-              <v-card-text class="text-body-1">
-                복수가입 시, 보험의 피보험자는 보상한도를 공유하여 가입하는 각 변호사가 되며, 사무소 또는 법인이 피보험자가 되지 않습니다.
-              </v-card-text>
-              <v-card-actions class="justify-end">
-                <v-btn text @click="isDialogQuestion = false"> 닫기 </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </div>
-
-        <!-- 법인 회원가입 메세지 팝업 시작 -->
-        <div class="text-center">
           <v-dialog persistent v-model="isDialogSignup" width="550" hide-overlay>
             <v-card>
               <v-card-title class="text-h6 font-weight-medium">회원가입안내</v-card-title>
               <v-divider></v-divider>
-              <v-card-text class="text-body-1">                       
+              <v-card-text class="text-body-1">
+              <span v-if="businessInfo.value === 'ADV'">복수가입</span>
               <span v-if="businessInfo.value === 'CAA'">법인/합동사무소</span>
               <span v-if="businessInfo.value === 'TAX'">법인</span>
                 회원은 사업자등록증을 록톤에 보내(팩스 송부)
@@ -248,7 +238,6 @@
   const isLoginDisable = ref(true);
   
   const isDialogSignup = ref(false);
-  const isDialogQuestion = ref(false);
   const isDialogBusinessInfo = ref(false);
   const isDialogModifyCOR = ref(false);
 
@@ -303,9 +292,6 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
     }else {
       isDialogSignup.value = true;
     }
-}
-const toQuestion = () => {
-  isDialogQuestion.value = true;
 }
   /**
    * ID/비밀번호 찾기

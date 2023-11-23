@@ -685,11 +685,12 @@
               </v-col>
 
               <!--세무사 명단-->
-              <v-col cols="12" class="pb-0" ref="refPage3" v-if="insuranceDTO.user_cd === 'COR'">
+              <v-col cols="12" class="pb-0" ref="refPage3" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-3">
                     <v-card-title>
-                      <h3 class="font-weight-bold">세무사 명단</h3>
+                      <h3 class="font-weight-bold" v-if="route.params.business_cd == 'TAX'">세무사 명단</h3>
+                      <h3 class="font-weight-bold" v-if="route.params.business_cd == 'ADV'">변호사 명단</h3>
                       <p class="text-body-2 color-gray-shadow ml-4">
                         총
                         <span class="color-primary">{{ validUserCount }}</span
@@ -784,10 +785,37 @@
                 </v-card>
               </v-col>
 
-              <!-- 변경정보 시작 -->
+              <!-- 담보한정 시작 -->
               <v-col cols="12" class="pb-0" ref="refPage4">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-4">
+                    <v-card-title class="d-flex justify-space-between pa-0">
+                      <h3 class="font-weight-bold">담보한정</h3>
+                      <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
+                    </v-card-title>
+                    <v-expansion-panel-text>
+                      <v-card-text class="pa-0">
+                        <v-row class="v-board-table size-x-small">
+                          <v-col cols="12" class="v-col">
+                            <div class="head-col align-baseline">
+                              <p>상세내용</p>
+                            </div>
+                            <div class="data-col align-baseline">
+                              <VTextFieldWithValidation v-model="insuranceDTO.limited_collateral" name="limited_collateral" single-line />
+                            </div>
+                          </v-col>
+                        </v-row>
+                      </v-card-text>
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                </v-card>
+              </v-col>
+              <!-- 담보한정 종료 -->
+
+              <!-- 변경정보 시작 -->
+              <v-col cols="12" class="pb-0" ref="refPage5">
+                <v-card>
+                  <v-expansion-panel elevation="0" value="panel-5">
                     <v-card-title class="d-flex justify-space-between pa-0">
                       <h3 class="font-weight-bold">변경정보</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -820,9 +848,9 @@
               <!-- 변경정보 종료 -->
 
               <!-- 변경신청상세 추가예정 -->
-              <v-col cols="12" class="pb-0" ref="refPage5">
+              <v-col cols="12" class="pb-0" ref="refPage6">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-5">
+                  <v-expansion-panel elevation="0" value="panel-6">
                     <v-card-title>
                       <h3 class="font-weight-bold">변경신청상세</h3>
                       <v-spacer />
@@ -834,7 +862,7 @@
               </v-col>
 
               <!--입금 처리-->
-              <v-col cols="12" class="pb-0" ref="refPage6">
+              <v-col cols="12" class="pb-0" ref="refPage7">
                 <v-card>
                   <v-card-title class="d-flex flex-wrap px-0 pt align-center">
                     <h2 class="font-weight-bold">
@@ -959,9 +987,9 @@
               </v-col>
 
               <!-- ERP정보 시작 -->
-              <v-col cols="12" class="py-0" ref="refPage7">
+              <v-col cols="12" class="py-0" ref="refPage8">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-7">
+                  <v-expansion-panel elevation="0" value="panel-8">
                     <v-card-title class="d-flex justify-space-between pa-0">
                       <h3 class="font-weight-bold">ERP정보</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -1007,9 +1035,9 @@
               <!-- ERP정보 종료 -->
 
               <!--약관동의-->
-              <v-col cols="12" class="pb-0" ref="refPage8">
+              <v-col cols="12" class="pb-0" ref="refPage9">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-8">
+                  <v-expansion-panel elevation="0" value="panel-9">
                     <v-card-title>
                       <h3 class="font-weight-bold">약관 동의</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -1050,9 +1078,9 @@
                 </v-card>
               </v-col>
               <!-- 메모 추가예정 -->
-              <v-col cols="12" class="pb-0" ref="refPage9">
+              <v-col cols="12" class="pb-0" ref="refPage10">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-9">
+                  <v-expansion-panel elevation="0" value="panel-10">
                     <v-card-title>
                       <h3 class="font-weight-bold">메모</h3>
                       <v-spacer />
@@ -1289,7 +1317,7 @@ async function fnSearchDtl(insurance_uuid: string) {
     console.log("insuranceDTO sort ", insuranceDTO.value.cbr_data)
 
     //메모 데이타 있을 경우 panel 확장, 2023-11-08 By Moon
-    if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '' && panel.value.length < 8 ) panel.value.push("panel-9")
+    if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '' && panel.value.length < 9 ) panel.value.push("panel-10")
     else if((insuranceDTO.value.rmk == null || insuranceDTO.value.rmk == '') && panel.value.length > 7 ) panel.value.pop();
 
     //const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
@@ -1695,5 +1723,5 @@ onMounted(async () => {
  */
 
 // 조회결과 아코디언
-const panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-7', 'panel-8']);
+const panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-7', 'panel-8', 'panel-9']);
 </script>

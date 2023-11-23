@@ -251,12 +251,6 @@
                     <TermsOfPolicy></TermsOfPolicy>
                   </v-dialog>
                 </v-btn>
-                <v-btn color="primary" variant="outlined" class="ml-2">특별약관 보기
-                  <v-dialog persistent v-model="isDialogTermsOfPolicy3" activator="parent" scrollable max-width="1000">
-                    <v-btn variant="outlined" color="dark" @click="isDialogTermsOfPolicy3 = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
-                    <TermsOfPolicy2></TermsOfPolicy2>
-                  </v-dialog>
-                </v-btn>
               </div>
 
 
@@ -272,7 +266,7 @@
                     </v-card-title>
                     <v-divider class="mb-0"/>
                     <v-card-text class="pa-0">
-                      <iframe src="/assets/doc/ADV/변호사_예상질문에_대한_답변서.pdf" width="100%" height="800px"></iframe>
+                      <iframe src="/assets/doc/ADV/2023 예상질문에 대한 답변서.pdf" width="100%" height="800px"></iframe>
                     </v-card-text>
                   </v-card>
                 </v-dialog>
@@ -398,19 +392,29 @@
                   <td class="border-right-0">
                     사고 인지 후 30일 이내에 반드시 보험사로 서면 통지하여야 하며,<br/>
                     기간 내 통지가 이루어지지 않을 경우 면책처리됨<br/>
-                    <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mt-2 px-4 py-1 text-14" href="/assets/doc/CAA/관세사_사고경위서.pdf" download>
-                      <span class="mr-1">사고 경위서 다운로드</span>
+                    <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mt-2 px-4 py-1 text-14" href="/assets/doc/ADV/변호사_사고통보서.pdf" download>
+                      <span class="mr-1">사고 통보서 다운로드</span>
                       <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
                     </a>
                   </td>
                 </tr>
                 </tbody>
+
               </table>
+              <div class="mt-4">
+                <span class="color-gray-shadow">※ 자세한 사항은 약관을 참조해주세요</span>
+                <v-btn color="primary" variant="outlined" class="ml-2">특별약관 보기
+                  <v-dialog persistent v-model="isDialogTermsOfPolicy3" activator="parent" scrollable max-width="1000">
+                    <v-btn variant="outlined" color="dark" @click="isDialogTermsOfPolicy3 = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
+                    <TermsOfPolicy2></TermsOfPolicy2>
+                  </v-dialog>
+                </v-btn>
+              </div>
               <dl class="mt-6 pa-10 bg-background">
                 <dt class="font-weight-medium"><i class="mdi mdi-alert-circle-outline mr-2"></i>유의사항</dt>
                 <dd class="text-body-1 mt-4 text-grey-darken-3">
                   <ul class="list-style-type-bull pl-3">
-                    <li>최초 가입 이후 사고 인지 시점에도 유효하게 가입되어 있어야 하며 기본 담보의 자동보고 연장기간(60일)은 적용되지 않습니다.</li>
+                    <li>최초 가입 이후 사고 인지 시점에도 유효하게 가입되어 있어야 하며 기본 담보의 자동보고 연장기간(70일)은 적용되지 않습니다.</li>
                     <li>보험회사가 지급한 보험금한도 내에서 사고를 야기한 사무원 및 제3자에 대하여 구상권을 행사 할 수 있습니다.</li>
                   </ul>
                 </dd>
@@ -507,7 +511,7 @@
                 </dd>
                 <dd class="mt-1">신규 가입 시 만기일 (매년 12월 1일)까지 일할 계산</dd>
                 <dd class="mt-1 color-gray-shadow" v-if="_AUTH_USER.userCd == 'IND'" >※ 입금자 피보험자 성명+등록번호로 반드시 기재<br/>(복수가입의 경우 사무소 명으로 일괄 납부)</dd>
-                <dd class="mt-1 color-gray-shadow" v-if="_AUTH_USER.userCd == 'COR'" >※ 보험료를 합산하여 사무소 명으로 일괄납부</dd>
+                <dd class="mt-1 color-gray-shadow" v-if="_AUTH_USER.userCd == 'JNT'" >※ 보험료를 합산하여 사무소 명으로 일괄납부</dd>
               </dl>
             </li>
             <li class="px-16 mt-2 mb-1">
@@ -544,7 +548,7 @@
               </tr>
               <tr>
                 <td>소속 변호사의 복수 가입<br/>(보상한도 공유가입)</td>
-                <td class="border-right-0">소속 변호사가 보상한도를 공유하여 가입되며, 3명 이상 복수 가입시 연간총보상한도액 2배수 적용</td>
+                <td class="border-right-0">소속 변호사가 보상한도를 공유하여 가입되며, <br/>3명 이상 복수 가입시 연간총보상한도액 2배수 적용</td>
               </tr>
               <tr>
                 <td>보상한도 증액</td>
@@ -572,9 +576,9 @@
               <img src="../../assets/images/icon/icon-insurance-4-1.png" alt="" class="pl-16 ml-16"/>
               <dl class="ml-16">
                 <dt class="color-primary">사고접수 양식 다운로드</dt>
-                <dd class="mt-1">사고 인지 즉시 서면에 의한 사고 접수를 하여야함(피보험자 상황 통지 의무)</dd>
+                <dd class="mt-1">사고 인지 즉시 서면에 의한 사고 접수를 하여야 함(피보험자 상황 통지 의무)</dd>
                 <dd class="mt-2">
-                  <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mr-4 px-4 py-1 text-14" href="/assets/doc/ADV/세무사_사고통보서.pdf" download>
+                  <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mr-4 px-4 py-1 text-14" href="/assets/doc/ADV/변호사_사고통보서.pdf" download>
                     <span class="mr-1">다운로드</span>
                     <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
                   </a>
@@ -593,7 +597,7 @@
             <li class="d-flex align-center px-16">
               <img src="../../assets/images/icon/icon-insurance-4-2.png" alt="" class="pl-16 ml-16"/>
               <dl class="ml-16">
-                <dt class="color-primary">경위서 작성 후 사고접수</dt>
+                <dt class="color-primary">통보서 작성 후 사고접수</dt>
                 <dd class="mt-1">이메일 또는 팩스로 사고접수</dd>
                 <dd>FAX : 0503-8379-2008 / 02-2011-0301</dd>
               </dl>

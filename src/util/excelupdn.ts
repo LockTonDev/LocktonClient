@@ -831,6 +831,7 @@ function mapperRow_ADV_IND(excelMapper: object, excelDataRow: any) {
   row[excelMapper.ERP납입일] = insuranceDTO.erp_dt;
   row[excelMapper.변경일자] = insuranceDTO.change_dt;
   row[excelMapper.변경내용] = insuranceDTO.change_rmk;
+  row[excelMapper.담보한정] = insuranceDTO?.limited_collateral;
   return [row];
 }
 
@@ -899,6 +900,8 @@ function mapperRow_ADV_JNT(excelMapper: object, excelDataRow: any) {
   row[excelMapper.처리일자] = insuranceDTO?.trx_data[0]?.trx_dt;
   row[excelMapper.비고] = insuranceDTO?.trx_data[0]?.rmk;
   row[excelMapper.예금주명] = insuranceDTO?.trx_data[0]?.acct_nm;
+
+  row[excelMapper.담보한정] = insuranceDTO?.limited_collateral;
 
   rows.push(row);
 

@@ -310,6 +310,7 @@
                       <div class="head-col">
                         <p v-if="insuranceDTO.user_cd === 'IND'">소급담보일</p>
                         <p v-if="insuranceDTO.user_cd === 'COR'">법인 소급담보일</p>
+                        <p v-if="insuranceDTO.user_cd === 'JNT'">복수 소급담보일</p>
                         <sup class="text-error">*</sup>
                       </div>
                       <div class="data-col">
@@ -546,11 +547,12 @@
 					</v-col>
 
 					<!--세무사 명단-->
-					<v-col cols="12" class="pb-0" ref="refPage3" v-if="insuranceDTO.user_cd === 'COR'">
+					<v-col cols="12" class="pb-0" ref="refPage3" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
 						<v-card>
 						<v-expansion-panel elevation="0" value="panel-3">
 							<v-card-title>
-							<h3 class="font-weight-bold">세무사 명단</h3>
+               <h3 class="font-weight-bold" v-if="route.params.business_cd == 'TAX'">세무사 명단</h3>
+               <h3 class="font-weight-bold" v-if="route.params.business_cd == 'ADV'">변호사 명단</h3>
 							<p class="text-body-2 color-gray-shadow ml-4">
 								총
 								<span class="color-primary">{{ insuranceDTO.cbr_data.length }}</span>명

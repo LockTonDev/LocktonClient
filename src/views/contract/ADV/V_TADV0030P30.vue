@@ -35,10 +35,11 @@
                     <dt class="my-1 w-20">보 험 기 간 :</dt>
                     <dd class="my-1 w-80">{{ insuranceDTO.insr_st_dt }}(00:01) ~ {{ insuranceDTO.insr_cncls_dt }}(00:01)</dd>
                     <dt class="my-1 w-20">보상한도액 :</dt>
-                    <dd class="my-1 w-80">{{ insuranceDTO.insr_clm_lt_amt.getValueBySplit(1) }} / {{ insuranceDTO.insr_year_clm_lt_amt }} (1청구당/보상한도액)</dd>
+                    <dd class="my-1 w-80">{{ insuranceDTO.insr_clm_lt_amt.getValueBySplit(1) }} / {{ insuranceDTO.insr_year_clm_lt_amt }} (1청구당/연간총보상한도)</dd>
                   </dl>
-                  <h2 class="text-center my-16 py-8 text-34">변호사 배상책임보험<br />가입업체임을 증명함.</h2>
-                  <p class="w-80 ma-auto word-break-keep-all text-18">귀 사(하)는 「변호사배상책임보험」에 가입하였으므로 상기 보험종목 의 보상하는 손해로 인하여 타인에 대한 법률상배상책임이 발생한 경우 보험약관에 의거 당사가 이를 보상하여 드립니다.</p>
+                  <h2 class="text-center mt-16 pt-8 text-34">변호사 배상책임보험<br />가입업체임을 증명함.</h2>
+                  <p class="text-center mb-16 pb-8 text-28 color-red">{{ insuranceDTO.limited_collateral }}</p>
+                  <p class="w-80 ma-auto word-break-keep-all text-18">귀 사(하)는 「변호사배상책임보험」에 가입하였으므로 상기 보험종목의 보상하는 손해로 인하여 타인에 대한 법률상배상책임이 발생한 경우 보험약관에 의거 당사가 이를 보상하여 드립니다.</p>
                   <p class="w-70 ma-auto mt-8 word-break-keep-all text-16 color-gray">※ 보험기간이 종료되었거나 보험료 미납으로 인해 계약이 해지된 경우에는 보험자의 보상책임이 발생하지 않습니다.</p>
                 </main>
                 <footer class="">
@@ -72,7 +73,7 @@
                       <th>계약자</th>
                       <td>대한변호사협회</td>
                       <th>사업자등록번호</th>
-                      <td>{{ insuranceDTO.corp_cnno }}</td>
+                      <td>214-82-01695</td>
                     </tr>
                     <tr>
                       <th>피보험자</th>
@@ -83,7 +84,7 @@
                     </tr>
                     <tr>
                       <th>사무소 주소</th>
-                      <td colspan="3">{{ insuranceDTO.corp_addr }},&nbsp;{{ insuranceDTO.corp_addr_dtl }}</td>
+                      <td colspan="3">{{ insuranceDTO.corp_addr }}<span v-if="insuranceDTO.corp_addr_dtl !== null">,&nbsp;{{ insuranceDTO.corp_addr_dtl }}</span></td>
                     </tr>
                     </tbody>
                   </table>
@@ -139,7 +140,7 @@
                   <table class="table w-50 ml-auto" v-if="insuranceDTO.spct_join_yn === 'Y'">
                     <tr>
                       <th>총 납입보험료</th>
-                      <td>{{insuranceDTO.insr_tot_amt}} 원</td>
+                      <td>{{ Number(insuranceDTO.insr_tot_amt).toLocaleString() }} 원</td>
                     </tr>
                   </table>
                   <table class="table" v-if="insuranceDTO.spct_join_yn !== 'Y'">
@@ -220,10 +221,10 @@
                         <tr>
                           <th>성명</th>
                           <th>등록번호</th>
-                          <th>소급일자</th>
+                          <th>소급담보일</th>
                           <th>성명</th>
                           <th>등록번호</th>
-                          <th>소급일자</th>
+                          <th>소급담보일</th>
                         </tr>
                       </thead>
 
@@ -343,7 +344,7 @@ const onExportPDF = (viewType: string) => {
 
   let opt = {
     margin: [0, 9, 0, 9],
-    filename: '가입증명서_세무사배상책임보험.pdf',
+    filename: '가입증명서_변호사배상책임보험.pdf',
     pagebreak: {
       mode: ['avoid-all', 'css', 'legacy']
     },

@@ -253,11 +253,17 @@
                         <span class="color-primary">&#x275A;</span>&nbsp;특별약관
                       </p>
                       <v-row class="table">
-                        <v-col cols="12">
+                        <v-col cols="6">
                           <div class="head-col">특약명</div>
                           <div class="data-col">
-                            고용 직원 부정직행위 담보 특별약관(Dishonesty
+                            고용직원 부정직행위 담보 특별약관<br/>(Dishonesty
                             Extension)
+                          </div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div class="head-col">소급담보일</div>
+                          <div class="data-col">
+                            {{ insuranceDTO.spct_data.insr_retr_dt }}
                           </div>
                         </v-col>
                         <v-col cols="6">
@@ -980,7 +986,7 @@
                       </v-col>
                       <v-col cols="6" class="v-col">
                         <div class="head-col">
-                          <p>사업부 형태</p>
+                          <p>사무소 형태</p>
                         </div>
                         <div class="data-col">
                           {{ corpTypeItems.find(item => item.value ==  insuranceDTO.corp_type)?.title }}
@@ -1149,11 +1155,17 @@
                         <span class="color-primary">&#x275A;</span>&nbsp;특별약관
                       </p>
                       <v-row class="table">
-                        <v-col cols="12">
+                        <v-col cols="6">
                           <div class="head-col">특약명</div>
                           <div class="data-col">
-                            사무원의 횡령 등 부정직행위 담보 특별약관(Dishonesty
+                            고용직원 부정직행위 담보 특별약관<br/>(Dishonesty
                             Extension)
+                          </div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div class="head-col">소급담보일</div>
+                          <div class="data-col">
+                            {{ insuranceDTO.spct_data.insr_retr_dt }}
                           </div>
                         </v-col>
                         <v-col cols="6">
@@ -1210,7 +1222,7 @@
                       <span class="text-14 mx-4 font-weight-medium"
                       >{{
                           Number(
-                              insuranceDTO?.insr_amt + insuranceDTO?.cons_data?.insr_amt
+                              insuranceDTO?.insr_amt
                           ).toLocaleString()
                         }}원</span
                       >
@@ -1240,7 +1252,7 @@
                         <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                       </li>
                       <li class="color-error line-height-1-2">
-                        법인명으로 일괄 송금하여 주시기 바랍니다.
+                        법인 및 사무소명으로 일괄 송금하여 주시기 바랍니다.
                       </li>
                     </ul>
                   </div>
@@ -1406,7 +1418,7 @@
                           <p class="text-12">피보험자</p>
                         </div>
                         <div class="data-col py-2 justify-end pr-8">
-                          <p class="text-12">{{ insuranceDTO.user_nm }}</p>
+                          <p class="text-12" v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}} 명</p>
                         </div>
                       </v-col>
                     </v-row>
@@ -1818,7 +1830,7 @@
                           <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                         </li>
                         <li class="color-error line-height-1-2">
-                          법인명으로 일괄 송금하여 주시기 바랍니다.
+                          법인 및 사무소명으로 일괄 송금하여 주시기 바랍니다.
                         </li>
                       </ul>
                     </div>
@@ -2250,7 +2262,7 @@ const onExportPDF = (viewType: string) => {
   
   let opt = {
     margin: [0, 9, 0, 9],
-    filename: '가입신청서_세무사배상책임보험.pdf',
+    filename: '가입신청서_변호사배상책임보험.pdf',
     pagebreak: {
       mode: ['avoid-all', 'css', 'legacy']
     },
@@ -2302,7 +2314,6 @@ const onExportPDF = (viewType: string) => {
 onMounted(async () => {
   statusCdItems.value = await CommonCode.getCodeList('COM030');
   corpTypeItems.value = await CommonCode.getCodeList('COM050');
-  console.log(corpTypeItems.value)
 
   isPdf.value = props.isPdf;
   isNotAuth.value = props.isNotAuth;

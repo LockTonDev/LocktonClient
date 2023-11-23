@@ -192,7 +192,8 @@ const EXCEL_ADV_IND = {
   ERP보험료: 'AR',
   ERP납입일: 'AS',
   변경일자: 'AT',
-  변경내용: 'AU'
+  변경내용: 'AU',
+  담보한정: 'AV'
 };
 
 const EXCEL_ADV_JNT = {
@@ -240,7 +241,8 @@ const EXCEL_ADV_JNT = {
   ERP보험료: 'AP',
   ERP납입일: 'AQ',
   변경일자: 'AR',
-  변경내용: 'AS'
+  변경내용: 'AS',
+  담보한정: 'AT'
   //----------------------
 };
 

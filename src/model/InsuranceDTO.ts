@@ -156,6 +156,7 @@ class InsuranceDTO {
   insr_tot_amt: number;
   insr_tot_unpaid_amt: number;
   insr_tot_paid_amt: number;
+  limited_collateral: string;
 
   cbr_cnt: number;
   cbr_data: CBRDataDTO[];
@@ -346,6 +347,7 @@ class InsuranceDTO {
     this.updated_id = data.updated_id || '';
     this.updated_ip = data.updated_ip || '';
     this.renewal = data.renewal || '';
+    this.limited_collateral = data.limited_collateral || '';
     this.table_name = data.table_name || '';
   }
 }

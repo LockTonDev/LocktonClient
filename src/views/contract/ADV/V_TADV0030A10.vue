@@ -22,9 +22,8 @@
       <div class="d-flex justify-space-between align-end">
         <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ InsuranceList.length }}</span> 건</p>
         <div>
-          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="newInsrYN=='Y' && renewalInsrUUID == null">신규 가입</v-btn>&nbsp;
-          <v-btn variant="flat" @click="onPageMove('renewal')" v-if="newInsrYN=='Y' && renewalInsrUUID != null">계약 갱신</v-btn>
-         
+          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="newInsrYN=='Y' && renewalInsrUUID === null">신규 가입</v-btn>&nbsp;
+          <v-btn variant="flat" @click="onPageMove('renewal')" v-if="newInsrYN=='Y' && renewalInsrUUID !== null">계약 갱신</v-btn>
         </div>
       </div>
       <v-table class="v-board-table size-large mt-4">
@@ -50,14 +49,15 @@
         </thead>
         <tbody v-if="InsuranceList.length">
           <tr v-for="(row, index) in InsuranceList">
-             <td class="text-center text-body-1">{{ row.status_cd !== '91' ? row.insurance_no : '' }}</td>
+             <td class="text-center text-body-1">{{ !['10', '91'].includes(row.status_cd) ? row.insurance_no : '' }}</td>
+            <template v-if="row.user_cd === user_cd">
             <td class="text-center text-body-1">
               <p v-if="row.user_cd == 'IND'">{{ row.user_nm }}</p>
               <p v-if="row.user_cd == 'JNT' && row.cbr_data.length > 0">{{ row.cbr_data[0].cbr_nm }} 외 {{row.cbr_cnt - 1}} 명</p>
             </td>
             <td class="text-center text-body-1">
-              <div v-if="row.insr_year === '2022' && row.status_cd !== 10">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
-              <div v-else class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
+              <div v-if="row.insr_year === '2022' && row.status_cd !== '10'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
+              <div v-else class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid, row.insr_year)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
             <td class="text-center text-body-1">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">
@@ -79,8 +79,14 @@
                 >mdi-printer</v-icon
                 >
               </td>
+            </template>
+            <template v-else>
+              <td colspan="5" class="text-center">{{ row.user_nm }} 복수 가입</td>
+            </template>
             <td class="text-center text-body-1">{{row.status_nm}}
             </td>
+
+
           </tr>
         </tbody>
         <tbody v-else>
@@ -143,10 +149,13 @@
   const isInsuranceFormDialog = ref(false);
   const insuranceUUID = ref("");
   const newInsrYN = ref("");
-  const renewalInsrUUID= ref(""); 
+  const renewalInsrUUID= ref("");
+  const renewalInsrYear= ref("");
 
   // 초기정보 설정
   const messageBoxDTO = ref(new MessageBoxDTO());
+
+  const user_cd = ref('');
 
 
   const page = ref({
@@ -181,14 +190,18 @@
     }
   };
 
-  const onPageView = (status_cd:string, insurance_uuid:string) => {
+  const onPageView = (status_cd:string, insurance_uuid:string, insr_year:string) => {
     let path = '';
 
     // 10 - 신청
     if (status_cd == "10") {
       messageBoxDTO.value.setConfirm('확인', '신청이력이 있습니다. 수정하시겠습니까?', insurance_uuid, (result, params) => {
         if (result) {
-           router.push('/contract/ADV/V_TADV0030A11/' + params);
+          if(insr_year === renewalInsrYear.value) {
+            router.push({ path:'/contract/ADV/V_TADV0030A11/' + params, query :{renewalUpdate : 'Y'} });
+          }else {
+            router.push('/contract/ADV/V_TADV0030A11/' + params);
+          }
         }
       });
     
@@ -245,12 +258,18 @@
   
   onMounted(async () => {    
       const params = ref([]);
+      user_cd.value = JSON.parse(localStorage.getItem('_AUTH_USER')).userCd;
       const resultData = await apiADV0030a.getDBSelList(params);
 
       InsuranceList.value = resultData.data.list;
       newInsrYN.value = resultData.data.newInsrYN[0].data;
-      renewalInsrUUID.value = resultData.data.renewalInsrUUID[0].data;
-
+      if(resultData.data.renewalInsrUUID.length > 0) {
+        renewalInsrUUID.value = resultData.data.renewalInsrUUID[0].data;
+        renewalInsrYear.value = resultData.data.renewalInsrUUID[0].insr_year;
+      }else {
+        renewalInsrUUID.value = null;
+        renewalInsrYear.value = "";
+      }
       if(InsuranceList.value.length == 0 && newInsrYN.value == 'Y' && renewalInsrUUID.value == null) {
         isNoData.value = true;
       }

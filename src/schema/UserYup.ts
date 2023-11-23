@@ -9,7 +9,7 @@ const 회원가입_공통_약관동의 = yup.object({
 });
 
 const 회원가입_공통_아이디_개인 = yup.object({
-  user_id: yup.string().matches(/^[a-zA-Z0-9]{6,20}$/, '아이디는 6 ~ 20자 이하, 영어 및 숫자 조합으로 입력하세요.')
+  user_id: yup.string().matches(/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{6,20}$/, '아이디는 6 ~ 20자 이하, 영어 및 숫자 조합으로 입력하세요.')
 });
 
 const 회원가입_공통_아이디_법인 = yup.object({
@@ -52,6 +52,7 @@ const 회원가입_공통_사무소정보 = yup.object({
   corp_faxno3: yup.string().matches(/^\d{4}$/, '사무소 팩스를 입력해주세요.'),
   corp_cust_nm: yup.string().required('담당자 성명을 입력해주세요.'),
   corp_addr: yup.string().required('사무소 주소를 입력해주세요.'),
+  corp_addr_dtl: yup.string().required('사무소 상세 주소를 입력해주세요.'),
 });
 
 const 회원가입_합동_사무소정보 = yup.object({
@@ -71,6 +72,7 @@ const 회원가입_합동_사무소정보 = yup.object({
   corp_cust_nm: yup.string().required('담당자 성명을 입력해주세요.'),
   corp_post: yup.string().required('사무소 우편번호를 입력해주세요.'),
   corp_addr: yup.string().required('사무소 주소를 입력해주세요.'),
+  corp_addr_dtl: yup.string().required('사무소 상세 주소를 입력해주세요.'),
 });
 
 const 회원가입_공통_개인 = yup.object({
