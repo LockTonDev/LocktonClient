@@ -39,6 +39,7 @@
 .color-gray-shadow {color: #858E94;}
 .color-black {color: #2b2b2b;}
 .color-gray {color: #858585;}
+.color-red {color: red;}
 .color-white {color:#fff;}
 .bg-background {background: #f3f7f9 !important;}
 .bg-header{background-color: #1f2328;}
@@ -60,6 +61,8 @@
 .w-30 {width:30% !important;}
 .w-80 {width:80% !important;}
 .text-34 {font-size:34px;}
+.text-30 {font-size:30px;}
+.text-28 {font-size:28px;}
 .text-24 {font-size:24px;}
 .text-23 {font-size:23px;}
 .text-22 {font-size:22px;}

@@ -253,8 +253,12 @@ async function fnSave(mode:string) {
   });
 
   if (isRun) {
-
-    const resultData = await apiADMIN.setApplyInsurance(dT0040ADTO.value);
+    let resultData;
+    if(route.params.business_cd=='ADV') {
+      resultData = await apiADMIN.setApplyADVInsurance(dT0040ADTO.value);
+    } else {
+      resultData = await apiADMIN.setApplyInsurance(dT0040ADTO.value);
+    }
     console.log(resultData);
 
     if (resultData.success) {
@@ -267,8 +271,12 @@ async function fnSave(mode:string) {
 };
 
 async function fnSearch() {
-  console.log('searchParams.value.data',searchParams.value.data)
-  const resultData = await apiADMIN.getApplyInsurance(searchParams.value.data);
+  let resultData;
+  if(route.params.business_cd=='ADV') {
+    resultData = await apiADMIN.getApplyADVInsurance(searchParams.value.data);
+  } else {
+    resultData = await apiADMIN.getApplyInsurance(searchParams.value.data);
+  }
   dataList.value = resultData.data;
   if (dataList.value.length == 0) {
     isNoData.value = true;

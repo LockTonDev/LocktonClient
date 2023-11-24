@@ -12,6 +12,12 @@ export default {
     return await api.authService.post('/ADM/TAX/APPLY/get', { params });
   },
 
+  async setApplyADVInsurance(params: any) {
+    return await api.authService.post('/ADM/ADV/APPLY/set', { params });
+  },
+  async getApplyADVInsurance(params: any) {
+    return await api.authService.post('/ADM/ADV/APPLY/get', { params });
+  },
   /** ============================================================================
    *  [전문인명단DB]
    *  ============================================================================
@@ -92,11 +98,6 @@ export default {
   async getTAXS(params: any) {
     return await api.authService.post('/ADM/TAX/gets', { params });
   },
-
-  async getTAXExcel(params: any) {
-    return await api.authService.post('/ADM/TAX/EXCEL/get', { params });
-  },
-
   async setTAX_TRX(params: any) {
     return await api.authService.post('/ADM/TAX/TRX/set', { params });
   },
@@ -104,6 +105,36 @@ export default {
   async getTAX_TRX(params: any) {
     return await api.authService.post('/ADM/TAX/TRX/get', { params });
   },
+  async getTAXExcel(params: any) {
+    return await api.authService.post('/ADM/TAX/EXCEL/get', { params });
+  },
+
+  /**  ADV  */
+  async setADV(params: any) {
+    return await api.authService.post('/ADM/ADV/set', { params });
+  },
+  async getADV(params: any) {
+    return await api.authService.post('/ADM/ADV/get', { params });
+  },
+  async getADVS(params: any) {
+    return await api.authService.post('/ADM/ADV/gets', { params });
+  },
+  async getADVRate(params: any) {
+    return await api.authService.post('/ADM/ADV/rate', { params });
+  },
+
+  async setADV_TRX(params: any) {
+    return await api.authService.post('/ADM/ADV/TRX/set', { params });
+  },
+
+  async getADV_TRX(params: any) {
+    return await api.authService.post('/ADM/ADV/TRX/get', { params });
+  },
+  async getADVExcel(params: any) {
+    return await api.authService.post('/ADM/ADV/EXCEL/get', { params });
+  },
+
+
 
   /** ============================================================================
    *  [갱신DB]
@@ -119,6 +150,17 @@ export default {
   async getRenewals(params: any) {
     return await api.authService.post('/ADM/TAX/RENEWAL/gets', { params });
   },
+  /**  ADV  */
+  async setADVRenewal(params: any) {
+    return await api.authService.post('/ADM/ADV/RENEWAL/set', { params });
+  },
+  async getADVRenewal(params: any) {
+    return await api.authService.post('/ADM/ADV/RENEWAL/get', { params });
+  },
+
+  async getADVRenewals(params: any) {
+    return await api.authService.post('/ADM/ADV/RENEWAL/gets', { params });
+  },
 
   /** ============================================================================
    *  [증권시작일조회]
@@ -132,6 +174,6 @@ export default {
    *  ============================================================================
    */
   async setUserPassword(params: any) {
-    return await api.authService.post('/ADM/USER/setUserPassword', { params });
+    return await api.authService.post('/ADM/USER/setUserPassword', {params});
   }
 };

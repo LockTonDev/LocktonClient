@@ -142,6 +142,8 @@ class InsuranceDTO {
   insr_retr_yn: string;
   insr_retr_dt: string;
   insr_pblc_brdn_rt: string;
+  insr_take_amt: number;
+  insr_take_sec: string;
   insr_clm_lt_amt: string;
   insr_year_clm_lt_amt: string;
   insr_psnl_brdn_amt: string;
@@ -154,6 +156,7 @@ class InsuranceDTO {
   insr_tot_amt: number;
   insr_tot_unpaid_amt: number;
   insr_tot_paid_amt: number;
+  limited_collateral: string;
 
   cbr_cnt: number;
   cbr_data: CBRDataDTO[];
@@ -269,6 +272,8 @@ class InsuranceDTO {
     this.insr_retr_yn = data.insr_retr_yn || '';
     this.insr_retr_dt = data.insr_retr_dt || '';
     this.insr_pblc_brdn_rt = data.insr_pblc_brdn_rt || '';
+    this.insr_take_amt = data.insr_take_amt || 0;
+    this.insr_take_sec = data.insr_take_sec || '';
     this.insr_year_clm_lt_amt = data.insr_year_clm_lt_amt || '';
     this.insr_clm_lt_amt = data.insr_clm_lt_amt || '';
     this.insr_psnl_brdn_amt = data.insr_psnl_brdn_amt || '';
@@ -342,6 +347,7 @@ class InsuranceDTO {
     this.updated_id = data.updated_id || '';
     this.updated_ip = data.updated_ip || '';
     this.renewal = data.renewal || '';
+    this.limited_collateral = data.limited_collateral || '';
     this.table_name = data.table_name || '';
   }
 }

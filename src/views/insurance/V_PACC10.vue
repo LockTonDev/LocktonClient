@@ -1,7 +1,7 @@
 <template>
   <BaseBreadcrumb :title="page.title" :image="page.image"></BaseBreadcrumb>
   <v-row>
-    <v-col cols="12" sm="12" class="pa-0">            
+    <v-col cols="12" sm="12" class="pa-0">
       <v-tabs v-model="mainTab" fixed-tabs color="primary">
         <v-tab value="1"><h3 class="font-weight-bold text-18">특징</h3></v-tab>
         <v-tab value="2"><h3 class="font-weight-bold text-18">보장사항</h3></v-tab>
@@ -44,7 +44,7 @@
               <p class="color-gray-shadow line-height-1-3 text-14">※ 개인 회계사에 한해 가입 가능<br>※ 회계법인 소속 회계사는 신규 가입 불가능</p>
             </v-col>
           </v-row>
-        </v-col> 
+        </v-col>
         <v-col cols="11" sm="11" class="px-0 mt-12">
           <h4 class="text-h5 font-weight-bold text-center">가입 필요성</h4>
           <v-row class="mt-10" justify="space-between">
@@ -107,7 +107,7 @@
               </div>
             </li>
           </ul>
-        </v-col> 
+        </v-col>
       </v-row>
     </v-window-item>
 
@@ -131,33 +131,33 @@
                   <col style="width:auto"/>
                 </colgroup>
                 <tbody>
-                    <tr>
-                      <th rowspan="8" class="text-center">주요 보상하는 손해</th>
-                      <td class="text-center">법률적 손해배상금</td>
-                      <td class="border-right-0">판결액, 최종합의 및 화해액</td>
-                    </tr>
-                    <tr>
-                      <td rowspan="6" class="text-center">사고처리 제비용</td>
-                      <td class="border-right-0">변호사 비용</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">전문조사인 비용</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">소송 비용</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">중재나 화해에 드는 비용</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">대위권 보전 비용</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">기타 조사, 방어, 합의 등의 과정에서 발생하는 수수료, 비용 등</td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" class="border-right-0">기타 보통약관 및 특별약관 보험조건에서 정하는 사항</td>
-                    </tr>
+                <tr>
+                  <th rowspan="8" class="text-center">주요 보상하는 손해</th>
+                  <td class="text-center">법률적 손해배상금</td>
+                  <td class="border-right-0">판결액, 최종합의 및 화해액</td>
+                </tr>
+                <tr>
+                  <td rowspan="6" class="text-center">사고처리 제비용</td>
+                  <td class="border-right-0">변호사 비용</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">전문조사인 비용</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">소송 비용</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">중재나 화해에 드는 비용</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">대위권 보전 비용</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">기타 조사, 방어, 합의 등의 과정에서 발생하는 수수료, 비용 등</td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="border-right-0">기타 보통약관 및 특별약관 보험조건에서 정하는 사항</td>
+                </tr>
                 </tbody>
               </table>
               <table class="normal-table mt-4">
@@ -166,37 +166,37 @@
                   <col style="width:auto"/>
                 </colgroup>
                 <tbody>
-                    <tr>
-                      <th rowspan="10" class="text-center">주요 보상하지 않는 손해</th>
-                      <td class="border-right-0">피보험자의 악의적 또는 사기적 부정행위</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">징벌적 손해 (Punitive Damage Exclusion Clause) : 벌금, 과태료 등</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">전문업무의 수행과 관련 없는 신체상해 또는 재물손해</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">중상, 비방 또는 명예훼손 등 인격침해</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">유가증권, 부동산 또는 기타 투자관련 자문 업무 등</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">피보험자의 지불불능 및 파산에 기인한 손해배상책임</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">보험개시일 이전에 행한 업무에 기인한 손해배상책임</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">계약상 가중책임 (Contractual Liability Exclusion Clause)</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">결과적 책임 / 간접손해 (Consequential Loss Exclusion Clause)</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">기타 보통약관 및 특별약관 보험조건에서 정하는 사항</td>
-                    </tr>
+                <tr>
+                  <th rowspan="10" class="text-center">주요 보상하지 않는 손해</th>
+                  <td class="border-right-0">피보험자의 악의적 또는 사기적 부정행위</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">징벌적 손해 (Punitive Damage Exclusion Clause) : 벌금, 과태료 등</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">전문업무의 수행과 관련 없는 신체상해 또는 재물손해</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">중상, 비방 또는 명예훼손 등 인격침해</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">유가증권, 부동산 또는 기타 투자관련 자문 업무 등</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">피보험자의 지불불능 및 파산에 기인한 손해배상책임</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">보험개시일 이전에 행한 업무에 기인한 손해배상책임</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">계약상 가중책임 (Contractual Liability Exclusion Clause)</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">결과적 책임 / 간접손해 (Consequential Loss Exclusion Clause)</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">기타 보통약관 및 특별약관 보험조건에서 정하는 사항</td>
+                </tr>
                 </tbody>
               </table>
               <div class="mt-4">
@@ -256,26 +256,26 @@
                             <col/>
                           </colgroup>
                           <tbody>
-                            <tr>
-                              <th>담보업무</th>
-                              <td class="border-right-0">과거 보험기간에 수행한 회계사의 업무</td>
-                            </tr>
-                            <tr>
-                              <th class="border-left-0">가입기간</th>
-                              <td class="border-right-0">최대 3년까지 가입가능</td>
-                            </tr>
-                            <tr>
-                              <th class="border-left-0">보험료</th>
-                              <td class="border-right-0">
-                                1년 가입 시 : 전년도 연간 보험료의 100%<br/>
-                                2년 가입 시 : 전년도 연간 보험료의 175%<br/>
-                                3년 가입 시 : 전년도 연간 보험료의 250%<br/>
-                              </td>
-                            </tr>
-                            <tr>
-                              <th class="border-left-0">유의사항</th>
-                              <td class="border-right-0">보험기간 만료 후 30일 이내에 서면 요청하여야 하며,<br/>보험조건은 전년도와 동일하게 가입(변경 불가)</td>
-                            </tr>
+                          <tr>
+                            <th>담보업무</th>
+                            <td class="border-right-0">과거 보험기간에 수행한 회계사의 업무</td>
+                          </tr>
+                          <tr>
+                            <th class="border-left-0">가입기간</th>
+                            <td class="border-right-0">최대 3년까지 가입가능</td>
+                          </tr>
+                          <tr>
+                            <th class="border-left-0">보험료</th>
+                            <td class="border-right-0">
+                              1년 가입 시 : 전년도 연간 보험료의 100%<br/>
+                              2년 가입 시 : 전년도 연간 보험료의 175%<br/>
+                              3년 가입 시 : 전년도 연간 보험료의 250%<br/>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th class="border-left-0">유의사항</th>
+                            <td class="border-right-0">보험기간 만료 후 30일 이내에 서면 요청하여야 하며,<br/>보험조건은 전년도와 동일하게 가입(변경 불가)</td>
+                          </tr>
                           </tbody>
                         </table>
                         <p class="mt-4">가입 및 기타 문의는 록톤(T. 02-2011-0300)으로 연락주시기 바랍니다.</p>
@@ -297,16 +297,16 @@
                   <col/>
                 </colgroup>
                 <tbody>
-                  <tr>
-                    <th>1청구당 보상한도액 </th>
-                    <td class="border-right-0">1 사고에 대한 보상한도</td>
-                  </tr>
-                  <tr>
-                    <th class="border-left-0">연간 총 보상한도액</th>
-                    <td class="border-right-0">
-                      보험기간 1년 동안 보상받을 수 있는 총 한도<br/>
-                    </td>
-                  </tr>
+                <tr>
+                  <th>1청구당 보상한도액 </th>
+                  <td class="border-right-0">1 사고에 대한 보상한도</td>
+                </tr>
+                <tr>
+                  <th class="border-left-0">연간 총 보상한도액</th>
+                  <td class="border-right-0">
+                    보험기간 1년 동안 보상받을 수 있는 총 한도<br/>
+                  </td>
+                </tr>
                 </tbody>
               </table>
               <h4 class="text-body-1 font-weight-bold mt-10">자기부담금(공제금액)</h4>
@@ -329,50 +329,50 @@
                   <col style="width: 25%"/>
                 </colgroup>
                 <thead>
-                  <tr>
-                    <th>구분</th>
-                    <th>CASE S</th>
-                    <th>CASE A</th>
-                    <th class="border-right-0">CASE B</th>
-                  </tr>
+                <tr>
+                  <th>구분</th>
+                  <th>CASE S</th>
+                  <th>CASE A</th>
+                  <th class="border-right-0">CASE B</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="border-left-0">사고공동부담비율</td>
-                    <td>없음</td>
-                    <td>10% 적용</td>
-                    <td class="border-right-0">20% 적용</td>
-                  </tr>
-                  <tr>
-                    <td class="border-left-0">보험사 지급 비율</td>
-                    <td>보험사 100% 지급</td>
-                    <td>보험사 90% 지급</td>
-                    <td class="border-right-0">보험사 80% 지급</td>
-                  </tr>
+                <tr>
+                  <td class="border-left-0">사고공동부담비율</td>
+                  <td>없음</td>
+                  <td>10% 적용</td>
+                  <td class="border-right-0">20% 적용</td>
+                </tr>
+                <tr>
+                  <td class="border-left-0">보험사 지급 비율</td>
+                  <td>보험사 100% 지급</td>
+                  <td>보험사 90% 지급</td>
+                  <td class="border-right-0">보험사 80% 지급</td>
+                </tr>
                 </tbody>
                 <tbody>
-                  <tr>
-                    <td colspan="4" class="bg-background border-right-0 py-8">
-                      <p class="color-primary text-20">손해배상액이 3천만원으로 확정된 경우 예상 보험금은?</p>
-                      <p class="color-gray-shadow">(보상한도 5천만원/자기부담금 3백만원 조건 가입시)</p>
-                      <p class="mt-4">손해배상액 3천만원 - 자기부담금 3백만원 = <span class="text-20">27,000,000원</span></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="border-left-0">수령보험금</td>
-                    <td>
-                      <p>27,000,000원</p>
-                      <p class="color-gray-shadow">(전액수령)</p>
-                    </td>
-                    <td>
-                      <p>24,300,000원</p>
-                      <p class="color-gray-shadow">(2,700,000원 차감)</p>
-                    </td>
-                    <td>
-                      <p>21,600,000원</p>
-                      <p class="color-gray-shadow">(5,400,000원 차감)</p>
-                    </td>
-                  </tr>
+                <tr>
+                  <td colspan="4" class="bg-background border-right-0 py-8">
+                    <p class="color-primary text-20">손해배상액이 3천만원으로 확정된 경우 예상 보험금은?</p>
+                    <p class="color-gray-shadow">(보상한도 5천만원/자기부담금 3백만원 조건 가입시)</p>
+                    <p class="mt-4">손해배상액 3천만원 - 자기부담금 3백만원 = <span class="text-20">27,000,000원</span></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border-left-0">수령보험금</td>
+                  <td>
+                    <p>27,000,000원</p>
+                    <p class="color-gray-shadow">(전액수령)</p>
+                  </td>
+                  <td>
+                    <p>24,300,000원</p>
+                    <p class="color-gray-shadow">(2,700,000원 차감)</p>
+                  </td>
+                  <td>
+                    <p>21,600,000원</p>
+                    <p class="color-gray-shadow">(5,400,000원 차감)</p>
+                  </td>
+                </tr>
                 </tbody>
               </table>
               <p class="color-gray-shadow mt-4 text-right">※ 피보험자가 선택한 조건에 따라 예상지급보험금이 위와 같이 보상됩니다.</p>
@@ -412,11 +412,11 @@
                 <dd class="mt-1">
                   약관/개인정보처리동의 확인<br/>
                   <v-btn color="primary" variant="outlined" class="ml-2"> <span>약관 상세 </span>
-                  <v-dialog persistent v-model="isDialogTermsOfPolicy2" activator="parent" scrollable max-width="1000">
-                    <v-btn variant="outlined" color="dark" @click="isDialogTermsOfPolicy2 = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
-                    <TermsOfPolicy></TermsOfPolicy>
-                  </v-dialog>
-                </v-btn>
+                    <v-dialog persistent v-model="isDialogTermsOfPolicy2" activator="parent" scrollable max-width="1000">
+                      <v-btn variant="outlined" color="dark" @click="isDialogTermsOfPolicy2 = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
+                      <TermsOfPolicy></TermsOfPolicy>
+                    </v-dialog>
+                  </v-btn>
                 </dd>
               </dl>
             </li>
@@ -492,26 +492,26 @@
               <col style="width:auto"/>
             </colgroup>
             <tbody>
-              <tr>
-                <th rowspan="4" class="text-18">내용</th>
-                <td colspan="2" class="border-right-0">한국공인회계사회 회원만 가입 가능</td>
-              </tr>
-              <tr>
-                <td>개인 회계사에 한해 가입 가능</td>
-                <td class="border-right-0">단, 보험에 가입중인 회계사가 회계법인으로 옮겨간 경우는 보험 갱신 가능 </td>
-              </tr>
-              <tr>
-                <td>보상한도 증액</td>
-                <td>정해진 보상한도를 초과하여 가입을 희망하는 경우 개별가입 신청 요망</td>
-              </tr>
+            <tr>
+              <th rowspan="4" class="text-18">내용</th>
+              <td colspan="2" class="border-right-0">한국공인회계사회 회원만 가입 가능</td>
+            </tr>
+            <tr>
+              <td>개인 회계사에 한해 가입 가능</td>
+              <td class="border-right-0">단, 보험에 가입중인 회계사가 회계법인으로 옮겨간 경우는 보험 갱신 가능 </td>
+            </tr>
+            <tr>
+              <td>보상한도 증액</td>
+              <td>정해진 보상한도를 초과하여 가입을 희망하는 경우 개별가입 신청 요망</td>
+            </tr>
             </tbody>
           </table>
           <v-btn variant="outlined" block color="primary" class="bg-lightprimary mt-10 py-7" to="/faq">
             <span class="mr-4">자주묻는 질문 자세히 알아보기</span>
             <svg width="34" height="16" stroke="#00AEEF" stroke-width="1" fill="none">
-                  <polyline points="26,8 34,16" />
-                  <line x1="0" y1="100%" x2="100%" y2="100%"/>
-                </svg>
+              <polyline points="26,8 34,16" />
+              <line x1="0" y1="100%" x2="100%" y2="100%"/>
+            </svg>
           </v-btn>
         </v-col>
       </v-row>
@@ -529,9 +529,9 @@
                 <dd class="mt-1">사고 인지 즉시 서면에 의한 사고 접수를 하여야함(피보험자 상황 통지 의무)</dd>
                 <dd class="mt-2">
                   <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mr-4 px-4 py-1 text-14" href="/assets/doc/ACC/회계사_사고통보서.pdf" download>
-                      <span class="mr-1">사고통보서 다운로드</span>
-                      <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
-                    </a>
+                    <span class="mr-1">사고통보서 다운로드</span>
+                    <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
+                  </a>
 
                 </dd>
               </dl>
@@ -618,16 +618,16 @@
               <col style="width:auto"/>
             </colgroup>
             <tbody>
-              <tr>
-                <th rowspan="3" class="text-18">내용</th>
-                <td class="border-right-0">사고 발생 시 사고 통보로부터 보험금 수령에 이르기 까지 제반 업무를 지원</td>
-              </tr>
-              <tr>
-                <td class="border-right-0">협상권을 가진 보험중개사로서 계약자를 대변하여 보험 계약 내용의 해석 및 사실 관계의 판단에 개입</td>
-              </tr>
-              <tr>
-                <td>다수의 전문인 보험 운영 능력 및 전문 조직을 바탕으로 한 업무 진행</td>
-              </tr>
+            <tr>
+              <th rowspan="3" class="text-18">내용</th>
+              <td class="border-right-0">사고 발생 시 사고 통보로부터 보험금 수령에 이르기 까지 제반 업무를 지원</td>
+            </tr>
+            <tr>
+              <td class="border-right-0">협상권을 가진 보험중개사로서 계약자를 대변하여 보험 계약 내용의 해석 및 사실 관계의 판단에 개입</td>
+            </tr>
+            <tr>
+              <td>다수의 전문인 보험 운영 능력 및 전문 조직을 바탕으로 한 업무 진행</td>
+            </tr>
             </tbody>
           </table>
           <h4 class="text-h5 font-weight-bold text-center mt-12 mb-10">사고 접수 시 확인 사항</h4>
@@ -637,25 +637,25 @@
               <col style="width:auto"/>
             </colgroup>
             <tbody>
-              <tr>
-                <th rowspan="2" class="text-18">내용</th>
-                <td class="border-right-0">소급담보일(통상 최초가입일) 이후에 수행한 업무에 대해서 담보(가입일 이전 수행업무에 대해서는 부담보)</td>
-              </tr>
-              <tr>
-                <td>자기부담금 이하의 손해에 대해서는 피보험자 본인이 책임을 부담</td>
-              </tr>
+            <tr>
+              <th rowspan="2" class="text-18">내용</th>
+              <td class="border-right-0">소급담보일(통상 최초가입일) 이후에 수행한 업무에 대해서 담보(가입일 이전 수행업무에 대해서는 부담보)</td>
+            </tr>
+            <tr>
+              <td>자기부담금 이하의 손해에 대해서는 피보험자 본인이 책임을 부담</td>
+            </tr>
             </tbody>
           </table>
           <v-btn variant="outlined" block color="primary" class="bg-lightprimary mt-10 py-7" to="/faq">
             <span class="mr-4">자주묻는 질문 자세히 알아보기</span>
             <svg width="34" height="16" stroke="#00AEEF" stroke-width="1" fill="none">
-                  <polyline points="26,8 34,16" />
-                  <line x1="0" y1="100%" x2="100%" y2="100%"/>
-                </svg>
+              <polyline points="26,8 34,16" />
+              <line x1="0" y1="100%" x2="100%" y2="100%"/>
+            </svg>
           </v-btn>
         </v-col>
       </v-row>
-      
+
     </v-window-item>
 
   </v-window>
@@ -663,40 +663,46 @@
 
 
 <script setup lang="ts">
-  import { ref } from "vue";
-  import { onBeforeMount, onBeforeUpdate, onUnmounted, onMounted, onRenderTracked, onRenderTriggered, onActivated, onDeactivated} from "vue";
-  import { useRoute } from 'vue-router'
-  import BaseBreadcrumb from "@/components/BaseBreadcrumb.vue";
-  import BaseCard from "@/components/BaseCard.vue";
-  import V_TACC0030P10 from '../contract/ACC/V_TACC0030P10.vue';      // 보험료표
-  import TermsOfPolicy from '../contract/ACC/V_TACC0030P01.vue';      // PDF 다운로드
-  import {storeToRefs} from "pinia";
-  const route = useRoute();
-  const mainTab = ref(1);
-  const tab2 = ref("option-1");
-  
-  const page = ref({
-    title: "공인회계사 배상책임보험",
-    image: "../../assets/images/background/bg-insurance3.jpg",
-  });
-  const isDialogTermsOfPolicy1 = ref(false);
-  const isDialogTermsOfPolicy2 = ref(false);
-  const isDialogFAQ = ref(false);
-  const dialogERP = ref(false);
+import { ref } from "vue";
+import { onBeforeMount, onBeforeUpdate, onUnmounted, onMounted, onRenderTracked, onRenderTriggered, onActivated, onDeactivated} from "vue";
+import { useRoute } from 'vue-router'
+import BaseBreadcrumb from "@/components/BaseBreadcrumb.vue";
+import BaseCard from "@/components/BaseCard.vue";
+import V_TACC0030P10 from '../contract/ACC/V_TACC0030P10.vue';      // 보험료표
+import TermsOfPolicy from '../contract/ACC/V_TACC0030P01.vue';      // PDF 다운로드
+import {storeToRefs} from "pinia";
+const route = useRoute();
+const mainTab = ref(1);
+const tab2 = ref("option-1");
 
-  // 이전 route.params 값 저장을 위한 변수
-  const prevParams = ref({});
-  onBeforeUpdate(() => {
+const page = ref({
+  title: "공인회계사 배상책임보험",
+  image: "../../assets/images/background/bg-insurance3.jpg",
+});
+const isDialogTermsOfPolicy1 = ref(false);
+const isDialogTermsOfPolicy2 = ref(false);
+const isDialogFAQ = ref(false);
+const dialogERP = ref(false);
 
-    if(JSON.stringify(prevParams.value) !== JSON.stringify(route.params)) {
-      mainTab.value = route.params.mainTabIdx;
-      prevParams.value = route.params;
-    }
-  });
+// 이전 route.params 값 저장을 위한 변수
+const prevParams = ref({});
 
-  onMounted(() =>{
+onMounted(() => {
+  mainTab.value = route.params.mainTabIdx;
+  prevParams.value = route.params;
+});
+
+onBeforeUpdate(() => {
+
+  if(JSON.stringify(prevParams.value) !== JSON.stringify(route.params)) {
     mainTab.value = route.params.mainTabIdx;
-  })
+    prevParams.value = route.params;
+  }
+});
+
+onMounted(() =>{
+  mainTab.value = route.params.mainTabIdx;
+})
 
 
 </script>

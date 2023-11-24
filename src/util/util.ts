@@ -36,10 +36,10 @@ export const getDateDiff = (sSDt: string, sEDt: string, maxDays:number) => {
  * @returns
  */
 export const calByString = (amount: string, num: number, maxAmt: number) => {
-  if (amount == null || amount == undefined) return '';
+  const koreanRegex = /[ㄱ-ㅎ가-힣]/;
+  if (amount == null || amount == undefined || !koreanRegex.test(amount)) return '';
   if (num == 0 || num == null || num == undefined) num = 1;
   if (maxAmt == 0 || maxAmt == null || maxAmt == undefined) maxAmt = 0;
-
   const amtNumber = parseInt(amount);
   const amtHangul = amount.match(/[ㄱ-ㅎㅏ-ㅣ가-힣]+/g).join(''); // 한글만 추출하여 문자열로 변환
 
@@ -51,6 +51,54 @@ export const calByString = (amount: string, num: number, maxAmt: number) => {
   };
 
   const totalAmount = amtNumber * num * unit[amtHangul];
+  const units = Object.entries(unit).reverse();
+
+  let result = '';
+  let remainingAmount = totalAmount;
+
+  // 맥스값 설정
+  if (maxAmt > 0 && remainingAmount > maxAmt) {
+    remainingAmount = maxAmt;
+  }
+
+  for (const [unitString, unitValue] of units) {
+    if (remainingAmount >= unitValue) {
+      const count = Math.floor(remainingAmount / unitValue);
+      remainingAmount -= count * unitValue;
+      result += count + unitString + '';
+    }
+  }
+
+  return result.trim().replace(/원/g, '') + '원';
+};
+
+/**
+ * 문자열 금액을 숫자로 계산하여 문자열로 리턴하기
+ *
+ * @param amount
+ * @param num
+ * @returns
+ */
+export const calByString_ADV = (amount: string, num: number, maxAmt: number) => {
+  const koreanRegex = /[ㄱ-ㅎ가-힣]/;
+  if (amount == null || amount == undefined || !koreanRegex.test(amount)) return '';
+  if (num == 0 || num == null || num == undefined) num = 1;
+  if (maxAmt == 0 || maxAmt == null || maxAmt == undefined) maxAmt = 0;
+  const amtNumber = parseInt(amount);
+  const amtHangul = amount.match(/[ㄱ-ㅎㅏ-ㅣ가-힣]+/g).join(''); // 한글만 추출하여 문자열로 변환
+
+  const unit = {
+    만원: 10000,
+    백만원: 1000000,
+    천만원: 10000000,
+    억원: 100000000
+  };
+  let double = 1;
+  if(num >= 3 ){
+    double = 2;
+  }
+
+  const totalAmount = amtNumber * 1 * double * unit[amtHangul];
   const units = Object.entries(unit).reverse();
 
   let result = '';

@@ -38,8 +38,9 @@
 					<p class="text-body-2 ml-3 pt-1">전체 <span class="color-primary font-weight-bold">{{ Number(InsuranceList.length).toLocaleString() }}</span> 건</p>
 					<div class="ml-auto">
 						<v-btn variant="outlined" size="small" @click="fnAdd('IND');" class="mx-1">개인 신규</v-btn> 
-						<v-btn variant="outlined" size="small" @click="fnAdd('COR');">법인 신규</v-btn> 
-						<v-btn variant="outlined" size="small" class="ml-3" @click="downloadAsExcel()">엑셀 다운</v-btn>
+						<v-btn variant="outlined" size="small" @click="fnAdd('COR');" class="mx-1">법인 신규</v-btn>
+            <v-btn variant="outlined" size="small" @click="fnAdd('JNT');" class="mx-1">합동 신규</v-btn>
+            <v-btn variant="outlined" size="small" class="ml-3" @click="downloadAsExcel()">엑셀 다운</v-btn>
 					</div>
 				</v-card-title>
 				<v-card-text class="pa-0 v-result-box">
@@ -189,7 +190,7 @@
 								<!-- 개인 끝-->
 						
 								<!-- 법인/합동 시작-->
-								<v-row class="v-board-table size-x-small" v-if="insuranceDTO.user_cd === 'COR'">
+								<v-row class="v-board-table size-x-small" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
 									<v-col cols="12" sm="4" class="v-col">
 									<div class="head-col">
 										<p>법인명</p>
@@ -293,162 +294,251 @@
 							<v-expansion-panel-text>
 							<v-card-text>
 								<v-row>
-								<!-- 보험 기본정보1 -->
-								<v-col cols="4">
-									<v-row class="v-board-table size-x-small">
-									<v-col cols="12" class="v-col">
-										<div class="head-col">
-										<p>보험년도</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col">
-										<VTextFieldWithValidation v-model="insuranceDTO.insr_year" name="insr_year" placeholder="가입년도" suffix="년" single-line />
-										</div>
-									</v-col>
-									<v-col cols="12" class="v-col" >
-										<div class="head-col">
-											<p v-if="insuranceDTO.user_cd === 'IND'">소급담보일</p>
-											<p v-if="insuranceDTO.user_cd === 'COR'">법인 소급담보일</p>
-											<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col"> 
-											<!-- {{ insuranceDTO.insr_retr_dt }} -->
-											<VTextFieldWithValidation v-model="insuranceDTO.insr_retr_dt" name="insr_retr_dt" label="소급담보일" type="date" single-line/>
-										</div>
-									</v-col>
-									<v-col cols="12" class="v-col" >
-										<div class="head-col">
-										<p>소급 적용</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col"> 
-											<VCheckBoxWithValidation v-model="insuranceDTO.insr_retr_yn" name="insr_retr_yn" label="소급여부"  class="v-checkbox" density="compact" />
-										</div>
-									</v-col>
-									</v-row>
-								</v-col>
-								
-								<!-- 보험 기본정보2 -->
-								<v-col cols="4">
-									<v-row class="v-board-table size-x-small">
-									
-									<v-col cols="12" class="v-col">
-										<div class="head-col">
-										<p>공동보험</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col">
-										<VSelectWithValidation v-model="insuranceDTO.insr_pblc_brdn_rt" name="insr_pblc_brdn_rt" label="공동보험" :items="insrPblcBrdnRtItems" single-line density="compact"></VSelectWithValidation>
-										</div>
-									</v-col>
-									<v-col cols="12" class="v-col">
-										<div class="head-col">
-										<p>보상한도</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col">
-										<VSelectWithValidation v-model="insuranceDTO.insr_clm_lt_amt" name="insr_clm_lt_amt" label="보상한도" :items="insrClmLtAmtItems" single-line density="compact"></VSelectWithValidation>
-										<v-divider class="border-0" />
-										</div>
-									</v-col>
-									<v-col cols="12" class="v-col">
-										<div class="head-col">
-										<p>자기부담금</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col">
-										<VSelectWithValidation v-model="insuranceDTO.insr_psnl_brdn_amt" name="insr_psnl_brdn_amt" label="자기부담금" :items="insrPsnlBrdnAmtItems" density="compact" single-line></VSelectWithValidation>
-										</div>
-									</v-col>
-									<v-col cols="12" class="v-col">
-										<div class="head-col">
-										<p>보상한도(연간총)</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col">
-										<VTextFieldWithValidation v-model="insuranceDTO.insr_year_clm_lt_amt" name="insr_year_clm_lt_amt" label="" single-line/>
-										</div>
-									</v-col>
-									<v-divider class="border-0"/>
-									<v-col cols="12" class="v-col" v-if="insuranceDTO.user_cd === 'COR'" >
-										<div class="head-col">
-										<p>인원수</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col">
-										<!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
-										<VTextFieldWithValidation v-model="insuranceDTO.cbr_cnt" name="cbr_cnt" label="" type="number" suffix="명" single-line/>
-										</div>
-									</v-col>
-									<v-col cols="12" class="v-col" v-if="insuranceDTO.user_cd === 'COR'" >
-										<div class="head-col">
-										<p>인원수 할인</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col">
-										<!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
-										<VTextFieldWithValidation v-model="insuranceDTO.insr_pcnt_sale_rt" name="insr_pcnt_sale_rt" label="" type="number" suffix="%" single-line/>
-										</div>
-									</v-col>
-									<v-col cols="12" class="v-col">
-										<div class="head-col">
-										<p>할인할증기준</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col">
-										<!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
-										<VTextFieldWithValidation v-model="insuranceDTO.insr_sale_year" name="insr_sale_year" label="" type="number" suffix="년" single-line/>
-										</div>
-									</v-col>
-									<v-col cols="12" class="v-col">
-										<div class="head-col">
-										<p v-if="insuranceDTO.user_cd == 'IND'">
-											무사고 할인 /<br />사고 할증
-										</p>
-										<p v-if="insuranceDTO.user_cd != 'IND'">무사고 할인</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col text-center" >
-										<!-- {{ insuranceDTO.insr_sale_rt }} % -->
-										<VTextFieldWithValidation v-model="insuranceDTO.insr_sale_rt" name="insr_sale_rt" label="" type="number" suffix="%" single-line/>
-										</div>
-									</v-col>
+                  <!-- 보험 기본정보1 -->
+                  <v-col cols="4">
+                    <v-row class="v-board-table size-x-small">
+                    <v-col cols="12" class="v-col">
+                      <div class="head-col">
+                      <p>보험년도</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                      <VTextFieldWithValidation v-model="insuranceDTO.insr_year" name="insr_year" label="가입년도" suffix="년" single-line />
+                      </div>
+                    </v-col>
+                    <v-col cols="12" class="v-col" >
+                      <div class="head-col">
+                        <p v-if="insuranceDTO.user_cd === 'IND'">소급담보일</p>
+                        <p v-if="insuranceDTO.user_cd === 'COR'">법인 소급담보일</p>
+                        <p v-if="insuranceDTO.user_cd === 'JNT'">복수 소급담보일</p>
+                        <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                        <!-- {{ insuranceDTO.insr_retr_dt }} -->
+                        <VTextFieldWithValidation v-model="insuranceDTO.insr_retr_dt" name="insr_retr_dt" label="소급담보일" type="date" single-line/>
+                      </div>
+                    </v-col>
+                    <v-col cols="12" class="v-col" >
+                      <div class="head-col">
+                      <p>소급 적용</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                        <VCheckBoxWithValidation v-model="insuranceDTO.insr_retr_yn" name="insr_retr_yn" label="소급여부"  class="v-checkbox" density="compact" />
+                      </div>
+                    </v-col>
+                    </v-row>
+                  </v-col>
 
-									</v-row>               
-								</v-col>
-								<!-- 보험 요금정보 -->
-								<v-col cols="4">
-									<v-row class="v-board-table size-x-small">
-									<v-col cols="12" class="v-col">
-										<div class="head-col">
-										<p>기준보험료</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col">
-										<VTextFieldWithValidation v-model="insuranceDTO.insr_base_amt" name="insr_sale_rt" label="" type="number" suffix="원" single-line/>
-										</div>
-									</v-col>
+                  <!-- 보험 기본정보2 -->
+                  <v-col cols="4" v-if="route.params.business_cd=='ADV'">
+                    <v-row class="v-board-table size-x-small">
 
-									<v-col cols="12" class="v-col">
-										<div class="head-col">
-										<p>합계보험료</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col">
-										<VTextFieldWithValidation v-model="insuranceDTO.insr_amt" name="insr_amt" label="" type="number" suffix="원" single-line/>
-										</div>
-									</v-col>
-									<v-col cols="12" class="v-col">
-										<div class="head-col">
-										<p>최종보험료</p>
-										<sup class="text-error">*</sup>
-										</div>
-										<div class="data-col">
-										<VTextFieldWithValidation v-model="insuranceDTO.insr_tot_amt" name="insr_tot_amt" label="" type="number" suffix="원" single-line/>
-										</div>
-									</v-col>
-									</v-row>               
-								</v-col>
+                      <v-col cols="12" class="v-col">
+                        <div class="head-col">
+                          <p>매출액구간</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VSelectWithValidation v-model="insuranceDTO.insr_take_sec" name="insr_take_sec" label="매출액구간" :items="insrTakeSectionItems" single-line density="compact"></VSelectWithValidation>
+                        </div>
+                      </v-col>
+                      <v-col cols="12" class="v-col">
+                        <div class="head-col">
+                          <p>보상한도</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VSelectWithValidation v-model="insuranceDTO.insr_clm_lt_amt" name="insr_clm_lt_amt" label="보상한도" :items="insrClmLtAmtItems" single-line density="compact"></VSelectWithValidation>
+                          <v-divider class="border-0" />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" class="v-col">
+                        <div class="head-col">
+                          <p>자기부담금</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VSelectWithValidation v-model="insuranceDTO.insr_psnl_brdn_amt" name="insr_psnl_brdn_amt" label="자기부담금" :items="insrPsnlBrdnAmtItems" density="compact" single-line></VSelectWithValidation>
+                        </div>
+                      </v-col>
+                      <v-col cols="12" class="v-col">
+                        <div class="head-col">
+                          <p>보상한도(연간총)</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.insr_year_clm_lt_amt" name="insr_year_clm_lt_amt" label="" single-line/>
+                        </div>
+                      </v-col>
+                      <v-divider class="border-0"/>
+                      <v-col cols="12" class="v-col" v-if="insuranceDTO.user_cd === 'COR'" >
+                        <div class="head-col">
+                          <p>인원수</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
+                          <VTextFieldWithValidation v-model="insuranceDTO.cbr_cnt" name="cbr_cnt" label="" type="number" suffix="명" single-line/>
+                        </div>
+                      </v-col>
+                      <v-col cols="12" class="v-col" v-if="insuranceDTO.user_cd === 'COR'" >
+                        <div class="head-col">
+                          <p>인원수 할인</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
+                          <VTextFieldWithValidation v-model="insuranceDTO.insr_pcnt_sale_rt" name="insr_pcnt_sale_rt" label="" type="number" suffix="%" single-line/>
+                        </div>
+                      </v-col>
+                      <v-col cols="12" class="v-col">
+                        <div class="head-col">
+                          <p>할인할증기준</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
+                          <VTextFieldWithValidation v-model="insuranceDTO.insr_sale_year" name="insr_sale_year" label="" type="number" suffix="년" single-line/>
+                        </div>
+                      </v-col>
+                      <v-col cols="12" class="v-col">
+                        <div class="head-col">
+                          <p v-if="insuranceDTO.user_cd == 'IND'">
+                            무사고 할인 /<br />사고 할증
+                          </p>
+                          <p v-if="insuranceDTO.user_cd != 'IND'">무사고 할인</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col text-center" >
+                          <!-- {{ insuranceDTO.insr_sale_rt }} % -->
+                          <VTextFieldWithValidation v-model="insuranceDTO.insr_sale_rt" name="insr_sale_rt" label="" type="number" suffix="%" single-line/>
+                        </div>
+                      </v-col>
+
+                    </v-row>
+                  </v-col>
+                  <!-- 보험 기본정보2 -->
+                  <v-col cols="4" v-else>
+                    <v-row class="v-board-table size-x-small">
+
+                    <v-col cols="12" class="v-col">
+                      <div class="head-col">
+                      <p>공동보험</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                      <VSelectWithValidation v-model="insuranceDTO.insr_pblc_brdn_rt" name="insr_pblc_brdn_rt" label="공동보험" :items="insrPblcBrdnRtItems" single-line density="compact"></VSelectWithValidation>
+                      </div>
+                    </v-col>
+                    <v-col cols="12" class="v-col">
+                      <div class="head-col">
+                      <p>보상한도</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                      <VSelectWithValidation v-model="insuranceDTO.insr_clm_lt_amt" name="insr_clm_lt_amt" label="보상한도" :items="insrClmLtAmtItems" single-line density="compact"></VSelectWithValidation>
+                      <v-divider class="border-0" />
+                      </div>
+                    </v-col>
+                    <v-col cols="12" class="v-col">
+                      <div class="head-col">
+                      <p>자기부담금</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                      <VSelectWithValidation v-model="insuranceDTO.insr_psnl_brdn_amt" name="insr_psnl_brdn_amt" label="자기부담금" :items="insrPsnlBrdnAmtItems" density="compact" single-line></VSelectWithValidation>
+                      </div>
+                    </v-col>
+                    <v-col cols="12" class="v-col">
+                      <div class="head-col">
+                      <p>보상한도(연간총)</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                      <VTextFieldWithValidation v-model="insuranceDTO.insr_year_clm_lt_amt" name="insr_year_clm_lt_amt" label="" single-line/>
+                      </div>
+                    </v-col>
+                    <v-divider class="border-0"/>
+                    <v-col cols="12" class="v-col" v-if="insuranceDTO.user_cd === 'COR'" >
+                      <div class="head-col">
+                      <p>인원수</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                      <!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
+                      <VTextFieldWithValidation v-model="insuranceDTO.cbr_cnt" name="cbr_cnt" label="" type="number" suffix="명" single-line/>
+                      </div>
+                    </v-col>
+                    <v-col cols="12" class="v-col" v-if="insuranceDTO.user_cd === 'COR'" >
+                      <div class="head-col">
+                      <p>인원수 할인</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                      <!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
+                      <VTextFieldWithValidation v-model="insuranceDTO.insr_pcnt_sale_rt" name="insr_pcnt_sale_rt" label="" type="number" suffix="%" single-line/>
+                      </div>
+                    </v-col>
+                    <v-col cols="12" class="v-col">
+                      <div class="head-col">
+                      <p>할인할증기준</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                      <!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
+                      <VTextFieldWithValidation v-model="insuranceDTO.insr_sale_year" name="insr_sale_year" label="" type="number" suffix="년" single-line/>
+                      </div>
+                    </v-col>
+                    <v-col cols="12" class="v-col">
+                      <div class="head-col">
+                      <p v-if="insuranceDTO.user_cd == 'IND'">
+                        무사고 할인 /<br />사고 할증
+                      </p>
+                      <p v-if="insuranceDTO.user_cd != 'IND'">무사고 할인</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col text-center" >
+                      <!-- {{ insuranceDTO.insr_sale_rt }} % -->
+                      <VTextFieldWithValidation v-model="insuranceDTO.insr_sale_rt" name="insr_sale_rt" label="" type="number" suffix="%" single-line/>
+                      </div>
+                    </v-col>
+
+                    </v-row>
+                  </v-col>
+                  <!-- 보험 요금정보 -->
+                  <v-col cols="4">
+                    <v-row class="v-board-table size-x-small">
+                    <v-col cols="12" class="v-col">
+                      <div class="head-col">
+                      <p>기준보험료</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                      <VTextFieldWithValidation v-model="insuranceDTO.insr_base_amt" name="insr_sale_rt" label="" type="number" suffix="원" single-line/>
+                      </div>
+                    </v-col>
+
+                    <v-col cols="12" class="v-col">
+                      <div class="head-col">
+                      <p>합계보험료</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                      <VTextFieldWithValidation v-model="insuranceDTO.insr_amt" name="insr_amt" label="" type="number" suffix="원" single-line/>
+                      </div>
+                    </v-col>
+                    <v-col cols="12" class="v-col">
+                      <div class="head-col">
+                      <p>최종보험료</p>
+                      <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                      <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_amt" name="insr_tot_amt" label="" type="number" suffix="원" single-line/>
+                      </div>
+                    </v-col>
+                    </v-row>
+                  </v-col>
 								</v-row>
 							</v-card-text>
 							</v-expansion-panel-text>
@@ -457,11 +547,12 @@
 					</v-col>
 
 					<!--세무사 명단-->
-					<v-col cols="12" class="pb-0" ref="refPage3" v-if="insuranceDTO.user_cd === 'COR'">
+					<v-col cols="12" class="pb-0" ref="refPage3" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
 						<v-card>
 						<v-expansion-panel elevation="0" value="panel-3">
 							<v-card-title>
-							<h3 class="font-weight-bold">세무사 명단</h3>
+               <h3 class="font-weight-bold" v-if="route.params.business_cd == 'TAX'">세무사 명단</h3>
+               <h3 class="font-weight-bold" v-if="route.params.business_cd == 'ADV'">변호사 명단</h3>
 							<p class="text-body-2 color-gray-shadow ml-4">
 								총
 								<span class="color-primary">{{ insuranceDTO.cbr_data.length }}</span>명
@@ -660,7 +751,8 @@ const userCdItems = ref([""]);
 const regionCdItems = ref([]);
 const trxCdItems = ref([]);
 
-const insrPblcBrdnRtItems = ref([]); 
+const insrPblcBrdnRtItems = ref([]);
+const insrTakeSectionItems = ref([]);
 const insrClmLtAmtItems = ref([]);
 const insrPsnlBrdnAmtItems = ref([]);
 
@@ -682,7 +774,12 @@ const messageBoxDTO = ref(new MessageBoxDTO());
 
 async function fnSearch() {
 	InsuranceList.value = [];
-	const resultData = await apiADMIN.getRenewals(searchParams.value.data);
+  let resultData;
+  if(route.params.business_cd=='ADV') {
+    resultData = await apiADMIN.getADVRenewals(searchParams.value.data);
+  } else {
+    resultData = await apiADMIN.getRenewals(searchParams.value.data);
+  }
 	insuranceDTO.value.insurance_uuid = null;
 	InsuranceList.value = resultData.data;
 	if (InsuranceList.value.length == 0) {
@@ -693,14 +790,25 @@ async function fnSearch() {
 }
 
 async function fnSetInsuranceRateCombo() {
-	const paramsRate = { user_cd: insuranceDTO.value.user_cd , business_cd: insuranceDTO.value.business_cd };
-    const resultDataRate = await apiADMIN.getTAXRate(paramsRate);    
+	  const paramsRate = { user_cd: insuranceDTO.value.user_cd , business_cd: insuranceDTO.value.business_cd };
+    let resultDataRate;
+    if(route.params.business_cd=='ADV') {
+      resultDataRate = await apiADMIN.getADVRate(paramsRate);
+    } else {
+      resultDataRate = await apiADMIN.getTAXRate(paramsRate);
+    }
     Object.assign(insuranceRateDTO.value, resultDataRate.data[0]);
-
-    insrPblcBrdnRtItems.value = insuranceRateDTO.value.contents["기본담보"]["공동부담"].map(({ code, value }) => ({
-      title: value,
-      value: `${code}|${value}`
-	}));
+    if(route.params.business_cd=='ADV') {
+      insrTakeSectionItems.value = insuranceRateDTO.value.contents["기본담보"]["연매출액구간"].map(({code, value}) => ({
+        title: value,
+        value: `${code}|${value}`
+      }));
+    }else {
+      insrPblcBrdnRtItems.value = insuranceRateDTO.value.contents["기본담보"]["공동부담"].map(({code, value}) => ({
+        title: value,
+        value: `${code}|${value}`
+      }));
+    }
 	
     insrClmLtAmtItems.value = insuranceRateDTO.value.contents["기본담보"]["보상한도"].map(({ code, value }) => ({
       title: value,
@@ -718,7 +826,12 @@ async function fnSearchDtl(insurance_uuid: string) {
   insuranceDTO.value = new InsuranceDTO();
   if (insurance_uuid) {
     const params = { insurance_uuid: insurance_uuid };
-    const resultData = await apiADMIN.getRenewal(params);
+    let resultData;
+    if(route.params.business_cd=='ADV') {
+      resultData = await apiADMIN.getADVRenewal(params);
+    } else {
+      resultData = await apiADMIN.getRenewal(params);
+    }
     Object.assign(insuranceDTO.value, resultData.data[0]);
 
 	fnSetInsuranceRateCombo();
@@ -766,7 +879,12 @@ async function fnSave() {
     });
 
 	if(isRun) {
-		const resultData = await apiADMIN.setTAXRenewal([insuranceDTO.value]);
+    let resultData;
+    if(route.params.business_cd=='ADV') {
+      resultData = await apiADMIN.setADVRenewal([insuranceDTO.value]);
+    } else {
+      resultData = await apiADMIN.setTAXRenewal([insuranceDTO.value]);
+    }
 
 		if (resultData.success) {
 			messageBoxDTO.value.setInfo('확인', '저장 되었습니다.');

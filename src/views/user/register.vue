@@ -238,7 +238,10 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="userDTO.user_pwd_chk" name="user_pwd_chk" label="비밀번호 확인" type="password" single-line density="comfortable" maxlength="16" />
+                              <VTextFieldWithValidation v-model="userDTO.user_pwd_chk" name="user_pwd_chk" label="비밀번호 확인" type="password" single-line density="comfortable" maxlength="16" @change="checkPassword"/>
+                              <p :class=" verifyPasswordChk.success ? 'text-info' : 'text-error'">
+                                &nbsp;&nbsp;{{ verifyPasswordChk.message }}
+                              </p>
                             </div>
                           </v-col>
                           <v-col cols="12" sm="6" class="v-col">
@@ -304,7 +307,7 @@
                               <VTextFieldWithValidation v-model="userDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line density="comfortable" maxlength="20" />
                             </div>
                           </v-col>
-                          <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd == 'TAX'">
+                          <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd != 'ACC'">
                             <div class="head-col">
                               <p>소속 지방회</p>
                               <sup class="text-error">*</sup>
@@ -349,7 +352,7 @@
                   <!-- 개인 종료 -->
                   
                   <!-- 법인 시작-->
-                  <v-row class="v-box pa-10"  v-if="userDTO.user_cd === 'COR'">
+                  <v-row class="v-box pa-10"  v-if="userDTO.user_cd === 'COR' || userDTO.user_cd === 'JNT'">
                     <v-col cols="12">
                       <v-row class="v-board-table">
                         <v-col cols="12" sm="12" class="v-col">
@@ -380,10 +383,37 @@
                             <sup class="text-error">*</sup>
                           </div>
                           <div class="data-col">
-                            <VTextFieldWithValidation v-model="userDTO.user_pwd_chk" name="user_pwd_chk" label="비밀번호 확인" type="password" single-line density="comfortable" maxlength="16" />
+                            <VTextFieldWithValidation v-model="userDTO.user_pwd_chk" name="user_pwd_chk" label="비밀번호 확인" type="password" single-line density="comfortable" maxlength="16" @change="checkPassword"/>
+                            <p :class=" verifyPasswordChk.success ? 'text-info' : 'text-error'">
+                              &nbsp;&nbsp;{{ verifyPasswordChk.message }}
+                            </p>
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="6" class="v-col">
+                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd ==='ADV'">
+                          <div class="head-col">
+                            <p>사무소 명</p>
+                            <sup class="text-error">*</sup>
+                          </div>
+                          <div class="data-col">  {{ userDTO.user_nm }}
+                            <!-- <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="" single-line density="comfortable" maxlength="25"/> -->
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd ==='ADV'">
+                          <div class="head-col">
+                            <p>대표자 성명</p>
+                            <sup class="text-error">*</sup>
+                          </div>
+                          <div class="data-col">
+                            <VTextFieldWithValidation
+                                v-model="userDTO.corp_ceo_nm"
+                                name="corp_ceo_nm"
+                                label="대표자 성명"
+                                single-line
+                                density="comfortable"
+                            />
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd!=='ADV'">
                           <div class="head-col">
                             <p>법인명</p>
                             <sup class="text-error">*</sup>
@@ -392,13 +422,14 @@
                             <!-- <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="" single-line density="comfortable" maxlength="25"/> -->
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="6" class="v-col">
+                        <v-col cols="12" sm="12" class="v-col" v-if="userDTO.business_cd === 'ADV'">
                           <div class="head-col">
-                            <p>대표자 성명</p>
+                            <p>사무소 형태</p>
                             <sup class="text-error">*</sup>
                           </div>
                           <div class="data-col">
-                            <VTextFieldWithValidation v-model="userDTO.corp_ceo_nm"  name="corp_ceo_nm" label="대표자 성명" single-line density="comfortable" />
+                            <VSelectWithValidation v-model="userDTO.corp_type" name="corp_type" label="사무소 형태" :items="corpTypeItems" class="w-200" single-line density="comfortable"
+                            ></VSelectWithValidation>
                           </div>
                         </v-col>
                         
@@ -431,6 +462,7 @@
                                 :maskOption="{ mask: '######-#######' }"
                                 single-line
                                 density="comfortable"
+                                :disabled="userDTO.business_cd==='ADV' && userDTO.corp_type !== '003'"
                               />
                           </div>
                         </v-col>
@@ -715,7 +747,7 @@ import TermsOfPersonalInfo from '@/components/TermsOfPersonalInfo.vue';
 import TermsOfMarketing from '@/components/TermsOfMarketing.vue';
 import TermsOfCreditInfo from '@/components/TermsOfCreditInfo.vue';
 
-import { MessageBoxDTO } from '@/model';
+import { MessageBoxDTO, CommonCode } from '@/model';
 import MessageBox from '@/components/MessageBox.vue';
 
 
@@ -733,49 +765,15 @@ const messageBoxDTO = ref(new MessageBoxDTO());
 
 const businessCd = route.params.business_cd;
 
-const regionCdItems = [
-  {
-    title: '서울',
-    rmk: '서울',
-    value: '010'
-  },
-  {
-    title: '중부',
-    rmk: '중부',
-    value: '020'
-  },
-  {
-    title: '인천',
-    rmk: '인천',
-    value: '030'
-  },
-  {
-    title: '부산',
-    rmk: '부산',
-    value: '040'
-  },
-  {
-    title: '대구',
-    rmk: '대구',
-    value: '050'
-  },
-  {
-    title: '광주',
-    rmk: '광주',
-    value: '060'
-  },
-  {
-    title: '대전',
-    rmk: '대전',
-    value: '070'
-  }
-];
 
+const regionCdItems = ref([]);
+const corpTypeItems = ref([]);
 const radios = ref('radio1');
 const isDaumPostDialog = ref(false);
 
 const verifyUserCostoms = ref({ success: false, message: '' });
 const verifyUser = ref({ success: false, message: '' });
+const verifyPasswordChk = ref({ success: false, message: '' });
 const verifyEMail = ref({ success: false, message: '', code: '' });
 const verifyHp = ref({ success: false, message: '', code: '' });
 
@@ -834,6 +832,17 @@ watch(
   }
 );
 
+watch(
+    () => userDTO.value.corp_type,
+    (newValue, oldValue) => {
+      if(newValue !== '003'){
+        userDTO.value.corp_bnno = ''
+      }
+    }
+);
+
+
+
 function onComplete_DaumPost(result: VueDaumPostcodeCompleteResult) {
   userDTO.value.corp_post = result.zonecode;
   userDTO.value.corp_addr = result.address;
@@ -873,6 +882,7 @@ async function isVerifyUserRegNo() {
     switch (userDTO.value.business_cd) {
       case 'TAX': message = '세무사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 세무사는 세무사등록증을 먼저 록톤으로 보내 세무사회원 확인 후 가입 진행되니 세무사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
       case 'ACC': message = '회계사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 회계사는 회계사등록증을 먼저 록톤으로 보내 회계사회원 확인 후 가입 진행되니 회계사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
+      case 'ADV': message = '변호사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 변호사는 변호사등록증을 먼저 록톤으로 보내 변호사회원 확인 후 가입 진행되니 변호사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
       default: message = '인증에 실패하였습니다.';
     }
     messageBoxDTO.value.setInfo( '인증 실패', message);
@@ -969,7 +979,7 @@ async function onSubmit(params: any) {
   if (!await checkValidation()) return false;
   let result = null;
 
-  if (userDTO.value.user_cd === 'COR') {
+  if (userDTO.value.user_cd === 'COR' || userDTO.value.user_cd === 'JNT') {
     // 사용자 등록
     userDTO.value.ignore_chk_pw = true;
     result = await apiUser.setUserInfo(userDTO.value);
@@ -1027,6 +1037,17 @@ async function isVerifyUserHpWithUser(imp_uid: string) {
   }
 }
 
+function checkPassword(){
+  console.log(userDTO.user_pwd, userDTO.user_pwd_chk)
+  if(userDTO.value.user_pwd !== userDTO.value.user_pwd_chk){
+    verifyPasswordChk.value.success = false;
+    verifyPasswordChk.value.message = '비밀번호가 일치하지 않습니다.';
+  }else {
+    verifyPasswordChk.value.success = true;
+    verifyPasswordChk.value.message = '비밀번호가 일치합니다.';
+  }
+}
+
 function setAll() {
     userDTO.value.agr1_yn = userDTO.value.agr_all_yn;
     userDTO.value.agr2_yn = userDTO.value.agr_all_yn;
@@ -1045,9 +1066,13 @@ function onTermsOfMarketingClose(agrs: any) {
   termsOfMarketing.value = false;
   userDTO.value.agr3_yn = agrs.value;
 }
-  
+async function InitCode(){
+  regionCdItems.value = await CommonCode.getCodeList('TAX001');
+  corpTypeItems.value = await CommonCode.getCodeList('COM050');
+}
 // 초기 로딩
 onMounted(() => {
+  InitCode();
   // 상태 정상
   userDTO.value.status_cd = '30';
 
@@ -1061,7 +1086,11 @@ onMounted(() => {
     // 최초가입시 사업자번호를 아이디값으로 설정한다.
     userDTO.value.corp_cnno = userDTO.value.user_id;
     page.value.title = '회원가입';
-    page.value.subtitle = '법인회원';
+    if(_AUTH_USER.value.userCd==="COR") {
+      page.value.subtitle = '법인회원';
+    }else if(_AUTH_USER.value.userCd==="JNT") {
+      page.value.subtitle = '복수회원';
+    }
 
   } else {
     // 최초가입시 하드코딩 추후 변경예정

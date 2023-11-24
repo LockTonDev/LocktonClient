@@ -1393,7 +1393,7 @@ onMounted(async () => {
    * 
    */
   const params = { user_cd: _AUTH_USER.value.userCd , business_cd: _AUTH_USER.value.businessCd };
-  const resultData = await apiContract.getDBSelInsuranceRate(params);    
+  const resultData = await apiContract.getDBSelInsuranceRate(params);
   Object.assign(insuranceRateDTO.value, resultData.data[0]);
 
   INSR_RATE_TABLE.value = resultData.data[0].contents;

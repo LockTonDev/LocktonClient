@@ -784,6 +784,11 @@
   // 이전 route.params 값 저장을 위한 변수
   const prevParams = ref({});
 
+  onMounted(() => {
+    mainTab.value = route.params.mainTabIdx;
+    prevParams.value = route.params;
+  });
+
   onBeforeUpdate(() => {
     if(JSON.stringify(prevParams.value) !== JSON.stringify(route.params)) {
       mainTab.value = route.params.mainTabIdx;

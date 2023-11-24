@@ -1421,7 +1421,7 @@
           </p>
           <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'IND'">
             <i class="mdi mdi-alert-circle-outline mr-1"></i
-            ><span class="color-primary">세무사 성명과 등록번호</span>를 함께
+            ><span class="color-primary">변호사 성명과 등록번호</span>를 함께
             기재하여 송금해주시기 바랍니다.
           </p>
           <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'COR'">
@@ -2335,7 +2335,7 @@ onMounted(async () => {
    * 
    *  TAX001 - 소속 중앙회
    */
-  regionCdItems.value = await CommonCode.getCodeList('TAX001'); 
+  regionCdItems.value = await CommonCode.getCodeList('TAX001');
 
   isReadOnlyAll.value = false;
 

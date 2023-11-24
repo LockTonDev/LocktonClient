@@ -185,5 +185,14 @@ export default {
    */
   async findCORUserNSendEMail(params: any) {
     return await api.commonService.post(`/user/findCORUserNSendEMail`, { params });
+  },
+
+  /**
+   * 복수 이메일 인증
+   * @param params.
+   * @returns
+   */
+  async findJNTUserNSendEMail(params: any) {
+    return await api.commonService.post(`/user/findJNTUserNSendEMail`, { params });
   }
 };
