@@ -693,8 +693,8 @@
                       <h3 class="font-weight-bold" v-if="route.params.business_cd == 'ADV'">변호사 명단</h3>
                       <p class="text-body-2 color-gray-shadow ml-4">
                         총
-                        <span class="color-primary">{{ validUserCount }}</span
-                        >명
+                        <span class="color-primary" v-if="route.params.business_cd == 'TAX'">{{ validUserCount }}</span>
+                        <span class="color-primary" v-if="route.params.business_cd == 'ADV'">{{ validUserCount }}</span>명
                       </p>
                       <v-spacer />
                       <v-btn variant="elevated" color="white" size="small" class="min-width-auto pa-0 mr-2" @click="fnAddCBR()">
@@ -1306,9 +1306,9 @@ async function fnSearchDtl(insurance_uuid: string) {
     Object.assign(insuranceDTO.value, resultData.data[0]);
 
     insuranceDTO.value.cbr_data.sort(function(a, b) {
-      if(a.status_cd=='90') {
+      if(a.status_cd=='90' || a.status_cd=='91') {
         return 1
-      }else if(b.status_cd=='90'){
+      }else if(b.status_cd=='90' || b.status_cd=='91'){
         return -1
       }else{
         return b.status_cd-a.status_cd
@@ -1320,8 +1320,8 @@ async function fnSearchDtl(insurance_uuid: string) {
     if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '' && panel.value.length < 9 ) panel.value.push("panel-10")
     else if((insuranceDTO.value.rmk == null || insuranceDTO.value.rmk == '') && panel.value.length > 7 ) panel.value.pop();
 
-    //const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
-    const filter1 = []
+    const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
+    //const filter1 = []
 
     validUserCount.value = filter1.length;
     fnSetInsuranceRateCombo();
@@ -1565,6 +1565,7 @@ async function initPage() {
   businessCdItems.value = await CommonCode.getCodeList('COM001');
   statusCdItems.value = await CommonCode.getCodeList('COM030');
   userCdItems.value = await CommonCode.getCodeList('TAX002');
+  console.log("userCdItems",userCdItems)
   regionCdItems.value = await CommonCode.getCodeList('TAX001');
   trxCdItems.value = await CommonCode.getCodeList('COM031');
   statusCdItems.value.unshift({ title: '전체', value: '%' });
