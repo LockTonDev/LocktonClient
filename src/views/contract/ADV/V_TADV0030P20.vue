@@ -1636,7 +1636,7 @@
                             <p>사무소명</p>
                           </div>
                           <div class="data-col">
-                            {{ insuranceDTO.corp_nm }}
+                            {{ insuranceDTO.user_nm }}
                           </div>
                         </v-col>
                         <v-col cols="6" class="v-col">
