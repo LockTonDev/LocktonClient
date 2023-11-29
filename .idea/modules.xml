@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/LocktonClient.iml" filepath="$PROJECT_DIR$/.idea/LocktonClient.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/frontend_new.iml" filepath="$PROJECT_DIR$/.idea/frontend_new.iml" />
+>>>>>>> fb33ab8dccfeb419e78ca4ba590326ca9747d80e
     </modules>
   </component>
 </project>

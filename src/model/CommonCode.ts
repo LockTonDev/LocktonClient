@@ -20,6 +20,7 @@ export class CommonCode {
 
   static async getCodeList(groupCode: string): Promise<any[]> {
     // 로컬 스토리지에서 코드를 가져옴
+<<<<<<< HEAD
     //let cachedCodes = localStorage.getItem(CommonCode.CODE_CACHE_KEY);
     //cachedCodes = null;
     //if (cachedCodes) {
@@ -29,6 +30,16 @@ export class CommonCode {
       await this.fetchCodeAll();
       let cachedCodes = localStorage.getItem(CommonCode.CODE_CACHE_KEY);
     //}
+=======
+    let cachedCodes = localStorage.getItem(CommonCode.CODE_CACHE_KEY);
+    //cachedCodes = null;
+    if (cachedCodes) {
+    } else {
+      // 로컬 스토리지에 코드가 없는 경우 서버에서 조회
+      await this.fetchCodeAll();
+      cachedCodes = localStorage.getItem(CommonCode.CODE_CACHE_KEY);
+    }
+>>>>>>> fb33ab8dccfeb419e78ca4ba590326ca9747d80e
     const codes = JSON.parse(cachedCodes);
     return codes.filter((code: any) => code.grp_cd === groupCode);
   }
