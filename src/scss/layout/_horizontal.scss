@@ -1,0 +1,159 @@
+.horizontaTopbar {
+  
+  .v-toolbar__content {
+    padding: $content-padding;
+    max-width: $content-width;
+    margin: 0 auto;
+  }
+}
+.mobile-menu {
+  .v-navigation-drawer {
+    margin-top: 0 !important;
+    height: 100vh !important;
+    z-index: 2000 !important;
+  }
+}
+
+.horizontalMenu {
+
+  .horizontal-navbar {
+    margin: 0px auto;
+    padding: $content-padding;
+    max-width: $content-width;
+    align-items: center;
+    display: flex;
+    z-index: 11;
+    position: relative;
+
+    ul {
+      padding: 0px;
+      margin: 0px;
+    }
+
+    .single-item a {
+      align-items: center;
+      display: flex;
+    }
+
+    li {
+      list-style: none;
+
+      a {
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 300;
+
+        i {
+          margin-right: 10px;
+        }
+
+        &:hover {
+          opacity: 1;
+          background: $color-strongblack;
+        }
+      }
+    }
+
+    .first-level {
+      position: relative;
+
+      >li {
+        >a {
+          padding: 0 20px;
+          height: 90px;
+
+          >div>span {
+            border-bottom: 2px solid transparent;
+            line-height: 38px;
+          }
+
+          &:hover {
+            >div>span {
+              border-bottom: 2px solid $color-primary;
+              transition: border .7s ease;
+            }
+          }
+        }
+      }
+
+      a {
+        color: $color-white;
+
+        .second-level {
+          background: $color-strongblack;
+
+          li {
+            a {
+              line-height: 38px;
+            }
+          }
+        }
+      }
+
+      a:hover {
+        .second-level {
+          display: block;
+        }
+      }
+    }
+
+    .second-level {
+      position: absolute;
+      display: none;
+      top: 90px;
+      left: 0;
+      padding: 8px;
+      min-width: 330px;
+      box-shadow: 7px 15px 20px 0px rgba(0, 0, 0, 0.1);
+      -webkit-box-shaodw: 7px 15px 20px 0px rgba(0, 0, 0, 0.1);
+
+      li {
+        padding: 3px 10px;
+
+        a {
+          font-weight: 400;
+          line-height: 34px;
+        }
+      }
+    }
+  }
+
+  .horizontal-navbar {
+    .first-level {
+      &.two-column {
+        .second-level {
+          width: 400px;
+
+          li {
+            width: 50%;
+            float: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+
+      &.mega-dropdown {
+        position: static;
+
+        .second-level {
+          left: 0;
+          right: 0;
+          max-height: 400px;
+          overflow: auto;
+          margin: 0 auto;
+
+          li {
+            width: 25%;
+            float: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}
+
