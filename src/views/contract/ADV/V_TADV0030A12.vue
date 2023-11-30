@@ -425,9 +425,10 @@
                       /><p style="font-size: 18px; margin-left: 10px">원</p>
                       </div>
                       <i class="mdi mdi-alert-circle-outline mr-2"></i
-                      >부과세 또는 손익계산서상의 매출액 기재요망 (전년도 1.1 ~ 12월말까지 매출)<br/>
+                      >전년도 부가세과세표준증명 또는 손익계산서상의 매출액 기재 (전년도 1.1 ~ 12월말까지 매출)<br/>
+                      <span v-if="insuranceDTO.user_cd=='JNT'">
                       <i class="mdi mdi-alert-circle-outline mr-2"></i
-                      >법무법인, 합동사무소의 연간총매출액을 변호사 수로 나눠 1인당 평균 매출액 기재<br/>
+                      >법무법인, 합동사무소의 연간총매출액을 변호사 수로 나눠 1인당 평균 매출액 기재<br/></span>
                       <i class="mdi mdi-alert-circle-outline mr-2"></i
                       >전년 매출이 없는 경우 1년 예상 매출액 기재
                       </p>
@@ -539,16 +540,11 @@
                         >2억원</v-btn
                         >
                       </v-btn-toggle>
-                      <p class="text-caption font-weight-light color-gray mt-2">
+                      <p class="text-caption font-weight-light color-gray mt-2" >
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>1
-                        청구당 / 연간총보상한도(3명 이상 가입시 연간 총 보상한도는 2배수 적용)
+                        청구당 / 연간총보상한도<span v-if="insuranceDTO.user_cd === 'JNT'">(3명 이상 가입시 연간 총 보상한도는 2배수 적용)</span>
                       </p>
                       <v-divider class="border-0" />
-                      <!-- 법인인 경우 문구 표기 시작 -->
-                      <p class="text-caption font-weight-light color-gray" v-if="insuranceDTO.user_cd === 'JNT'">
-                        <i class="mdi mdi-alert-circle-outline mr-2"></i>연간 총 보상한도는 10억원을 초과하지 못함
-                      </p>
-                      <!-- 법인인 경우 문구 표기 끝 -->
                     </div>
                   </v-col>
                   <v-col cols="12" sm="12" class="v-col">
