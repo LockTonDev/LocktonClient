@@ -32,6 +32,7 @@ const EXCEL_NUM_MAPPERS = {
   TAX_COR: EXCEL_NUM_CELL_TAX_COR,
   ADV_IND: EXCEL_NUM_CELL_ADV_IND,
   ADV_JNT: EXCEL_NUM_CELL_ADV_JNT,
+  ACC_IND: EXCEL_NUM_CELL_TAX_IND,
 };
 
 const EXCEL_MAPPERS = {
@@ -344,7 +345,8 @@ export const UPLOAD_EXCEL_INSURANCE_ADV_TRE_JNT = async (event: any) => {
               insuranceDTO = new InsuranceDTO();
 
               insuranceDTO.insurance_uuid = row.getCell(EXCEL_ADV_JNT.보험식별번호).value;
-              insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_ADV_JNT.총입금액).value;
+             // insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_ADV_JNT.총입금액).value;
+              insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_ADV_JNT.총입금액).value ? row.getCell(EXCEL_ADV_JNT.총입금액).value: 0;
               insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_ADV_JNT.차액).value;
 
               insuranceDTO.status_nm = row.getCell(EXCEL_ADV_JNT.상태).value;
@@ -526,7 +528,7 @@ export const DOWNLOAD_EXCEL = async (searchParams: ParamsDTO, excelList: any[]) 
       let rowMapper = ROW_MAPPERS[mapperKey];
       let numMapper = EXCEL_NUM_MAPPERS[mapperKey];
       let headers = Object.keys(excelMapper).map(key => ({ header: key, key: excelMapper[key] }));
-      console.log(numMapper)
+      console.log("numMapper :",numMapper)
 
       // Assign columns
       worksheet.columns = headers;

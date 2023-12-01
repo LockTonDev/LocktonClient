@@ -487,13 +487,9 @@ async function handleFileUploadCOR(event) {
 
 async function handleFileUploadJNT(event) {
   try {
-    console.log('here')
     let resultData;
     if(route.params.business_cd=='ADV') {
-      console.log('here2')
       const excelList = await UPLOAD_EXCEL_INSURANCE_ADV_TRE_JNT(event);
-      console.log('here3')
-      console.log(excelList);
       resultData = await apiADMIN.setADV_TRX(excelList);
 
       if (resultData.success) {
@@ -529,12 +525,12 @@ async function fnExcelDownload() {
   try {
     if (isRun) {
       let resultData;
-      if(route.params.business_cd=='ADV') {
+      if(route.params.business_cd == 'ADV') {
         resultData = await apiADMIN.getADVExcel(searchParams.value.data);
       } else {
         resultData = await apiADMIN.getTAXExcel(searchParams.value.data);
       }
-      console.log(resultData)
+
       searchParams.value.data['excel_filenm'] = fileNm;
 
       if (resultData.data.length == 0) {

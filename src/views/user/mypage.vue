@@ -1078,10 +1078,6 @@ async function onUpdateUserInfoSubmit(params: any) {
   }
   // console.log(`MODIFY_${userDTO.value.business_cd}_${userDTO.value.user_cd}`);
   const validationSchema = UserYup[`MODIFY_${userDTO.value.business_cd}_${userDTO.value.user_cd}`];
-<<<<<<< HEAD
-  console.log("validationSchema : ",validationSchema)
-=======
->>>>>>> fb33ab8dccfeb419e78ca4ba590326ca9747d80e
   const isValidate = await validationSchema.validate(userDTO.value, { abortEarly: false })
     .then(() => {
       return true;

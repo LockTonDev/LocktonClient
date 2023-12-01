@@ -41,11 +41,8 @@ const 회원가입_공통_이메일 = yup.object({
 });
 
 const 회원가입_공통_사무소정보 = yup.object({
-<<<<<<< HEAD
   user_nm: yup.string().required('사무소명을 입력해주세요'),
-=======
-  corp_nm: yup.string().required('사무소명을 입력해주세요'),
->>>>>>> fb33ab8dccfeb419e78ca4ba590326ca9747d80e
+  //corp_nm: yup.string().required('사무소명을 입력해주세요'),
   corp_cnno: yup.string().matches(/^[0-9]{3}-[0-9]{2}-[0-9]{5}$/, '사업자번호를 정확히 입력하세요.'),
   corp_telno1: yup.string().matches(/^\d{2,3}$/, '사무소 전화를 입력해주세요.'),
   corp_post: yup.string().required('사무소 우편번호를 입력해주세요.'),
@@ -57,10 +54,8 @@ const 회원가입_공통_사무소정보 = yup.object({
   corp_cust_nm: yup.string().required('담당자 성명을 입력해주세요.'),
   corp_addr: yup.string().required('사무소 주소를 입력해주세요.'),
   corp_addr_dtl: yup.string().required('사무소 상세 주소를 입력해주세요.'),
-<<<<<<< HEAD
   user_hpno: yup.string().required('휴대전화를 입력해주세요.'),
-=======
->>>>>>> fb33ab8dccfeb419e78ca4ba590326ca9747d80e
+
 });
 
 const 회원가입_합동_사무소정보 = yup.object({
@@ -81,10 +76,7 @@ const 회원가입_합동_사무소정보 = yup.object({
   corp_post: yup.string().required('사무소 우편번호를 입력해주세요.'),
   corp_addr: yup.string().required('사무소 주소를 입력해주세요.'),
   corp_addr_dtl: yup.string().required('사무소 상세 주소를 입력해주세요.'),
-<<<<<<< HEAD
   user_hpno: yup.string().required('휴대전화를 입력해주세요.'),
-=======
->>>>>>> fb33ab8dccfeb419e78ca4ba590326ca9747d80e
 });
 
 const 회원가입_공통_개인 = yup.object({
