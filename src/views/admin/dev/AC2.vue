@@ -1314,7 +1314,6 @@ async function fnSearchDtl(insurance_uuid: string) {
         return b.status_cd-a.status_cd
       }
     })
-    console.log("insuranceDTO sort ", insuranceDTO.value.cbr_data)
 
     //메모 데이타 있을 경우 panel 확장, 2023-11-08 By Moon
     if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '' && panel.value.length < 9 ) panel.value.push("panel-10")
@@ -1429,6 +1428,7 @@ async function fnSave() {
 
   if (isRun) {
     let resultData;
+    insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length
     if (route.params.business_cd == 'ADV'){
       resultData = await apiADMIN.setADV([insuranceDTO.value]);
     }

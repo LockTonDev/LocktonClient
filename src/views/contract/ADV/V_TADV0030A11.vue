@@ -2780,7 +2780,7 @@ watch(
   insuranceDTO.value.cbr_data,
   (newVal, oldVal) => {
     // 읽기전용일 경우 해당로직 제외
- 
+
     if (isReadOnlyAll.value) return false;
 
     newVal.forEach((row, index) => {

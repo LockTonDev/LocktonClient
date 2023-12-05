@@ -78,7 +78,7 @@
                           <p>보험기간</p>
                         </div>
                         <div class="data-col">
-                          {{ insuranceDTO.base_insr_st_dt }}(00:01) ~ {{ insuranceDTO.base_insr_cncls_dt }}(00:01)
+                          {{ insuranceDTO.insr_st_dt }}(00:01) ~ {{ insuranceDTO.insr_cncls_dt }}(00:01)
                         </div>
                       </v-col>
                       <v-col cols="6" class="v-col">
@@ -957,7 +957,7 @@
                           <p>보험기간</p>
                         </div>
                         <div class="data-col">
-                          {{ insuranceDTO.base_insr_st_dt }}(00:01) ~ {{ insuranceDTO.base_insr_cncls_dt }}(00:01)
+                          {{ insuranceDTO.insr_st_dt }}(00:01) ~ {{ insuranceDTO.insr_cncls_dt }}(00:01)
                         </div>
                       </v-col>
                       <v-col cols="6" class="v-col">
