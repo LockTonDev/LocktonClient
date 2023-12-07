@@ -739,7 +739,7 @@
                           <tr v-for="(row, index) in insuranceDTO.cbr_data" >
                             <td>{{ index + 1 }}</td>
                             <td :style='(row.status_cd =="80")?"color:black;":"color:red"'>
-                              <VSelectWithValidation v-model="row.status_cd" name="status_cd" label="" color="primary" density="compact" :items="statusCdItems" variant="outlined" single-line></VSelectWithValidation>
+                              <VSelectWithValidation v-model="row.status_cd"  @update:modelValue="fnChangeStatus" name="status_cd" label="" color="primary" density="compact" :items="statusCdItems" variant="outlined" single-line></VSelectWithValidation>
                             </td>
                             <td :style='(row.status_cd =="80")?"color:black;":"color:red"'>
                               <VTextFieldWithValidation v-model="row.cbr_nm" name="cbr_nm" label="" density="compact" color="primary" variant="outlined" single-line />
@@ -1103,7 +1103,7 @@
           <div class="position-sticky sticky-top v-box">
             <v-btn block variant="outlined" class="mb-1" @click="onInsuranceFormOpen()">신청서출력</v-btn>
             <v-btn block variant="outlined" class="mb-1" @click="onCertificatePrintFrameOpen()">증명서출력</v-btn>
-            <v-btn block variant="outlined" class="mb-1" @click="onCalculateInsurance()">보험료계산</v-btn>
+            <v-btn block variant="outlined" class="mb-1" @click="onCalculateInsurance(true)">보험료계산</v-btn>
             <v-btn block size="large" @click="fnSave()">저장</v-btn>
           </div>
         </v-col>
@@ -1505,20 +1505,26 @@ const onCertificatePrintFrameClose = () => {
 /**
  * 보험료계산
  */
-const onCalculateInsurance = async () => {
+const onCalculateInsurance = async (confirmYn) => {
   let isRun = false;
-  await messageBoxDTO.value.setConfirm('확인', '총 보험료를 자동계산하시겠습니까?', null, (result, params) => {
-    isRun = result;
-  });
+  if(confirmYn) { // 상태값 변경시 자동계산 확인 창 표시 안함
+    await messageBoxDTO.value.setConfirm('확인', '총 보험료를 자동계산하시겠습니까?', null, (result, params) => {
+      isRun = result;
+    });
+  } else {
+    isRun = true
+  }
 
   if (isRun) {
     let totAmt = 0;
 
     if (insuranceDTO.value.cbr_data != undefined && insuranceDTO.value.user_cd !== 'IND') {
-      for (var idx in insuranceDTO.value.cbr_data) {
+      for (let idx in insuranceDTO.value.cbr_data) {
         // 기본담보 보험료(할인할증적용)
-        //if(insuranceDTO.value.cbr_data[idx].status_cd=='80')
-        totAmt += Number(insuranceDTO.value.cbr_data[idx].insr_amt, 0);
+        if(insuranceDTO.value.cbr_data[idx].status_cd !='91') { //2023-12-07 미가입 상태는 제외
+          console.log("insuranceDTO.value.cbr_data[idx].status_cd : ", insuranceDTO.value.cbr_data[idx].status_cd)
+          totAmt += Number(insuranceDTO.value.cbr_data[idx].insr_amt, 0);
+        }
       }
 
       insuranceDTO.value.insr_amt = totAmt;
@@ -1534,8 +1540,10 @@ watch(
     () => route.params.business_cd,
     newBusinessCd => {
       initPage();
-    }
+    },
 );
+
+
 
 function changeTotUnpaidAmt(){
   if(insuranceDTO.value.business_cd == 'TAX' && insuranceDTO.value.user_cd=='COR'){
@@ -1552,6 +1560,12 @@ function changeTotUnpaidAmt(){
   }
 
 }
+
+
+function fnChangeStatus(memStatus) {
+  onCalculateInsurance(false)
+}
+
 
 /**
  * 페이지 로딩시 셋팅할 정보
@@ -1710,6 +1724,7 @@ async function fnAutoTRX() {
     fnSave();
   }
 }
+
 /**
  * 페이지 로딩이 완료되면 실행하는 로직
  */
