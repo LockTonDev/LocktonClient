@@ -432,11 +432,13 @@
                                 <div class="head-col">
                                   <p v-if="insuranceDTO.user_cd === 'IND'">소급담보일</p>
                                   <p v-if="insuranceDTO.user_cd === 'COR'">법인 소급담보일</p>
+                                  <p v-if="insuranceDTO.user_cd === 'JNT'">소급담보일</p>
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col" :style='(insuranceDTO.insr_retr_dt >= stockStartDt)?"color:blue;":"color:black"'>
                                   <!-- {{ insuranceDTO.insr_retr_dt }} -->
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_retr_dt" name="insr_retr_dt" label="소급담보일" type="date" single-line />
+                                  <VTextFieldWithValidation v-if="insuranceDTO.business_cd !== 'ADV' && insuranceDTO.user_cd !== 'JNT'" v-model="insuranceDTO.insr_retr_dt" name="insr_retr_dt" label="소급담보일" type="date" single-line />
+                                  <span v-else class="pl-2"> 해당없음</span>
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -501,7 +503,7 @@
 										<VTextFieldWithValidation v-model="insuranceDTO.cbr_cnt" name="cbr_cnt" label="" type="number" suffix="명" single-line/>
 										</div>
 									</v-col> -->
-                              <v-col cols="12" class="v-col" v-if="insuranceDTO.user_cd === 'COR'">
+                              <v-col cols="12" class="v-col" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'" >
                                 <div class="head-col">
                                   <p>인원수 할인</p>
                                   <sup class="text-error">*</sup>
@@ -947,7 +949,7 @@
                     </v-card>
                     <v-card class="py-2 px-6 bg-lighterror w-full mr-1">
                       <p class="text-12">납입 상태</p>
-                      <p class="text-h6 text-right text-error">미납</p>
+                      <p class="text-h6 text-right text-error">{{ insuranceDTO.insr_tot_amt == 0 ? '-' : '미납' }}</p>
                     </v-card>
                     <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
                       <p class="text-12">보험 상태</p>
@@ -1169,6 +1171,9 @@ import VCheckBoxWithValidation from '@/components/VCheckBoxWithValidation.vue';
 import apiADMIN from '@/api/api/A_ADMIN';
 import {UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR, UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND} from "../../../util/excelupdn";
 import dayjs from "dayjs";
+import RATE_ITEMS from '../../json/discountRateByMemData.json';
+import {getDiscountRate, getInsrAmt} from '@/util/calUtils';
+import {calByString_ADV} from "../../../util/util";
 
 const route = useRoute();
 
@@ -1522,7 +1527,7 @@ const onCalculateInsurance = async (confirmYn) => {
       for (let idx in insuranceDTO.value.cbr_data) {
         // 기본담보 보험료(할인할증적용)
         if(insuranceDTO.value.cbr_data[idx].status_cd !='91') { //2023-12-07 미가입 상태는 제외
-          console.log("insuranceDTO.value.cbr_data[idx].status_cd : ", insuranceDTO.value.cbr_data[idx].status_cd)
+         // console.log("insuranceDTO.value.cbr_data[idx].status_cd : ", insuranceDTO.value.cbr_data[idx].status_cd)
           totAmt += Number(insuranceDTO.value.cbr_data[idx].insr_amt, 0);
         }
       }
@@ -1563,6 +1568,85 @@ function changeTotUnpaidAmt(){
 
 
 function fnChangeStatus(memStatus) {
+  const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
+  let businessCd = insuranceDTO.value.business_cd
+  if(insuranceDTO.value.business_cd == "ADV") {
+    insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate(businessCd, validMemberCount.length)
+    //for (let i = 0; i < RATE_ITEMS[insuranceDTO.value.business_cd].length;i++) {
+    //  console.log("RATE :", RATE_ITEMS[insuranceDTO.value.business_cd][i].rate)
+    //}
+
+
+    let totAmt = 0;
+
+    // // 소급담보일이 수기등록이 아니면 보험 시작일자로 변경
+    // if (insuranceDTO.insr_retr_yn !== 'Y') {
+    //   insuranceDTO.insr_retr_dt = insuranceDTO.value.insr_st_dt;
+    // }
+
+    // // 기준_보험시작일자 보다 이전이면 기준_보험시작일자로 보험기간 변경
+    // if (insuranceDTO.value.insr_st_dt < insuranceRateDTO.value.insr_st_dt) {
+    //   insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
+    // }
+    let data = insuranceDTO.value
+    if (data.cbr_data != undefined) {
+
+      for (var idx in data.cbr_data) {
+        // data.cbr_data[idx].insr_st_dt = insuranceDTO.value.insr_st_dt;
+
+        // 수기처리가 아니면 기초셋팅
+        /*if( data.cbr_data[idx].insr_retr_yn !== 'Y') {
+          data.cbr_data[idx].insr_retr_dt = data.cbr_data[idx].insr_st_dt;
+          data.cbr_data[idx].insr_sale_rt = insuranceDTO.value.insr_sale_rt;
+        }*/
+
+        // 연간 보험료 (365일 기준)
+
+        data.cbr_data[idx].insr_base_amt = getInsrAmt(
+            null,
+            null,
+            data.insr_take_sec,
+            data.insr_clm_lt_amt,
+            data.insr_psnl_brdn_amt,
+            0,
+            1,
+            insuranceDTO.value.insr_pcnt_sale_rt,
+            data,
+            insuranceRateDTO.value.contents,
+            insuranceRateDTO.value.days
+        );
+
+        // 개별 보험료 - 기간, 할인할증 적용 보험료
+        data.cbr_data[idx].insr_amt = getInsrAmt(
+            data.cbr_data[idx].insr_st_dt,
+            data.cbr_data[idx].insr_cncls_dt,
+            data.insr_take_sec,
+            data.insr_clm_lt_amt,
+            data.insr_psnl_brdn_amt,
+            data.cbr_data[idx].insr_sale_rt,
+            validMemberCount,
+            insuranceDTO.value.insr_pcnt_sale_rt,
+            data,
+            insuranceRateDTO.value.contents,
+            insuranceRateDTO.value.days
+        );
+        // 기본담보 보험료(할인할증적용)
+        totAmt += data.cbr_data[idx].insr_amt;
+
+        // 소급담보일이 수기등록이 아니면 보험 시작일자로 변경
+        // if (data.cbr_data[idx].insr_retr_yn != 'Y') {
+        //   data.cbr_data[idx].insr_retr_dt = insuranceDTO.value.insr_st_dt;
+        // }
+
+        // 기본담보 - 보상한도(연보험)
+        insuranceDTO.value.insr_year_clm_lt_amt = calByString_ADV(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1), insuranceDTO.value?.cbr_data?.length, 1000000000);
+
+      }
+
+      data.insr_amt = totAmt;
+      data.insr_premium_amt = totAmt;
+    }
+  }
   onCalculateInsurance(false)
 }
 
