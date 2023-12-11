@@ -1524,6 +1524,16 @@ const onCalculateInsurance = async (confirmYn) => {
     let totAmt = 0;
 
     if (insuranceDTO.value.cbr_data != undefined && insuranceDTO.value.user_cd !== 'IND') {
+
+      //인원 증가시 할증율 적용 2023-12-11
+      const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
+      let businessCd = insuranceDTO.value.business_cd
+      if(insuranceDTO.value.business_cd == "ADV") {
+        insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate(businessCd, validMemberCount.length)
+      }
+
+      fnChangeStatus('')
+      //----------------------------
       for (let idx in insuranceDTO.value.cbr_data) {
         // 기본담보 보험료(할인할증적용)
         if(insuranceDTO.value.cbr_data[idx].status_cd !='91') { //2023-12-07 미가입 상태는 제외
@@ -1647,7 +1657,7 @@ function fnChangeStatus(memStatus) {
       data.insr_premium_amt = totAmt;
     }
   }
-  onCalculateInsurance(false)
+  //onCalculateInsurance(false)
 }
 
 

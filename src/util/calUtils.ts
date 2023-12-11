@@ -38,7 +38,7 @@ export let getDiscountRate = (businnessCd: string,  nPCnt:number) => {
     let discountRate = 0
     let discountRanges = []
 
-    console.log("businnessCd :",businnessCd)
+    //console.log("businnessCd :",businnessCd)
     if(businnessCd == 'ADV') {
         discountRanges = discountRangesADV
     }
@@ -50,7 +50,7 @@ export let getDiscountRate = (businnessCd: string,  nPCnt:number) => {
         }
     }
 
-    console.log("discountRate :",discountRate)
+    //console.log("discountRate :",discountRate)
   return discountRate;
 };
 
@@ -72,8 +72,9 @@ export let getInsrAmt = (
     INSR_RATE_TABLE = contents;
     INSR_RATE_MAX_DAYS = days;
 
-    //console.log("INSR_RATE_TABLE : ",INSR_RATE_TABLE)
-    //console.log("INSR_RATE_MAX_DAYS : ",INSR_RATE_MAX_DAYS)
+    // console.log("sKey1 : ",sKey1)
+    // console.log("sKey2 : ",sKey2)
+    // console.log("sKey3 : ",sKey3)
     if (!sKey1 || !sKey2 || !sKey3) return 0;
 
     let nTotAmt = 0;
@@ -105,7 +106,6 @@ export let getInsrAmt = (
     // 계산불가 일 경우 0으로 설정
     if (isNaN(nTotAmt)) nTotAmt = 0;
 
-    console.log("nTotAmt :",nTotAmt)
     return nTotAmt;
 };
 
