@@ -437,7 +437,8 @@
                                 </div>
                                 <div class="data-col" :style='(insuranceDTO.insr_retr_dt >= stockStartDt)?"color:blue;":"color:black"'>
                                   <!-- {{ insuranceDTO.insr_retr_dt }} -->
-                                  <VTextFieldWithValidation v-if="insuranceDTO.business_cd !== 'ADV' && insuranceDTO.user_cd !== 'JNT'" v-model="insuranceDTO.insr_retr_dt" name="insr_retr_dt" label="소급담보일" type="date" single-line />
+                                  <!-- 2023-12-12 세무사,회계사,변호사 경우 변호사 합동인 경우만 해당없음으로 표시되어야 함-->
+                                  <VTextFieldWithValidation v-if="insuranceDTO.business_cd !== 'ADV' || (insuranceDTO.business_cd == 'ADV' && insuranceDTO.user_cd !== 'JNT')" v-model="insuranceDTO.insr_retr_dt" name="insr_retr_dt" label="소급담보일" type="date" single-line />
                                   <span v-else class="pl-2"> 해당없음</span>
                                 </div>
                               </v-col>
@@ -1524,16 +1525,6 @@ const onCalculateInsurance = async (confirmYn) => {
     let totAmt = 0;
 
     if (insuranceDTO.value.cbr_data != undefined && insuranceDTO.value.user_cd !== 'IND') {
-
-      //인원 증가시 할증율 적용 2023-12-11
-      const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
-      let businessCd = insuranceDTO.value.business_cd
-      if(insuranceDTO.value.business_cd == "ADV") {
-        insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate(businessCd, validMemberCount.length)
-      }
-
-      fnChangeStatus('')
-      //----------------------------
       for (let idx in insuranceDTO.value.cbr_data) {
         // 기본담보 보험료(할인할증적용)
         if(insuranceDTO.value.cbr_data[idx].status_cd !='91') { //2023-12-07 미가입 상태는 제외
@@ -1541,7 +1532,9 @@ const onCalculateInsurance = async (confirmYn) => {
           totAmt += Number(insuranceDTO.value.cbr_data[idx].insr_amt, 0);
         }
       }
-
+      if(insuranceDTO.value.spct_join_yn == 'Y') {
+        totAmt+=insuranceDTO.value.spct_data.insr_amt
+      }
       insuranceDTO.value.insr_amt = totAmt;
       insuranceDTO.value.insr_tot_amt = totAmt;
     }
@@ -1580,6 +1573,13 @@ function changeTotUnpaidAmt(){
 function fnChangeStatus(memStatus) {
   const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
   let businessCd = insuranceDTO.value.business_cd
+  if(businessCd== "ADV" || businessCd == "TAX") {
+
+    insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate(businessCd, validMemberCount.length)
+    validUserCount.value = validMemberCount.length
+  }
+  /*
+  let businessCd = insuranceDTO.value.business_cd
   if(insuranceDTO.value.business_cd == "ADV") {
     insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate(businessCd, validMemberCount.length)
     //for (let i = 0; i < RATE_ITEMS[insuranceDTO.value.business_cd].length;i++) {
@@ -1603,12 +1603,6 @@ function fnChangeStatus(memStatus) {
 
       for (var idx in data.cbr_data) {
         // data.cbr_data[idx].insr_st_dt = insuranceDTO.value.insr_st_dt;
-
-        // 수기처리가 아니면 기초셋팅
-        /*if( data.cbr_data[idx].insr_retr_yn !== 'Y') {
-          data.cbr_data[idx].insr_retr_dt = data.cbr_data[idx].insr_st_dt;
-          data.cbr_data[idx].insr_sale_rt = insuranceDTO.value.insr_sale_rt;
-        }*/
 
         // 연간 보험료 (365일 기준)
 
@@ -1657,7 +1651,9 @@ function fnChangeStatus(memStatus) {
       data.insr_premium_amt = totAmt;
     }
   }
-  //onCalculateInsurance(false)
+  onCalculateInsurance(false)
+
+   */
 }
 
 
