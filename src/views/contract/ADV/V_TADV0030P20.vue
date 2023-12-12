@@ -1239,6 +1239,11 @@
                       >{{
                           Number(insuranceDTO?.insr_tot_amt).toLocaleString()
                         }}
+                        <!--{{
+                          (Number(
+                              insuranceDTO?.insr_amt
+                          ) + Number(insuranceDTO?.spct_data?.insr_amt)).toLocaleString()
+                        }}-->
                 원</span
                       >
                     </div>

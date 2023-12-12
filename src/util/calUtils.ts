@@ -24,6 +24,29 @@ let discountRangesADV = [
     {range: [2, 2], rate: -10},
     {range: [0, 1], rate: -0},
 ];
+// 변호사 인원수별 할인구간
+let discountRangesTAX = [
+    {range: [11, Infinity], rate: -15},
+    {range: [7, 10], rate: -10},
+    {range: [3, 6], rate: -5},
+    {range: [0, 2], rate: -0},
+];
+/*
+0	0%
+1	0%
+2	0%
+3	-5%
+4	-5%
+5	-5%
+6	-5%
+7	-10%
+8	-10%
+9	-10%
+10	-10%
+11	-15%
+12	-15%
+
+ */
 
 
 /**
@@ -41,6 +64,8 @@ export let getDiscountRate = (businnessCd: string,  nPCnt:number) => {
     //console.log("businnessCd :",businnessCd)
     if(businnessCd == 'ADV') {
         discountRanges = discountRangesADV
+    } else if(businnessCd == 'TAX') {
+        discountRanges = discountRangesTAX
     }
     for (let i = 0; i < discountRanges.length; i++) {
         let range = discountRanges[i].range;
