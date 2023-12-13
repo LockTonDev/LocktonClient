@@ -134,3 +134,59 @@ export let getInsrAmt = (
     return nTotAmt;
 };
 
+
+
+/**
+ * 특약 보험료 계산
+ *
+ * @param sSDt  시작일자
+ * @param sEDt  종료일자
+ * @param sKey1 보상한도
+ * @param sKey2 자기부담금
+ * @param nPCnt 인원수
+ */
+export let getInsrSpctAmt = (
+    sSDt: string,
+    sEDt: string,
+    sKey1: string,
+    sKey2: string,
+    nPCnt: number,
+    contents : object,
+    days : number
+
+) => {
+    if (!sKey1 || !sKey2) return 0;
+
+    INSR_RATE_TABLE = contents;
+    INSR_RATE_MAX_DAYS = days;
+
+    let nTotAmt = 0;
+    let nInitAmt = 0;
+    let nDCnt = 0;
+
+    let sKey = sKey1.getValueBySplit(0) + '|' + sKey2.getValueBySplit(0);
+
+    console.log("INSR_RATE_TABLE",INSR_RATE_TABLE)
+    console.log("INSR_RATE_MAX_DAYS",INSR_RATE_MAX_DAYS)
+    try {
+        // 연간보험료 계산
+        nDCnt = getDateDiff(sSDt, sEDt, INSR_RATE_MAX_DAYS);
+        // 365일을 넘지 않도록 한다.
+        if (nDCnt > INSR_RATE_MAX_DAYS) nDCnt = INSR_RATE_MAX_DAYS;
+        // 기본보험료 조회
+        //nInitAmt =  (eval("INSR_RATE_TABLE.value['특약']['" + sKey1 + "']['"+ sKey2 + "']"));
+        nInitAmt = INSR_RATE_TABLE.특약담보.보험료.filter(
+            data => data.key === sKey
+        )[0].amt;
+
+        // 보험 계산식
+        nTotAmt = Math.floor((nInitAmt * (nDCnt / INSR_RATE_MAX_DAYS)) / 10) * 10 * nPCnt;
+    } catch (err) {
+        console.log(err);
+        nTotAmt = 0;
+    }
+    // 계산불가 일 경우 0으로 설정
+    if (isNaN(nTotAmt)) nTotAmt = 0;
+console.log("nTotAmt",nTotAmt)
+    return nTotAmt;
+};
