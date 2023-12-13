@@ -92,7 +92,7 @@ const 회원가입_공통_개인 = yup.object({
 const 회원가입_공통_법인 = yup.object({
   user_id: yup.string().required('아이디를 입력해주세요.'),
   user_nm: yup.string().required('법인명을 입력해주세요.'),
-  corp_ceo_nm: yup.string().required('대표자명을 입력해주세요'),
+  //corp_ceo_nm: yup.string().required('대표자명을 입력해주세요'),
   corp_bnno: yup.string().matches(/^[0-9]{6}-[0-9]{7}$/, '법인번호를 정확히 입력하세요.')
 });
 

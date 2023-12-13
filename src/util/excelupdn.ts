@@ -17,23 +17,25 @@ async function initCode() {
   regionCdItems = await CommonCode.getCodeList('TAX001');
   trxCdItems = await CommonCode.getCodeList('COM031');
 }
+/*
 
 const EXCEL_NUM_CELL_TAX_IND = ['G','I','O','R','AC','AD','AF','AK','AO','AP','AQ'];
 const EXCEL_NUM_CELL_TAX_COR = ['H','I','P','Q','S','V','W','AG','AH','AJ','AN','AO','AP','AQ'];
 
 const EXCEL_NUM_CELL_ADV_IND = ['G','I','O','R','AC','AD','AF','AK','AO','AP','AQ'];
 const EXCEL_NUM_CELL_ADV_JNT = ['H','I','P','Q','S','V','W','AG','AH','AJ','AN','AO','AP','AQ'];
+*/
 
 // 초기 호출
 initCode();
-
+/*
 const EXCEL_NUM_MAPPERS = {
   TAX_IND: EXCEL_NUM_CELL_TAX_IND,
   TAX_COR: EXCEL_NUM_CELL_TAX_COR,
   ADV_IND: EXCEL_NUM_CELL_ADV_IND,
   ADV_JNT: EXCEL_NUM_CELL_ADV_JNT,
   ACC_IND: EXCEL_NUM_CELL_TAX_IND,
-};
+};*/
 
 const EXCEL_MAPPERS = {
   TAX_IND: EXCEL_TAX_IND,
@@ -526,15 +528,25 @@ export const DOWNLOAD_EXCEL = async (searchParams: ParamsDTO, excelList: any[]) 
       console.log("mapperKey",mapperKey)
       let excelMapper = EXCEL_MAPPERS[mapperKey];
       let rowMapper = ROW_MAPPERS[mapperKey];
-      let numMapper = EXCEL_NUM_MAPPERS[mapperKey];
+     // let numMapper = EXCEL_NUM_MAPPERS[mapperKey];
       let headers = Object.keys(excelMapper).map(key => ({ header: key, key: excelMapper[key] }));
-      console.log("numMapper :",numMapper)
+      console.log("headers :",headers)
 
       // Assign columns
       worksheet.columns = headers;
-
-      // Add rows to the sheet
       excelList.forEach((dataRow, index) => {
+        // dataRow.index = index;
+         let rows = rowMapper(excelMapper, dataRow);
+         rows.forEach(row => {
+        //   numMapper.forEach(target => {
+        //
+        //     if(row[target]!=undefined &&row[target]!='') row[target]=row[target]*1
+        //   })
+          worksheet.addRow(row);
+        });
+      });
+      // Add rows to the sheet
+      /*excelList.forEach((dataRow, index) => {
         dataRow.index = index;
         let rows = rowMapper(excelMapper, dataRow);
         rows.forEach(row => {
@@ -554,7 +566,7 @@ export const DOWNLOAD_EXCEL = async (searchParams: ParamsDTO, excelList: any[]) 
             })
           }
         })
-      });
+      });*/
 
       // Write to the buffer
       const buffer = await workbook.xlsx.writeBuffer();
@@ -790,6 +802,12 @@ function mapperRow_ADV_IND(excelMapper: object, excelDataRow: any) {
   row[excelMapper.할인할증] = insuranceDTO.insr_sale_rt;
   row[excelMapper.매출액구간] = insuranceDTO.insr_take_sec?.getValueBySplit(1);
   row[excelMapper.최종보험료] = insuranceDTO.insr_tot_amt;
+  row[excelMapper.특약가입여부] = insuranceDTO.spct_join_yn=='Y'?'가입':'미가입';
+  row[excelMapper.특약보상한도] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_clm_lt_amt?.getValueBySplit(1):'';
+  row[excelMapper.특약자기부담금] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_psnl_brdn_amt?.getValueBySplit(1):'';
+  row[excelMapper.사무원인원수] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.cbr_cnt:'';
+  row[excelMapper.특약소급담보일] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_retr_dt:'';
+  row[excelMapper.특약산출보험료] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_amt:'';
   row[excelMapper.전화] = insuranceDTO.corp_telno;
   row[excelMapper.팩스] = insuranceDTO.corp_faxno;
   row[excelMapper.휴대폰] = insuranceDTO.corp_cust_hpno;
@@ -815,7 +833,7 @@ function mapperRow_ADV_IND(excelMapper: object, excelDataRow: any) {
   row[excelMapper.비고1] = insuranceDTO?.trx_data[0]?.rmk;
   row[excelMapper.예금주명1] = insuranceDTO?.trx_data[0]?.acct_nm;
 
-  // console.log('row[excelMapper.입금금액1]',row[excelMapper.입금금액1])
+   console.log('row[excelMapper.특약가입여부]',row[excelMapper.특약가입여부])
   try {
     row[excelMapper.입금구분2] = trxCdItems.find(item => item.value == insuranceDTO?.trx_data[1]?.trx_cd).title;
   } catch (e) {
@@ -871,6 +889,12 @@ function mapperRow_ADV_JNT(excelMapper: object, excelDataRow: any) {
   row[excelMapper.할인할증] = insuranceDTO.insr_sale_rt;
   row[excelMapper.매출액구간] = insuranceDTO.insr_take_sec?.getValueBySplit(1);
   row[excelMapper.최종보험료] = insuranceDTO.insr_tot_amt;
+  row[excelMapper.특약가입여부] = insuranceDTO.spct_join_yn=='Y'?'가입':'미가입';
+  row[excelMapper.특약보상한도] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_clm_lt_amt?.getValueBySplit(1):'';
+  row[excelMapper.특약자기부담금] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_psnl_brdn_amt?.getValueBySplit(1):'';
+  row[excelMapper.사무원인원수] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.cbr_cnt:'';
+  row[excelMapper.특약소급담보일] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_retr_dt:'';
+  row[excelMapper.특약산출보험료] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_amt:'';
   row[excelMapper.전화] = insuranceDTO.corp_telno;
   row[excelMapper.팩스] = insuranceDTO.corp_faxno;
   row[excelMapper.휴대폰] = insuranceDTO.corp_cust_hpno;

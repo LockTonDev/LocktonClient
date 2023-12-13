@@ -708,7 +708,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation value="고용직원 부정직행위 담보 특별약관 (Dishonesty Extension)" single-line aria-readonly="true"/>
+                                  <input type="text" value="고용직원 부정직행위 담보 특별약관 (Dishonesty Extension)" disabled style="font-size: 13px; width :400px"/>
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -1302,6 +1302,7 @@ const insrSpctPsnlBrdnAmtItems = ref([]);
 
 const selectedRow = ref();
 const selectedRowDtl = ref();
+const selectedRowTRX = ref();
 
 const isNoData = ref(false);
 const isDaumPostDialog = ref(false);
@@ -1625,6 +1626,7 @@ const onCalculateInsurance = async (confirmYn) => {
   if (isRun) {
     let totAmt = 0;
 
+    //개인일 경우 해당 안됨
     if (insuranceDTO.value.cbr_data != undefined && insuranceDTO.value.user_cd !== 'IND') {
       for (let idx in insuranceDTO.value.cbr_data) {
         // 기본담보 보험료(할인할증적용)
@@ -1633,17 +1635,23 @@ const onCalculateInsurance = async (confirmYn) => {
           totAmt += Number(insuranceDTO.value.cbr_data[idx].insr_amt, 0);
         }
       }
-      if(insuranceDTO.value.spct_join_yn == 'Y') {
-        totAmt+=insuranceDTO.value.spct_data.insr_amt
-      }
+      // if(insuranceDTO.value.spct_join_yn == 'Y') {
+      //   totAmt+=insuranceDTO.value.spct_data.insr_amt
+      // }
       insuranceDTO.value.insr_amt = totAmt;
       insuranceDTO.value.insr_tot_amt = totAmt;
-
-      // 특약 재계산
-      if (insuranceDTO.value.spct_join_yn == 'Y') {
-        calInsrSpctAmt(insuranceDTO.value.spct_data);
-      }
     }
+    console.log('insuranceDTO.value.spct_join_yn',insuranceDTO.value.spct_join_yn)
+    // 특약 재계산
+    //개인도 특약 가능
+    if (insuranceDTO.value.spct_join_yn == 'Y') {
+      console.log('insuranceDTO.value.spct_join_yn')
+      // let insrAmt = 0;
+      // insrAmt += calInsrSpctAmt(insuranceDTO.value.spct_data);
+      insuranceDTO.value.spct_data.insr_amt=calInsrSpctAmt(insuranceDTO.value.spct_data);
+      insuranceDTO.value.insr_tot_amt = Number(insuranceDTO.value.insr_amt,0) + Number(insuranceDTO.value.spct_data.insr_amt,0)
+    }
+
     // 입금금액 계산
     insuranceDTO.value.insr_tot_paid_amt = insuranceDTO.value.trx_data.reduce((total, item) => total + Number(item.trx_amt), 0);
     insuranceDTO.value.insr_tot_unpaid_amt = Number(insuranceDTO.value.insr_tot_amt) - Number(insuranceDTO.value.insr_tot_paid_amt);
@@ -1656,9 +1664,8 @@ const onCalculateInsurance = async (confirmYn) => {
  * @param data 보험 명단 데이터
  */
 const calInsrSpctAmt = (data: any) => {
-
-
-  data.insr_amt = getInsrSpctAmt(
+  let insrAmt = 0;
+  insrAmt = getInsrSpctAmt(
       data.insr_st_dt,
       insuranceDTO.value.insr_cncls_dt,
       data.insr_clm_lt_amt,
@@ -1667,7 +1674,7 @@ const calInsrSpctAmt = (data: any) => {
       insuranceRateDTO.value.contents,
       insuranceRateDTO.value.days
   );
-
+  return insrAmt
 };
 
 

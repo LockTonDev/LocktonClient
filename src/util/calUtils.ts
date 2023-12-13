@@ -175,7 +175,7 @@ export let getInsrSpctAmt = (
         if (nDCnt > INSR_RATE_MAX_DAYS) nDCnt = INSR_RATE_MAX_DAYS;
         // 기본보험료 조회
         //nInitAmt =  (eval("INSR_RATE_TABLE.value['특약']['" + sKey1 + "']['"+ sKey2 + "']"));
-        nInitAmt = INSR_RATE_TABLE.value.특약담보.보험료.filter(
+        nInitAmt = INSR_RATE_TABLE.특약담보.보험료.filter(
             data => data.key === sKey
         )[0].amt;
 
@@ -187,6 +187,6 @@ export let getInsrSpctAmt = (
     }
     // 계산불가 일 경우 0으로 설정
     if (isNaN(nTotAmt)) nTotAmt = 0;
-
+console.log("nTotAmt",nTotAmt)
     return nTotAmt;
 };
