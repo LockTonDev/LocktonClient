@@ -688,11 +688,14 @@
               </v-col>
 
               <!-- 특별약관 -->
-              <v-col cols="12" class="pb-0" ref="refPage3"  v-if="route.params.business_cd == 'ADV' && insuranceDTO.spct_join_yn === 'Y'">
+              <v-col cols="12" class="pb-0" ref="refPage3"  v-if="route.params.business_cd == 'ADV'">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-3">
                     <v-card-title>
                       <h3 class="font-weight-bold">특별 약관</h3>
+                      <div class="data-col">
+                        <VCheckBoxWithValidation v-model="insuranceDTO.spct_join_yn" name="spct_join_yn" label="특약가입 여부" class="v-checkbox" density="compact" />
+                      </div>
                       <v-spacer />
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
                     </v-card-title>
@@ -737,6 +740,49 @@
                           <v-col cols="6" v-if="route.params.business_cd == 'ADV'">
                             <v-row class="v-board-table size-x-small">
                               <v-col cols="12" class="v-col">
+<!--                                <div class="head-col">
+                                  <p>특약가입여부</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col">
+                                  <v-btn-toggle
+                                      v-model="insuranceDTO.spct_join_yn"
+                                      divided
+                                      variant="outlined"
+                                      class="w-100"
+                                      style="height: 33px !important;"
+                                      density="comfortable"
+                                      :disabled="isReadOnlyAll"
+                                  >
+                                    <v-btn color="primary" class="flex-grow-1" value="N"
+                                    >가입 안함</v-btn
+                                    >
+                                    <v-btn color="primary" class="flex-grow-1" value="Y"
+                                    >특약 가입</v-btn
+                                    >
+                                  </v-btn-toggle>
+                                </div>--><!--                                <div class="head-col">
+                                  <p>특약가입여부</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col">
+                                  <v-btn-toggle
+                                      v-model="insuranceDTO.spct_join_yn"
+                                      divided
+                                      variant="outlined"
+                                      class="w-100"
+                                      style="height: 33px !important;"
+                                      density="comfortable"
+                                      :disabled="isReadOnlyAll"
+                                  >
+                                    <v-btn color="primary" class="flex-grow-1" value="N"
+                                    >가입 안함</v-btn
+                                    >
+                                    <v-btn color="primary" class="flex-grow-1" value="Y"
+                                    >특약 가입</v-btn
+                                    >
+                                  </v-btn-toggle>
+                                </div>-->
                                 <div class="head-col">
                                   <p>소급담보일</p>
                                   <sup class="text-error">*</sup>
@@ -757,7 +803,7 @@
                               </v-col>
                               <v-col cols="12" class="v-col">
                                 <div class="head-col">
-                                  <p>산출보험료</p>
+                                  <p>특약보험료</p>
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
@@ -1427,6 +1473,10 @@ async function fnSearchDtl(insurance_uuid: string) {
     if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '' && panel.value.length < 9 ) panel.value.push("panel-10")
     else if((insuranceDTO.value.rmk == null || insuranceDTO.value.rmk == '') && panel.value.length > 7 ) panel.value.pop();
 
+    //특약 가입일 경우 오픈 아님 닫기
+    if(insuranceDTO.value.spct_join_yn == 'Y' && panel.value.length < 9 ) panel.value.push("panel-3")
+    else if((insuranceDTO.value.rmk == null || insuranceDTO.value.rmk == '') && panel.value.length > 7 ) panel.value.pop();
+
     const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
     //const filter1 = []
 
@@ -1648,7 +1698,7 @@ const onCalculateInsurance = async (confirmYn) => {
       console.log('insuranceDTO.value.spct_join_yn')
       // let insrAmt = 0;
       // insrAmt += calInsrSpctAmt(insuranceDTO.value.spct_data);
-      insuranceDTO.value.spct_data.insr_amt=calInsrSpctAmt(insuranceDTO.value.spct_data);
+      //insuranceDTO.value.spct_data.insr_amt=calInsrSpctAmt(insuranceDTO.value.spct_data);
       insuranceDTO.value.insr_tot_amt = Number(insuranceDTO.value.insr_amt,0) + Number(insuranceDTO.value.spct_data.insr_amt,0)
     }
 
@@ -1963,5 +2013,5 @@ onMounted(async () => {
  */
 
 // 조회결과 아코디언
-const panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-7', 'panel-8', 'panel-9']);
+const panel = ref(['panel-1', 'panel-2',  'panel-4', 'panel-5', 'panel-7', 'panel-8', 'panel-9']);
 </script>
