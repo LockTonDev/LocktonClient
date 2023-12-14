@@ -2859,7 +2859,7 @@ onMounted(async () => {
    * 
    *  ADV001 - 소속 중앙회
    */
-  regionCdItems.value = await CommonCode.getCodeList('TAX001');
+  regionCdItems.value = await CommonCode.getCodeList('ADV001');
   corpTypeItems.value = await CommonCode.getCodeList('COM050');
 
   isReadOnlyAll.value = false;

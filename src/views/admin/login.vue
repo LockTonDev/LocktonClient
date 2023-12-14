@@ -74,7 +74,7 @@ async function onSubmit(values: any) {
 
 
 onMounted(async () => {
-  if (_AUTH_ADMIN) {
+  if (_AUTH_ADMIN && _AUTH_ADMIN.value) {
        const decoded = jwt_decode(_AUTH_ADMIN.value.accessToken);
        const expiresAt = decoded.exp;
       const currentTime = Math.floor(Date.now() / 1000);

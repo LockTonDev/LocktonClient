@@ -1853,8 +1853,8 @@ async function initPage() {
   businessCdItems.value = await CommonCode.getCodeList('COM001');
   statusCdItems.value = await CommonCode.getCodeList('COM030');
   userCdItems.value = await CommonCode.getCodeList('TAX002');
-  console.log("userCdItems",userCdItems)
-  regionCdItems.value = await CommonCode.getCodeList('TAX001');
+  console.log("businessCd==>",businessCd)
+  regionCdItems.value = await CommonCode.getCodeList(businessCd+'001');
   trxCdItems.value = await CommonCode.getCodeList('COM031');
   statusCdItems.value.unshift({ title: '전체', value: '%' });
   userCdItems.value.unshift({ title: '전체', value: '%' });

@@ -924,7 +924,7 @@ async function initPage() {
 	userCdItems.value.unshift({ title: '전체', value: '%'});
 	statusCdItems.value.unshift({ title: '전체', value: '%'});
 
-	regionCdItems.value = await CommonCode.getCodeList('TAX001');
+	regionCdItems.value = await CommonCode.getCodeList(businessCd+'001');
 	trxCdItems.value = await CommonCode.getCodeList('COM031');
   
 

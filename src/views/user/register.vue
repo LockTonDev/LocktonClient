@@ -1067,7 +1067,8 @@ function onTermsOfMarketingClose(agrs: any) {
   userDTO.value.agr3_yn = agrs.value;
 }
 async function InitCode(){
-  regionCdItems.value = await CommonCode.getCodeList('TAX001');
+  console.log("userDTO.value.business_cd : ",businessCd)
+  regionCdItems.value = await CommonCode.getCodeList(businessCd+'001');
   corpTypeItems.value = await CommonCode.getCodeList('COM050');
 }
 // 초기 로딩

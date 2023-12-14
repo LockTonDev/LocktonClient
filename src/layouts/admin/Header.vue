@@ -36,10 +36,10 @@ function initPage() {
 
     const decoded = jwt_decode(_AUTH_ADMIN.value.accessToken);
     const expiresAt = decoded.exp;
+
     intervalId = setInterval(() => {
       const currentTime = Math.floor(Date.now() / 1000);
       const remainingSeconds = expiresAt - currentTime;
-
       if (remainingSeconds <= 0) {
         clearInterval(intervalId);
         authStore.adminLogout();
@@ -54,8 +54,16 @@ function initPage() {
       }
     }, 1000);
   } catch(e) {
-    console.error(e) 
+    console.error(e)
   }
+}
+
+function logoutAction() {
+  if (intervalId) {
+    clearInterval(intervalId);
+  }
+
+  authStore.adminLogout()
 }
 
 // storage 이벤트를 사용해 localStorage 의 _AUTH_ADMIN 변경을 감지하고 스토어를 업데이트
@@ -107,7 +115,7 @@ onUnmounted(() => {
           홈
         </p>
       </v-btn>
-      <v-btn icon color="border" size="small" @click="authStore.adminLogout()" v-if="_AUTH_ADMIN">
+      <v-btn icon color="border" size="small" @click="logoutAction" v-if="_AUTH_ADMIN">
         <vue-feather type="log-out" size="20"></vue-feather>
         <p class="font-size-4 mt-1 d-none d-md-block">
           로그아웃
