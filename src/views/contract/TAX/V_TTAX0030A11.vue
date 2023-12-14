@@ -1582,7 +1582,7 @@ const messageBoxDTO = ref(new MessageBoxDTO());
 let TODAY = dayjs().format('YYYY-MM-DD');
 let INSR_RETR_DT_TODAY = dayjs().format('YYYY-MM-DD');
 
-const tab = ref(1);
+const tab = ref("1");
 
 const page = ref({
   title: '전문인배상책임보험 가입',

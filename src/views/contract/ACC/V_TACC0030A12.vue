@@ -533,7 +533,7 @@ const messageBoxDTO = ref(new MessageBoxDTO());
 // 오늘일자
 let today = dayjs().format('YYYY-MM-DD');
 
-const tab = ref(1);
+const tab = ref("1");
 
 const page = ref({
   title: '전문인배상책임보험 가입',
