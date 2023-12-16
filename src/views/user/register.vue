@@ -307,7 +307,7 @@
                               <VTextFieldWithValidation v-model="userDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line density="comfortable" maxlength="20" />
                             </div>
                           </v-col>
-                          <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd != 'ACC'">
+                          <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd != 'ACC' && userDTO.business_cd != 'CAA'">
                             <div class="head-col">
                               <p>소속 지방회</p>
                               <sup class="text-error">*</sup>

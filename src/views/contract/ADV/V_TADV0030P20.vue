@@ -7,7 +7,6 @@
     scrollable
   >
     <v-card>
-
       <v-card-title class="d-flex align-center justify-space-between">
         <div class="text-h6 font-weight-medium">
           보험가입신청서

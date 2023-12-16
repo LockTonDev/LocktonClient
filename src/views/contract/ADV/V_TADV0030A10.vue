@@ -182,7 +182,6 @@
 
 
   const onPageMove = (actionType:string) => {
-
     if(actionType == 'renewal') {
       router.push({ path: '/contract/ADV/V_TADV0030A11/' + renewalInsrUUID.value , query :{renewal : 'Y'} });
     }else  if(actionType == 'insert') {
@@ -270,7 +269,7 @@
         renewalInsrUUID.value = null;
         renewalInsrYear.value = "";
       }
-      if(InsuranceList.value.length == 0 && newInsrYN.value == 'Y' && renewalInsrUUID.value == null) {
+      if(InsuranceList.value.length == 0) {
         isNoData.value = true;
       }
   });

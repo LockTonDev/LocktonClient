@@ -758,7 +758,7 @@
 
   const route = useRoute();
 
-  const mainTab = ref(1);
+  const mainTab = ref('1');
   const tab2 = ref("option-1");
   const page = ref({
     title: "관세사배상책임보험",
@@ -770,6 +770,10 @@
 
   // 이전 route.params 값 저장을 위한 변수
   const prevParams = ref({});
+
+  onMounted(() => {
+    mainTab.value = route.params.mainTabIdx;
+  });
 
   onBeforeUpdate(() => {
     if(JSON.stringify(prevParams.value) !== JSON.stringify(route.params)) {

@@ -443,14 +443,6 @@
                       <p>휴대전화</p>
                     </div>
                     <div class="data-col">{{ insuranceDTO.corp_cust_hpno }}
-                      <!-- <VTextFieldWithValidation
-                        v-model="insuranceDTO.user_hpno"
-                        name="user_hpno"
-                        label="휴대전화"
-                        single-line
-                        density="comfortable"
-                        :readonly="isReadOnlyAll"
-                      /> -->
                     </div>
                   </v-col>
                   <v-col cols="12" sm="6" class="v-col">
@@ -459,14 +451,6 @@
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col">{{ insuranceDTO.corp_cust_email }}
-                      <!-- <VTextFieldWithValidation
-                        v-model="insuranceDTO.user_email"
-                        name="user_email"
-                        label="이메일"
-                        single-line
-                        density="comfortable"
-                        :readonly="isReadOnlyAll"
-                      /> -->
                     </div>
                   </v-col>
                   <v-col cols="12" sm="6" class="v-col">

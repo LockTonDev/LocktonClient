@@ -8,7 +8,7 @@
           <v-avatar color="success" size="x-large">
             <vue-feather type="file" class="feather-lg"></vue-feather>
           </v-avatar>
-          <p class="text-h5 font-weight-medium mt-10"><span class="text-primary">{{_AUTH_USER.userNm}}</span> 회원님,<br/>가입한 보험 상품이 없습니다.</p>
+          <p class="text-h5 font-weight-medium mt-10"><span class="text-primary">{{_AUTH_USER?.userNm}}</span> 회원님,<br/>가입한 보험 상품이 없습니다.</p>
         </v-card-text>
       </v-card>
       <div class="d-flex justify-center">
@@ -22,8 +22,8 @@
       <div class="d-flex justify-space-between align-end">
         <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ InsuranceList.length }}</span> 건</p>
         <div>
-          <v-btn variant="tonal" @click="onPageMove('insert')">신규 가입</v-btn>&nbsp;
-          <v-btn variant="tonal" @click="onPageMove('renewal')">계약 갱신</v-btn>
+          <v-btn variant="tonal" @click="onPageMove('insert')" v-if="newInsrYN=='Y' && renewalInsrUUID === null">신규 가입</v-btn>&nbsp;
+          <v-btn variant="tonal" @click="onPageMove('renewal')" v-if="newInsrYN=='Y' && renewalInsrUUID !== null">계약 갱신</v-btn>
          
         </div>
       </div>
@@ -36,50 +36,59 @@
             <th class="font-weight-medium text-center text-body-1">보험기간</th>
             <th class="font-weight-medium text-center text-body-1">보험료</th>
             <th class="font-weight-medium text-center text-body-1">신청서</th>
-            <th class="font-weight-medium text-center text-body-1">가입증명서</th>
+            <th class="font-weight-medium text-center text-body-1">
+              가입증명서<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
+              <v-tooltip activator="parent" location="top">
+                가입증명서<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
+                <v-divider class="my-1"/>
+                개시일인 12월 1일 이후 영업일 기준 3일 후부터 출력 가능합니다.<br/>
+                중도 가입자의 경우에는 보험료 입금 익일 오후부터 출력 가능합니다.
+              </v-tooltip>
+            </th>
             <th class="font-weight-medium text-center text-body-1">상태</th>
-            <th class="font-weight-medium text-center text-body-1">변경이력</th>
           </tr>
         </thead>
         <tbody v-if="InsuranceList.length">
-          <tr v-for="(row, index) in InsuranceList">
-             <td class="text-center text-body-1">{{ row.status_cd !== '91' ? row.insurance_no : '' }}</td>
-            <td class="text-center text-body-1">{{ row.user_nm }}</td>
+        <tr v-for="(row, index) in InsuranceList">
+          <td class="text-center text-body-1">{{ !['10', '91'].includes(row.status_cd) ? row.insurance_no : '' }}</td>
+          <template v-if="row.user_cd === user_cd">
             <td class="text-center text-body-1">
-              <div class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
+              <p v-if="row.user_cd == 'IND'">{{ row.user_nm }}</p>
+              <p v-if="row.user_cd != 'IND'">{{ row.cbr_data[0].cbr_nm }} 외 {{row.cbr_cnt + row.cons_data.cbr_cnt - 1}} 명</p>
+            </td>
+            <td class="text-center text-body-1">
+              <div v-if="row.insr_year === '2022' && row.status_cd !== '10'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
+              <div v-else class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid, row.insr_year)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
             <td class="text-center text-body-1">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">
-              <v-icon
-                small
-                class="text-primary cursor-pointer"
-                title="신청서 출력"
-                @click="onInsuranceFormOpen(row.insurance_uuid);"
-                >mdi-printer</v-icon
+              <v-icon v-if="row.insr_year !== '2022'"
+                      small
+                      class="text-primary cursor-pointer"
+                      title="신청서 출력"
+                      @click="onInsuranceFormOpen(row.insurance_uuid);"
+              >mdi-printer</v-icon
               >
             </td>
             <td class="text-center text-body-1">
               <v-icon
-                small
-                class="text-primary cursor-pointer"
-                title="가입증명서 출력"
-                @click="onCertificatePrintFrameOpen(row.status_cd, row.insurance_uuid)"
-                v-if="row.status_cd == '80' || row.status_cd == '90'"
-                >mdi-printer</v-icon
-                >
-              </td>
-            <td class="text-center text-body-1">{{row.status_nm}}
+                  small
+                  class="text-primary cursor-pointer"
+                  title="가입증명서 출력"
+                  @click="onCertificatePrintFrameOpen(row.status_cd, row.insurance_uuid)"
+                  v-if="row.status_cd == '80' || row.status_cd == '90'"
+              >mdi-printer</v-icon
+              >
             </td>
-            <td class="text-center text-body-1">
-              <!-- <v-icon 
-                small
-                class="text-primary cursor-pointer"
-                title="변경이력"
-                @click="onInsuranceHistoryOpen(row.insurance_uuid);"
-                >mdi-file-document
-              </v-icon> -->
-            </td>
-          </tr>
+          </template>
+          <template v-else>
+            <td colspan="5" class="text-center">{{ row.user_nm }} 복수 가입</td>
+          </template>
+          <td class="text-center text-body-1">{{row.status_nm}}
+          </td>
+
+
+        </tr>
         </tbody>
         <tbody v-else>
             <tr>
@@ -102,34 +111,15 @@
     </v-col>
   </v-row>
 
-  <!-- 가입증명서 시작 -->
-  <!-- <v-dialog persistent v-model="isInsuranceFormDialog" width="1020" hide-overlay scrollable>
-    <v-card class="position-relative">
-        <v-card-title class="d-flex justify-space-between pr-6">
-          <h3 class="text-h6 font-weight-bold">보험가입신청서</h3>
-         
-            <v-icon small title="닫기" >mdi-close</v-icon>
-          
-          <v-btn variant="outlined" color="dark" @click="isInsuranceFormDialog = false">닫기</v-btn>
-        </v-card-title>
-        
-        
-        <InsuranceForm :insurance_uuid="insuranceUUID"/>
-      
-       
-    </v-card>
-  </v-dialog>
-   -->
-  <!-- 가입증명서 종료 -->
 
   <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
 
   <!-- 가입신청서 시작 -->
-  <V_TCAA0030P20 :insurance_uuid="insuranceUUID" v-if="isInsuranceFormDialog" @close="onInsuranceFormClose" />
+  <V_TCAA0030P20 :insurance_uuid="insuranceUUID" :isPdf=true v-if="isInsuranceFormDialog" @close="onInsuranceFormClose" />
   <!-- 가입신청서 종료 -->
 
   <!-- 가입증명서 시작 -->
-  <V_TCAA0030P30 :insurance_uuid="insuranceUUID" :isCertificatePrintFramDialog="isCertificatePrintFramDialog" v-if="isCertificatePrintFramDialog" @close="onCertificatePrintFrameClose" />
+  <V_TCAA0030P30 :insurance_uuid="insuranceUUID" :isPdf=true :isCertificatePrintFramDialog="isCertificatePrintFramDialog" v-if="isCertificatePrintFramDialog" @close="onCertificatePrintFrameClose" />
   <!-- 가입증명서 종료 -->
 
 
@@ -144,8 +134,8 @@
   import BaseCard from "@/components/BaseCard.vue";
   import MessageBox from "@/components/MessageBox.vue";
   import BaseBreadcrumb from "@/components/BaseBreadcrumb.vue";
-  import V_TCAA0030P20 from "@/views/contract/CAA/V_TCAA0030P20.vue";
   import V_TCAA0030P30 from "@/views/contract/CAA/V_TCAA0030P30.vue";
+  import V_TCAA0030P20 from "@/views/contract/CAA/V_TCAA0030P20.vue";
   import InsuranceForm from "@/components/InsuranceForm.vue";
   import apiA_TCAA0030A from '@/api/api/A_TCAA0030A';
   import router from "@/router";
@@ -154,14 +144,16 @@
 
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
-  console.log(_AUTH_USER);
   let InsuranceList = ref([]);
   
   const isNoData = ref(false);
   const isCertificatePrintFramDialog = ref(false);
   const isInsuranceFormDialog = ref(false);
   const insuranceUUID = ref("");
-  
+  const newInsrYN = ref("");
+  const renewalInsrUUID= ref("");
+  const renewalInsrYear= ref("");
+  const user_cd = ref('');
   
   // 초기정보 설정
   const messageBoxDTO = ref(new MessageBoxDTO());
@@ -192,24 +184,32 @@
 
   const onPageMove = (moveType:string) => {
     if(moveType == 'renewal') {
-      messageBoxDTO.value.setInfo( '계약 갱신', '계약 갱신은 현재 가입중인 보험의 계약 종료일 2주전부터 안내 예정입니다. 갱신일정이 안내 된 이후 신청해주세요.');
+      router.push({ path: '/contract/CAA/V_TCAA0030A11/' + renewalInsrUUID.value , query :{renewal : 'Y'} });
     }else {
       router.push('/contract/CAA/V_TCAA0030A11');
     }
   };
 
 
-  const onPageView = (status_cd:string, insurance_uuid:string) => {
+  const onPageView = (status_cd:string, insurance_uuid:string, insr_year:string) => {
     let path = '';
 
     // 10 - 신청
-    if(status_cd == "10") {
-      path = '/contract/CAA/V_TCAA0030A11/' + insurance_uuid;
+    if (status_cd == "10") {
+      messageBoxDTO.value.setConfirm('확인', '신청이력이 있습니다. 수정하시겠습니까?', insurance_uuid, (result, params) => {
+        if (result) {
+          if(insr_year === renewalInsrYear.value) {
+            router.push({ path:'/contract/CAA/V_TCAA0030A11/' + params, query :{renewalUpdate : 'Y'} });
+          }else {
+            router.push('/contract/CAA/V_TCAA0030A11/' + params);
+          }
+        }
+      });
+
     }else {
       path = '/contract/CAA/V_TCAA0030A12/' + insurance_uuid;
+      router.push(path);
     }
-    
-    router.push(path);
   };
 
   const onPageDelete = (moveType:string, insurance_uuid:string) => {
@@ -263,10 +263,20 @@
   }
 
   
-  onMounted(async () => {    
+  onMounted(async () => {
       const params = ref([]);
+      user_cd.value = JSON.parse(localStorage.getItem('_AUTH_USER')).userCd;
       const resultData = await apiA_TCAA0030A.getDBSelList(params);
-      InsuranceList.value = resultData.data;
+
+      InsuranceList.value = resultData.data.list;
+      newInsrYN.value = resultData.data.newInsrYN[0].data;
+      if(resultData.data.renewalInsrUUID.length > 0) {
+        renewalInsrUUID.value = resultData.data.renewalInsrUUID[0].data;
+        renewalInsrYear.value = resultData.data.renewalInsrUUID[0].insr_year;
+      }else {
+        renewalInsrUUID.value = null;
+        renewalInsrYear.value = "";
+      }
       if(InsuranceList.value.length == 0) {
         isNoData.value = true;
       }

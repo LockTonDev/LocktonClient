@@ -126,7 +126,7 @@
                     <sup class="text-error">*</sup>
                   </div>
                   <div class="data-col">
-                    {{ insuranceDTO.user_hpno }}
+                    {{ insuranceDTO.corp_cust_hpno }}
                   </div>
                 </v-col>
                 <v-col cols="12" sm="12" class="v-col">
@@ -135,7 +135,7 @@
                     <sup class="text-error">*</sup>
                   </div>
                   <div class="data-col">
-                    {{ insuranceDTO.user_email }}
+                    {{ insuranceDTO.corp_cust_email }}
                   </div>
                 </v-col>
                 <v-col cols="12" sm="12" class="v-col">
@@ -143,10 +143,7 @@
                     <p>사무소 주소<sup class="text-error">*</sup></p>
                   </div>
                   <div class="data-col">
-                    {{ insuranceDTO.corp_post }}
-                    <v-divider class="border-0" />
-                    {{ insuranceDTO.corp_addr }}
-                    {{ insuranceDTO.corp_addr_dtl }}
+                    ( {{ insuranceDTO.corp_post }} ) {{ insuranceDTO.corp_addr }}&nbsp;{{ insuranceDTO.corp_addr_dtl }}
                   </div>
                 </v-col>
               </v-row>
@@ -464,25 +461,25 @@
                       <v-btn
                         color="primary"
                         class="flex-grow-1"
-                        value="1|1천만원"
+                        value="10000000|1천만원"
                         >1천만원</v-btn
                       >
                       <v-btn
                         color="primary"
                         class="flex-grow-1"
-                        value="2|2천만원"
+                        value="20000000|2천만원"
                         >2천만원</v-btn
                       >
                       <v-btn
                         color="primary"
                         class="flex-grow-1"
-                        value="3|3천만원"
+                        value="30000000|3천만원"
                         >3천만원</v-btn
                       >
                       <v-btn
                         color="primary"
                         class="flex-grow-1"
-                        value="4|5천만원"
+                        value="50000000|5천만원"
                         >5천만원</v-btn
                       >
                     </v-btn-toggle>
@@ -509,37 +506,37 @@
                       <v-btn
                         color="primary"
                         class="flex-grow-1"
-                        value="1|1백만원"
+                        value="1000000|1백만원"
                         >1백만원</v-btn
                       >
                       <v-btn
                         color="primary"
                         class="flex-grow-1"
-                        value="2|2백만원"
+                        value="2000000|2백만원"
                         >2백만원</v-btn
                       >
                       <v-btn
                         color="primary"
                         class="flex-grow-1"
-                        value="3|3백만원"
+                        value="3000000|3백만원"
                         >3백만원</v-btn
                       >
                       <v-btn
                         color="primary"
                         class="flex-grow-1"
-                        value="4|5백만원"
+                        value="5000000|5백만원"
                         >5백만원</v-btn
                       >
                       <v-btn
                         color="primary"
                         class="flex-grow-1"
-                        value="5|1천만원"
+                        value="10000000|1천만원"
                         >1천만원</v-btn
                       >
                       <v-btn
                         color="primary"
                         class="flex-grow-1"
-                        value="6|1천5백만원"
+                        value="15000000|1천5백만원"
                         >1천5백만원</v-btn
                       >
                     </v-btn-toggle>
@@ -1168,14 +1165,9 @@
                         color="gray"
                         variant="outlined"
                         class="ml-4"
-                        @click="isInsuranceFormDialog = true"
+                        @click="onInsuranceFormOpen(false)"
                         >보기</v-btn
                       >
-                      <InsuranceForm2
-                        v-if="isInsuranceFormDialog"
-                        :insurance_dto="insuranceDTO"
-                        @close="onInsuranceFormClose"
-                      />
                     </td>
                   </tr>
                   <tr>
@@ -1650,6 +1642,10 @@
   <!-- 완료영역 종료 -->
 
   <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
+
+  <!-- 가입신청서 시작 -->
+  <V_TCAA0030P20 :insurance_dto="insuranceDTO" :insurance_uuid ="insuranceUUID" :isPdf=isPdf v-if="isInsuranceFormDialog" @close="onInsuranceFormClose" />
+  <!-- 가입증명서 종료 -->
 </template>
 
 <style scope>
@@ -1689,6 +1685,9 @@ import BaseCard from '@/components/BaseCard.vue';
 import VTextFieldWithValidation from '@/components/VTextFieldWithValidation.vue';
 import VCheckBoxWithValidation from '@/components/VCheckBoxWithValidation.vue';
 
+import V_TCAA0030P10 from './V_TCAA0030P10.vue';
+import V_TCAA0030P20 from "@/views/contract/CAA/V_TCAA0030P20.vue";
+
 import InsuranceTable from '@/components/InsuranceTable.vue';
 import TermsOfCCAinsurance from '@/components/TermsOfCCAinsurance.vue';
 import TermsOfContract from '@/components/TermsOfContract.vue';
@@ -1702,6 +1701,7 @@ const { _AUTH_USER } = storeToRefs(authStore);
 
 let INSR_RATE_TABLE = ref([]);
 const onLoading = ref(false);
+const isPdf = ref(false);
 const isSubmit = ref(false);
 const isReadOnlyAll = ref(false);
 
@@ -1710,7 +1710,7 @@ const userDTO = ref(new UserDTO());
 const insuranceDTO = ref(new InsuranceDTO());
 const messageBoxDTO = ref(new MessageBoxDTO());
 
-const tab = ref(1);
+const tab = ref('1');
 
 const page = ref({
   title: '전문인배상책임보험 가입',
@@ -1756,7 +1756,15 @@ function onTermsOfCCAinsuranceClose(agrs: any) {
   insuranceDTO.value.agr40_yn = agrs.value.agr40_yn;
   insuranceDTO.value.agr41_yn = agrs.value.agr41_yn;
 }
+/**
+ * 보험가입신청서 팝업호출
+ * @param param
+ */
+const onInsuranceFormOpen = (isPdfOption:boolean) => {
+  isPdf.value = isPdfOption;
+  isInsuranceFormDialog.value = true;
 
+}
 function onInsuranceFormClose() {
   isInsuranceFormDialog.value = false;
 }

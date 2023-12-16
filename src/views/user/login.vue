@@ -97,6 +97,19 @@
                                   />
                                   <VTextFieldWithValidation name="COR_user_pwd" label="비밀번호" type="password" maxlength="16" class="mt-4"/>
                               </v-window-item>
+                              <v-window-item value="two">
+                                <div class="my-4 login-subtext">
+                                  <p v-if="businessInfo.value === 'CAA'">법인/합동사무소 회원은 하나의 아이디만 부여되며 본점, 지점별로 중복가입 되지 않습니다.</p>
+                                </div>
+                                <VTextFieldWithValidation
+                                    name="COR_user_id"
+                                    label="사업자번호"
+                                    density="comfortable"
+                                    single-line
+                                    :maskOption="{ mask: '###-##-#####' }"
+                                />
+                                <VTextFieldWithValidation name="COR_user_pwd" label="비밀번호" type="password" maxlength="16" class="mt-4"/>
+                              </v-window-item>
                               <v-window-item value="JNT">
                                 <div class="my-4 login-subtext">
                                   <p v-if="businessInfo.value === 'ADV'">복수가입(보상한도 공유가입)회원은 사무소 또는 법인명으로 하나의 아이디만 부여되며 본점, 지점별로 중복가입 되지 않습니다.
@@ -212,6 +225,7 @@
   import Header from "@/layouts/default/Header.vue";
   import Footer from "@/layouts/default/Footer.vue";
   import { useAuthStore } from '@/stores';
+  import apiUser from '@/api/api/user.api';
   import { UserYup }  from '@/schema';
   import { useForm, useField, useFieldValue , Field, Form } from 'vee-validate';
   import { useRouter } from 'vue-router' 
@@ -311,12 +325,20 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
     loginErrorMessage.value = '';
     let user_id = ''
     let user_pwd = ''
-    if (userCd.value === 'JNT' || userCd.value == 'COR'){
+    if (userCd.value !== 'IND'  ){
       user_id = 'COR_user_id'
       user_pwd = 'COR_user_pwd'
     }else {
       user_id = 'IND_user_id'
       user_pwd = 'IND_user_pwd'
+    }
+    if(userCd.value == "two"){
+      const params = {
+        business_cd: values.businessInfo.value,
+        user_id: values[user_id]
+      };
+      const result_userCd = await apiUser.getUserCd(params);
+      userCd.value = result_userCd['data'];
     }
     const params = {
       business_cd: values.businessInfo.value,

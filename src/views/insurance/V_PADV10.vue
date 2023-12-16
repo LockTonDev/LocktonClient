@@ -750,7 +750,7 @@
 
   const route = useRoute();
 
-  const mainTab = ref(1);
+  const mainTab = ref('1');
   const tab2 = ref("option-1");
   
   const page = ref({

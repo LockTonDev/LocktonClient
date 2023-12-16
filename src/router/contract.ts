@@ -4,7 +4,35 @@ export default {
   path: '/contract',
   component: Layout,
   children: [
+    /**
+     * 관세사
+     */
+    {
+      name: '[관세사] 보험계약신청/갱신',
+      path: '/contract/CAA/V_TCAA0030A11',
+      component: () => import('@/views/contract/CAA/V_TCAA0030A11.vue')
+    },
+    {
+      name: '[관세사] 보험계약수정',
+      path: '/contract/CAA/V_TCAA0030A11/:insuranceUUID?',
+      component: () => import('@/views/contract/CAA/V_TCAA0030A11.vue')
+    },
+    {
+      name: '[관세사] 보험계약상세조회',
+      path: '/contract/CAA/V_TCAA0030A12/:insuranceUUID?',
+      component: () => import('@/views/contract/CAA/V_TCAA0030A12.vue')
+    },
+    {
+      name: '[관세사] 가입/조회/출력',
+      path: '/contract/CAA/V_TCAA0030A10',
+      component: () => import('@/views/contract/CAA/V_TCAA0030A10.vue')
+    },
 
+    {
+      name: '[관세사] 변경',
+      path: '/contract/CAA/V_TCAA0040A10',
+      component: () => import('@/views/contract/CAA/V_TCAA0040A10.vue')
+    },
 
     /**
      * 변호사

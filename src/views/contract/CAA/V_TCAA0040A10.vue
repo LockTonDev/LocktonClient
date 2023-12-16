@@ -76,7 +76,7 @@ cd <template>
           <v-col cols="6">
             <div class="head-col">변경구분<sup class="text-error">*</sup></div>
             <div class="data-col w-100">
-              <VSelectWithValidation v-model="d_TCAA0040A.apply_cd" name="apply_cd" label="변경구분을 선택하세요." :items="items2" item-title="text" item-value="value" class="w-100"  single-line density="comfortable"></VSelectWithValidation>
+              <VSelectWithValidation v-model="d_TCAA0040A.apply_cd" name="apply_cd" label="변경구분을 선택하세요." :items="applyItems" class="w-100"  single-line density="comfortable"></VSelectWithValidation>
             </div>
           </v-col>
           <v-col cols="6">
@@ -202,7 +202,7 @@ cd <template>
   import { storeToRefs } from 'pinia';
   import dayjs from 'dayjs'
   import { useAuthStore } from '@/stores';
-  import { MessageBoxDTO, D_T0040ADTO } from '@/model';
+  import { MessageBoxDTO, D_T0040ADTO, CommonCode } from '@/model';
   import MessageBox from "@/components/MessageBox.vue";
   import BaseCard from "@/components/BaseCard.vue";
   import BaseBreadcrumb from "@/components/BaseBreadcrumb.vue";
@@ -258,23 +258,7 @@ cd <template>
   const isRegDialog = ref(false);
   const isViewDialog = ref(false);
 
-
-  const items = [
-            { text: '2023', value: '2023' }
-  ];
-      
-  const items2 = [
-            { text: '구성원추가', value: '10' },
-            { text: '해지(폐업/휴업)', value: '20' },
-            { text: '개인전환', value: '30' },
-            { text: '타 합동/법인전환', value: '40' },
-            { text: '기타', value: '50' }
-  ];
-
-
-
-
-
+  const applyItems = ref([]);
 
  /**
    * 변경신청내역 상세조회
@@ -287,9 +271,11 @@ cd <template>
     d_TCAA0040A.value.apply_posted_dt = today;
     d_TCAA0040A.value.apply_dt = today;
     d_TCAA0040A.value.proc_cd = '10'; //접수
+    d_TCAA0040A.value.user_cd = _AUTH_USER.value.userCd;
+    d_TCAA0040A.value.business_cd = _AUTH_USER.value.businessCd;
 
     const {data} = await apiA_TCAA0030A.getDBSelStatus();
-    
+
     if(data.length > 0) {
       d_TCAA0040A.value.insurance_no = data[0].insurance_no;
       d_TCAA0040A.value.insurance_user_nm = data[0].user_nm;
@@ -297,6 +283,7 @@ cd <template>
     }else {
       messageBoxDTO.value.setInfo( '변경신청', '가입되어 있는 보험이 없습니다.');
     }
+    console.log(d_TCAA0040A)
 
 
   };
@@ -307,7 +294,6 @@ cd <template>
   async function onSubmit() {
     
     const retData = await apiA_TCAA0040A.setDBIns(d_TCAA0040A.value);
-    console.log(retData);
     if(retData.success) {
       getItems();
       messageBoxDTO.value.setInfo( '변경신청', '보험 변경신청이 접수 되었습니다.');
@@ -344,11 +330,11 @@ cd <template>
 
   watchEffect(() => {
     getItems();
-  }); 
+  });
 
 
-  onMounted(async () => {    
-   // getItems();
-
+  onMounted(async () => {
+    const items = await CommonCode.getCodeList('COM040');
+    applyItems.value = items.filter(item => item.value.startsWith(`${_AUTH_USER.value.businessCd}${_AUTH_USER.value.userCd}`));
   });
 </script>

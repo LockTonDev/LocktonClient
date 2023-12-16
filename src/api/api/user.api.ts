@@ -44,6 +44,15 @@ export default {
   },
 
   /**
+   * 사용자 코드 정보 조회
+   * @param params
+   * @returns
+   */
+  async getUserCd(params: any) {
+    return await api.commonService.post('/user/userCd', { params });
+  },
+
+  /**
    * 사용자 등록
    * @param params
    * @returns

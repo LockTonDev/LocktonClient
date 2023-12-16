@@ -18,6 +18,11 @@ export default {
       name: 'insurance_ACC',
       path: '/insurance/V_PACC10/:mainTabIdx',
       component: () => import('@/views/insurance/V_PACC10.vue')
+    },
+    {
+      name: 'insurance_CAA',
+      path: '/insurance/V_PCAA10/:mainTabIdx',
+      component: () => import('@/views/insurance/V_PCAA10.vue')
     }
   ]
 };

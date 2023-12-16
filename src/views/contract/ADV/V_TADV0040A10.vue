@@ -358,8 +358,7 @@ async function onSubmit() {
 
 
   onMounted(async () => {  
-  const items = await CommonCode.getCodeList('COM040');
-  console.log(items)
-  applyItems.value = items.filter(item => item.value.startsWith(`${_AUTH_USER.value.businessCd}${_AUTH_USER.value.userCd}`));
+    const items = await CommonCode.getCodeList('COM040');
+    applyItems.value = items.filter(item => item.value.startsWith(`${_AUTH_USER.value.businessCd}${_AUTH_USER.value.userCd}`));
   });
 </script>

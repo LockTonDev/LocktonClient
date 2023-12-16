@@ -134,6 +134,30 @@ export default {
     return await api.authService.post('/ADM/ADV/EXCEL/get', { params });
   },
 
+  /**  CAA  */
+  async setCAA(params: any) {
+    return await api.authService.post('/ADM/CAA/set', { params });
+  },
+  async getCAA(params: any) {
+    return await api.authService.post('/ADM/CAA/get', { params });
+  },
+  async getCAAS(params: any) {
+    return await api.authService.post('/ADM/CAA/gets', { params });
+  },
+  async getCAARate(params: any) {
+    return await api.authService.post('/ADM/CAA/rate', { params });
+  },
+
+  async setCAA_TRX(params: any) {
+    return await api.authService.post('/ADM/CAA/TRX/set', { params });
+  },
+
+  async getCAA_TRX(params: any) {
+    return await api.authService.post('/ADM/CAA/TRX/get', { params });
+  },
+  async getCAAExcel(params: any) {
+    return await api.authService.post('/ADM/CAA/EXCEL/get', { params });
+  },
 
 
   /** ============================================================================
@@ -160,6 +184,18 @@ export default {
 
   async getADVRenewals(params: any) {
     return await api.authService.post('/ADM/ADV/RENEWAL/gets', { params });
+  },
+
+  /**  CAA  */
+  async setCAARenewal(params: any) {
+    return await api.authService.post('/ADM/CAA/RENEWAL/set', { params });
+  },
+  async getCAARenewal(params: any) {
+    return await api.authService.post('/ADM/CAA/RENEWAL/get', { params });
+  },
+
+  async getCAARenewals(params: any) {
+    return await api.authService.post('/ADM/CAA/RENEWAL/gets', { params });
   },
 
   /** ============================================================================

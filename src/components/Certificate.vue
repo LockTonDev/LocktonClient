@@ -391,7 +391,7 @@
 .headline1 {letter-spacing: 0.6rem;color: navy;}
 .headline2 {color: red;}
 .title-wrap{position: relative;padding-left: 16px;margin: 10px 0 8px;}
-.title {background: rgb(197, 224, 180);padding-left: 30px;line-height: 28px;text-align: left;}
+.title {background: rgb(252, 214, 179);padding-left: 30px;line-height: 28px;text-align: left;}
 .circle{position: absolute;top: 0;left: 0;display: block;width: 32px;height: 32px;line-height: 32px;margin-right:16px;text-align: center;background: rgba(95, 95, 95);border-radius: 50%;color:white;}
 .table{table-layout: fixed;width: 100%;border-collapse: collapse;}
 .table th {font-size:12px;text-align: center;padding:2px 8px;border: 2px solid #bbb;background: rgb(217, 225, 242);}

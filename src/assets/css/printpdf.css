@@ -101,7 +101,7 @@
 .certificatePrintFrame-wrap .headline1 {letter-spacing: 0.6rem;color: navy;}
 .certificatePrintFrame-wrap .headline2 {color: red;}
 .certificatePrintFrame-wrap .title-wrap{position: relative;padding-left: 16px;margin: 24px 0 10px;}
-.certificatePrintFrame-wrap .title {background: rgb(197, 224, 180);padding-left: 40px;line-height: 32px}
+.certificatePrintFrame-wrap .title {background: rgb(252, 214, 179);padding-left: 40px;line-height: 32px}
 .certificatePrintFrame-wrap .circle{position: absolute;top: 0;left: 0;display: block;width: 32px;height: 32px;line-height: 32px;margin-right:16px;text-align: center;background: rgba(95, 95, 95);border-radius: 50%;color:white;}
 .certificatePrintFrame-wrap .table{table-layout: fixed;width: 100%;border-collapse: collapse;}
 .certificatePrintFrame-wrap .table th {font-size:12px;text-align: center;padding:2px 8px;border: 2px solid #bbb;background: rgb(217, 225, 242);}

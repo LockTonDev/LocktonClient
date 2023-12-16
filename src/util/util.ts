@@ -69,6 +69,8 @@ export const calByString = (amount: string, num: number, maxAmt: number) => {
     }
   }
 
+
+
   return result.trim().replace(/원/g, '') + '원';
 };
 

@@ -241,14 +241,6 @@
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col extend">{{ insuranceDTO.corp_cust_email }}
-                      <!-- <VTextFieldWithValidation
-                        v-model="insuranceDTO.user_email"
-                        name="user_email"
-                        label="이메일"
-                        single-line
-                        density="comfortable"
-                        :readonly="isReadOnlyAll"
-                      /> -->
                     </div>
                   </v-col>
                   <v-col cols="12" sm="12" class="v-col">
@@ -651,7 +643,7 @@
                     <div class="head-col">
                       <p>소급담보일</p>
                     </div>
-                    <div class="data-col" v-if="insuranceDTO.user_cd === 'IND'" > {{ insuranceDTO.insr_retr_dt }}</div>
+                    <div class="data-col" v-if="insuranceDTO.user_cd === 'IND'" > {{ insuranceDTO.insr_retr_dt }} </div>
                     <div class="data-col" v-if="insuranceDTO.user_cd === 'JNT'">개인별 적용</div>
                   </v-col>
                   <v-col
@@ -664,14 +656,6 @@
                       <p>인원수 할인</p>
                     </div>
                     <div class="data-col">{{ insuranceDTO.insr_pcnt_sale_rt }} %
-                      <!-- <VTextFieldWithValidation
-                        v-model="insuranceDTO.insr_pcnt_sale_rt"
-                        name="insr_pcnt_sale_rt"
-                        label=""
-                        single-line
-                        density="comfortable"
-                        disabled
-                      /> -->
                     </div>
                   </v-col>
                   <v-col cols="12" :sm="insuranceDTO.user_cd === 'JNT'? 6 : 12" class="v-col">
@@ -969,112 +953,6 @@
                       </v-btn>
                     </td>
                   </tr>
-
-
-
-                  <!-- <tr>
-                    <td>1</td>
-                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="홍길동" disabled/></td>
-                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="820101" disabled/></td>
-                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="1234567" disabled/></td>
-                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date" disabled/></td>
-                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date" disabled/></td>
-                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date" disabled/></td>
-                    <td>2%</td>
-                    <td>
-                      12,000원
-                      <v-btn variant="outlined" class="d-none">인증</v-btn>
-                    </td>
-                    <td>
-                      <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle" v-if="!isReadOnlyAll">
-                        <v-btn variant="none" @click="delCBR(insuranceDTO, index)"></v-btn>
-                      </vue-feather>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="홍길동"/></td>
-                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="820101"/></td>
-                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="1234567"/></td>
-                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date"/></td>
-                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date"/></td>
-                    <td><v-text-field name="" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date"/></td>
-                    <td>0%</td>
-                    <td>
-
-                      <v-btn variant="outlined" class="">인증</v-btn>
-                    </td>
-                    <td>
-                      <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle" v-if="!isReadOnlyAll">
-                        <v-btn variant="none" @click="delCBR(insuranceDTO, index)"></v-btn>
-                      </vue-feather>
-                    </td>
-                  </tr>
-                  <tr v-for="(row, index) in insuranceDTO.cbr_data">
-                    <td class="text-center">{{ index + 1 }}</td>
-                    <td class="text-center">
-                      <v-text-field
-                        v-model="row.cbr_nm"
-                        name="cbr_nm"
-                        variant="outlined"
-                        hide-details="auto"
-                        density="compact"
-                        class="text-body-2"
-                        single-line
-                        label="홍길동"
-                        :disabled="row.isCheck"
-
-                      />
-                    </td>
-                    <td class="text-center">
-                      <v-text-field
-                        v-model="row.cbr_brdt"
-                        name="cbr_brdt"
-                        variant="outlined"
-                        hide-details="auto"
-                        density="compact"
-                        class="text-body-2"
-                        single-line
-                        label="820101"
-                        :disabled="row.isCheck"
-
-                      />
-                    </td>
-                    <td class="text-center">
-                      <v-text-field
-                        v-model="row.cbr_regno"
-                        name="cbr_regno"
-                        variant="outlined"
-                        hide-details="auto"
-                        density="compact"
-                        class="text-body-2"
-                        single-line
-                        label="1234567"
-                        :disabled="row.isCheck"
-                      />
-                    </td>
-                    <td>
-                      <v-text-field
-                        type="date"
-                        name=""
-                        variant="outlined"
-                        hide-details="auto"
-                        density="compact"
-                        class="text-body-2"
-                        single-line
-                        label=""
-                      />
-                    </td>
-                    <td class="text-center">{{ row.insr_retr_dt }}</td>
-                    <td class="text-center">{{ row.insr_sale_rt }}%</td>
-                    <td class="text-center">
-                      {{ Number(row.insr_amt).toLocaleString() }}원
-                    </td>
-                    <td class="text-center">
-
-
-                    </td>
-                  </tr> -->
                   </tbody>
                 </v-table>
                 <!-- <p class="text-14 color-error font-weight-light mt-2"><i class="mdi mdi-alert-circle-outline mr-1"></i>세무사를 인증해주세요.</p> -->
@@ -1335,7 +1213,7 @@
                           color="gray"
                           variant="outlined"
                           class="ml-4"
-                          @click="onInsuranceFormOpen(false);"
+                          @click="onInsuranceFormOpen(false)"
                           >보기</v-btn
                         >
                       </td>
@@ -2924,7 +2802,6 @@ onMounted(async () => {
         insuranceDTO.value.spct_data.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
       }else {
         insuranceDTO.value.insr_year = renewalData.data[0].insr_year
-
         insuranceDTO.value.spct_data.insr_cncls_dt = renewalData.data[0].insr_cncls_dt;
       }
     }
