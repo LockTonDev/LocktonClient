@@ -69,7 +69,7 @@ const 보험가입_관세사기본복합보험계약 = yup.object({
       cbr_data: yup.array().min(1, '관세사 명단은 최소한 한 명 이상이어야 합니다.').of(
           yup.object({
             cbr_nm: yup.string().required('관세사 명단 성명을 입력해주세요.'),
-            cbr_brdt: yup.string().matches(/^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, '사무원 명단 생년월일 입력해주세요.'),
+            cbr_brdt: yup.string().matches(/^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, '관세사 명단 생년월일 입력해주세요.'),
             cbr_regno: yup.string().matches(/^\d{3,7}$/, '관세사 명단 등록번호 입력해주세요.'),
             isCheck: yup.boolean().oneOf([true], '관세사 명단 인증해주세요.').required()
           })

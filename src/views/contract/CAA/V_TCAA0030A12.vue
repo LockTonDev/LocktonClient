@@ -953,7 +953,7 @@
                       single-line
                       class="w-100 readonly"
                       density="comfortable"
-                      >사무원의 횡령 등 부정직행위 담보 특별약관(Dishonesty
+                      >사무원 부정직행위 담보 특별약관(Dishonesty
                       Extension)</v-text-field
                     >
                   </div>
@@ -1531,7 +1531,7 @@
           <v-col cols="12" class="flex-wrap">
             <p class="text-body-2 color-gray-shadow">특약명</p>
             <p class="text-body-2 text-right">
-              사무원의 횡령 등 부정직행위 담보 특별약관(Dishonesty Extension)
+              사무원 부정직행위 담보 특별약관(Dishonesty Extension)
             </p>
           </v-col>
           <v-col cols="12">

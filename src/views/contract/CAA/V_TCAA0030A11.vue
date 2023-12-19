@@ -194,8 +194,9 @@
                       <p>이메일</p>
                       <sup class="text-error">*</sup>
                     </div>
-                    <div class="data-col">
+                    <div class="data-col w-100">
                       <VTextFieldWithValidation
+                          class="w-50"
                         v-model="insuranceDTO.corp_cust_email"
                         name="user_email"
                         label="이메일"
@@ -384,8 +385,9 @@
                       <p>이메일</p>
                       <sup class="text-error">*</sup>
                     </div>
-                    <div class="data-col">
+                    <div class="data-col w-100">
                       <VTextFieldWithValidation
+                        class="w-50"
                         v-model="insuranceDTO.corp_cust_email"
                         name="user_email"
                         label="이메일"
@@ -915,6 +917,7 @@
                           label="820101"
                           :readonly="isReadOnlyAll"
                           :disabled="row.isCheck"
+                          maxLength="6"
                         />
                       </td>
                       <td class="text-center">
@@ -1289,6 +1292,7 @@
                               label="820101"
                               :readonly="isReadOnlyAll"
                               :disabled="row.isCheck"
+                              maxLength="6"
                             />
                           </td>
                           <td class="text-center">
@@ -1380,7 +1384,7 @@
                         single-line
                         class="w-100 readonly"
                         density="comfortable"
-                        >사무원의 횡령 등 부정직행위 담보 특별약관(Dishonesty
+                        >사무원 부정직행위 담보 특별약관 (Dishonesty
                         Extension)</v-text-field
                       >
                     </div>
@@ -1569,6 +1573,7 @@
                               single-line
                               label="820101"
                               :readonly="isReadOnlyAll"
+                              maxLength="6"
                             />
                           </td>
                           <td class="text-center">{{ row.insr_retr_dt }}</td>
@@ -1793,7 +1798,7 @@
                     피보험자로 하는 단체계약 프로그램입니다.
                   </li>
                   <li>
-                    보험회사 : 메리츠화재(주) 보험중개사 :
+                    보험회사 : 메리츠화재(주) <span class="text-caption mx-3">|</span> 보험중개사 :
                     록톤컴퍼니즈코리아손해보험중개(주)
                   </li>
                   <li>
@@ -1835,7 +1840,7 @@
                   </p>
                   <p class="text-body-2 mt-2">
                     피보험자 :
-                    <span class="d-inline-block w-sm-110 v-box px-4 py-1">{{
+                    <span class="d-inline-block v-box px-4 py-1">{{
                       insuranceDTO.user_nm
                     }}</span>
                   </p>
@@ -2052,7 +2057,7 @@
             <v-col cols="12" class="flex-wrap">
               <p class="text-body-2 color-gray-shadow">특약명</p>
               <p class="text-body-2 text-right">
-                사무원의 횡령 등 부정직행위 담보 특별약관(Dishonesty Extension)
+                사무원 부정직행위 담보 특별약관<br/>(Dishonesty Extension)
               </p>
             </v-col>
             <v-col cols="12">
@@ -2980,7 +2985,7 @@ async function onSubmit2(values, actions) {
  * @param values 가입 정보
  */
 async function onSubmit(params: any) {
-  //if(!chkValiation()) return false;
+  if(!chkValiation()) return false;
 
   let result;
   // 사용자 등록
@@ -3174,7 +3179,13 @@ async function chkSaleRtConsTWO(list: any, rowIdx: number) {
        * 2. 할인 가져오기
        *  - 법인 할인 가져온다.
        */
-      list.cbr_data[rowIdx].insr_sale_rt = insr_sale_rt;
+      if (insr_sale_year >= 1000 || insr_sale_rt > 0) {
+        // 전환 대상자의 할증을 가져온다.
+        list.cbr_data[rowIdx].insr_sale_rt = insr_sale_rt;
+      } else {
+        // 현재 법인 할인율을 가져온다
+        list.cbr_data[rowIdx].insr_sale_rt = insuranceDTO.value.insr_sale_rt;
+      }
       calInsrAmt(list);
 
     } else {
@@ -3636,7 +3647,7 @@ watch(
     // 특약 - 보상한도(연보험)
     insuranceDTO.value.spct_data.insr_year_clm_lt_amt = calByString(
       insuranceDTO.value.spct_data.insr_clm_lt_amt?.getValueBySplit(1),
-        insuranceDTO.value?.spct_data.cbr_cnt
+        1
     );
 
     // 산출보험료 (통관 합계보험료 + 컨설팅 합계보험료)
@@ -3758,6 +3769,7 @@ onMounted(async () => {
     insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
+    insuranceDTO.value.cons_data.insr_sale_rt = insuranceDTO.value.insr_sale_rt;
 
     // 갱신자는 인증처리 완료
     insuranceDTO.value.cbr_data.forEach(function (data) {
@@ -3868,6 +3880,10 @@ function resetCBRConsData() {
       calInsrAmt(insuranceDTO.value.cons_data);
     }
   });
+}
+
+function calculateWidth() {
+  return insuranceDTO.value.user_nm.length * 15;
 }
 
 

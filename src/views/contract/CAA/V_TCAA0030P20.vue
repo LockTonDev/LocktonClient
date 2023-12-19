@@ -250,14 +250,14 @@
                         <v-col cols="6">
                           <div class="head-col">특약명</div>
                           <div class="data-col">
-                            고용직원 부정직행위 담보 특별약관<br/>(Dishonesty
+                            사무원 부정직행위 담보 특별약관<br/>(Dishonesty
                             Extension)
                           </div>
                         </v-col>
                         <v-col cols="6">
                           <div class="head-col">소급담보일</div>
                           <div class="data-col">
-                            {{ insuranceDTO.spct_data.insr_retr_dt }}
+                            가입자명단별첨
                           </div>
                         </v-col>
                         <v-col cols="6">
@@ -341,7 +341,7 @@
                     <li class="text-11">
                       <p>
                         보험료 입금 계좌번호 :
-                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-005-862117</b>
                         <span class="text-10 mx-3">|</span>예금주 :
                         <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                       </p>
@@ -541,7 +541,7 @@
                 <div class="html2pdf__page-break"></div>
 
                 <!-- 가입자명단 (PDF용)-->
-                <div v-if="isPdf" v-for="chunkIndex in chunkedDivSpctCount">
+                <template v-if="isPdf" v-for="chunkIndex in chunkedDivSpctCount">
                   <div :class="isPdf ? 'print-wrap' : ''">
                     <!-- header 영역 시작-->
                     <header v-if="isPdf">
@@ -617,7 +617,53 @@
                     </footer>
                     <!-- footer 영역 종료-->
                   </div>
-              </div>
+              </template>
+              <!-- 가입자명단 (신청보기용)-->
+              <template v-if="!isPdf">
+                <div :class="isPdf?'print-wrap':''">
+                  <main>
+                    <div class="mt-4">
+                      <p class="text-12 font-weight-bold mt-2 mb-1">
+                        <span class="color-primary">&#x275A;</span>&nbsp;특별약관 가입자
+                        명단
+                      </p>
+                      <v-row class="table vertical">
+                        <v-col cols="6">
+                          <div class="head-col w-10">No.</div>
+                          <div class="head-col w-30">성명</div>
+                          <div class="head-col w-30">생년월일</div>
+                          <div class="head-col w-30">소급담보일</div>
+                          <!-- <div class="head-col">1인당 보험료</div> -->
+                        </v-col>
+                        <v-col cols="6">
+                          <div class="head-col w-10">No.</div>
+                          <div class="head-col w-30">성명</div>
+                          <div class="head-col w-30">생년월일</div>
+                          <div class="head-col w-30">소급담보일</div>
+                          <!-- <div class="head-col">1인당 보험료</div> -->
+                        </v-col>
+                        <v-col
+                            cols="6"
+                            v-for="(row, index) in insuranceDTO.spct_data.cbr_data"
+                        >
+                          <div class="data-col w-10">{{ index + 1 }}</div>
+                          <div class="data-col w-30">{{ row.cbr_nm }}</div>
+                          <div class="data-col w-30">{{ row.cbr_brdt }}</div>
+                          <div class="data-col w-30">{{ row.insr_retr_dt }}</div>
+                          <!-- <div class="data-col">{{row.insr_amt.toLocaleString()}}원</div> -->
+                        </v-col>
+                        <v-col
+                            v-if="insuranceDTO.spct_data.cbr_data.length === 0"
+                            cols="12"
+                            class="justify-center"
+                        ><div class="py-2 text-center">내용 없음</div></v-col
+                        >
+                      </v-row>
+                    </div>
+                  </main>
+
+                </div>
+              </template>
             </div>
 
             <div class="insuranceForm-wrap" v-if="insuranceDTO.user_cd === 'IND' && insuranceDTO.spct_join_yn === 'N'">
@@ -830,7 +876,7 @@
                     <li class="text-11">
                       <p>
                         보험료 입금 계좌번호 :
-                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-005-862117</b>
                         <span class="text-10 mx-3">|</span>예금주 :
                         <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                       </p>
@@ -1014,7 +1060,7 @@
                       </v-col>
                       <v-col cols="6" class="v-col">
                         <div class="head-col">
-                          <p>사무소명</p>
+                          <p>피보험자</p>
                         </div>
                         <div class="data-col">
                           {{ insuranceDTO.user_nm }}
@@ -1026,22 +1072,6 @@
                         </div>
                         <div class="data-col">
                           {{ insuranceDTO.corp_ceo_nm }}
-                        </div>
-                      </v-col>
-                      <v-col cols="6" class="v-col">
-                        <div class="head-col">
-                          <p>피보험자</p>
-                        </div>
-                        <div class="data-col">
-                          <p v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt + insuranceDTO.cons_data.cbr_cnt - 1}} 명</p>
-                        </div>
-                      </v-col>
-                      <v-col cols="6" class="v-col">
-                        <div class="head-col">
-                          <p>사무소 형태</p>
-                        </div>
-                        <div class="data-col">
-                          {{ corpTypeItems.find(item => item.value ==  insuranceDTO.corp_type)?.title }}
                         </div>
                       </v-col>
                       <v-col cols="6" class="v-col">
@@ -1148,9 +1178,12 @@
                           <div class="head-col flex-wrap">무사고 할인</div>
                           <div class="data-col" >개인별 적용</div>
                         </v-col>
+
                         <v-col cols="6">
-                          <div class="head-col flex-wrap">인원수 할인</div>
-                          <div class="data-col">{{ insuranceDTO.insr_pcnt_sale_rt }} %</div>
+                          <div class="head-col">관세사 인원수</div>
+                          <div class="data-col">
+                            {{ insuranceDTO.cbr_cnt  }} 명
+                          </div>
                         </v-col>
                         <v-col cols="6">
                           <div class="head-col flex-wrap">보상한도</div>
@@ -1179,12 +1212,6 @@
                             {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
                           </div>
                         </v-col>
-                        <v-col cols="6">
-                          <div class="head-col">관세사 인원수</div>
-                          <div class="data-col">
-                            {{ insuranceDTO.cbr_cnt  }} 명
-                          </div>
-                        </v-col>
                         <v-col cols="6" class="point">
                           <div class="head-col">산출 보험료</div>
                           <div class="data-col">
@@ -1200,7 +1227,7 @@
                     >
                       <li>
                         보험료 입금 계좌번호 :
-                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-005-862117</b>
                         <span class="text-10 mx-3">|</span>예금주 :
                         <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                       </li>
@@ -1528,7 +1555,7 @@
                       </v-col>
                       <v-col cols="6" class="v-col">
                         <div class="head-col">
-                          <p>사무소명</p>
+                          <p>피보험자</p>
                         </div>
                         <div class="data-col">
                           {{ insuranceDTO.user_nm }}
@@ -1540,22 +1567,6 @@
                         </div>
                         <div class="data-col">
                           {{ insuranceDTO.corp_ceo_nm }}
-                        </div>
-                      </v-col>
-                      <v-col cols="6" class="v-col">
-                        <div class="head-col">
-                          <p>피보험자</p>
-                        </div>
-                        <div class="data-col">
-                          <p v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt + insuranceDTO.cons_data.cbr_cnt - 1}} 명</p>
-                        </div>
-                      </v-col>
-                      <v-col cols="6" class="v-col">
-                        <div class="head-col">
-                          <p>사무소 형태</p>
-                        </div>
-                        <div class="data-col">
-                          {{ corpTypeItems.find(item => item.value ==  insuranceDTO.corp_type)?.title }}
                         </div>
                       </v-col>
                       <v-col cols="6" class="v-col">
@@ -1663,8 +1674,10 @@
                           <div class="data-col" >개인별 적용</div>
                         </v-col>
                         <v-col cols="6">
-                          <div class="head-col flex-wrap">인원수 할인</div>
-                          <div class="data-col">{{ insuranceDTO.insr_pcnt_sale_rt }} %</div>
+                          <div class="head-col">관세사 인원수</div>
+                          <div class="data-col">
+                            {{ insuranceDTO.cbr_cnt  }} 명
+                          </div>
                         </v-col>
                         <v-col cols="6">
                           <div class="head-col flex-wrap">보상한도</div>
@@ -1691,12 +1704,6 @@
                           <div class="head-col">기준보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
-                          </div>
-                        </v-col>
-                        <v-col cols="6">
-                          <div class="head-col">관세사 인원수</div>
-                          <div class="data-col">
-                            {{ insuranceDTO.cbr_cnt  }} 명
                           </div>
                         </v-col>
                         <v-col cols="6" class="point">
@@ -1729,8 +1736,10 @@
                           <div class="data-col" >개인별 적용</div>
                         </v-col>
                         <v-col cols="6">
-                          <div class="head-col flex-wrap">인원수 할인</div>
-                          <div class="data-col">{{ insuranceDTO.cons_data.insr_pcnt_sale_rt ? insuranceDTO.cons_data.insr_pcnt_sale_rt : 0 }} %</div>
+                          <div class="head-col">관세사 인원수</div>
+                          <div class="data-col">
+                            {{ insuranceDTO.cons_data.cbr_cnt  }} 명
+                          </div>
                         </v-col>
                         <v-col cols="6">
                           <div class="head-col flex-wrap">보상한도</div>
@@ -1757,12 +1766,6 @@
                           <div class="head-col">기준보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.cons_data.insr_base_amt).toLocaleString() }} 원
-                          </div>
-                        </v-col>
-                        <v-col cols="6">
-                          <div class="head-col">관세사 인원수</div>
-                          <div class="data-col">
-                            {{ insuranceDTO.cons_data.cbr_cnt  }} 명
                           </div>
                         </v-col>
                         <v-col cols="6" class="point">
@@ -1809,7 +1812,7 @@
                     >
                       <li>
                         보험료 입금 계좌번호 :
-                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-005-862117</b>
                         <span class="text-10 mx-3">|</span>예금주 :
                         <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                       </li>
@@ -2262,7 +2265,7 @@
                       </v-col>
                       <v-col cols="6" class="v-col">
                         <div class="head-col">
-                          <p>사무소명</p>
+                          <p>피보험자</p>
                         </div>
                         <div class="data-col">
                           {{ insuranceDTO.user_nm }}
@@ -2274,22 +2277,6 @@
                         </div>
                         <div class="data-col">
                           {{ insuranceDTO.corp_ceo_nm }}
-                        </div>
-                      </v-col>
-                      <v-col cols="6" class="v-col">
-                        <div class="head-col">
-                          <p>피보험자</p>
-                        </div>
-                        <div class="data-col">
-                          <p v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt + insuranceDTO.cons_data.cbr_cnt - 1}} 명</p>
-                        </div>
-                      </v-col>
-                      <v-col cols="6" class="v-col">
-                        <div class="head-col">
-                          <p>사무소 형태</p>
-                        </div>
-                        <div class="data-col">
-                          {{ corpTypeItems.find(item => item.value ==  insuranceDTO.corp_type)?.title }}
                         </div>
                       </v-col>
                       <v-col cols="6" class="v-col">
@@ -2397,8 +2384,10 @@
                           <div class="data-col" >개인별 적용</div>
                         </v-col>
                         <v-col cols="6">
-                          <div class="head-col flex-wrap">인원수 할인</div>
-                          <div class="data-col">{{ insuranceDTO.insr_pcnt_sale_rt }} %</div>
+                          <div class="head-col">관세사 인원수</div>
+                          <div class="data-col">
+                            {{ insuranceDTO.cbr_cnt  }} 명
+                          </div>
                         </v-col>
                         <v-col cols="6">
                           <div class="head-col flex-wrap">보상한도</div>
@@ -2427,12 +2416,6 @@
                             {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
                           </div>
                         </v-col>
-                        <v-col cols="6">
-                          <div class="head-col">관세사 인원수</div>
-                          <div class="data-col">
-                            {{ insuranceDTO.cbr_cnt  }} 명
-                          </div>
-                        </v-col>
                         <v-col cols="6" class="point">
                           <div class="head-col">산출 보험료</div>
                           <div class="data-col">
@@ -2450,14 +2433,14 @@
                         <v-col cols="6">
                           <div class="head-col">특약명</div>
                           <div class="data-col">
-                            고용직원 부정직행위 담보 특별약관<br/>(Dishonesty
+                            사무원 부정직행위 담보 특별약관<br/>(Dishonesty
                             Extension)
                           </div>
                         </v-col>
                         <v-col cols="6">
                           <div class="head-col">소급담보일</div>
                           <div class="data-col">
-                            {{ insuranceDTO.spct_data.insr_retr_dt }}
+                            가입자명단별첨
                           </div>
                         </v-col>
                         <v-col cols="6">
@@ -2536,7 +2519,7 @@
                     >
                       <li>
                         보험료 입금 계좌번호 :
-                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-005-862117</b>
                         <span class="text-10 mx-3">|</span>예금주 :
                         <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                       </li>
@@ -2978,7 +2961,7 @@
                       </v-col>
                       <v-col cols="6" class="v-col">
                         <div class="head-col">
-                          <p>사무소명</p>
+                          <p>피보험자</p>
                         </div>
                         <div class="data-col">
                           {{ insuranceDTO.user_nm }}
@@ -2990,22 +2973,6 @@
                         </div>
                         <div class="data-col">
                           {{ insuranceDTO.corp_ceo_nm }}
-                        </div>
-                      </v-col>
-                      <v-col cols="6" class="v-col">
-                        <div class="head-col">
-                          <p>피보험자</p>
-                        </div>
-                        <div class="data-col">
-                          <p v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt + insuranceDTO.cons_data.cbr_cnt - 1}} 명</p>
-                        </div>
-                      </v-col>
-                      <v-col cols="6" class="v-col">
-                        <div class="head-col">
-                          <p>사무소 형태</p>
-                        </div>
-                        <div class="data-col">
-                          {{ corpTypeItems.find(item => item.value ==  insuranceDTO.corp_type)?.title }}
                         </div>
                       </v-col>
                       <v-col cols="6" class="v-col">
@@ -3113,8 +3080,10 @@
                           <div class="data-col" >개인별 적용</div>
                         </v-col>
                         <v-col cols="6">
-                          <div class="head-col flex-wrap">인원수 할인</div>
-                          <div class="data-col">{{ insuranceDTO.insr_pcnt_sale_rt }} %</div>
+                          <div class="head-col">관세사 인원수</div>
+                          <div class="data-col">
+                            {{ insuranceDTO.cbr_cnt  }} 명
+                          </div>
                         </v-col>
                         <v-col cols="6">
                           <div class="head-col flex-wrap">보상한도</div>
@@ -3141,12 +3110,6 @@
                           <div class="head-col">기준보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
-                          </div>
-                        </v-col>
-                        <v-col cols="6">
-                          <div class="head-col">관세사 인원수</div>
-                          <div class="data-col">
-                            {{ insuranceDTO.cbr_cnt  }} 명
                           </div>
                         </v-col>
                         <v-col cols="6" class="point">
@@ -3179,8 +3142,10 @@
                           <div class="data-col" >개인별 적용</div>
                         </v-col>
                         <v-col cols="6">
-                          <div class="head-col flex-wrap">인원수 할인</div>
-                          <div class="data-col">{{ insuranceDTO.cons_data.insr_pcnt_sale_rt }} %</div>
+                          <div class="head-col">관세사 인원수</div>
+                          <div class="data-col">
+                            {{ insuranceDTO.cons_data.cbr_cnt  }} 명
+                          </div>
                         </v-col>
                         <v-col cols="6">
                           <div class="head-col flex-wrap">보상한도</div>
@@ -3209,12 +3174,6 @@
                             {{ Number(insuranceDTO.cons_data.insr_base_amt).toLocaleString() }} 원
                           </div>
                         </v-col>
-                        <v-col cols="6">
-                          <div class="head-col">관세사 인원수</div>
-                          <div class="data-col">
-                            {{ insuranceDTO.cons_data.cbr_cnt  }} 명
-                          </div>
-                        </v-col>
                         <v-col cols="6" class="point">
                           <div class="head-col">산출 보험료</div>
                           <div class="data-col">
@@ -3232,14 +3191,14 @@
                         <v-col cols="6">
                           <div class="head-col">특약명</div>
                           <div class="data-col">
-                            고용직원 부정직행위 담보 특별약관<br/>(Dishonesty
+                            사무원 부정직행위 담보 특별약관<br/>(Dishonesty
                             Extension)
                           </div>
                         </v-col>
                         <v-col cols="6">
                           <div class="head-col">소급담보일</div>
                           <div class="data-col">
-                            {{ insuranceDTO.spct_data.insr_retr_dt }}
+                            가입자명단별첨
                           </div>
                         </v-col>
                         <v-col cols="6">
@@ -3365,7 +3324,7 @@
                     >
                       <li>
                         보험료 입금 계좌번호 :
-                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-005-862117</b>
                         <span class="text-10 mx-3">|</span>예금주 :
                         <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                       </li>

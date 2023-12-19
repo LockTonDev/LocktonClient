@@ -39,7 +39,7 @@
     <v-card>
       <v-card-title class="d-flex align-center justify-space-between">
           <div class="text-h6 font-weight-medium">
-            2023 관세사전문인배상책임보험 상품설명 확인서 <span class="text-18">(피보험자 관세사 확인)</span>
+            2024 관세사전문인배상책임보험 상품설명 확인서 <span class="text-18">(피보험자 관세사 확인)</span>
           </div>
           <div class="d-flex justify-space-between align-end">
               <v-btn variant="outlined" color="dark" @click="close()">닫기</v-btn>
@@ -50,7 +50,7 @@
       <v-card-text class="px-10 pt-8 pb-14">
         <ul class="list-style-type-disc ml-4 font-weight-medium">
           <li>보험계약자	:	한국관세사회 </li>
-          <li>보험기간 	:	2023.1.1(00:01)~2024.1.1(00:01)(단, 1.1일 이후 신규가입시 가입일로부터 2024.1.1)</li>
+          <li>보험기간 	:	2024.1.1(00:01)~2025.1.1(00:01)(단, 1.1일 이후 신규가입시 가입일로부터 2025.1.1)</li>
         </ul>
         <div class="v-board-table mt-4 d-flex justify-space-between">
           <p class="pa-4 pr-0">관세사전문인배상책임보험의 주요사항에 대해 록톤컴퍼니즈코리아로부터 충분히 설명 받고 양지하였음을 확인합니다.<br/> 설명 받았다는 사실을 “확인” 란에 체크 해주시기 바랍니다.</p>

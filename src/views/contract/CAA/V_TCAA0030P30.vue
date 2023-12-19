@@ -131,7 +131,7 @@
                             </tr>
                             <tr>
                                 <th>피보험자</th>
-                                <td>{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{ insuranceDTO.cbr_cnt + insuranceDTO.cons_data.cbr_cnt - 1 }} 명</td>
+                                <td>{{ insuranceDTO.user_nm }} 명</td>
                                 <th>사무소명</th>
                                 <td>{{ insuranceDTO.user_nm }} </td>
                             </tr>
@@ -166,7 +166,7 @@
                             <th>보험종목</th>
                             <td colspan="2">전문직업배상책임보험<br/>( Surveyors Professional Indemnity Error &<br> Omission Insurance Policy )</td>
                             <th>증권번호</th>
-                            <td>14090-6488</td>
+                            <td>{{ insuranceDTO.insurance_no }}</td>
                         </tr>
                         <tr>
                             <th colspan="2">보험기간</th>
@@ -193,8 +193,8 @@
                             <th>자기부담금(1청구당)</th>
                         </tr>
                         <tr>
-                            <td colspan="2"><p class="min-h-16">{{insuranceDTO.spct_data.insr_clm_lt_amt.getValueBySplit(1)||'해당사항 없음'}} / {{insuranceDTO.spct_data.insr_year_clm_lt_amt||'해당사항 없음'}}</p></td>
-                            <td><p class="min-h-16">{{insuranceDTO.spct_data.insr_psnl_brdn_amt.getValueBySplit(1)||'해당사항 없음'}}</p></td>
+                            <td colspan="2"><p class="min-h-16">{{insuranceDTO.spct_data?.insr_clm_lt_amt?.getValueBySplit(1)||'해당사항 없음'}} / {{insuranceDTO.spct_data?.insr_year_clm_lt_amt ||'해당사항 없음'}}</p></td>
+                            <td><p class="min-h-16">{{insuranceDTO.spct_data?.insr_psnl_brdn_amt?.getValueBySplit(1)||'해당사항 없음'}}</p></td>
                         </tr>
                     </tbody>
                 </table>
@@ -404,9 +404,9 @@
                             <td>{{row.cbr_brdt}}</td>
                             <td>{{row.insr_retr_dt}}</td>
                             <template v-if="insuranceDTO.spct_data.cbr_data[index+1]">
-                                <td>{{insuranceDTO?.cbr_data[index+1]?.cbr_nm}}</td>
-                                <td>{{insuranceDTO?.cbr_data[index+1]?.cbr_brdt}}</td>
-                                <td>{{insuranceDTO?.cbr_data[index+1]?.insr_retr_dt}}</td>
+                                <td>{{insuranceDTO.spct_data.cbr_data[index+1]?.cbr_nm}}</td>
+                                <td>{{insuranceDTO.spct_data.cbr_data[index+1]?.cbr_brdt}}</td>
+                                <td>{{insuranceDTO.spct_data.cbr_data[index+1]?.insr_retr_dt}}</td>
                             </template>
                             <template v-else>
                                 <td></td>

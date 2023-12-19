@@ -447,7 +447,23 @@
                               </v-radio-group>
                         </v-col>
                         <!-- 관세사 추가 사항 종료 -->
-
+                        <v-col cols="12" sm="6" class="v-col">
+                          <div class="head-col">
+                            <p>사업자번호</p>
+                            <sup class="text-error">*</sup>
+                          </div>
+                          <div class="data-col">
+                            <VTextFieldWithValidation
+                                v-model="userDTO.corp_cnno"
+                                name="corp_cnno"
+                                label="사업자번호"
+                                :maskOption="{ mask: '###-##-#####' }"
+                                single-line
+                                density="comfortable"
+                                :disabled="true"
+                            />
+                          </div>
+                        </v-col>
                         <v-col cols="12" sm="6" class="v-col">
                           <div class="head-col">
                             <p>법인번호</p>
@@ -461,27 +477,11 @@
                                 :maskOption="{ mask: '######-#######' }"
                                 single-line
                                 density="comfortable"
-                                :disabled="isDisabledCorpBnno"
+                                :disabled="isDisabledCorpBnno()"
                               />
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="6" class="v-col">
-                          <div class="head-col">
-                            <p>사업자번호</p>
-                            <sup class="text-error">*</sup>
-                          </div>
-                          <div class="data-col">
-                            <VTextFieldWithValidation
-                              v-model="userDTO.corp_cnno"
-                              name="corp_cnno"
-                              label="사업자번호"
-                              :maskOption="{ mask: '###-##-#####' }"
-                              single-line
-                              density="comfortable"
-                              :disabled="true"
-                            />
-                          </div>
-                        </v-col>
+
                         <v-col cols="12" sm="6" class="v-col">
                           <div class="head-col">
                             <p>사무소 전화</p>
@@ -536,7 +536,6 @@
                             <VTextFieldWithValidation v-model="userDTO.user_hpno" name="user_hpno" single-line density="comfortable" :maskOption="{ mask: '###-####-####' }" />
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="6" class="v-col"></v-col>
                         <v-col cols="12" sm="12" class="v-col">
                           <div class="head-col">
                             <p>이메일</p>
@@ -968,10 +967,10 @@ async function onNext() {
 }
 
 function isDisabledCorpBnno() {
-  if (userDTO.business_cd==='ADV' && userDTO.corp_type !== '003')
+  if (userDTO.value.business_cd==='ADV' && userDTO.value.corp_type !== '003')
     return true;
 
-  if (userDTO.business_cd==='CAA' && userDTO.corp_type !== '002')
+  if (userDTO.value.business_cd==='CAA' && userDTO.value.corp_type === '002')
     return true;
   return false;
 }
