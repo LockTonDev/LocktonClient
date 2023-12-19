@@ -5,6 +5,36 @@ export default {
   component: Layout,
   children: [
     /**
+     * 변리사
+     */
+    {
+      name: '[변리사] 보험계약신청/갱신',
+      path: '/contract/PAT/V_TPAT0030A11',
+      component: () => import('@/views/contract/PAT/V_TPAT0030A11.vue')
+    },
+    {
+      name: '[변리사] 보험계약수정',
+      path: '/contract/PAT/V_TPAT0030A11/:insuranceUUID?',
+      component: () => import('@/views/contract/PAT/V_TPAT0030A11.vue')
+    },
+    {
+      name: '[변리사] 보험계약상세조회',
+      path: '/contract/PAT/V_TPAT0030A12/:insuranceUUID?',
+      component: () => import('@/views/contract/PAT/V_TPAT0030A12.vue')
+    },
+    {
+      name: '[변리사] 가입/조회/출력',
+      path: '/contract/PAT/V_TPAT0030A10',
+      component: () => import('@/views/contract/PAT/V_TPAT0030A10.vue')
+    },
+
+    {
+      name: '[변리사] 변경',
+      path: '/contract/PAT/V_TPAT0040A10',
+      component: () => import('@/views/contract/PAT/V_TPAT0040A10.vue')
+    },
+
+    /**
      * 관세사
      */
     {

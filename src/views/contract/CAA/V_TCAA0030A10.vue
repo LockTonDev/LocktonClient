@@ -41,7 +41,7 @@
               <v-tooltip activator="parent" location="top">
                 가입증명서<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
                 <v-divider class="my-1"/>
-                개시일인 12월 1일 이후 영업일 기준 3일 후부터 출력 가능합니다.<br/>
+                개시일인 1월 1일 이후 영업일 기준 3일 후부터 출력 가능합니다.<br/>
                 중도 가입자의 경우에는 보험료 입금 익일 오후부터 출력 가능합니다.
               </v-tooltip>
             </th>
@@ -54,7 +54,7 @@
           <template v-if="row.user_cd === user_cd">
             <td class="text-center text-body-1">
               <p v-if="row.user_cd == 'IND'">{{ row.user_nm }}</p>
-              <p v-if="row.user_cd != 'IND'">{{ row.cbr_data[0].cbr_nm }} 외 {{row.cbr_cnt + row.cons_data.cbr_cnt - 1}} 명</p>
+              <p v-if="row.user_cd != 'IND'">{{ row.cbr_data[0].cbr_nm }} 외 {{ Number(row.cbr_cnt) + Number(row.cons_data.cbr_cnt) - 1}} 명</p>
             </td>
             <td class="text-center text-body-1">
               <div v-if="row.insr_year === '2022' && row.status_cd !== '10'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
@@ -62,7 +62,7 @@
             </td>
             <td class="text-center text-body-1">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">
-              <v-icon v-if="row.insr_year !== '2022'"
+              <v-icon v-if="row.insr_year !== '2023'"
                       small
                       class="text-primary cursor-pointer"
                       title="신청서 출력"

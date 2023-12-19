@@ -5,6 +5,11 @@ export default {
   component: Layout,
   children: [
     {
+      name: 'insurance_PAT',
+      path: '/insurance/V_PPAT10/:mainTabIdx',
+      component: () => import('@/views/insurance/V_PPAT10.vue')
+    },
+    {
       name: 'insurance_ADV',
       path: '/insurance/V_PADV10/:mainTabIdx',
       component: () => import('@/views/insurance/V_PADV10.vue')

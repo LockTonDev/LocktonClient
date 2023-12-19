@@ -338,5 +338,53 @@ export const UserYup = {
   MODIFY_CAA_COR: yup.object().shape({
     ...회원수정_합동_사무소정보.fields,
     ...회원가입_공통_이메일.fields
+  }),
+
+  /** ============================================================================
+   *  사이트 : 변리사
+   *  ============================================================================
+   */
+  INSERT_PAT_IND_STEP1: yup.object().shape({
+    ...회원가입_공통_약관동의.fields
+  }),
+  INSERT_PAT_IND_STEP2: yup.object().shape({
+    ...회원가입_공통_개인.fields,
+    ...회원가입_공통_이메일.fields,
+    ...회원가입_공통_비밀번호.fields,
+    ...회원가입_공통_사무소정보.fields,
+  }),
+
+  MODIFY_PAT_IND: yup.object().shape({
+    ...회원수정_공통_사무소정보.fields,
+    ...회원가입_공통_이메일.fields
+  }),
+
+  INSERT_PAT_JNT_STEP1: yup.object().shape({
+    ...회원가입_공통_약관동의.fields
+  }),
+  INSERT_PAT_JNT_STEP2: yup.object().shape({
+    ...회원가입_합동_사무소정보.fields,
+    ...회원가입_공통_합동.fields,
+    ...회원가입_공통_이메일.fields,
+    ...회원가입_공통_비밀번호.fields,
+  }),
+
+  MODIFY_PAT_JNT: yup.object().shape({
+    ...회원수정_합동_사무소정보.fields,
+    ...회원가입_공통_이메일.fields
+  }),
+  INSERT_PAT_COR_STEP1: yup.object().shape({
+    ...회원가입_공통_약관동의.fields
+  }),
+  INSERT_PAT_COR_STEP2: yup.object().shape({
+    ...회원가입_법인_사무소정보.fields,
+    ...회원가입_공통_합동.fields,
+    ...회원가입_공통_이메일.fields,
+    ...회원가입_공통_비밀번호.fields,
+  }),
+
+  MODIFY_PAT_COR: yup.object().shape({
+    ...회원수정_합동_사무소정보.fields,
+    ...회원가입_공통_이메일.fields
   })
 };

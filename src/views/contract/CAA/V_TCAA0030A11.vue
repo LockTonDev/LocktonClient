@@ -260,13 +260,11 @@
                     <div class="head-col">
                       <p>사업 유형<sup class="text-error">*</sup></p>
                     </div>
-                    <div class="data-col">
                       <v-radio-group v-model="insuranceDTO.corp_type" inline class="align-center d-flex" :disabled="true">
                           <v-radio label="법인" value="001" class="mr-4"></v-radio>
                           <v-radio label="합동사무소" value="002" class="mr-4"></v-radio>
                           <v-radio label="통관 취급 법인" value="003"></v-radio>
                       </v-radio-group>
-                    </div>
                   </v-col>
                   <v-col cols="12" sm="6" class="v-col">
                     <div class="head-col">
@@ -890,7 +888,7 @@
                   </thead>
                   <tbody>
                     <tr v-for="(row, index) in insuranceDTO.cbr_data" style="font-size: 15px">
-                      <td class="text-center">{{ row.cbr_type }}</td>
+                      <td class="text-center">통관</td>
                       <td class="text-center">
                         <v-text-field
                           v-model="row.cbr_nm"
@@ -1264,7 +1262,7 @@
                           v-for="(row, index) in insuranceDTO.cons_data
                             .cbr_data"  style="font-size: 15px"
                         >
-                          <td class="text-center">{{ row.cbr_type }}</td>
+                          <td class="text-center">컨설팅</td>
                           <td class="text-center">
                             <v-text-field
                               v-model="row.cbr_nm"
@@ -2178,17 +2176,33 @@
             <i class="mdi mdi-alert-circle-outline mr-1"></i>합동사무소 및
             법인명으로 일괄 송금하여 주시기 바랍니다.
           </p>
+          <v-divider class="my-8" />
+          <p class="text-18 mt-8">
+            신청서를 출력하시겠습니까?
+          </p>
+          <v-row class="mt-10">
+            <v-col class="pa-0 d-flex justify-center">
+
+              <v-btn
+                  size="x-large"
+                  variant="flat"
+                  color="primary"
+                  class="mr-4"
+                  @click="onInsuranceFormOpen(true);"
+              >출력</v-btn
+              >
+              <v-btn
+                  size="x-large"
+                  variant="outlined"
+                  color="dark"
+                  to="/contract/CAA/V_TCAA0030A10"
+                  depressed
+              >가입조회</v-btn
+              >
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
-      <v-btn
-        size="x-large"
-        variant="flat"
-        color="primary"
-        to="/contract/CAA/V_TCAA0030A10"
-        depressed
-        class="px-10"
-        >신청서 확인</v-btn
-      >
     </v-col>
   </v-row>
   <!-- 완료영역 종료 -->
@@ -2472,7 +2486,7 @@ const getInsrAmt = (
 
     // 보험 계산식
     // 보험 계산식 ( 기본금액 * 공동보험 할증 * 인원수 할인 * 기간일수) * 할인할증률  10원단위 절사
-    nTotAmt = (nInitAmt * (1 - pblcBrdnRt / 100) * (1) * (nDCnt / INSR_RATE_MAX_DAYS.value)) * (1 + nRate / 100);
+    nTotAmt = (nInitAmt * (nDCnt / INSR_RATE_MAX_DAYS.value)) * (1 + nRate / 100);
     nTotAmt = Math.floor(nTotAmt / 10) * 10;
   } catch (err) {
     console.log(err);
@@ -2509,14 +2523,9 @@ const getInsrSpctAmt = (
 
   let sKey = sKey1.getValueBySplit(0) + '|' + sKey2.getValueBySplit(0);
   try {
-    // 연간보험료 계산
-    if (sSDt == null || sEDt == null) {
-      nDCnt = 365;
+    nDCnt = getDateDiff(sSDt, sEDt, INSR_RATE_MAX_DAYS.value);
 
-      // 보험료 계산(기간별)
-    } else {
-      nDCnt = getDateDiff(sSDt, sEDt);
-    }
+    if (nDCnt > INSR_RATE_MAX_DAYS.value) nDCnt = INSR_RATE_MAX_DAYS.value;
 
     // 기본보험료 조회
     //nInitAmt =  (eval("INSR_RATE_TABLE.value['특약']['" + sKey1 + "']['"+ sKey2 + "']"));
@@ -2525,7 +2534,7 @@ const getInsrSpctAmt = (
     )[0].amt;
 
     // 보험 계산식
-    nTotAmt = Math.floor((nInitAmt * (nDCnt / 365)) / 10) * 10;
+    nTotAmt = Math.floor((nInitAmt * (nDCnt / INSR_RATE_MAX_DAYS.value)) / 10) * 10;
   } catch (err) {
     console.log(err);
     nTotAmt = 0;
@@ -3737,7 +3746,7 @@ onMounted(async () => {
       }
     }
     // 사용자 정보 재설정
-    //await getUserInfoByUser();
+    await getUserInfoByUser();
 
     insuranceDTO.value.status_cd = '10' // 신청
     insuranceDTO.value.insurance_uuid = ''; // 초기값

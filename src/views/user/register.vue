@@ -307,7 +307,7 @@
                               <VTextFieldWithValidation v-model="userDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line density="comfortable" maxlength="20" />
                             </div>
                           </v-col>
-                          <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd != 'ACC' && userDTO.business_cd != 'CAA'">
+                          <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd != 'ACC' && userDTO.business_cd != 'CAA' &&  userDTO.business_cd != 'PAT'">
                             <div class="head-col">
                               <p>소속 지방회</p>
                               <sup class="text-error">*</sup>
@@ -398,7 +398,17 @@
                             <!-- <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="" single-line density="comfortable" maxlength="25"/> -->
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd ==='ADV'">
+                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd!=='ADV'">
+                          <div class="head-col">
+                            <p v-if="userDTO.user_cd==='COR'">법인명</p>
+                            <p v-else-if="userDTO.user_cd=='JNT'">합동사무소 명</p>
+                            <sup class="text-error">*</sup>
+                          </div>
+                          <div class="data-col">  {{ userDTO.user_nm }}
+                            <!-- <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="" single-line density="comfortable" maxlength="25"/> -->
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd ==='ADV' || userDTO.business_cd ==='CAA' || userDTO.business_cd ==='PAT' ">
                           <div class="head-col">
                             <p>대표자 성명</p>
                             <sup class="text-error">*</sup>
@@ -413,15 +423,6 @@
                             />
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd!=='ADV'">
-                          <div class="head-col">
-                            <p>법인명</p>
-                            <sup class="text-error">*</sup>
-                          </div>
-                          <div class="data-col">  {{ userDTO.user_nm }}
-                            <!-- <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="" single-line density="comfortable" maxlength="25"/> -->
-                          </div>
-                        </v-col>
                         <v-col cols="12" sm="12" class="v-col" v-if="userDTO.business_cd === 'ADV'">
                           <div class="head-col">
                             <p>사무소 형태</p>
@@ -434,18 +435,16 @@
                         </v-col>
                         
                         <!-- 관세사 추가 사항 시작 -->
-                        <v-col cols="12" sm="12" class="v-col" v-if="userDTO.business_cd === 'CCA'">
+                        <v-col cols="12" sm="12" class="v-col" v-if="userDTO.business_cd === 'CAA'">
                           <div class="head-col">
                             <p>사업 유형</p>
                             <sup class="text-error">*</sup>
                           </div>
-                          <div class="data-col">
-                            <v-radio-group v-model="radios" :mandatory="false" inline class="align-center d-flex">
-                              <v-radio label="법인" value="radio1" class="mr-4"></v-radio>
-                              <v-radio label="합동사무소" value="radio2" class="mr-4"></v-radio>
-                              <v-radio label="통관 취급 법인" value="radio3"></v-radio>
-                            </v-radio-group>
-                          </div>
+                              <v-radio-group v-model="userDTO.corp_type" :mandatory="false" inline class="align-center d-flex" :disabled="true">
+                                <v-radio label="법인" value="001" class="mr-4 d-inline-block"></v-radio>
+                                <v-radio label="합동사무소" value="002" class="mr-4 d-inline-block"></v-radio>
+                                <v-radio label="통관 취급 법인" value="003"></v-radio>
+                              </v-radio-group>
                         </v-col>
                         <!-- 관세사 추가 사항 종료 -->
 
@@ -462,7 +461,7 @@
                                 :maskOption="{ mask: '######-#######' }"
                                 single-line
                                 density="comfortable"
-                                :disabled="userDTO.business_cd==='ADV' && userDTO.corp_type !== '003'"
+                                :disabled="isDisabledCorpBnno"
                               />
                           </div>
                         </v-col>
@@ -519,7 +518,7 @@
                             <VTextFieldWithValidation v-model="userDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line density="comfortable"  maxlength="20"/>
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="6" class="v-col">
+                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd != 'ACC' && userDTO.business_cd != 'CAA' &&  userDTO.business_cd != 'PAT'">
                             <div class="head-col">
                               <p>소속 지방회</p>
                               <sup class="text-error">*</sup>
@@ -968,6 +967,15 @@ async function onNext() {
   step.value = step.value + 1;
 }
 
+function isDisabledCorpBnno() {
+  if (userDTO.business_cd==='ADV' && userDTO.corp_type !== '003')
+    return true;
+
+  if (userDTO.business_cd==='CAA' && userDTO.corp_type !== '002')
+    return true;
+  return false;
+}
+
 
 
 /**
@@ -1038,7 +1046,6 @@ async function isVerifyUserHpWithUser(imp_uid: string) {
 }
 
 function checkPassword(){
-  console.log(userDTO.user_pwd, userDTO.user_pwd_chk)
   if(userDTO.value.user_pwd !== userDTO.value.user_pwd_chk){
     verifyPasswordChk.value.success = false;
     verifyPasswordChk.value.message = '비밀번호가 일치하지 않습니다.';
@@ -1067,22 +1074,21 @@ function onTermsOfMarketingClose(agrs: any) {
   userDTO.value.agr3_yn = agrs.value;
 }
 async function InitCode(){
-  console.log("userDTO.value.business_cd : ",businessCd)
   regionCdItems.value = await CommonCode.getCodeList(businessCd+'001');
   corpTypeItems.value = await CommonCode.getCodeList('COM050');
 }
 // 초기 로딩
-onMounted(() => {
+onMounted(async () => {
   InitCode();
   // 상태 정상
   userDTO.value.status_cd = '30';
 
   if (_AUTH_USER.value) {
     // 최초가입시 하드코딩 추후 변경예정
-    userDTO.value.business_cd = _AUTH_USER.value.businessCd;
-    userDTO.value.user_cd = _AUTH_USER.value.userCd;
-    userDTO.value.user_id = _AUTH_USER.value.userId;
-    userDTO.value.user_nm = _AUTH_USER.value.userNm;
+    const userResult = await apiUser.getUserInfo();
+    Object.assign(userDTO.value, userResult[0]);
+
+    userDTO.value.status_cd = '30';
 
     // 최초가입시 사업자번호를 아이디값으로 설정한다.
     userDTO.value.corp_cnno = userDTO.value.user_id;
@@ -1092,7 +1098,6 @@ onMounted(() => {
     }else if(_AUTH_USER.value.userCd==="JNT") {
       page.value.subtitle = '복수회원';
     }
-
   } else {
     // 최초가입시 하드코딩 추후 변경예정
     userDTO.value.business_cd = businessCd;

@@ -157,14 +157,11 @@
                   <div class="head-col">
                     <p>사업 유형<sup class="text-error">*</sup></p>
                   </div>
-                  <div class="data-col">
-                    {{ insuranceDTO.corp_type }}
-                    <!-- <v-radio-group v-model="insuranceDTO.corp_type" inline class="align-center d-flex" :disabled="true">
-                          <v-radio label="법인" value="법인" class="mr-4"></v-radio>
-                          <v-radio label="합동사무소" value="합동" class="mr-4"></v-radio>
-                          <v-radio label="통관 취급 법인" value="통관"></v-radio>
-                      </v-radio-group> -->
-                  </div>
+                  <v-radio-group v-model="insuranceDTO.corp_type" inline class="align-center d-flex" :disabled="true">
+                    <v-radio label="법인" value="001" class="mr-4"></v-radio>
+                    <v-radio label="합동사무소" value="002" class="mr-4"></v-radio>
+                    <v-radio label="통관 취급 법인" value="003"></v-radio>
+                  </v-radio-group>
                 </v-col>
                 <v-col cols="12" sm="6" class="v-col">
                   <div class="head-col">
@@ -172,7 +169,7 @@
                     <sup class="text-error">*</sup>
                   </div>
                   <div class="data-col">
-                    {{ insuranceDTO.corp_nm }}
+                    {{ insuranceDTO.user_nm }}
                   </div>
                 </v-col>
                 <v-col cols="12" sm="6" class="v-col">
@@ -240,7 +237,7 @@
                     <sup class="text-error">*</sup>
                   </div>
                   <div class="data-col">
-                    {{ insuranceDTO.user_hpno }}
+                    {{ insuranceDTO.corp_cust_hpno }}
                   </div>
                 </v-col>
                 <v-col cols="12" sm="12" class="v-col">
@@ -249,7 +246,7 @@
                     <sup class="text-error">*</sup>
                   </div>
                   <div class="data-col">
-                    {{ insuranceDTO.user_email }}
+                    {{ insuranceDTO.corp_cust_email }}
                   </div>
                 </v-col>
                 <v-col cols="12" sm="12" class="v-col">
@@ -748,25 +745,25 @@
                           <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            value="1|1천만원"
+                            value="10000000|1천만원"
                             >1천만원</v-btn
                           >
                           <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            value="2|2천만원"
+                            value="20000000|2천만원"
                             >2천만원</v-btn
                           >
                           <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            value="3|3천만원"
+                            value="30000000|3천만원"
                             >3천만원</v-btn
                           >
                           <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            value="4|5천만원"
+                            value="50000000|5천만원"
                             >5천만원</v-btn
                           >
                         </v-btn-toggle>
@@ -791,37 +788,37 @@
                           <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            value="1|1백만원"
+                            value="1000000|1백만원"
                             >1백만원</v-btn
                           >
                           <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            value="2|2백만원"
+                            value="2000000|2백만원"
                             >2백만원</v-btn
                           >
                           <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            value="3|3백만원"
+                            value="3000000|3백만원"
                             >3백만원</v-btn
                           >
                           <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            value="4|5백만원"
+                            value="5000000|5백만원"
                             >5백만원</v-btn
                           >
                           <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            value="5|1천만원"
+                            value="10000000|1천만원"
                             >1천만원</v-btn
                           >
                           <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            value="6|1천5백만원"
+                            value="15000000|1천5백만원"
                             >1천5백만원</v-btn
                           >
                         </v-btn-toggle>
@@ -1010,7 +1007,7 @@
                       <v-btn
                         color="primary"
                         class="flex-grow-1 bg-white"
-                        value="1|1천만원"
+                        value="10000000|1천만원"
                         >1천만원</v-btn
                       >
                     </v-btn-toggle>
@@ -1042,13 +1039,13 @@
                       <v-btn
                         color="primary"
                         class="flex-grow-1 bg-white"
-                        value="1|50만원"
+                        value="500000|50만원"
                         >50만원</v-btn
                       >
                       <v-btn
                         color="primary"
                         class="flex-grow-1 bg-white"
-                        value="2|1백만원"
+                        value="1000000|1백만원"
                         >1백만원</v-btn
                       >
                     </v-btn-toggle>
@@ -1517,7 +1514,7 @@
             </p>
             <!-- <p class="text-body-1 font-weight-medium text-right">{{(insuranceDTO.insr_amt + insuranceDTO.cons_data.insr_amt)?.toLocaleString()}}원</p> -->
             <p class="text-body-1 font-weight-medium text-right">
-              {{ Number(insuranceDTO.insr_premium_amt)?.toLocaleString() }}원
+              {{ (Number(insuranceDTO.insr_amt) + Number(insuranceDTO?.cons_data?.insr_amt)).toLocaleString() }}원
             </p>
           </v-col>
         </v-row>
