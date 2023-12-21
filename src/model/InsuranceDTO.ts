@@ -147,6 +147,9 @@ class InsuranceDTO {
   insr_clm_lt_amt: string;
   insr_year_clm_lt_amt: string;
   insr_psnl_brdn_amt: string;
+  insr_program_yn: string;
+  insr_program: string;
+  insr_service: string;
   insr_sale_year: number;
   insr_sale_rt: number;
   insr_pcnt_sale_rt: number;
@@ -277,6 +280,9 @@ class InsuranceDTO {
     this.insr_year_clm_lt_amt = data.insr_year_clm_lt_amt || '';
     this.insr_clm_lt_amt = data.insr_clm_lt_amt || '';
     this.insr_psnl_brdn_amt = data.insr_psnl_brdn_amt || '';
+    this.insr_program_yn = data.insr_program_yn || 'N';
+    this.insr_program = data.insr_program || '';
+    this.insr_service = data.insr_service || '';
     this.insr_pcnt_sale_rt = data.insr_pcnt_sale_rt || 0;
     this.insr_sale_year = data.insr_sale_year || 0;
     this.insr_sale_rt = data.insr_sale_rt || 0;

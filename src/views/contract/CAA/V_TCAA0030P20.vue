@@ -53,7 +53,7 @@
                   </h1>
                   <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
                     본 보험은 한국관세사회 및 메리츠화재㈜ 그리고
-                    록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라<br />피보험자가
+                    록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가
                     관세사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을
                     보상합니다.
                   </p>
@@ -347,7 +347,7 @@
                       </p>
                     </li>
                     <li class="color-error line-height-1-2">
-                      관세사 성명 및 등록번호를 함께 기재하여 납부하여 주시기
+                      관세사 성명 및 등록번호를 함께 기재하여 납부하여 주시기 바랍니다.
                     </li>
                   </ul>
 
@@ -680,7 +680,7 @@
                   </h1>
                   <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
                     본 보험은 한국관세사회 및 메리츠화재㈜ 그리고
-                    록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라<br />피보험자가
+                    록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가
                     관세사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을
                     보상합니다.
                   </p>
@@ -882,7 +882,7 @@
                       </p>
                     </li>
                     <li class="color-error line-height-1-2">
-                      관세사 성명 및 등록번호를 함께 기재하여 납부하여 주시기
+                      관세사 성명 및 등록번호를 함께 기재하여 납부하여 주시기 바랍니다.
                     </li>
                   </ul>
                   <!-- 약관동의 시작 -->
@@ -1027,7 +1027,7 @@
                   </h1>
                   <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
                     본 보험은 한국관세사회 및 메리츠화재㈜ 그리고
-                    록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라<br />피보험자가
+                    록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가
                     관세사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을
                     보상합니다.
                   </p>
@@ -1212,8 +1212,11 @@
                             {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
                           </div>
                         </v-col>
+                        <v-col cols="6">
+                          <div class="head-col"></div>
+                        </v-col>
                         <v-col cols="6" class="point">
-                          <div class="head-col">산출 보험료</div>
+                          <div class="head-col">산출보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
                           </div>
@@ -1336,7 +1339,7 @@
                             <p class="text-12">피보험자</p>
                           </div>
                           <div class="data-col py-2 justify-end pr-8">
-                            <p class="text-12" v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt + insuranceDTO.cons_data.cbr_cnt - 1}} 명</p>
+                            <p class="text-12">{{ insuranceDTO.user_nm }} </p>
                           </div>
                         </v-col>
                       </v-row>
@@ -1522,7 +1525,7 @@
                   </h1>
                   <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
                     본 보험은 한국관세사회 및 메리츠화재㈜ 그리고
-                    록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라<br />피보험자가
+                    록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가
                     관세사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을
                     보상합니다.
                   </p>
@@ -1706,8 +1709,11 @@
                             {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
                           </div>
                         </v-col>
+                        <v-col cols="6">
+                          <div class="head-col"></div>
+                        </v-col>
                         <v-col cols="6" class="point">
-                          <div class="head-col">산출 보험료</div>
+                          <div class="head-col">산출보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
                           </div>
@@ -1768,8 +1774,11 @@
                             {{ Number(insuranceDTO.cons_data.insr_base_amt).toLocaleString() }} 원
                           </div>
                         </v-col>
+                        <v-col cols="6">
+                          <div class="head-col"></div>
+                        </v-col>
                         <v-col cols="6" class="point">
-                          <div class="head-col">산출 보험료</div>
+                          <div class="head-col">산출보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.cons_data.insr_amt).toLocaleString() }} 원
                           </div>
@@ -1959,7 +1968,7 @@
                           <p class="text-12">피보험자</p>
                         </div>
                         <div class="data-col py-2 justify-end pr-8">
-                          <p class="text-12" v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt + insuranceDTO.cons_data.cbr_cnt - 1}} 명</p>
+                          <p class="text-12" > {{ insuranceDTO.user_nm }} </p>
                         </div>
                       </v-col>
                     </v-row>
@@ -2232,7 +2241,7 @@
                   </h1>
                   <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
                     본 보험은 한국관세사회 및 메리츠화재㈜ 그리고
-                    록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라<br />피보험자가
+                    록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가
                     관세사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을
                     보상합니다.
                   </p>
@@ -2416,8 +2425,11 @@
                             {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
                           </div>
                         </v-col>
+                        <v-col cols="6">
+                          <div class="head-col"></div>
+                        </v-col>
                         <v-col cols="6" class="point">
-                          <div class="head-col">산출 보험료</div>
+                          <div class="head-col">산출보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
                           </div>
@@ -2666,7 +2678,7 @@
                           <p class="text-12">피보험자</p>
                         </div>
                         <div class="data-col py-2 justify-end pr-8">
-                          <p class="text-12" v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt + insuranceDTO.cons_data.cbr_cnt - 1}} 명</p>
+                          <p class="text-12">{{ insuranceDTO.user_nm }}</p>
                         </div>
                       </v-col>
                     </v-row>
@@ -2928,7 +2940,7 @@
                   </h1>
                   <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
                     본 보험은 한국관세사회 및 메리츠화재㈜ 그리고
-                    록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라<br />피보험자가
+                    록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가
                     관세사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을
                     보상합니다.
                   </p>
@@ -3112,8 +3124,11 @@
                             {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
                           </div>
                         </v-col>
+                        <v-col cols="6">
+                          <div class="head-col"></div>
+                        </v-col>
                         <v-col cols="6" class="point">
-                          <div class="head-col">산출 보험료</div>
+                          <div class="head-col">산출보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
                           </div>
@@ -3174,8 +3189,11 @@
                             {{ Number(insuranceDTO.cons_data.insr_base_amt).toLocaleString() }} 원
                           </div>
                         </v-col>
+                        <v-col cols="6">
+                          <div class="head-col"></div>
+                        </v-col>
                         <v-col cols="6" class="point">
-                          <div class="head-col">산출 보험료</div>
+                          <div class="head-col">산출보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.cons_data.insr_amt).toLocaleString() }} 원
                           </div>
@@ -3435,7 +3453,7 @@
                           <p class="text-12">피보험자</p>
                         </div>
                         <div class="data-col py-2 justify-end pr-8">
-                          <p class="text-12" v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt + insuranceDTO.cons_data.cbr_cnt - 1}} 명</p>
+                          <p class="text-12">{{ insuranceDTO.user_nm }}</p>
                         </div>
                       </v-col>
                     </v-row>
@@ -3462,7 +3480,6 @@
                 <!--//footer-->
               </div>
 
-              <div class="html2pdf__page-break"></div>
 
               <!-- 가입자명단 (PDF용)-->
               <template v-if="isPdf" v-for="chunkIndex in chunkedDivCount">
@@ -3526,9 +3543,52 @@
                     </div>
                     <!--가입자 명단 종료 -->
 
+
+                    <!--가입자 명단 종료 -->
+                  </main>
+
+                  <!-- footer 영역 시작-->
+                  <footer v-if="isPdf">
+                    <v-divider class="border-0 mt-4" />
+                    <v-row justify="space-between" align="center">
+                      <v-col class="text-12">
+                          <span>문의처 : 록톤컴퍼니즈코리아손해보험중개㈜</span
+                          ><span class="mx-4 text-10">|</span
+                      ><span>대표전화 : 02.2011.0300</span>
+                      </v-col>
+                      <v-col class="flex-grow-0">
+                        <div style="width: 70px">
+                          <img src="/assets/Lockton_Logo_Black_simbol.png" class="w-100" />
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </footer>
+                  <!-- footer 영역 종료-->
+                </div>
+              </template>
+
+
+              <!-- 가입자명단 (PDF용)-->
+              <template v-if="isPdf" v-for="chunkIndex in chunkedDivCount">
+                <div :class="isPdf ? 'print-wrap' : ''">
+                  <!-- header 영역 시작-->
+                  <header v-if="isPdf">
+                    <h1 class="text-center">
+                      <p class="text-20 font-weight-bold color-primary line-height-1-2">
+                        전문직업배상책임보험
+                      </p>
+                      <p class="text-20 font-weight-bold line-height-1-2">
+                        보험가입신청서
+                      </p>
+                    </h1>
+                  </header>
+                  <!-- header 영역 종료-->
+
+                  <main>
+
                     <!--컨설팅 명단 시작-->
                     <div class="mt-4">
-                      <p class="font-weight-bold text-14"><span class="color-primary">&#x275A;</span>&nbsp;컨설팅 추가 명단</p>
+                      <p class="font-weight-bold text-14"><span class="color-primary">&#x275A;</span>&nbsp;컨설팅 추가 가입자 명단</p>
                       <div class="mt-1">
                         <table class="table v2 mb-1">
                           <colgroup>
@@ -3569,7 +3629,47 @@
                       </div>
                     </div>
                     <!--가입자 명단 종료 -->
+                  </main>
 
+                  <!-- footer 영역 시작-->
+                  <footer v-if="isPdf">
+                    <v-divider class="border-0 mt-4" />
+                    <v-row justify="space-between" align="center">
+                      <v-col class="text-12">
+                          <span>문의처 : 록톤컴퍼니즈코리아손해보험중개㈜</span
+                          ><span class="mx-4 text-10">|</span
+                      ><span>대표전화 : 02.2011.0300</span>
+                      </v-col>
+                      <v-col class="flex-grow-0">
+                        <div style="width: 70px">
+                          <img src="/assets/Lockton_Logo_Black_simbol.png" class="w-100" />
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </footer>
+                  <!-- footer 영역 종료-->
+                </div>
+              </template>
+
+              <!-- 가입자명단 (PDF용)-->
+              <template v-if="isPdf && insuranceDTO.spct_join_yn == 'Y'">
+                <div :class="isPdf ? 'print-wrap' : ''">
+                  <!-- header 영역 시작-->
+                  <header v-if="isPdf">
+                    <h1 class="text-center">
+                      <p class="text-20 font-weight-bold color-primary line-height-1-2">
+                        전문직업배상책임보험
+                      </p>
+                      <p class="text-20 font-weight-bold line-height-1-2">
+                        보험가입신청서
+                      </p>
+                    </h1>
+                  </header>
+                  <!-- header 영역 종료-->
+
+                  <main>
+
+                    <!--가입자 명단 시작-->
                     <div class="mt-4">
                       <p class="text-12 font-weight-bold mt-2 mb-1">
                         <span class="color-primary">&#x275A;</span>&nbsp;특별약관 가입자
@@ -3630,6 +3730,8 @@
                   <!-- footer 영역 종료-->
                 </div>
               </template>
+
+
 
               <!-- 가입자명단 (신청보기용)-->
               <template v-if="!isPdf">
@@ -3910,12 +4012,10 @@ const onExportPDF = (viewType: string) => {
   } else if (insuranceDTO.value.user_cd === 'JNT' || insuranceDTO.value.user_cd === 'COR' ) {
     pdfPassword = insuranceDTO.value.corp_cnno.slice(-5);
   }
-  console.log(pdfPassword)
-
 
   let opt = {
     margin: [0, 9, 0, 9],
-    filename: '가입신청서_변호사배상책임보험.pdf',
+    filename: '가입신청서_관세사배상책임보험.pdf',
     pagebreak: {
       mode: ['avoid-all', 'css', 'legacy']
     },

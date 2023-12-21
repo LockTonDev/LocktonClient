@@ -435,10 +435,6 @@
                         >공동부담비율 30%</v-btn
                       >
                     </v-btn-toggle>
-                    <p class="text-caption font-weight-light mt-2 flex-grow-1">
-                      <i class="mdi mdi-alert-circle-outline mr-2"></i
-                      >공동부담비율
-                    </p>
                   </div>
                 </v-col>
                 <v-col cols="12" sm="12" class="v-col">
@@ -600,7 +596,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="(row, index) in insuranceDTO.cbr_data">
-                    <td class="text-center">{{ row.cbr_type }}</td>
+                    <td class="text-center">통관</td>
                     <td class="text-center">{{ row.cbr_nm }}</td>
                     <td class="text-center">{{ row.cbr_brdt }}</td>
                     <td class="text-center">{{ row.cbr_regno }}</td>
@@ -722,12 +718,6 @@
                             >공동부담비율 30%</v-btn
                           >
                         </v-btn-toggle>
-                        <p
-                          class="text-caption font-weight-light mt-2 flex-grow-1"
-                        >
-                          <i class="mdi mdi-alert-circle-outline mr-2"></i
-                          >공동부담비율
-                        </p>
                       </div>
                     </v-col>
                     <v-col cols="12" sm="12" class="v-col">
@@ -884,7 +874,7 @@
                       <tr
                         v-for="(row, index) in insuranceDTO.cons_data.cbr_data"
                       >
-                        <td class="text-center">{{ row.cbr_type }}</td>
+                        <td class="text-center">컨설팅</td>
                         <td class="text-center">{{ row.cbr_nm }}</td>
                         <td class="text-center">{{ row.cbr_brdt }}</td>
                         <td class="text-center">{{ row.cbr_regno }}</td>
@@ -1838,6 +1828,12 @@ onMounted(async () => {
     const params = { insurance_uuid: insuranceUUID.value };
     const resultData = await apiA_TCAA0030A.getDBSel(params);
     Object.assign(insuranceDTO.value, resultData.data[0]);
+
+    if(insuranceDTO.value.cons_join_yn != null && insuranceDTO.value.cons_join_yn == 'Y' ){
+      if(insuranceDTO.value.cons_data.insr_retr_dt == null || insuranceDTO.value.cons_data.insr_retr_dt == ''){
+        insuranceDTO.value.cons_data.insr_retr_dt = insuranceDTO.value.insr_retr_dt
+      }
+    }
 
     onLoading.value = true;
   }

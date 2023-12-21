@@ -706,12 +706,6 @@
                           >공동부담비율 30%</v-btn
                         >
                       </v-btn-toggle>
-                      <p
-                        class="text-caption font-weight-light mt-2 flex-grow-1"
-                      >
-                        <i class="mdi mdi-alert-circle-outline mr-2"></i
-                        >공동부담비율
-                      </p>
                     </div>
                   </v-col>
                   <v-col cols="12" sm="12" class="v-col">
@@ -832,31 +826,19 @@
               </v-col>
 
               <!--통관 관세사 명단 시작 -->
-              <v-col
-                cols="12"
-                sm="12"
-                class="py-0 px-14 mb-10"
-                v-if="insuranceDTO.user_cd != 'IND'"
-              >
+              <v-col cols="12" sm="12" class="py-0 px-14 mb-10" v-if="insuranceDTO.user_cd != 'IND'">
                 <div class="d-flex align-center mb-4 mt-6">
-                  <svg
-                    width="8"
-                    height="12"
-                    fill="none"
-                    stroke-width="3"
-                    class="mr-2"
-                  >
+                  <svg width="8" height="12" fill="none" stroke-width="3" class="mr-2">
                     <line x1="7" y1="5" x2="0" y2="12" stroke="#222222"></line>
                     <line x1="0" y1="0" x2="8" y2="7" stroke="#00AEEF"></line>
                   </svg>
                   <p class="text-body-1 font-weight-bold">관세사 명단</p>
                   <p class="text-body-2 color-gray-shadow ml-4">
                     총
-                    <span class="color-primary">{{ insuranceDTO.cbr_cnt }}</span
-                    >명
+                    <span class="color-primary">{{ insuranceDTO.cbr_data.length }}</span>명
                   </p>
                   <div class="ml-auto">
-                    <v-btn variant="outlined" @click="resetCBRData" size="small" class="min-width-auto px-1 mr-1">
+                    <v-btn variant="outlined" @click="resetCBRData()" size="small" class="min-width-auto px-1 mr-1">
                       초기화<v-icon icon="mdi-autorenew"></v-icon>
                     </v-btn>
                     <v-btn variant="elevated" color="white" @click="addCBR(insuranceDTO, '통관')" size="small" class="min-width-auto pa-0">
@@ -867,93 +849,92 @@
                 </div>
                 <v-table class="v-board-table size-small">
                   <colgroup>
-                    <col style="width: 62px" />
+                    <col style="width: 50px" />
+                    <col style="width: 80px" />
+                    <col style="width: 80px" />
+                    <col style="width: 80px" />
                     <col style="width: auto" />
+                    <!-- <col style="width: 82px" />
+                    <col style="width: 82px" /> -->
+                    <col style="width: 40px" />
                     <col style="width: auto" />
-                    <col style="width: auto" />
-                    <col style="width: 88px" />
-                    <col style="width: 74px" />
-                    <col style="width: 84px" />
-                    <col style="width: 48px" />
+                    <col style="width: 30px" />
                   </colgroup>
                   <thead>
-                    <tr>
-                      <th class="text-center">구분</th>
-                      <th class="text-center">성명</th>
-                      <th class="text-center">생년월일</th>
-                      <th class="text-center">등록번호</th>
-                      <th class="text-center">소급담보일</th>
-                      <th class="text-center">할인/할증</th>
-                      <th class="text-center">1인당 보험료</th>
-                      <th></th>
-                    </tr>
+                  <tr>
+                    <th class="text-center">구분</th>
+                    <th class="text-left">&nbsp;성명</th>
+                    <th class="text-left">생년월일</th>
+                    <th class="text-left">등록번호</th>
+                    <!-- <th class="text-center">보험시작일</th>
+                    <th class="text-center">보험종료일</th> -->
+                    <th class="text-center">소급담보일 / 보험개시일</th>
+                    <th class="text-center">할인 할증</th>
+                    <th class="text-center">1인당 보험료</th>
+                    <th></th>
+                  </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(row, index) in insuranceDTO.cbr_data" style="font-size: 15px">
-                      <td class="text-center">통관</td>
-                      <td class="text-center">
-                        <v-text-field
+
+                  <tr v-for="(row, index) in insuranceDTO.cbr_data">
+                    <td class="text-center">통관</td>
+                    <td>
+                      <VTextFieldWithValidation
                           v-model="row.cbr_nm"
                           name="cbr_nm"
-                          variant="outlined"
-                          hide-details="auto"
+                          label="성명"
                           density="compact"
-                          class="text-body-2"
+                          color="primary"
+                          variant="underlined"
                           single-line
-                          label="홍길동"
-                          :readonly="isReadOnlyAll"
                           :disabled="row.isCheck"
-                        />
-                      </td>
-                      <td class="text-center">
-                        <v-text-field
+                      />
+                    </td>
+                    <td>
+                      <VTextFieldWithValidation
                           v-model="row.cbr_brdt"
                           name="cbr_brdt"
-                          variant="outlined"
-                          hide-details="auto"
+                          label="생년월일"
                           density="compact"
-                          class="text-body-2"
+                          color="primary"
+                          variant="underlined"
+                          :maskOption="{ mask: '######' }"
                           single-line
-                          label="820101"
-                          :readonly="isReadOnlyAll"
                           :disabled="row.isCheck"
-                          maxLength="6"
-                        />
-                      </td>
-                      <td class="text-center">
-                        <v-text-field
+                      />
+                    </td>
+                    <td>
+                      <VTextFieldWithValidation
                           v-model="row.cbr_regno"
                           name="cbr_regno"
-                          variant="outlined"
-                          hide-details="auto"
+                          label="등록번호"
+                          color="primary"
                           density="compact"
-                          class="text-body-2"
+                          variant="underlined"
+                          :maskOption="{ mask: '#######' }"
                           single-line
-                          label="1234"
-                          :readonly="isReadOnlyAll"
                           :disabled="row.isCheck"
-                        />
-                      </td>
-                      <td class="text-center" v-if="row.isCheck">{{ row.insr_retr_dt }}</td>
-                      <td class="text-center" v-if="row.isCheck">{{ row.insr_sale_rt }}%</td>
-
-                      <td class="text-center" v-if="row.isCheck">
-                        {{ Number(row.insr_amt).toLocaleString() }}원
-                      </td>
-                      <td colspan="3" v-if="!row.isCheck"><v-btn variant="outlined" @click="chkSaleRtTWO(insuranceDTO, index)">인증</v-btn></td>
-                      <td class="text-center">
-                        <vue-feather
-                          type="minus-square"
-                          class="text-gray cursor-pointer"
-                          @click="delCBR(insuranceDTO, index)"
-                          v-if="!isReadOnlyAll"
-                        ></vue-feather>
-                      </td>
-                    </tr>
+                      />
+                      <!-- <v-text-field v-model="row.cbr_regno" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="1234567"  :disabled="row.isCheck"/> -->
+                    </td>
+                    <!-- <td><v-text-field v-model="row.insr_st_dt" :min="insuranceDTO.insr_st_dt"  :max="insuranceDTO.insr_cncls_dt" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date"  :disabled="row.isCheck || true" /></td>
+                    <td>{{row.insr_cncls_dt}}</td> -->
+                    <td >{{row.insr_retr_dt}} / {{row.insr_st_dt}}</td>
+                    <td v-if="row.isCheck">{{row.insr_sale_rt}}%</td>
+                    <td v-if="row.isCheck">
+                      {{ Number(row.insr_amt).toLocaleString() }}원
+                    </td>
+                    <td colspan="2" v-if="!row.isCheck"><v-btn variant="outlined" @click="chkSaleRtTWO(insuranceDTO, index)">인증</v-btn></td>
+                    <td>
+                      <v-btn variant="elevated" color="white" @click="delCBR(insuranceDTO, index)" size="small" class="min-width-auto pa-0" v-if="!isReadOnlyAll">
+                        <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle"></vue-feather>
+                      </v-btn>
+                    </td>
+                  </tr>
                   </tbody>
                 </v-table>
               </v-col>
-              <!--//통관 관세사 명단 종료 -->
+
 
               <!-- 보험가입 [컨설팅]  시작 -->
               <v-col
@@ -1081,12 +1062,6 @@
                               >공동부담비율 30%</v-btn
                             >
                           </v-btn-toggle>
-                          <p
-                            class="text-caption font-weight-light mt-2 flex-grow-1"
-                          >
-                            <i class="mdi mdi-alert-circle-outline mr-2"></i
-                            >공동부담비율
-                          </p>
                         </div>
                       </v-col>
                       <v-col cols="12" sm="12" class="v-col">
@@ -1195,40 +1170,19 @@
                   </v-col>
 
                   <!--컨설팅 사무원 명단-->
-                  <v-col cols="12" sm="12" class="py-0 px-14">
+                  <v-col cols="12" sm="12" class="py-0 px-14 mb-10" v-if="insuranceDTO.user_cd != 'IND'">
                     <div class="d-flex align-center mb-4 mt-6">
-                      <svg
-                        width="8"
-                        height="12"
-                        fill="none"
-                        stroke-width="3"
-                        class="mr-2"
-                      >
-                        <line
-                          x1="7"
-                          y1="5"
-                          x2="0"
-                          y2="12"
-                          stroke="#222222"
-                        ></line>
-                        <line
-                          x1="0"
-                          y1="0"
-                          x2="8"
-                          y2="7"
-                          stroke="#00AEEF"
-                        ></line>
+                      <svg width="8" height="12" fill="none" stroke-width="3" class="mr-2">
+                        <line x1="7" y1="5" x2="0" y2="12" stroke="#222222"></line>
+                        <line x1="0" y1="0" x2="8" y2="7" stroke="#00AEEF"></line>
                       </svg>
-                      <p class="text-body-1 font-weight-medium">관세사 명단</p>
+                      <p class="text-body-1 font-weight-bold">관세사 명단</p>
                       <p class="text-body-2 color-gray-shadow ml-4">
                         총
-                        <span class="color-primary">{{
-                          insuranceDTO.cons_data.cbr_cnt
-                        }}</span
-                        >명
+                        <span class="color-primary">{{ insuranceDTO.cons_data?.cbr_data?.length }}</span>명
                       </p>
                       <div class="ml-auto">
-                        <v-btn variant="outlined" @click="resetCBRConsData" size="small" class="min-width-auto px-1 mr-1">
+                        <v-btn variant="outlined" @click="resetCBRConsData()" size="small" class="min-width-auto px-1 mr-1">
                           초기화<v-icon icon="mdi-autorenew"></v-icon>
                         </v-btn>
                         <v-btn variant="elevated" color="white" @click="addCBR(insuranceDTO.cons_data, '컨설팅')" size="small" class="min-width-auto pa-0">
@@ -1239,96 +1193,91 @@
                     </div>
                     <v-table class="v-board-table size-small">
                       <colgroup>
-                        <col style="width: 62px" />
+                        <col style="width: 50px" />
+                        <col style="width: 80px" />
+                        <col style="width: 80px" />
+                        <col style="width: 80px" />
                         <col style="width: auto" />
+                        <!-- <col style="width: 82px" />
+                        <col style="width: 82px" /> -->
+                        <col style="width: 40px" />
                         <col style="width: auto" />
-                        <col style="width: auto" />
-                        <col style="width: 88px" />
-                        <col style="width: 74px" />
-                        <col style="width: 84px" />
-                        <col style="width: 48px" />
+                        <col style="width: 30px" />
                       </colgroup>
                       <thead>
-                        <tr>
-                          <th class="text-center">구분</th>
-                          <th class="text-center">성명</th>
-                          <th class="text-center">생년월일</th>
-                          <th class="text-center">등록번호</th>
-                          <th class="text-center">소급담보일</th>
-                          <th class="text-center">할인/할증</th>
-                          <th class="text-center">1인당 보험료</th>
-                          <th></th>
-                        </tr>
+                      <tr>
+                        <th class="text-center">구분</th>
+                        <th class="text-left">&nbsp;성명</th>
+                        <th class="text-left">생년월일</th>
+                        <th class="text-left">등록번호</th>
+                        <!-- <th class="text-center">보험시작일</th>
+                        <th class="text-center">보험종료일</th> -->
+                        <th class="text-center">소급담보일 / 보험개시일</th>
+                        <th class="text-center">할인 할증</th>
+                        <th class="text-center">1인당 보험료</th>
+                        <th></th>
+                      </tr>
                       </thead>
                       <tbody>
-                        <tr
-                          v-for="(row, index) in insuranceDTO.cons_data
-                            .cbr_data"  style="font-size: 15px"
-                        >
-                          <td class="text-center">컨설팅</td>
-                          <td class="text-center">
-                            <v-text-field
+
+                      <tr v-for="(row, index) in insuranceDTO.cons_data.cbr_data">
+                        <td class="text-center">컨설팅</td>
+                        <td>
+                          <VTextFieldWithValidation
                               v-model="row.cbr_nm"
                               name="cbr_nm"
-                              variant="outlined"
-                              hide-details="auto"
+                              label="성명"
                               density="compact"
-                              class="text-body-2"
+                              color="primary"
+                              variant="underlined"
                               single-line
-                              label="홍길동"
-                              :readonly="isReadOnlyAll"
                               :disabled="row.isCheck"
-                            />
-                          </td>
-                          <td class="text-center">
-                            <v-text-field
+                          />
+                        </td>
+                        <td>
+                          <VTextFieldWithValidation
                               v-model="row.cbr_brdt"
                               name="cbr_brdt"
-                              variant="outlined"
-                              hide-details="auto"
+                              label="생년월일"
                               density="compact"
-                              class="text-body-2"
+                              color="primary"
+                              variant="underlined"
+                              :maskOption="{ mask: '######' }"
                               single-line
-                              label="820101"
-                              :readonly="isReadOnlyAll"
                               :disabled="row.isCheck"
-                              maxLength="6"
-                            />
-                          </td>
-                          <td class="text-center">
-                            <v-text-field
+                          />
+                        </td>
+                        <td>
+                          <VTextFieldWithValidation
                               v-model="row.cbr_regno"
                               name="cbr_regno"
-                              variant="outlined"
-                              hide-details="auto"
+                              label="등록번호"
+                              color="primary"
                               density="compact"
-                              class="text-body-2"
+                              variant="underlined"
+                              :maskOption="{ mask: '#######' }"
                               single-line
-                              label="1234"
-                              :readonly="isReadOnlyAll"
                               :disabled="row.isCheck"
-                            />
-                          </td>
-                          <td class="text-center" v-if="row.isCheck">{{ row.insr_retr_dt }}</td>
-                          <td class="text-center" v-if="row.isCheck">{{ row.insr_sale_rt }}%</td>
-
-                          <td class="text-center" v-if="row.isCheck">
-                            {{ Number(row.insr_amt).toLocaleString() }}원
-                          </td>
-                          <td colspan="3" v-if="!row.isCheck"><v-btn variant="outlined" @click="chkSaleRtConsTWO(insuranceDTO.cons_data, index)">인증</v-btn></td>
-                          <td class="text-center">
-                            <vue-feather
-                              type="minus-square"
-                              class="text-gray cursor-pointer"
-                              @click="delCBR(insuranceDTO.cons_data, index)"
-                              v-if="!isReadOnlyAll"
-                            ></vue-feather>
-                          </td>
-                        </tr>
+                          />
+                          <!-- <v-text-field v-model="row.cbr_regno" variant="underlined" color="primary" hide-details="auto" density="compact" single-line label="1234567"  :disabled="row.isCheck"/> -->
+                        </td>
+                        <!-- <td><v-text-field v-model="row.insr_st_dt" :min="insuranceDTO.insr_st_dt"  :max="insuranceDTO.insr_cncls_dt" variant="underlined" color="primary" hide-details="auto" density="compact" single-line type="date"  :disabled="row.isCheck || true" /></td>
+                        <td>{{row.insr_cncls_dt}}</td> -->
+                        <td >{{row.insr_retr_dt}} / {{row.insr_st_dt}}</td>
+                        <td v-if="row.isCheck">{{row.insr_sale_rt}}%</td>
+                        <td v-if="row.isCheck">
+                          {{ Number(row.insr_amt).toLocaleString() }}원
+                        </td>
+                        <td colspan="2" v-if="!row.isCheck"><v-btn variant="outlined" @click="chkSaleRtConsTWO(insuranceDTO.cons_data, index)">인증</v-btn></td>
+                        <td>
+                          <v-btn variant="elevated" color="white" @click="delCBR(insuranceDTO.cons_data, index)" size="small" class="min-width-auto pa-0" v-if="!isReadOnlyAll">
+                            <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle"></vue-feather>
+                          </v-btn>
+                        </td>
+                      </tr>
                       </tbody>
                     </v-table>
                   </v-col>
-                  <!--//컨설팅 사무원 명단-->
                 </v-row>
               </v-col>
               <!-- 보험가입 [컨설팅]  종료 -->
@@ -1559,7 +1508,7 @@
                               density="compact"
                               class="text-body-2"
                               single-line
-                              label="홍길동"
+                              label="성명"
                               :readonly="isReadOnlyAll"
                             />
                           </td>
@@ -1571,7 +1520,7 @@
                               density="compact"
                               class="text-body-2"
                               single-line
-                              label="820101"
+                              label="생년월일"
                               :readonly="isReadOnlyAll"
                               maxLength="6"
                             />
@@ -1680,7 +1629,7 @@
                               class="position-absolute right-0 mt-3 mr-4 z-index-1"
                               >닫기</v-btn
                             >
-                            <TermsOfCCA></TermsOfCCA>
+                            <TermsOfPolicy></TermsOfPolicy>
                           </v-dialog>
                         </v-btn>
                       </td>
@@ -2017,7 +1966,7 @@
             <v-col cols="12">
               <p class="text-body-2 color-gray-shadow">관세사 인원수</p>
               <p class="text-body-2 text-right">
-                {{ insuranceDTO.cons_data.cbr_data.length }} 명
+                {{ insuranceDTO.cons_data?.cbr_data?.length }} 명
               </p>
             </v-col>
             <v-col cols="12">
@@ -2254,7 +2203,7 @@
                   variant="outlined"
                   hide-details="auto"
                   density="compact"
-                  label="홍길동"
+                  label="성명"
                 />
               </td>
               <td class="text-body-1 text-center py-2">
@@ -2404,13 +2353,13 @@ import BaseBreadcrumb from '@/components/BaseBreadcrumb.vue';
 import VTextFieldWithValidation from '@/components/VTextFieldWithValidation.vue';
 import VCheckBoxWithValidation from '@/components/VCheckBoxWithValidation.vue';
 
-//import V_TCAA0030P10 from './V_TCAA0030P10.vue';
+import V_TCAA0030P10 from './V_TCAA0030P10.vue';
 import V_TCAA0030P20 from "@/views/contract/CAA/V_TCAA0030P20.vue";
 
 import InsuranceTable from '@/components/InsuranceTable.vue';
 import TermsOfCCAinsurance from '@/components/TermsOfCCAinsurance.vue';
 import TermsOfContract from '@/components/TermsOfContract.vue';
-import TermsOfCCA from '@/components/TermsOfCCA.vue';
+import TermsOfPolicy from './V_TCAA0030P01.vue';      // PDF 다운로드
 import InsuranceForm2 from '@/components/InsuranceForm2.vue';
 import dayjs from 'dayjs'
 
@@ -2725,7 +2674,7 @@ function isReadonlyByInsrStDt()
    * 1. 신규이면 항상 보험기간을 변경할 수 있게 한다
    * 2. 기준_보험시작일자가 소금담보일보다 작으면 갱신으로 판단하여 수정불가
    */
-  if (insuranceDTO.value.user_cd === 'JNT') return true;
+  if (insuranceDTO.value.user_cd !== 'IND') return true;
   if (renewalYN.value === 'Y') return true;
   if (new Date(insuranceDTO.value.base_insr_st_dt) > new Date(insuranceDTO.value.insr_retr_dt)) {
     return true;
@@ -2851,9 +2800,14 @@ function formPhoneNumber() {
 
 function addCBR(list: any, cbr_type: string) {
   try {
+    if(!list.cbr_data){
+      list.cbr_data = []
+    }
     const cbrDataDTO = new CBRDataDTO();
     cbrDataDTO.cbr_type = cbr_type;
-    cbrDataDTO.insr_retr_dt = list.insr_retr_dt;
+    cbrDataDTO.insr_retr_dt = INSR_RETR_DT_TODAY;
+    cbrDataDTO.insr_st_dt = INSR_RETR_DT_TODAY;
+    cbrDataDTO.status_cd = '80'
     list.cbr_data.push(cbrDataDTO);
     list.cbr_cnt = list.cbr_data.length;
 
@@ -2935,7 +2889,7 @@ function chkValiation() {
     );
     isValiation = false;
   } else if (insuranceDTO.value.agr40_yn != 'Y') {
-    messageBoxDTO.value.setInfo( '약관동의', '상품설명확인서 확인');
+    messageBoxDTO.value.setInfo( '약관동의', '상품설명확인서 확인을 확인해주세요');
     isValiation = false;
   } else if (insuranceDTO.value.agr50_yn != 'Y') {
     messageBoxDTO.value.setInfo(
@@ -3019,6 +2973,10 @@ async function chkSaleRtTWO(list: any, rowIdx: number) {
   //   messageBoxDTO.value.setWarning( '입력확인', '이미 입력하신 회원입니다.');
   //   return false;
   // }
+  if(list.cbr_data[rowIdx].cbr_brdt.length !== 6){
+    messageBoxDTO.value.setWarning( '입력확인', '관세사 명단 생년월일 입력해주세요.');
+    return false;
+  }
 
   if (insuranceDTO.value.cbr_data != null) {
     const existValue = insuranceDTO.value.cbr_data.filter(item => item.cbr_nm === list.cbr_data[rowIdx].cbr_nm || item.cbr_regno === list.cbr_data[rowIdx].cbr_regno)
@@ -3121,6 +3079,11 @@ async function chkSaleRtConsTWO(list: any, rowIdx: number) {
   //   messageBoxDTO.value.setWarning( '입력확인', '이미 입력하신 회원입니다.');
   //   return false;
   // }
+
+  if(list.cbr_data[rowIdx].cbr_brdt.length !== 6){
+    messageBoxDTO.value.setWarning( '입력확인', '관세사 명단 생년월일 입력해주세요.');
+    return false;
+  }
 
   if (insuranceDTO.value.cons_data.cbr_data != null) {
     const existValue = insuranceDTO.value.cons_data.cbr_data.filter(item => item.cbr_nm === list.cbr_data[rowIdx].cbr_nm || item.cbr_regno === list.cbr_data[rowIdx].cbr_regno)
@@ -3411,6 +3374,24 @@ watch(
       showMessageBoxByInsrDt();
     }*/
     // }
+
+    // 소급담보일이 수기수정일 경우에는 갱신으로 판단하기에 해당 로직에서 제외된다.
+    if (insuranceDTO.value.insr_retr_yn === 'Y') {
+      return false;
+    } else if (insuranceDTO.value.user_cd === 'IND' && TODAY <= newValue[0]) {
+      insuranceDTO.value.insr_retr_dt = newValue[0];
+    }
+    // 과거일자로는 변경 불가, 원복시킨다.
+    if (TODAY > newValue[0] && renewalYN === 'N') {
+      insuranceDTO.value.insr_st_dt = TODAY;
+      insuranceDTO.value.insr_retr_dt = TODAY;
+      showMessageBoxByInsrDt();
+    }
+
+    // [보험료표] 보험개시일자가 과거이면 보험개시일로 변경한다.
+    if (newValue[0] < insuranceRateDTO.value.insr_st_dt) {
+      INSR_RETR_DT_TODAY = insuranceRateDTO.value.insr_st_dt
+    }
   }
 );
 
@@ -3471,6 +3452,8 @@ watch(
   }
 );
 
+let cons_data_backup = ref({})
+let spct_data_backup = ref({})
 /**
  *
  */
@@ -3479,17 +3462,33 @@ watch(
   (newValue, oldValue) => {
     // 읽기전용일 경우 해당로직 제외
     if (isReadOnlyAll.value) return false;
-
     if (newValue == 'N') {
+      cons_data_backup.value = JSON.parse(JSON.stringify(insuranceDTO.value.cons_data));
+
       insuranceDTO.value.cons_data.cbr_cnt = 0;
       insuranceDTO.value.cons_data.cbr_data = [];
 
       calInsrAmt(insuranceDTO.value.cons_data);
     } else {
-      if(insuranceDTO.value.cons_data.cbr_cnt == 0) {
-        addCBR(insuranceDTO.value.cons_data, '컨설팅');
-        calInsrAmt(insuranceDTO.value.cons_data);
+      if(Object.keys(cons_data_backup.value).length !== 0) {
+        insuranceDTO.value.cons_data = JSON.parse(JSON.stringify(cons_data_backup.value));
+        cons_data_backup.value = {}
+      }else {
+        if(!insuranceDTO.value.cons_data) {
+          insuranceDTO.value.cons_data = {}
+          insuranceDTO.value.cons_data.cbr_cnt = 0;
+          insuranceDTO.value.cons_data.cbr_data = [];
+        }
       }
+
+      if(!insuranceDTO.value.cons_data.cbr_cnt || insuranceDTO.value.cons_data.cbr_cnt == 0) {
+        addCBR(insuranceDTO.value.cons_data, '컨설팅');
+      }
+      insuranceDTO.value.cons_data.insr_retr_dt = insuranceDTO.value.insr_retr_dt
+      if(!insuranceDTO.value.cons_data.insr_sale_rt) {
+        insuranceDTO.value.cons_data.insr_sale_rt = insuranceDTO.value.insr_sale_rt
+      }
+      calInsrAmt(insuranceDTO.value.cons_data);
     }
   }
 );
@@ -3501,8 +3500,14 @@ watch(
     if (isReadOnlyAll.value) return false;
 
     if (newValue == 'N') {
+      spct_data_backup.value = JSON.parse(JSON.stringify(insuranceDTO.value.spct_data));
       insuranceDTO.value.spct_data = {}
     } else {
+      if(Object.keys(spct_data_backup.value).length !== 0) {
+        insuranceDTO.value.spct_data = JSON.parse(JSON.stringify(spct_data_backup.value));
+        spct_data_backup.value = {}
+      }
+
       if (!insuranceDTO.value.spct_data.cbr_data || insuranceDTO.value.spct_data.cbr_data.length == 0) {
         addSpctCBR(insuranceDTO.value.spct_data, '특약');
       }
@@ -3771,6 +3776,12 @@ onMounted(async () => {
     insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
     insuranceDTO.value.cons_data.insr_sale_rt = insuranceDTO.value.insr_sale_rt;
 
+    if(insuranceDTO.value.cons_join_yn != null && insuranceDTO.value.cons_join_yn == 'Y' ){
+      if(insuranceDTO.value.cons_data.insr_retr_dt == null || insuranceDTO.value.cons_data.insr_retr_dt == ''){
+        insuranceDTO.value.cons_data.insr_retr_dt = insuranceDTO.value.insr_retr_dt
+      }
+    }
+
     // 갱신자는 인증처리 완료
     insuranceDTO.value.cbr_data.forEach(function (data) {
 
@@ -3805,6 +3816,13 @@ onMounted(async () => {
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_year = insuranceRateDTO.value.base_year;
 
+    insuranceDTO.value.base_insr_st_dt = insuranceRateDTO.value.insr_st_dt;
+    insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
+    insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
+    insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
+    insuranceDTO.value.spct_data.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
+    insuranceDTO.value.spct_data.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
+
 
     if (insuranceDTO.value.user_cd == 'IND') {
       insuranceDTO.value.user_birth = userDTO.value.user_birth;
@@ -3825,7 +3843,6 @@ onMounted(async () => {
     insuranceDTO.value.spct_join_yn = 'N';
 
     // 기본담보 시작,종료일
-    insuranceDTO.value.insr_st_dt = today;
     insuranceDTO.value.insurance_no = insuranceNO.value;
 
     // 컨설팅 시작,종료일
@@ -3845,9 +3862,14 @@ onMounted(async () => {
       router.push('/404');
     } else {
       Object.assign(insuranceDTO.value, resultData.data[0]);
-      insuranceDTOBackup.value = JSON.parse(JSON.stringify(insuranceDTO.value));
+      if(insuranceDTO.value.cons_join_yn != null && insuranceDTO.value.cons_join_yn == 'Y' ){
+        if(insuranceDTO.value.cons_data.insr_retr_dt == null || insuranceDTO.value.cons_data.insr_retr_dt == ''){
+          insuranceDTO.value.cons_data.insr_retr_dt = insuranceDTO.value.insr_retr_dt
+        }
+      }
     }
   }
+  insuranceDTOBackup.value = JSON.parse(JSON.stringify(insuranceDTO.value));
 
   onLoading.value = true;
 });

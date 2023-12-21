@@ -15,9 +15,9 @@
     <v-window-item value="1">
       <v-row class="mt-10" justify="center">
         <v-col cols="12" sm="10">
-          <h4 class="text-h5 font-weight-bold text-center">관세사배상책임보험이란?</h4>
+          <h4 class="text-h5 font-weight-bold text-center">변호사배상책임보험이란?</h4>
           <p class="text-18 text-center mt-10">
-            관세사 및 그 임직원이 전문인의 자격으로 업무를 수행함에 있어 과실로 의뢰인 또는 제 3자에게<br />직접적인 손해를 입힌 경우 법률상 손해배상금 및 사고처리에 드는 제반비용을 보상해주는 상품입니다.<br />공제, 이행보증보험과 달리 보험금 지급 후 구상권을 행사하지 않습니다.
+            변호사 및 그 임직원이 전문인의 자격으로 업무를 수행함에 있어 과실로 의뢰인 또는 제 3자에게 직접적인 손해를 입힌 경우 법률상 손해배상금 및 사고처리에 드는 제반비용을 보상해주는 상품입니다.
           </p>
           <v-row class="my-10 px-sm-16" justify="center">
             <v-col align="center" class="pa-0">
@@ -25,22 +25,22 @@
                 <img src="../../assets/images/icon/icon-insurance-1-5-small.png" alt=""/>
               </div>
               <p class="text-20 font-weight-medium mt-6">계약자</p>
-              <p class="mt-4">한국관세사회</p>
+              <p class="mt-4">대한변호사협회</p>
             </v-col>
             <v-col align="center" class="pa-0">
               <div class="bg-background border-radius-round d-inline-block pa-10">
                 <img src="../../assets/images/icon/icon-insurance-1-6-small.png" alt=""/>
               </div>
               <p class="text-20 font-weight-medium mt-6">보험기간</p>
-              <p class="mt-4">1월 1일 00:01 ~ 다음해 1월 1일 00:01</p>
-              <p class="color-gray-shadow mt-2 text-14">※ 단, 1월 1일 이후 신규 가입 시 가입일부터 개시</p>
+              <p class="mt-4">12월 1일 00:01 ~ 다음해 12월 1일 00:01</p>
+              <p class="color-gray-shadow mt-2 text-14">※ 12월 1일 이후 신규 가입 시 가입일부터 개시</p>
             </v-col>
             <v-col align="center" class="pa-0">
               <div class="bg-background border-radius-round d-inline-block pa-10">
                 <img src="../../assets/images/icon/icon-insurance-1-7-small.png" alt=""/>
               </div>
               <p class="text-20 font-weight-medium mt-6">보험가입대상</p>
-              <p class="mt-4">한국관세사회 개인회원 및<br/>합동사무소 / 법인</p>
+              <p class="mt-4">대한변호사협회 회원</p>
             </v-col>
           </v-row>
         </v-col> 
@@ -51,8 +51,8 @@
               <v-card class="w-sm-360 v-box">
                 <img src="../../assets/images/img-insurance-1-3.jpg" alt="" class="d-block w-full"/>
                 <div class="px-6 py-9 text-left">
-                  <p class="text-20 font-weight-medium">손해배상 책임의 보장</p>
-                  <p class="mt-4 word-break-keep-all">관세사법 및 동법 시행령에서 관세사 1인당 1천만원 이상에 해당하는 보험 가입 등 필요한 조치를 해야한다고 규정하고 있습니다.</p>
+                  <p class="text-20 font-weight-medium">손해배상책임 위험 증가</p>
+                  <p class="mt-4 word-break-keep-all">급격한 세계화 및 사회구조 다변화로 변호사의 전문성은 더욱 강조되고 있으며, 직무가 복잡해지고 세분화되어 업무 수행에 대한 손해배상책임 위험이 점차 증가하고 있습니다.</p>
                 </div>
               </v-card>
             </v-col>
@@ -61,7 +61,7 @@
                 <img src="../../assets/images/img-insurance-1-1.jpg" alt="" class="d-block w-full"/>
                 <div class="px-6 py-9 text-left">
                   <p class="text-20 font-weight-medium">전문자격사로서의 역할과 책임 확대</p>
-                  <p class="mt-4 word-break-keep-all">FTA, APTA 등 무역협정체결의 증대로 관세사 업무의 리스크가 갈수록 증가하여 전문 자격사 로서의 역할과 책임이 늘어나고 있습니다.</p>
+                  <p class="mt-4 word-break-keep-all">변호사 전문분야 등록제 등 각 업무영역에 대한 전문성이 극대화 되는 상황에서 법률 수요자에 대한 양질의 법률서비스 제공과 업무 책임도 증가하고 있습니다.</p>
                 </div>
               </v-card>
             </v-col>
@@ -70,35 +70,31 @@
                 <img src="../../assets/images/img-insurance-1-2.jpg" alt="" class="d-block w-full"/>
                 <div class="px-6 py-9 text-left">
                   <p class="text-20 font-weight-medium">경제적 부담 완화</p>
-                  <p class="mt-4 word-break-keep-all">관세사가 직무를 수행하는 과정에서 부주의, 착오 등 과실로 인해 발생하는 경제적 부담을 완화할 수 있습니다.</p>
+                  <p class="mt-4 word-break-keep-all">전문직업인의 직무상 과실에 대한 민사적 책임을 묻는 경우가 늘고 있으며, 손해배상액의 규모 또한 점점 증가하고 있는 추세입니다. 이에 전문인보험의 가입을 통하여 경제적 부담을 완화할 수 있습니다.</p>
                 </div>
               </v-card>
             </v-col>
           </v-row>
-          <div class="bg-background text-center px-4 py-8 mt-8 mb-12">
-            <p class="text-18 font-weight-medium">관련법령</p>
-            <p class="text-body-1 color-gray-shadow mt-5 word-break-keep-all">
-              <span class="mx-2">관세사법16조(손해배상책임의보장)</span>
-              <span class="mx-2">|</span>
-              <span class="mx-2">관세사법제17조의5(손해배상준비금 등)</span>
-              <span class="mx-2">|</span>
-              <span class="mx-2">관세사법제19조(통관취급법인 등)</span>
-              <span class="mx-2">|</span>
-              <v-spacer />
-              <span class="mx-2">관세사법시행령제22조(손해배상책임의보장)</span>
-              <span class="mx-2">|</span>
-              <span class="mx-2">관세사법시행령제24조의3(관세법인의손해배상준비금적립등)</span>
-            </p>
+          <!--
+          <div class="bg-background px-4 py-8 mt-8 mb-12">
+            <div class="text-18 font-weight-medium text-center">관련 법령</div>
+            <div class="text-body-1 color-gray-shadow mt-5 word-break-keep-all d-flex flex-wrap justify-center px-16">
+              <span class="w-40 pl-16">세무사법 제16조의2(손해배상책임의 보장)</span>
+              <span class="w-40">세무사법 시행령 제33조의4(손해배상책임의 보장)</span>
+              <span class="w-40 mt-1 pl-16">세무사법 제16조의7(손해배상준비금 등)</span>
+              <span class="w-40 mt-1">세무사법 시행령 제14조의8(손해배상준비금의 적립 등)</span>
+            </div>
           </div>
+          -->
         </v-col>
         <v-col cols="12" sm="9" class="px-0 mt-12">
           <h4 class="text-h5 font-weight-bold text-center">록톤의 역할</h4>
           <ul class="list-style-type-none v-box py-2 px-16 mt-10 border-color-gray">
             <li class="d-flex justify-space-between align-center py-8">
               <img src="../../assets/images/icon/icon-insurance-1-1.png" alt="" class="ml-4">
-              <p class="text-h6 w-30 ml-10">계약자<span class="text-18">(한국관세사회)</span> 대변</p>
+              <p class="text-h6 w-30 ml-10">계약자<span class="text-18">(대한변호사협회)</span> 대변</p>
               <div class="text-body-1 line-1-6 w-50">
-                <p>사고중재/ 요율작업에서 계약자에 유리하도록 적극 협상</p>
+                <p>사고중재 / 요율작업에서 계약자에 유리하도록 적극 협상</p>
               </div>
             </li>
             <v-divider />
@@ -106,7 +102,7 @@
               <img src="../../assets/images/icon/icon-insurance-1-2.png" alt="" class="ml-4">
               <p class="text-h6 w-30 ml-10">2002년부터 단체보험 운영</p>
               <div class="text-body-1 line-1-6 w-50">
-                <p>2002년부터 한국관세사회를 계약자로 하여 단체보험 도입</p>
+                <p>2002년부터 단체보험 도입</p>
                 <p class="mt-1">- 개별 가입 대비 저렴한 보험료 제공</p>
               </div>
             </li>
@@ -131,19 +127,14 @@
           <v-tabs v-model="tab2" color="primary" direction="vertical">
             <v-tab value="option-1"><h4 class="text-body-1">보상하는 손해</h4></v-tab>
             <v-tab value="option-2"><h4 class="text-body-1">배상청구기준증권</h4></v-tab>
-            <v-tab value="option-3"><h4 class="text-body-1">보상한도액/자기부담금</h4></v-tab>
-            <v-tab value="option-4"><h4 class="text-body-1">사고공동부담비율</h4></v-tab>
-            <v-tab value="option-5"><h4 class="text-body-1">특별약관</h4></v-tab>
+            <v-tab value="option-3"><h4 class="text-body-1">보상한도/자기부담금</h4></v-tab>
+            <v-tab value="option-4"><h4 class="text-body-1">특별약관</h4></v-tab>
           </v-tabs>
         </v-col>
         <v-col cols="12" md="10">
           <v-window v-model="tab2">
             <v-window-item value="option-1">
-              <ul class="list-style-type-bull word-break-keep-all ml-3">
-                <li>관세사의 관세대리업무 중 과실신고 등으로 인해 피해자가 추가로 어떠한 세액을 납부하는 경우 관세사로서는 원칙적으로 부과되는 “본세”는 배상책임을 부담하지 않으며 추가로 지출하게 되는 “가산세”등에 대해서만 배상책임을 부담합니다.</li>
-              </ul>
-              <p class="color-gray-shadow mt-2">※ 관세 감면, 환급 신고 등의 부실신고로 인해 피해자가 추가로 부담하는 관세 차액은 “본세”에 해당하더라도 배상의 책임이 있을 수 있음.</p>
-              <table class="normal-table mt-6">
+              <table class="normal-table">
                 <colgroup>
                   <col style="width:20%"/>
                   <col style="width:20%"/>
@@ -153,7 +144,7 @@
                     <tr>
                       <th rowspan="8" class="text-center">주요 보상하는 손해</th>
                       <td class="text-center">법률적 손해배상금</td>
-                      <td class="border-right-0">판결액, 최종합의 및 화해액</td>
+                      <td class="border-right-0">판결액, 최종합의 및 화해액<br/>(단, 징벌적 손해, 벌과금, 과태료 등과 서비스 수수료 반환금은 포함되지 않음)</td>
                     </tr>
                     <tr>
                       <td rowspan="6" class="text-center">사고처리 제비용</td>
@@ -186,8 +177,11 @@
                 </colgroup>
                 <tbody>
                     <tr>
-                      <th rowspan="10" class="text-center">보상하지 않는 손해</th>
+                      <th rowspan="13" class="text-center">주요 보상하지 않는 손해</th>
                       <td class="border-right-0">피보험자의 악의적 또는 사기적 부정행위</td>
+                    </tr>
+                    <tr>
+                      <td class="border-right-0">다른 기관 및 정부기관의 공무원 자격, 다른 단체의 임원 등 업무에 기인한 책임</td>
                     </tr>
                     <tr>
                       <td class="border-right-0">징벌적 손해 (Punitive Damage Exclusion Clause) : 벌금, 과태료 등</td>
@@ -214,8 +208,39 @@
                       <td class="border-right-0">결과적 책임 / 간접손해 (Consequential Loss Exclusion Clause)</td>
                     </tr>
                     <tr>
+                      <td class="border-right-0">고용직원의 고의 등 행위 부담보(고용직원 부정직행위 담보 특별약관 가입 시 예외)</td>
+                    </tr>
+                    <tr>
+                      <td class="border-right-0">선의의 피보험자 조항 적용 안함</td>
+                    </tr>
+                    <tr>
                       <td class="border-right-0">기타 보통 약관 및 특별약관 보험조건에서 정하는 사항</td>
                     </tr>
+                </tbody>
+              </table>
+              <table class="normal-table mt-4">
+                <colgroup>
+                  <col style="width:20%"/>
+                  <col style="width:auto"/>
+                </colgroup>
+                <tbody>
+                <tr>
+                  <th rowspan="3" class="text-center">추가사항</th>
+                  <td class="border-right-0">할인 및 할증 적용 : 이 보험은 무사고 기간에 따른 할인 및 사고 할증을 적용하며, 보상한도 공유 복수가입 시 인원수에 따른 할인율이 추가됩니다.</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">복수가입 시 총 보상한도 : 변호사 3인 이상 복수가입 시에는 연간 총 보상한도액 2배수를 적용합니다. <br/>(단, 2명 복수가입 시에는 1배수 적용)</td>
+                </tr>
+                <tr>
+                  <td class="border-right-0">사고자 보험료 할증 : 보험금 수령 시 수령보험금 규모에 따라 3개년 할증이 적용됩니다. <br/>(사고조사 진행 중 갱신 시 10% 할증 적용) <br/>
+                    <v-btn
+                        variant="outlined"
+                        color="primary"
+                        class="mt-2 flex-grow-0"
+                        @click="isInsrTableDialog = true"
+                    >보험료표 보기</v-btn
+                    ></td>
+                </tr>
                 </tbody>
               </table>
               <div class="mt-4">
@@ -227,11 +252,13 @@
                   </v-dialog>
                 </v-btn>
               </div>
+
+
               <v-btn color="primary" variant="tonal" block class="mt-10 py-7 border-primary-1">
                 <span class="mr-1">예상질문에 대한 답변서</span>
                 <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
-                <v-dialog persistent v-model="dialogCAAfaq" activator="parent" scrollable max-width="1000">
-                  <v-btn variant="outlined" color="dark" @click="dialogCAAfaq = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
+                <v-dialog persistent v-model="isDialogFAQ" activator="parent" scrollable max-width="1000">
+                  <v-btn variant="outlined" color="dark" @click="isDialogFAQ = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
                   <v-card>
                     <v-card-title class="d-flex justify-space-between align-center px-6 py-4 position-relative">
                       <p class="text-h6 font-weight-bold">예상질문에 대한 답변서</p>
@@ -239,35 +266,35 @@
                     </v-card-title>
                     <v-divider class="mb-0"/>
                     <v-card-text class="pa-0">
-                      <iframe src="/assets/doc/CAA/관세사2024_예상질문에 대한 답변서.pdf" width="100%" height="800px"></iframe>
+                      <iframe src="/assets/doc/ADV/2023 예상질문에 대한 답변서.pdf" width="100%" height="800px"></iframe>
                     </v-card-text>
                   </v-card>
                 </v-dialog>
               </v-btn>
-                    
+
             </v-window-item>
             <v-window-item value="option-2">
               <h4 class="text-body-1 font-weight-bold">배상청구기준증권</h4>
-              <ul class="list-style-type-bull word-break-keep-all mt-6 ml-3">                
+              <ul class="list-style-type-bull word-break-keep-all mt-6 ml-3">
                 <li>현재 유효한 보험증권의 보험기간 중에 제3자(의뢰인 포함)로 부터 손해배상청구가 있어야 보상이 가능한 증권입니다.</li>
                 <li class="mt-1">소급 담보일(통상 최초가입일) 이후의 업무에 기인한 사고로 보험종료일 사이에 발생된 배상청구에 대하여 보상이 이루어지며, 매년 갱신이 되면 소급담보일(통상 최초가입일) 이후 업무가 계속적으로 담보됩니다.</li>
                 <li class="mt-1">보상기준은 업무일이 속한 보험증권의 가입조건을 따르는 것이 아닌, 배상청구 당시의 유효한 보험가입조건에 따라 보상이 됩니다.</li>
               </ul>
               <img src="../../assets/images/img-insurance-2-2.png" alt="" class="mt-4"/>
               <div class="mt-4">
-                <p class="color-gray-shadow">※ 갱신이 되지 않을 경우에는 보험가입기간 중의 업무로 발생한 사고라도 보험만기일로부터 자동보고연장담보기간 60일이 경과하면 보험혜택을 받으실 수 없습니다.</p>
+                <p class="color-gray-shadow">※ 갱신이 되지 않을 경우에는 보험가입기간 중의 업무로 발생한 사고라도 보험만기일로부터 자동보고연장담보기간 70일이 경과하면 보험혜택을 받으실 수 없습니다.</p>
                 <v-btn type="button" color="primary" variant="outlined" class="mt-2 d-block">
                   <span class="mr-1">보고기간연장담보(Extended Reporting Period) 알아보기</span>
                   <v-dialog persistent v-model="dialogERP" activator="parent" scrollable max-width="1000">
                     <v-btn variant="outlined" color="dark" @click="dialogERP = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
                     <v-card>
                       <v-card-title class="d-flex justify-space-between align-center px-6 py-4 position-relative">
-                        <p class="text-h6 font-weight-bold">관세사배상책임보험 보고기간연장담보(ERP) 안내</p>
+                        <p class="text-h6 font-weight-bold">변호사배상책임보험 보고기간연장담보(ERP) 안내</p>
                         <v-spacer />
                       </v-card-title>
                       <v-divider class="mb-0"/>
                       <v-card-text class="px-10 py-6">
-                        <p>피보험자인 관세사의 폐업 등 부득이한 경우로 보험을 갱신하지 못하는 경우 추가보험료를 납부하고 과거 보험기간에 수행한 관세사의 업무에 대한 담보를 연장할 수 있습니다.</p>
+                        <p>법인의 해산, 개인사무소의 폐업 등 보험계약을 유지할 수 없는 사유가 발생한 경우 추가보험료를 납부하고 과거 보험기간에 수행한 변호사의 업무에 대한 담보를 연장할 수 있습니다.</p>
                         <table class="normal-table mt-6">
                           <colgroup>
                             <col style="width:22%"/>
@@ -276,7 +303,7 @@
                           <tbody>
                             <tr>
                               <th>담보업무</th>
-                              <td class="border-right-0">과거 보험기간에 수행한 관세사의 업무</td>
+                              <td class="border-right-0">과거 보험기간에 수행한 변호사의 업무</td>
                             </tr>
                             <tr>
                               <th class="border-left-0">가입기간</th>
@@ -292,7 +319,7 @@
                             </tr>
                             <tr>
                               <th class="border-left-0">유의사항</th>
-                              <td class="border-right-0">보험기간 만료 후 30일 이내에 서면 요청하여야 하며,<br/>보험조건은 전년도와 동일하게 가입(증액 불가)</td>
+                              <td class="border-right-0">보험기간 만료 후 30일 이내에 서면 요청하여야 하며,<br/>보험조건은 전년도와 동일하게 가입(변경 불가)</td>
                             </tr>
                           </tbody>
                         </table>                        
@@ -307,7 +334,7 @@
               <h4 class="text-body-1 font-weight-bold">보상한도액</h4>
               <ul class="list-style-type-bull word-break-keep-all mt-6 ml-3">
                 <li>사고 발생시 보험회사에서 지급되는 보험금의 상한선을 뜻합니다.</li>
-                <li class="mt-1">약관상 보상되는 손해 및 그와 관련된 소송 비용, 변호사 비용 등 방어 비용은 보상한도액을 넘지 않는 범위내에서 보상됩니다.<br />(All Costs & Expenses are included within the Limit of Liability 조항)</li>
+                <li class="mt-1">약관상 보상되는 손해 및 그와 관련된 소송 비용, 변호사 비용 등 방어 비용은 보상한도액을 넘지 않는 범위내에서 보상됩니다.<br/> (All Costs & Expenses are included within the Limit of Liability 조항)</li>
               </ul>
               <table class="normal-table mt-6">
                 <colgroup>
@@ -316,104 +343,29 @@
                 </colgroup>
                 <tbody>
                   <tr>
-                    <th>1청구당 보상한도액</th>
-                    <td class="border-right-0">1 사고에 대한 보상한도액</td>
+                    <th>1청구당 보상한도액 </th>
+                    <td class="border-right-0">1 사고에 대한 보상한도</td>
                   </tr>
                   <tr>
-                    <th style="border-left: 0px solid #FFFFFF">연간 총 보상한도액</th>
-                    <td class="border-right-0">보험기간 1년 동안 보상받을 수 있는 총 한도액</td>
+                    <th class="border-left-0">연간 총 보상한도액</th>
+                    <td class="border-right-0">
+                      보험기간 1년 동안 보상받을 수 있는 총 한도
+                    </td>
                   </tr>                  
                 </tbody>
               </table>
               <h4 class="text-body-1 font-weight-bold mt-10">자기부담금(공제금액)</h4>
-              <ul class="list-style-type-bull word-break-keep-all mt-6 ml-3">
-                <li>피보험자 본인이 부담하는 금액으로 자기부담금 미만의 손해에 대해서는 보상되지 않습니다. <br /></li>
-                <li class="mt-1">자기부담금을 초과하는 손해에 대해서는 산출손해배상액에서 자기부담금을 차감 후 1청구당 보상한도액 범위 내에서 보상합니다. <br/>(사고공동부담비율 선택한 경우 추가 공제 후 지급)</li>
+              <ul class="list-style-type-bull word-break-keep-all mt-6 ml-3">                
+                <li>피보험자 본인이 부담하는 금액으로 매 사고당 적용되며, 자기부담금 미만의 손해에 대해서는 보상되지 않습니다.</li>
+                <li>자기부담금을 초과하는 손해에 대해서는 산출손해배상액에서 자기부담금을 차감 후 청구당 보상한도액 범위 내에서 보상됩니다.</li>
+                <!--<li class="mt-1"><span class="text-decoration-underline">동일회사</span>의 법인세, 종합소득세 등 신고 시 발생한 <span class="text-decoration-underline">동일한 업무상 과실에 기인한 사고</span>들은 그 과실이 연속된 귀속연도에 계속 반복되어 발생하였더라도 기간에 관계없이 <span class="text-decoration-underline">하나의 사고로 간주</span>하여 자기부담금을 적용합니다.</li>-->
               </ul>
-              <table class="normal-table mt-2">
-                <colgroup>
-                  <col style="width:22%"/>
-                  <col/>
-                </colgroup>
-                <tbody>
-                  <tr>
-                    <th>자기부담금</th>
-                    <td class="border-right-0"> 1 사고당 적용</td>
-                  </tr>
-                  <tr>
-                    <td class="border-right-0" style="border-left: 0px solid #FFFFFF" colspan="2">
-                      동일회사, 동일 물품 통관 시 발생한 동일한 업무상 과실에 기인한 사고들은 기간에 관계없이 하나의 사고로 처리
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </v-window-item>
             <v-window-item value="option-4">
-              <h4 class="text-body-1 font-weight-bold word-break-keep-all">사고공동부담비율</h4>
-              <ul class="list-style-type-bull word-break-keep-all mt-6 ml-3">
-                <li>1회의 배상청구(하나의 사고)에 대하여 손해사정 후 결정된 손해배상금에서 자기부담금을 차감한 금액(=예상지급보험금)의 일정비율(%)에 해당하는 금액을 피보험자가 부담하는 제도입니다. </li>
-              </ul>
-              <table class="normal-table mt-6 text-center">
-                <colgroup>
-                  <col style="width: 25%"/>
-                  <col style="width: 25%"/>
-                  <col style="width: 25%"/>
-                  <col style="width: 25%"/>
-                </colgroup>
-                <thead>
-                  <tr>
-                    <th>구분</th>
-                    <th>CASE A</th>
-                    <th>CASE B</th>
-                    <th class="border-right-0">CASE C</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="border-left-0">사고공동부담비율</td>
-                    <td>미적용</td>
-                    <td>15% 적용</td>
-                    <td class="border-right-0">30% 적용</td>
-                  </tr>
-                  <tr>
-                    <td class="border-left-0">보험사 지급 비율</td>
-                    <td>보험사 100% 지급</td>
-                    <td>보험사 85% 지급</td>
-                    <td class="border-right-0">보험사 70% 지급</td>
-                  </tr>
-                </tbody>
-                <tbody>
-                  <tr>
-                    <td colspan="4" class="bg-background border-right-0 py-8">
-                      <p class="color-primary text-20">손해배상액이 1천만원으로 확정된 경우 예상 보험금은?</p>
-                      <p class="color-gray-shadow">(보상한도 1천만원/자기부담금 2백만원 조건 가입시)</p>
-                      <p class="mt-4">손해배상액 1천만원 - 자기부담금 2백만원 = <span class="text-20">8,000,000원</span></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="border-left-0">수령보험금</td>
-                    <td>
-                      <p>8,000,000원</p>
-                      <p class="color-gray-shadow">(전액수령)</p>
-                    </td>
-                    <td>
-                      <p>6,800,000원</p>
-                      <p class="color-gray-shadow">(1,200,000원 차감)</p>
-                    </td>
-                    <td>
-                      <p>5,600,000원</p>
-                      <p class="color-gray-shadow">(2,400,000원 차감)</p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <p class="color-gray-shadow mt-4 text-right">※ 피보험자가 선택한 조건에 따라 예상지급보험금이 위와 같이 보상됩니다.</p>
-            </v-window-item>
-            <v-window-item value="option-5">
-              <h4 class="text-body-1 font-weight-bold">사무원부정직행위담보특별약관<span class="font-weight-normal">(추가보험료발생)</span></h4>
+              <h4 class="text-body-1 font-weight-bold">고용직원 부정직행위 담보 특별약관<span class="font-weight-normal">(추가보험료발생)</span></h4>
               <p class="mt-6  word-break-keep-all">
-                관세사가 고용한 직원의 부정직(또는 사기행위)의 직접적인 결과로 보험기간 중에 발견된 금전적인 손실을 보상 받을 수 있는 특별 약관(Dishonesty Extension) 입니다.<br/>
-                고의적이고 명백한 의도에 의한 직접 결과이거나 혹은 고용한 사무원이 관세사를 대신하여 전문서비스 업무를 수행하는 동안 사무원 자신의 경제적인 이득을 취할 목적으로 단독/타인과 공모하여 행한 부정 행위 또는 사기행위에 기인한 것을 전제로 합니다.
+                변호사가 고용한 직원의 부정직(또는 사기행위)의 직접적인 결과로 보험기간 중에 발견된 금전적인 손실을 보상 받을 수 있는 특별 약관(Dishonesty Extension) 입니다.<br/>
+                고의적이고 명백한 의도에 의한 직접 결과이거나 혹은 고용한 사무원이 변호사를 대신하여 전문서비스 업무를 수행하는 동안 사무원 자신의 경제적인 이득을 취할 목적으로 단독/타인과 공모하여 행한 부정 행위 또는 사기행위에 기인한 것을 전제로 합니다.
               </p>
               <table class="normal-table mt-6">
                 <colgroup>
@@ -421,31 +373,33 @@
                   <col style="width: auto"/>
                 </colgroup>
                 <tbody>
-                  <tr>
-                    <th>보상한도액</th>
-                    <td class="border-right-0">
-                      1천만원 (*기본담보 보상한도 2천만원 이상부터 가입 가능) <br/>
-                      <span class="color-gray">(사무원 1인당 적용되는 보상 한도액 이 아닌 1청구당/연간 총 한도액입니다.)</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="border-left-0">담보 내용 </th>
-                    <td class="border-right-0">
-                      가입 시 기재된 사무원에 대하여 보장 <br/>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="border-left-0">사고 통지</th>
-                    <td class="border-right-0">
-                      사고 인지 후 30일 이내에 반드시 보험사로 서면 통지하여야 하며,<br/>
-                      기간 내 통지가 이루어지지 않을 경우 면책처리됨<br/>
-                      <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mt-2 px-4 py-1 text-14" href="/assets/doc/CAA/관세사2023_사고통보서.pdf" download>
-                        <span class="mr-1">사고 경위서 다운로드</span>
-                        <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
-                      </a>
-                    </td>
-                  </tr>
+                <tr>
+                  <th>보상한도액</th>
+                  <td class="border-right-0">
+                    2천5백만원 / 5천만원 / 1억원 중 선택<br/>
+                    <span class="color-gray">(고용직원 1인당 적용되는 보상 한도액 이 아닌 1청구당/연간 총 한도액입니다.)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="border-left-0">가입조건 </th>
+                  <td class="border-right-0">
+                    - 기본담보의 50%적용을 원칙으로 함 <br/>
+                    - 각 지방 변호사회에 사무원으로 등록된 전 직원의 일괄가입이 조건임 <br/>(변호사 유자격자 제외)
+                  </td>
+                </tr>
+                <tr>
+                  <th class="border-left-0">사고 통지</th>
+                  <td class="border-right-0">
+                    사고 인지 후 30일 이내에 반드시 보험사로 서면 통지하여야 하며,<br/>
+                    기간 내 통지가 이루어지지 않을 경우 면책처리됨<br/>
+                    <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mt-2 px-4 py-1 text-14" href="/assets/doc/ADV/변호사_사고통보서.pdf" download>
+                      <span class="mr-1">사고 통보서 다운로드</span>
+                      <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
+                    </a>
+                  </td>
+                </tr>
                 </tbody>
+
               </table>
               <div class="mt-4">
                 <span class="color-gray-shadow">※ 자세한 사항은 약관을 참조해주세요</span>
@@ -460,7 +414,7 @@
                 <dt class="font-weight-medium"><i class="mdi mdi-alert-circle-outline mr-2"></i>유의사항</dt>
                 <dd class="text-body-1 mt-4 text-grey-darken-3">
                   <ul class="list-style-type-bull pl-3">
-                    <li>최초 가입 이후 사고 인지 시점에도 유효하게 가입되어 있어야 하며 기본 담보의 자동보고 연장기간(60일)은 적용되지 않습니다.</li>
+                    <li>최초 가입 이후 사고 인지 시점에도 유효하게 가입되어 있어야 하며 기본 담보의 자동보고 연장기간(70일)은 적용되지 않습니다.</li>
                     <li>보험회사가 지급한 보험금한도 내에서 사고를 야기한 사무원 및 제3자에 대하여 구상권을 행사 할 수 있습니다.</li>
                   </ul>
                 </dd>
@@ -483,7 +437,7 @@
                 <dd class="mt-1">
                   회원가입 후 로그인<br/>
                 </dd>
-                <dd class="">합동/법인은 하나의 아이디를 발급 받은 후 회원가입</dd>
+                <dd class="">복수가입의 경우 하나의 아이디를 발급 받은 후 회원가입</dd>
               </dl>
             </li>
             <li class="px-16 mt-2 mb-1">
@@ -498,18 +452,17 @@
               <img src="../../assets/images/icon/icon-insurance-3-2.png" alt="" class="pl-16 ml-16"/>
               <dl class="ml-16">
                 <dt class="color-primary">가입/계약 정보 입력</dt>
-                <dd class="mt-1">가입 정보/ 계약 정보 입력 후 보험료 확인</dd>
+                <dd class="mt-1">가입 정보/계약 정보 입력 후 보험료 확인</dd>
                 <dd class="mt-1">    
-                  약관/ 개인정보처리동의 확인
-                  <v-btn color="primary" variant="outlined" density="comfortable" class="ml-2">
-                    <span class="mr-1">약관 상세 </span>
-                  </v-btn>
+                  약관/개인정보처리동의 확인<br/>
+                  <v-btn color="primary" variant="outlined" class="ml-2"> <span>약관 상세 </span>
                   <v-dialog persistent v-model="isDialogTermsOfPolicy2" activator="parent" scrollable max-width="1000">
                     <v-btn variant="outlined" color="dark" @click="isDialogTermsOfPolicy2 = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
                     <TermsOfPolicy></TermsOfPolicy>
                   </v-dialog>
+                </v-btn>
+
                 </dd>
-                <dd class="color-gray-shadow">※ 보험 기간 중에는 가입 조건 변경이 불가능 하오니 재확인 부탁드립니다.</dd>
               </dl>
             </li>
             <li class="px-16 mt-2 mb-1">
@@ -556,8 +509,9 @@
                 <dd class="mt-1">
                   보험 개시일 전까지 납부
                 </dd>
-                <dd class="mt-1">신규 가입 시 만기일 (매년 1월 1일)까지 일할 계산</dd>
-                <dd class="mt-1 color-gray-shadow">※ 입금자 피보험자 성명으로 반드시 기재<br/>(합동/법인은 합동/법인명으로 일괄 납부)</dd>
+                <dd class="mt-1">신규 가입 시 만기일 (매년 12월 1일)까지 일할 계산</dd>
+                <dd class="mt-1 color-gray-shadow" v-if="_AUTH_USER.userCd == 'IND'" >※ 입금자 피보험자 성명+등록번호로 반드시 기재<br/>(복수가입의 경우 사무소 명으로 일괄 납부)</dd>
+                <dd class="mt-1 color-gray-shadow" v-if="_AUTH_USER.userCd == 'JNT'" >※ 보험료를 합산하여 사무소 명으로 일괄납부</dd>
               </dl>
             </li>
             <li class="px-16 mt-2 mb-1">
@@ -573,7 +527,6 @@
               <dl class="ml-16">
                 <dt class="color-primary">가입 조회/증명서 출력</dt>
                 <dd class="mt-1">저장 및 출력</dd>
-                <dd class="mt-1 color-gray-shadow">※ 편집 불가한 PDF파일</dd>
               </dl>
             </li>
           </ul>
@@ -587,20 +540,19 @@
             <tbody>
               <tr>
                 <th rowspan="4" class="text-18">내용</th>
-                <td>한국관세사회 회원만 가입 가능</td>
-                <td class="border-right-0">등록번호 협회 홈페이지에서 검색 가능 <a href="http://www.krcaa.or.kr" target="_blank" class="color-black text-decoration-none">(http://www.krcaa.or.kr)<vue-feather type="external-link" class="ml-1 color-primary vertical-align-middle mt-minus-1"></vue-feather></a></td>
+                <td colspan="2" class="border-right-0">대한변호사협회 회원만 가입 가능</td>
               </tr>
               <tr>
-                <td>개인으로 각각 가입</td>
-                <td class="border-right-0">개인 사무소에 채용된 직원 관세사도 가입 해야함(개인으로 각각 가입)</td>
+                <td>개인 가입</td>
+                <td class="border-right-0">개인사무소에 등록변호사가 근무하는 경우 별도로 가입 해야함</td>
               </tr>
               <tr>
-                <td>합동/법인은 일괄 가입 원칙</td>
-                <td class="border-right-0">가입 시 한국관세사회에 등록 되어있는 소속 관세사 전원 가입 필수</td>
+                <td>소속 변호사의 복수 가입<br/>(보상한도 공유가입)</td>
+                <td class="border-right-0">소속 변호사가 보상한도를 공유하여 가입되며, <br/>3명 이상 복수 가입시 연간총보상한도액 2배수 적용</td>
               </tr>
               <tr>
-                <td>보상한도</td>
-                <td>보상 한도 5천만원 이상 가입을 희망하는 경우 개별 신청</td>
+                <td>보상한도 증액</td>
+                <td>정해진 보상한도를 초과하여 가입을 희망하는 경우 개별 신청</td>
               </tr>
             </tbody>
           </table>
@@ -624,12 +576,12 @@
               <img src="../../assets/images/icon/icon-insurance-4-1.png" alt="" class="pl-16 ml-16"/>
               <dl class="ml-16">
                 <dt class="color-primary">사고접수 양식 다운로드</dt>
-                <dd class="mt-1">사고 인지 즉시 서면에 의한 사고 접수를 하여야함(피보험자 상황 통지 의무)</dd>
+                <dd class="mt-1">사고 인지 즉시 서면에 의한 사고 접수를 하여야 함(피보험자 상황 통지 의무)</dd>
                 <dd class="mt-2">
-                  <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mr-4 px-4 py-1 text-14" href="/assets/doc/CAA/관세사2023_사고통보서.pdf" download>
-                      <span class="mr-1">사고 경위서 다운로드</span>
-                      <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
-                    </a>
+                  <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mr-4 px-4 py-1 text-14" href="/assets/doc/ADV/변호사_사고통보서.pdf" download>
+                    <span class="mr-1">다운로드</span>
+                    <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
+                  </a>
                                   
                 </dd>
               </dl>
@@ -645,7 +597,7 @@
             <li class="d-flex align-center px-16">
               <img src="../../assets/images/icon/icon-insurance-4-2.png" alt="" class="pl-16 ml-16"/>
               <dl class="ml-16">
-                <dt class="color-primary">경위서 작성 후 사고접수</dt>
+                <dt class="color-primary">통보서 작성 후 사고접수</dt>
                 <dd class="mt-1">이메일 또는 팩스로 사고접수</dd>
                 <dd>FAX : 0503-8379-2008 / 02-2011-0301</dd>
               </dl>
@@ -673,11 +625,11 @@
                 </svg>
               </div>
             </li>
-            <li class="d-flex align-center px-16">
+            <li class="d-flex align-center pl-16">
               <img src="../../assets/images/icon/icon-insurance-3-4.png" alt="" class="pl-16 ml-16"/>
               <dl class="ml-16">
                 <dt class="color-primary">사고 조사 진행 및 소송 대행</dt>
-                <dd class="mt-1">관세사의 과실 또는 부작위로 인한 법률상 배상책임액 및 사고처리 제비용 보상</dd>
+                <dd class="mt-1">변호사의 과실 또는 부작위로 인한 법률상 배상책임액 및 사고처리 제비용 보상</dd>
               </dl>
             </li>
             <li class="px-16 mt-2 mb-1">
@@ -721,7 +673,7 @@
                 <td class="border-right-0">사고 발생 시 사고 통보로부터 보험금 수령에 이르기 까지 제반 업무를 지원</td>
               </tr>
               <tr>
-                <td class="border-right-0">협상권을 가진 보험중개사로서 계약자(한국관세사회)를 대변하여 보험 계약 내용의 해석 및 사실 관계의 판단에 개입</td>
+                <td class="border-right-0">협상권을 가진 보험중개사로서 계약자(대한변호사협회)를 대변하여 보험 계약 내용의 해석 및 사실 관계의 판단에 개입</td>
               </tr>
               <tr>
                 <td>다수의 전문인 보험 운영 능력 및 전문 조직을 바탕으로 한 업무 진행</td>
@@ -757,42 +709,67 @@
     </v-window-item>
 
   </v-window>
+
+
+  <!--LAYER : 보험료 -->
+  <v-dialog persistent v-model="isInsrTableDialog" width="1024" scrollable>
+  <v-card class="position-relative">
+    <v-card-title class="d-flex justify-space-between pr-6">
+      <h3 class="text-h6 font-weight-bold">보험료표</h3>
+      <v-btn
+        variant="outlined"
+        color="dark"
+        @click="isInsrTableDialog = false"
+        class="mr-4"
+        >닫기</v-btn
+      >
+    </v-card-title>
+    <v-card-text class="pa-0">
+      <V_TADV0030P10 />
+    </v-card-text>
+  </v-card>
+  </v-dialog>
+
 </template>
 
 
 <script setup lang="ts">
   import { ref } from "vue";
-  import { onBeforeMount,watch, onBeforeUpdate, onUnmounted, onMounted, onRenderTracked, onRenderTriggered, onActivated, onDeactivated} from "vue";
+  import { onBeforeMount, onBeforeUpdate, onUnmounted, onMounted, onRenderTracked, onRenderTriggered, onActivated, onDeactivated} from "vue";
   import { useRoute } from 'vue-router'
   import BaseBreadcrumb from "@/components/BaseBreadcrumb.vue";
-  import BaseCard from "@/components/BaseCard.vue";
-  import TermsOfCCA from '@/components/TermsOfCCA.vue'
-  import V_TCAA0030P10 from '../contract/CAA/V_TCAA0030P10.vue';      //
-  import TermsOfPolicy from '../contract/CAA/V_TCAA0030P01.vue';      // PDF 다운로드 (약관)
-  import TermsOfPolicy2 from '../contract/CAA/V_TCAA0030P04.vue';      // PDF 다운로드 (특별약관)
+  import V_TADV0030P10 from '../contract/ADV/V_TADV0030P10.vue';      // 보험료표
+  import TermsOfPolicy from '../contract/ADV/V_TADV0030P01.vue';      // PDF 다운로드 (약관)
+  import TermsOfPolicy2 from '../contract/ADV/V_TADV0030P04.vue';      // PDF 다운로드 (특별약관)
+
+  import { storeToRefs } from 'pinia';
+  import { useAuthStore } from '@/stores';
+  
+  const authStore = useAuthStore();
+  const { _AUTH_USER } = storeToRefs(authStore);
 
   const route = useRoute();
 
   const mainTab = ref('1');
   const tab2 = ref("option-1");
+  
   const page = ref({
-    title: "관세사배상책임보험",
-    image: "../../assets/images/img-introduce-6.jpg",
+    title: "변호사배상책임보험",
+    image: "/assets/images/background/bg-insurance2.jpg",
+
   });
   const isDialogTermsOfPolicy1 = ref(false);
   const isDialogTermsOfPolicy2 = ref(false);
   const isDialogTermsOfPolicy3 = ref(false);
-  const dialogCAAfaq = ref(false);
+  const isDialogFAQ = ref(false);
   const dialogERP = ref(false);
-
+  const isInsrTableDialog = ref(false);
   // 이전 route.params 값 저장을 위한 변수
   const prevParams = ref({});
 
   onMounted(() => {
     mainTab.value = route.params.mainTabIdx;
-    prevParams.value = route.params
   });
-  watch(()=>mainTab.value, ()=>{console.log(mainTab.value)})
 
   onBeforeUpdate(() => {
     if(JSON.stringify(prevParams.value) !== JSON.stringify(route.params)) {

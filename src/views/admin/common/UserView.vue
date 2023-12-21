@@ -351,6 +351,17 @@
                   <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="" single-line density="comfortable" maxlength="25"/>
                 </div>
               </v-col>
+            <v-col cols="12" sm="12" class="v-col" >
+              <div class="head-col">
+                <p>사업 유형</p>
+                <sup class="text-error">*</sup>
+              </div>
+              <v-radio-group v-model="userDTO.corp_type" inline class="align-center d-flex" >
+                <v-radio label="법인" value="001" class="mr-4"></v-radio>
+                <v-radio label="합동사무소" value="002" class="mr-4"></v-radio>
+                <v-radio label="통관 취급 법인" value="003"></v-radio>
+              </v-radio-group>
+            </v-col>
               <v-col cols="12" sm="12" class="v-col">
                 <div class="head-col">
                   <p>대표자 성명</p>

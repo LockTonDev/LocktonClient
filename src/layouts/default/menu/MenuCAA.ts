@@ -49,7 +49,6 @@ export const MenuCAA = [
         title: '특징',
         to: '/insurance/V_PCAA10/1'
       },
-
       {
         icon: 'mdi mdi-calendar',
         title: '보장사항',

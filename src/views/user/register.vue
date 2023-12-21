@@ -470,6 +470,7 @@
                             <sup class="text-error">*</sup>
                           </div>
                           <div class="data-col">
+                              <p v-if="isDisabledCorpBnno()">해당 없음</p>
                               <VTextFieldWithValidation
                                 v-model="userDTO.corp_bnno"
                                 name="corp_bnno"
@@ -478,6 +479,7 @@
                                 single-line
                                 density="comfortable"
                                 :disabled="isDisabledCorpBnno()"
+                                v-else
                               />
                           </div>
                         </v-col>
@@ -857,7 +859,7 @@ async function isVerifyUserRegNo() {
     messageBoxDTO.value.setWarning('인증 실패', `본인인증 후 등록번호 인증하세요.`);
     return false;
   }
-  if(userDTO.value.user_nm === '') {
+  if(userDTO.value.user_regno === '') {
     messageBoxDTO.value.setWarning('인증 실패', `등록번호를 입력하세요.`);
     return false;
   }
@@ -881,6 +883,8 @@ async function isVerifyUserRegNo() {
       case 'TAX': message = '세무사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 세무사는 세무사등록증을 먼저 록톤으로 보내 세무사회원 확인 후 가입 진행되니 세무사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
       case 'ACC': message = '회계사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 회계사는 회계사등록증을 먼저 록톤으로 보내 회계사회원 확인 후 가입 진행되니 회계사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
       case 'ADV': message = '변호사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 변호사는 변호사등록증을 먼저 록톤으로 보내 변호사회원 확인 후 가입 진행되니 변호사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
+      case 'CAA': message = '관세사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 관세사는 관세사등록증을 먼저 록톤으로 보내 관세사회원 확인 후 가입 진행되니 관세사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
+      case 'PAT': message = '변리사등록증 상의 등록번호(3~7자리 숫자)를 확인하여 주시기 바라며, 등록번호가 정상임에도 인증 실패되는 경우 록톤코리아로 연락주시기 바랍니다.(T. 02-2011-0300)<br/><br/>* 신규 가입을 원하는 개인 변리사는 변리사등록증을 먼저 록톤으로 보내 변리사회원 확인 후 가입 진행되니 변리사등록증을 팩스 송부 후 안내 받으시기 바랍니다.(F. 0503-8379-2008)'; break;
       default: message = '인증에 실패하였습니다.';
     }
     messageBoxDTO.value.setInfo( '인증 실패', message);
@@ -971,6 +975,9 @@ function isDisabledCorpBnno() {
     return true;
 
   if (userDTO.value.business_cd==='CAA' && userDTO.value.corp_type === '002')
+    return true;
+
+  if (userDTO.value.business_cd==='PAT' && userDTO.value.user_cd === 'JNT')
     return true;
   return false;
 }
@@ -1091,11 +1098,16 @@ onMounted(async () => {
 
     // 최초가입시 사업자번호를 아이디값으로 설정한다.
     userDTO.value.corp_cnno = userDTO.value.user_id;
+
     page.value.title = '회원가입';
     if(_AUTH_USER.value.userCd==="COR") {
       page.value.subtitle = '법인회원';
     }else if(_AUTH_USER.value.userCd==="JNT") {
-      page.value.subtitle = '복수회원';
+      if(userDTO.value.business_cd==="CAA"){
+        page.value.subtitle = '합동사무소 회원';
+      }else {
+        page.value.subtitle = '복수회원';
+      }
     }
   } else {
     // 최초가입시 하드코딩 추후 변경예정

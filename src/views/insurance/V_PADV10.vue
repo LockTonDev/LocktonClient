@@ -769,6 +769,7 @@
 
   onMounted(() => {
     mainTab.value = route.params.mainTabIdx;
+    prevParams.value = route.params;
   });
 
   onBeforeUpdate(() => {

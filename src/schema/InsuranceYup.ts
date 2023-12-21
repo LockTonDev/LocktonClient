@@ -78,6 +78,47 @@ const 보험가입_관세사기본복합보험계약 = yup.object({
   })
 });
 
+const 보험가입_변리사기본명단보험계약 = yup.object({
+  cbr_data: yup.array().min(2, '변리사 명단은 최소한 두 명 이상이어야 합니다.').of(
+      yup.object({
+        cbr_nm: yup.string().required('변리사 명단 성명을 입력해주세요.'),
+        cbr_brdt: yup.string().matches(/^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, '변리사 명단 생년월일 입력해주세요.'),
+        cbr_regno: yup.string().matches(/^\d{3,7}$/, '변리사 명단 등록번호 입력해주세요.'),
+        isCheck: yup.boolean().oneOf([true], '변리사 명단 인증해주세요.').required()
+      })
+  )
+});
+
+const 보험가입_변리사법인기본명단보험계약 = yup.object({
+  cbr_data: yup.array().min(1, '변리사 명단은 최소한 한 명 이상이어야 합니다.').of(
+      yup.object({
+        cbr_nm: yup.string().required('변리사 명단 성명을 입력해주세요.'),
+        cbr_brdt: yup.string().matches(/^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, '변리사 명단 생년월일 입력해주세요.'),
+        cbr_regno: yup.string().matches(/^\d{3,7}$/, '변리사 명단 등록번호 입력해주세요.'),
+        isCheck: yup.boolean().oneOf([true], '변리사 명단 인증해주세요.').required()
+      })
+  )
+});
+
+const 보험가입_변리사보험계약 = yup.object({
+  insr_st_dt: yup.string().required('보험시작일자를 입력해주세요.'),
+  insr_cncls_dt: yup.string().required('보험시작일자를 입력해주세요.'),
+  insr_clm_lt_amt: yup.string().required('보상한도를 선택해주세요.'),
+  insr_psnl_brdn_amt: yup.string().required('자기부담금을 선택해주세요.'),
+  insr_program: yup.string().when('insr_program_yn', {
+    is: (value) => value === 'Y',
+    then: yup.string().required('프로그램 명을 입력해주세요.')
+  }),
+  insr_service: yup.string().when('insr_program_yn', {
+    is: (value) => value === 'Y',
+    then: yup.string().required('서비스 제공회사를 입력해주세요.')
+  })
+});
+
+const 보험가입_변호사법인매출액 = yup.object({
+  insr_take_sec: yup.string().required('매출액을 입력해주세요.'),
+});
+
 
 const 보험가입_변호사특약보험계약 = yup.object({
   spct_join_yn: yup.string().required('특약을 선택해주세요.'),
@@ -262,7 +303,7 @@ export const InsuranceYup = {
   }),
 
   /** ============================================================================
-   *  사이트 : 변호사
+   *  사이트 : 관세사
    *  ============================================================================
    */
   CAA_IND_TAB1: yup.object().shape({
@@ -288,7 +329,7 @@ export const InsuranceYup = {
     ...보험가입_관세사기본복합보험계약.fields
   }),
   CAA_JNT_TAB3: yup.object().shape({
-    ...보험가입_변호사특약보험계약.fields
+    ...보험가입_관세사특약보험계약.fields
   }),
   CAA_JNT_TAB4: yup.object().shape({
     ...보험가입_공통약관동의.fields
@@ -303,9 +344,49 @@ export const InsuranceYup = {
     ...보험가입_관세사기본복합보험계약.fields
   }),
   CAA_COR_TAB3: yup.object().shape({
-    ...보험가입_변호사특약보험계약.fields
+    ...보험가입_관세사특약보험계약.fields
   }),
   CAA_COR_TAB4: yup.object().shape({
+    ...보험가입_공통약관동의.fields
+  }),
+
+  /** ============================================================================
+   *  사이트 : 변리사
+   *  ============================================================================
+   */
+  PAT_IND_TAB1: yup.object().shape({
+    ...보험가입_관세사개인가입정보.fields,
+    ...보험가입_관세사가입정보.fields
+  }),
+  PAT_IND_TAB2: yup.object().shape({
+    ...보험가입_변리사보험계약.fields
+  }),
+  PAT_IND_TAB3: yup.object().shape({
+    ...보험가입_공통약관동의.fields
+  }),
+
+  PAT_JNT_TAB1: yup.object().shape({
+    ...보험가입_관세사복합가입정보.fields,
+    ...보험가입_관세사가입정보.fields,
+  }),
+  PAT_JNT_TAB2: yup.object().shape({
+    ...보험가입_변리사보험계약.fields,
+    ...보험가입_변리사기본명단보험계약.fields
+  }),
+  PAT_JNT_TAB3: yup.object().shape({
+    ...보험가입_공통약관동의.fields
+  }),
+
+  PAT_COR_TAB1: yup.object().shape({
+    ...보험가입_관세사복합가입정보.fields,
+    ...보험가입_관세사가입정보.fields,
+  }),
+  PAT_COR_TAB2: yup.object().shape({
+    ...보험가입_변호사법인매출액.fields,
+    ...보험가입_변리사보험계약.fields,
+    ...보험가입_변리사법인기본명단보험계약.fields
+  }),
+  PAT_COR_TAB4: yup.object().shape({
     ...보험가입_공통약관동의.fields
   })
 };

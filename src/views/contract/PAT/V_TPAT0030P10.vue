@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
-import apiCAA0030a from '@/api/api/A_TCAA0030A';
+import apiPAT0030a from '@/api/api/A_TPAT0030A';
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
 const authStore = useAuthStore();
@@ -27,14 +27,13 @@ const fileName = ref('');
 onMounted(async () => {
   // 보험료 조회
   const params = { user_cd: _AUTH_USER.value.userCd, business_cd: _AUTH_USER.value.businessCd, base_year: props.baseYear };
-  const resultData = await apiCAA0030a.getDBSelInsuranceRate(params);
+  const resultData = await apiPAT0030a.getDBSelInsuranceRate(params);
   INSR_INFO.value = resultData.data[0];
 
-  if (_AUTH_USER.value.userCd === 'IND') {
-    fileName.value = '/assets/doc/insr_table/관세사_개인_보험료표_' + INSR_INFO.value.base_year + '.pdf';
-  } else if (_AUTH_USER.value.userCd !== 'IND') {
-    fileName.value = '/assets/doc/insr_table/관세사_법인합동_보험료표_' + INSR_INFO.value.base_year + '.pdf';
+  if (_AUTH_USER.value.userCd == 'IND') {
+    fileName.value = '/assets/doc/insr_table/변호사_개인_보험료표_' + INSR_INFO.value.base_year + '.pdf';
+  } else if (_AUTH_USER.value.userCd == 'JNT') {
+    fileName.value = '/assets/doc/insr_table/변호사_복수_보험료표_' + INSR_INFO.value.base_year + '.pdf';
   }
-  console.log(fileName.value)
 });
 </script>
