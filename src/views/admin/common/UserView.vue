@@ -603,6 +603,11 @@ function fnAdd(user_cd:string) {
   userDTO.value.user_cd = user_cd;
   userDTO.value.status_cd = ((user_cd === 'COR' || user_cd === 'JNT') ? '20' : '30');
   userDTO.value.rmk = genPassword(10);
+
+ // 임시암호 발급용 임시 코드
+ // for(let i = 0 ; i < 246; i++) {
+ //   console.log(genPassword(10))
+ // }
 }
 
 async function fnSearch(user_uuid: string) {
