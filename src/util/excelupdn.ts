@@ -525,17 +525,17 @@ export const DOWNLOAD_EXCEL = async (searchParams: ParamsDTO, excelList: any[]) 
       let worksheet = workbook.addWorksheet(sheetName);
       let mapperKey = `${searchParams.data.business_cd}_${searchParams.data.user_cd}`;
 
-      console.log("mapperKey",mapperKey)
+      // console.log("mapperKey",mapperKey)
       let excelMapper = EXCEL_MAPPERS[mapperKey];
       let rowMapper = ROW_MAPPERS[mapperKey];
      // let numMapper = EXCEL_NUM_MAPPERS[mapperKey];
       let headers = Object.keys(excelMapper).map(key => ({ header: key, key: excelMapper[key] }));
-      console.log("headers :",headers)
+      // console.log("headers :",headers)
 
       // Assign columns
       worksheet.columns = headers;
       excelList.forEach((dataRow, index) => {
-        // dataRow.index = index;
+         dataRow.index = index;
          let rows = rowMapper(excelMapper, dataRow);
          rows.forEach(row => {
         //   numMapper.forEach(target => {
@@ -833,7 +833,7 @@ function mapperRow_ADV_IND(excelMapper: object, excelDataRow: any) {
   row[excelMapper.비고1] = insuranceDTO?.trx_data[0]?.rmk;
   row[excelMapper.예금주명1] = insuranceDTO?.trx_data[0]?.acct_nm;
 
-   console.log('row[excelMapper.특약가입여부]',row[excelMapper.특약가입여부])
+   // console.log('row[excelMapper.특약가입여부]',row[excelMapper.특약가입여부])
   try {
     row[excelMapper.입금구분2] = trxCdItems.find(item => item.value == insuranceDTO?.trx_data[1]?.trx_cd).title;
   } catch (e) {
