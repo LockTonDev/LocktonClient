@@ -264,7 +264,7 @@ const onlyIND = ['ACC']
 
 
 async function isVerifyEMailAuthCode() {
-  const params = { user_id: userDTO.value.user_id, auth_code: userDTO.value.auth_code, corp_bnno: userDTO.value.corp_bnno};
+  const params = { user_id: userDTO.value.user_id, auth_code: userDTO.value.auth_code, corp_bnno: userDTO.value.corp_bnno,business_cd: businessCd};
   const resultData = await apiUser.isVerifyEMailAuthCode(params);
   console.log(resultData);
   if (resultData.success) {
