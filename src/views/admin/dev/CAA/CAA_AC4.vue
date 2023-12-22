@@ -170,7 +170,7 @@
                               <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line maxlength="20" />
                             </div>
                           </v-col>
-
+                          <!--
                           <v-col cols="12" sm="4" class="v-col" v-if="insuranceDTO.business_cd === 'TAX'">
                             <div class="head-col">
                               <p>소속 지방회</p>
@@ -180,6 +180,7 @@
                               <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" single-line density="compact"></VSelectWithValidation>
                             </div>
                           </v-col>
+                          -->
                         </v-row>
                         <!-- 개인 끝-->
 
@@ -257,7 +258,7 @@
                               <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line maxlength="20" />
                             </div>
                           </v-col>
-
+                          <!--
                           <v-col cols="12" sm="12" class="v-col">
                             <div class="head-col">
                               <p>소속 지방회</p>
@@ -267,6 +268,7 @@
                               <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" density="compact" single-line></VSelectWithValidation>
                             </div>
                           </v-col>
+                          -->
                         </v-row>
                         <!-- 법인/합동 끝-->
 
@@ -904,9 +906,17 @@ async function initPage() {
 
   insrYearCdItems.value = [];
   insrYearCdItems.value.unshift({ title: '전체', value: '%' });
-  for (let year = new Date().getFullYear(); year >= 2022; year--) {
+
+  // CAA는 2024년 추가 2023-12-22
+  let curDate = new Date()
+  curDate.setFullYear(curDate.getFullYear() + 1);
+  for (let year = curDate.getFullYear(); year >= 2022; year--) {
     insrYearCdItems.value.push({ title: year.toString(), value: year.toString(), rmk: null });
   }
+  /*
+  for (let year = new Date().getFullYear(); year >= 2022; year--) {
+    insrYearCdItems.value.push({ title: year.toString(), value: year.toString(), rmk: null });
+  }*/
 
   searchParams.value.data['business_cd'] = businessCd;
   searchParams.value.data['insr_year'] = '%';

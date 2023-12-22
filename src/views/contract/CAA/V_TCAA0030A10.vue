@@ -121,7 +121,7 @@
   <V_TCAA0030P30 :insurance_uuid="insuranceUUID" :isPdf=true :isCertificatePrintFramDialog="isCertificatePrintFramDialog" v-if="isCertificatePrintFramDialog" @close="onCertificatePrintFrameClose" />
   <!-- 가입증명서 종료 -->
 
-
+  <PopupList></PopupList>
 
 </template>
 
@@ -132,6 +132,7 @@
   import { MessageBoxDTO } from '@/model';
   import BaseCard from "@/components/BaseCard.vue";
   import MessageBox from "@/components/MessageBox.vue";
+  import PopupList from "@/components/PopupList.vue";
   import BaseBreadcrumb from "@/components/BaseBreadcrumb.vue";
   import V_TCAA0030P30 from "@/views/contract/CAA/V_TCAA0030P30.vue";
   import V_TCAA0030P20 from "@/views/contract/CAA/V_TCAA0030P20.vue";
