@@ -72,7 +72,7 @@
                     </tr>
                     <tr>
                       <th colspan="2" class="bg-white border-gray-1">피보험자</th>
-                      <td class="bg-white border-gray-1" colspan="3" v-if="insuranceDTO.user_cd === 'JNT' && insuranceDTO.cbr_data.length > 0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 변호사 외 {{ insuranceDTO.cbr_cnt - 1 }} 명 </td>
+                      <td class="bg-white border-gray-1" colspan="3" v-if="insuranceDTO.user_cd === 'JNT' && insuranceDTO.cbr_data.length > 0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 변리사 외 {{ insuranceDTO.cbr_cnt - 1 }} 명 </td>
                       <td class="bg-white border-gray-1" colspan="3" v-if="insuranceDTO.user_cd !== 'JNT'"> {{ insuranceDTO.user_nm }}</td>
                       <th colspan="2" class="bg-white border-gray-1">사업자번호</th>
                       <td colspan="4" class="bg-white border-gray-1"> {{ insuranceDTO.corp_cnno }}</td>
@@ -89,7 +89,7 @@
                     <tr>
                       <td colspan="5" class="bg-white border-gray-1"> {{ insuranceDTO.insr_clm_lt_amt }} / {{insuranceDTO.insr_year_clm_lt_amt}}</td>
                       <td colspan="2" class="bg-white border-gray-1">{{insuranceDTO.insr_psnl_brdn_amt.getValueBySplit(1) }}</td>
-                      <td colspan="4" class="bg-white border-gray-1"> {{ insuranceDTO.insr_amt }} 원</td>
+                      <td colspan="4" class="bg-white border-gray-1"> {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원</td>
                     </tr>
                     </tbody>
                   </table>
@@ -296,7 +296,7 @@ const onExportPDF = (viewType: string) => {
     }
   };
 
-  /*if (!isAdmin) {
+  if (!isAdmin) {
     opt.jsPDF.encryption = {
       userPassword: pdfPassword,
       ownerPassword: pdfPassword,
@@ -304,7 +304,7 @@ const onExportPDF = (viewType: string) => {
       encryptionAlgorithm: 'aes',
       keyLength: 128
     };
-  }*/
+  }
 
   const printDiv = document.getElementById('printDiv');
 

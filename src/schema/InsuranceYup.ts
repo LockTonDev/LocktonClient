@@ -90,9 +90,10 @@ const 보험가입_변리사기본명단보험계약 = yup.object({
 });
 const 보험가입_변리사보험계약 = yup.object({
   insr_st_dt: yup.string().required('보험시작일자를 입력해주세요.'),
-  insr_cncls_dt: yup.string().required('보험시작일자를 입력해주세요.'),
+  insr_cncls_dt: yup.string().required('보험종료일자를 입력해주세요.'),
   insr_clm_lt_amt: yup.string().required('보상한도를 선택해주세요.'),
   insr_psnl_brdn_amt: yup.string().required('자기부담금을 선택해주세요.'),
+  insr_program_yn: yup.string().required('프로그램 명을 입력해주세요.'),
   insr_program: yup.string().when('insr_program_yn', {
     is: (value) => value === 'Y',
     then: yup.string().required('프로그램 명을 입력해주세요.')

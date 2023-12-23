@@ -223,7 +223,7 @@
                         <v-col cols="6">
                           <div class="head-col">할인 및 할증율</div>
                           <div class="data-col">
-                            {{ insuranceDTO.insr_sale_rt }}% 할인 적용
+                            {{ insuranceDTO.insr_sale_rt }}%
                           </div>
                         </v-col>
                         <v-col cols="6" class="point">

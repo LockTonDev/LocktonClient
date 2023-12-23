@@ -79,25 +79,29 @@ export default {
    * @param params.insurance_type
    * @returns
    */
-  async setDBIns(params: any, file: any) {
-    const reader = new FileReader();
-    const promise = new Promise((resolve, reject) => {
-      reader.onload = () => {
-        const base64Data = reader.result.split(',')[1];
+  async setDBIns(params: any, file: any, user: any) {
+    if(user === 'COR') {
+      const reader = new FileReader();
+      const promise = new Promise((resolve, reject) => {
+        reader.onload = () => {
+          const base64Data = reader.result.split(',')[1];
 
-        params.fileName = file.name;
-        params.fileType = file.type;
-        params.fileData = base64Data;
-        resolve();
-      };
+          params.fileName = file.name;
+          params.fileType = file.type;
+          params.fileData = base64Data;
+          resolve();
+        };
 
-      reader.onerror = reject;
-    });
-    reader.readAsDataURL(file);
+        reader.onerror = reject;
+      });
+      reader.readAsDataURL(file);
 
-    await promise;
+      await promise;
 
-    return await api.commonService.post('/PAT/PAT0030A/set', { params });
+      return await api.commonService.post('/PAT/PAT0030A/set', {params});
+    }else {
+      return await api.commonService.post('/PAT/PAT0030A/set', {params});
+    }
   },
   /**
    * 보험 수정

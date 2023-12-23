@@ -264,19 +264,19 @@
               </ul>
               <img src="../../assets/images/img-insurance-2-2.png" alt="" class="mt-4"/>
               <div class="mt-4">
-                <p class="color-gray-shadow">※ 갱신이 되지 않을 경우에는 보험가입기간 중의 업무로 발생한 사고라도 보험만기일로부터 자동보고연장담보기간 70일이 경과하면 보험혜택을 받으실 수 없습니다.</p>
+                <p class="color-gray-shadow">※ 갱신이 되지 않을 경우에는 보험가입기간 중의 업무로 발생한 사고라도 보험만기일로부터 자동보고연장담보기간 60일이 경과하면 보험혜택을 받으실 수 없습니다.</p>
                 <v-btn type="button" color="primary" variant="outlined" class="mt-2 d-block">
                   <span class="mr-1">보고기간연장담보(Extended Reporting Period) 알아보기</span>
                   <v-dialog persistent v-model="dialogERP" activator="parent" scrollable max-width="1000">
                     <v-btn variant="outlined" color="dark" @click="dialogERP = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
                     <v-card>
                       <v-card-title class="d-flex justify-space-between align-center px-6 py-4 position-relative">
-                        <p class="text-h6 font-weight-bold">변호사배상책임보험 보고기간연장담보(ERP) 안내</p>
+                        <p class="text-h6 font-weight-bold">변리사배상책임보험 보고기간연장담보(ERP) 안내</p>
                         <v-spacer />
                       </v-card-title>
                       <v-divider class="mb-0"/>
                       <v-card-text class="px-10 py-6">
-                        <p>법인의 해산, 개인사무소의 폐업 등 보험계약을 유지할 수 없는 사유가 발생한 경우 추가보험료를 납부하고 과거 보험기간에 수행한 변호사의 업무에 대한 담보를 연장할 수 있습니다.</p>
+                        <p>법인의 해산, 개인사무소의 폐업 등 보험계약을 유지할 수 없는 사유가 발생한 경우 추가보험료를 납부하고 과거 보험기간에 수행한 변리사의 업무에 대한 담보를 연장할 수 있습니다.</p>
                         <table class="normal-table mt-6">
                           <colgroup>
                             <col style="width:22%"/>
@@ -285,7 +285,7 @@
                           <tbody>
                             <tr>
                               <th>담보업무</th>
-                              <td class="border-right-0">과거 보험기간에 수행한 변호사의 업무</td>
+                              <td class="border-right-0">과거 보험기간에 수행한 변리사의 업무</td>
                             </tr>
                             <tr>
                               <th class="border-left-0">가입기간</th>

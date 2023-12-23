@@ -19,7 +19,7 @@
 
         >
           <v-tab value="1" class="flex-grow-1">가입정보</v-tab>
-          <v-tab value="2" class="flex-grow-1">보험계약 [기본담보]</v-tab>
+          <v-tab value="2" class="flex-grow-1">보험계약</v-tab>
           <v-tab value="3" class="flex-grow-1">약관동의</v-tab>
         </v-tabs>
       </div>
@@ -419,7 +419,7 @@
                       {{insuranceDTO.insr_take_amt.toLocaleString()}}원
                     </div>
                     <i class="mdi mdi-alert-circle-outline mr-2"></i
-                    >전년도 부가세과세표준증명 또는 손익계산서상의 매출액 기재 (전년도 1.1 ~ 12월말까지 매출)<br/>
+                    >전년도 손익계산서상의 매출액 기재 (예시: 2024.1.1 가입시 2022년 손익계산서) <br/>
                     <i class="mdi mdi-alert-circle-outline mr-2"></i
                     >전년 매출이 없는 경우 1년 예상 매출액 기재
                     </p>
