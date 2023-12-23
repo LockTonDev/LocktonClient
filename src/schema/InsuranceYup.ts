@@ -88,18 +88,6 @@ const 보험가입_변리사기본명단보험계약 = yup.object({
       })
   )
 });
-
-const 보험가입_변리사법인기본명단보험계약 = yup.object({
-  cbr_data: yup.array().min(1, '변리사 명단은 최소한 한 명 이상이어야 합니다.').of(
-      yup.object({
-        cbr_nm: yup.string().required('변리사 명단 성명을 입력해주세요.'),
-        cbr_brdt: yup.string().matches(/^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, '변리사 명단 생년월일 입력해주세요.'),
-        cbr_regno: yup.string().matches(/^\d{3,7}$/, '변리사 명단 등록번호 입력해주세요.'),
-        isCheck: yup.boolean().oneOf([true], '변리사 명단 인증해주세요.').required()
-      })
-  )
-});
-
 const 보험가입_변리사보험계약 = yup.object({
   insr_st_dt: yup.string().required('보험시작일자를 입력해주세요.'),
   insr_cncls_dt: yup.string().required('보험시작일자를 입력해주세요.'),
@@ -217,7 +205,12 @@ const 보험변경_신청정보 = yup.object({
   email: yup.string().required('이메일을 입력해주세요.')
 });
 
-
+const 보험가입_변리사법인기본명단보험계약 = yup.object({
+  cbr_cnt: yup.string().required('소속 변호사 수를 입력해주세요.'),
+  ...보험가입_변호사법인매출액.fields,
+  ...보험가입_변리사보험계약.fields,
+  insr_income_filename: yup.string().required('손익계산서를 선택해주세요.')
+});
 
 
 export const InsuranceYup = {
@@ -382,11 +375,9 @@ export const InsuranceYup = {
     ...보험가입_관세사가입정보.fields,
   }),
   PAT_COR_TAB2: yup.object().shape({
-    ...보험가입_변호사법인매출액.fields,
-    ...보험가입_변리사보험계약.fields,
-    ...보험가입_변리사법인기본명단보험계약.fields
+    ...보험가입_변리사법인기본명단보험계약.fields,
   }),
-  PAT_COR_TAB4: yup.object().shape({
+  PAT_COR_TAB3: yup.object().shape({
     ...보험가입_공통약관동의.fields
   })
 };

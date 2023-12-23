@@ -73,6 +73,70 @@ commonService.interceptors.response.use(
   }
 );
 
+const fileService = axios.create({
+    baseURL: '/api',
+    headers: { 'Content-Type': `multipart/form-data` },
+    timeout: 1000 * 10 * 6
+});
+
+fileService.interceptors.request.use(
+    config => {
+        //showLoading(); // Show loading bar
+        const { _AUTH_USER } = useAuthStore();
+        const isLoggedIn = !!_AUTH_USER?.accessToken;
+
+        if (isLoggedIn) {
+            if (config.data instanceof FormData) {
+                config.data.append('_AUTH_USER', JSON.stringify(_AUTH_USER));
+            } else {
+                // For other types of requests (e.g., JSON)
+                config.data = {
+                    ...config.data,
+                    _AUTH_USER: _AUTH_USER,
+                };
+            }
+            config.headers['Authorization'] = 'Bearer ' + _AUTH_USER.accessToken;
+            //config.headers['x-access-token'] = user.accessToken; // for Node.js Express back-end
+        }
+        // console.log('commonService Request: OnFulfilled Data', config.data);
+        return config;
+    },
+    error => {
+        //hideLoading(); // Hide loading bar
+        console.log('commonService Request: OnRejected');
+        return Promise.reject(error);
+    }
+);
+
+fileService.interceptors.response.use(
+    response => {
+        //console.log('commonService Response: ', response.data);
+
+        return response.data;
+    },
+    error => {
+        if (error.response && error.response.status === 401) {
+            //  console.log(error);
+            const authStore = useAuthStore();
+            const { _AUTH_USER } = useAuthStore();
+            const isLoggedIn = !!_AUTH_USER?.accessToken;
+
+            authStore.logout();
+
+        }
+
+        if (error.response && error.response.status === 403) {
+            console.log(error);
+            if (false) {
+                const authStore = useAuthStore();
+                authStore.logout();
+            }
+        }
+
+        return Promise.reject(error);
+    }
+);
+
 
 const authService = axios.create({
   baseURL: '/api',
@@ -131,5 +195,6 @@ authService.interceptors.response.use(
 // 생성한 인스턴스를 익스포트 합니다.
 export default {
   commonService,
-  authService
+  authService,
+  fileService
 };

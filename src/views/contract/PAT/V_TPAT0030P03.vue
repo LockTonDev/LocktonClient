@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title class="d-flex align-center justify-space-between">
         <div class="text-h6 font-weight-medium">
-          계약의 체결∙이행 등을 위한 개인(신용)정보 처리 동의서 (변호사)
+          계약의 체결∙이행 등을 위한 개인(신용)정보 처리 동의서 (변리사)
         </div>
         <div class="d-flex justify-space-between align-end">
           <v-btn variant="outlined" color="dark" @click="close()">닫기</v-btn>
@@ -12,7 +12,7 @@
       <v-divider class="mb-0" />
       <v-card-text class="px-10 pt-8 pb-14">
         <div class="d-flex justify-space-between align-center">
-          <h3 class="text-display-2 font-weight-bold">DB손해보험㈜ 귀중</h3>
+          <h3 class="text-display-2 font-weight-bold">흥국화재해상보험㈜ 귀중</h3>
           <p class="text-14 color-gray-shadow">각 동의란에 체크 하십시오</p>
         </div>
         <div class="v-board-table mt-4">
@@ -146,7 +146,7 @@
                     <li>∙공공기관 등 : 금융위원회, 금융감독원, 보험요율산출기관 등 공기관, 법원, 검찰, 경찰, 국토해양부, 국세청 등 법령상 업무수행기관(위탁사업자 포함), 손해보험협회</li>
                     <li>∙보험회사 등 : 손해보험회사, 국내∙국외 재보험사, 공제사업자, 체신관서(우체국보험), 금융거래 관련 계좌개설 금융기관, 금융결제원</li>
                     <li>∙업무수탁자 등 : 보험중개사, 계약 체결 및 이행 등에 필요한 업무를 위탁받은 자(보험사고조사업체, 손해사정업체, 변호사 등)</li>
-                    <li>∙대한변호사협회</li>
+                    <li>∙대한변리사회</li>
                   </ul>
                 </li>
                 <li>▪ 개인(신용)정보를 제공받는 자의 이용목적
@@ -155,7 +155,7 @@
                     <li>∙공공기관 등 : 보험업법 등 법령에 따른 업무수행(위탁업무포함)</li>
                     <li>∙보험회사 등 : 중복보험 확인 및 비례보상, 재보험 가입 및 재보험금 청구, 보험계약 공동인수</li>
                     <li>∙업무수탁자 등 : 본 계약의 체결∙이행 관련 위탁업무 수행, 자문업무</li>
-                    <li>∙대한변호사협회 : 단체보험 가입∙운영, 보험갱신, 사고조회, 자문업무</li>
+                    <li>∙대한변리사회 : 단체보험 가입∙운영, 보험갱신, 사고조회, 자문업무</li>
                   </ul>
                 </li>
                 <li>▪ 제공할 개인(신용)정보의 내용
@@ -172,7 +172,7 @@
             </li>
           </ul>
           <p>※거래종료일:1)보험계약 만기, 해지, 취소, 철회일 또는 소멸일 및 2)보험금청구권 소멸시효 완성일, 채권채무관계 소멸일 중 가장 나중에 도래한 사유를 기준으로 판단</p>
-          <p>※각 제공대상기관 및 이용목적의 구체적인 정보는 당사 홈페이지[http://www.idbins.com]에서 확인할 수 있습니다.</p>
+          <p>※각 제공대상기관 및 이용목적의 구체적인 정보는 당사 홈페이지[https://www.heungkukfire.co.kr]에서 확인할 수 있습니다.</p>
         </div>
         <p class="font-weight-medium mt-4 word-break-keep-all">※ 본인은 「개인정보보호법」및 「신용정보의 이용 및 보호에 관한 법률」에 따라 귀사가 본인의
           개인(신용)정보를 상기 내용과 같이 처리하는 것에 동의 합니다.</p>

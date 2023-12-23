@@ -159,6 +159,7 @@ class InsuranceDTO {
   insr_tot_amt: number;
   insr_tot_unpaid_amt: number;
   insr_tot_paid_amt: number;
+  insr_income_filename: string;
   limited_collateral: string;
 
   cbr_cnt: number;

@@ -4,7 +4,7 @@
   <v-row>
     <v-col cols="12" sm="12" class="py-16">
       <div class="d-flex justify-space-between align-end">
-        <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ d_TADV0040AList.length }}</span>건</p>
+        <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ d_TPAT0040AList.length }}</span>건</p>
         <v-btn text @click="onRegDialog()"> 변경신청 </v-btn>
       </div>
       <v-table class=" v-board-table size-large mt-4">
@@ -21,8 +21,8 @@
             <th class="text-center text-subtitle-1">상세보기</th>
           </tr>
         </thead>
-        <tbody v-if="d_TADV0040AList.length">
-          <tr v-for="(row, index) in d_TADV0040AList">
+        <tbody v-if="d_TPAT0040AList.length">
+          <tr v-for="(row, index) in d_TPAT0040AList">
             <td class="text-center text-subtitle-1">{{ row.insurance_no }}</td>
             <td class="text-center text-subtitle-1">{{ row.insurance_user_nm}}</td>
             <td class="text-center text-subtitle-1">{{ row.apply_nm }}</td>
@@ -71,51 +71,51 @@
         <v-row class="v-board-table ma-0">
           <v-col cols="6">
             <div class="head-col">증권번호</div>
-            <div class="data-col w-full"> {{  d_TADV0040A.insurance_no  }}
+            <div class="data-col w-full"> {{  d_TPAT0040A.insurance_no  }}
               <!-- <VSelectWithValidation v-model="d_TADV0040A.insurance_year" name="insurance_year" :items="items" item-title="text" item-value="value" class="w-100" density="comfortable" :disabled="true"></VSelectWithValidation>             -->
             </div>
           </v-col>
           <v-col cols="6">
             <div class="head-col">변경구분<sup class="text-error ml-1">*</sup></div>
             <div class="data-col w-full">
-              <VSelectWithValidation v-model="d_TADV0040A.apply_cd" name="apply_cd" label="변경구분을 선택하세요." :items="applyItems" class="w-100"  single-line density="comfortable"></VSelectWithValidation>
+              <VSelectWithValidation v-model="d_TPAT0040A.apply_cd" name="apply_cd" label="변경구분을 선택하세요." :items="applyItems" class="w-100"  single-line density="comfortable"></VSelectWithValidation>
             </div>
           </v-col>
           <v-col cols="6">
             <div class="head-col">신청일자</div>
-            <div class="data-col">{{ d_TADV0040A.apply_dt  }}
+            <div class="data-col">{{ d_TPAT0040A.apply_dt  }}
               <!-- <VTextFieldWithValidation v-model="d_TADV0040A.apply_dt" name="apply_dt" label="" type="date" single-line :readonly="true" class="w-100" density="comfortable"/>  -->
             </div>
           </v-col>
           <v-col cols="6">
             <div class="head-col">변경개시일<sup class="text-error ml-1">*</sup></div>
             <div class="data-col w-full">
-              <VTextFieldWithValidation v-model="d_TADV0040A.apply_posted_dt" name="apply_posted_dt" label="" type="date" :min="d_TADV0040A.apply_dt" single-line density="comfortable" class="w-full"/>
+              <VTextFieldWithValidation v-model="d_TPAT0040A.apply_posted_dt" name="apply_posted_dt" label="" type="date" :min="d_TPAT0040A.apply_dt" single-line density="comfortable" class="w-full"/>
             </div>
           </v-col>
           <v-col cols="12">
             <div class="head-col">변경상세<sup class="text-error ml-1">*</sup></div>
             <div class="data-col w-full">
               <p class="w-full text-gray">* 변경되는 변호사의 성명/생년월일/등록번호/사유(추가 또는 해지)</p>
-              <v-textarea v-model="d_TADV0040A.apply_content" variant="outlined" counter class="mt-2 w-full" rows="10" no-resize></v-textarea>
+              <v-textarea v-model="d_TPAT0040A.apply_content" variant="outlined" counter class="mt-2 w-full" rows="10" no-resize></v-textarea>
             </div>
           </v-col>
           <v-col cols="4">
             <div class="head-col">담당자명<sup class="text-error ml-1">*</sup></div>
             <div class="data-col w-full">
-              <VTextFieldWithValidation v-model="d_TADV0040A.nm" name="nm" label="" single-line class="w-sm-242" maxlength="20" density="comfortable"/>
+              <VTextFieldWithValidation v-model="d_TPAT0040A.nm" name="nm" label="" single-line class="w-sm-242" maxlength="20" density="comfortable"/>
             </div>
           </v-col>
           <v-col cols="4">
             <div class="head-col">연락처<sup class="text-error ml-1">*</sup></div>
             <div class="data-col col">
-              <VTextFieldWithValidation v-model="d_TADV0040A.tel" name="tel" label="" single-line maxlength="20" />
+              <VTextFieldWithValidation v-model="d_TPAT0040A.tel" name="tel" label="" single-line maxlength="20" />
             </div>
           </v-col>
           <v-col cols="4">
             <div class="head-col">이메일<sup class="text-error ml-1">*</sup></div>
             <div class="data-col w-full">
-              <VTextFieldWithValidation v-model="d_TADV0040A.email" name="email" label="" single-line class="w-100"  maxlength="50" density="comfortable"/>
+              <VTextFieldWithValidation v-model="d_TPAT0040A.email" name="email" label="" single-line class="w-100"  maxlength="50" density="comfortable"/>
             </div>
           </v-col>
         </v-row>
@@ -142,43 +142,43 @@
         <v-row class="v-board-table ma-0">
           <v-col cols="6">
             <div class="head-col">증권번호</div>
-            <div class="data-col">{{ d_TADV0040A.insurance_no }}</div>
+            <div class="data-col">{{ d_TPAT0040A.insurance_no }}</div>
           </v-col>
           <v-col cols="6">
             <div class="head-col">변경구분</div>
-            <div class="data-col">  {{  d_TADV0040A.apply_nm }}</div>
+            <div class="data-col">  {{  d_TPAT0040A.apply_nm }}</div>
           </v-col>
           <v-col cols="6">
             <div class="head-col">신청일자</div>
-            <div class="data-col"> {{  d_TADV0040A.apply_dt }}</div>
+            <div class="data-col"> {{  d_TPAT0040A.apply_dt }}</div>
           </v-col>
           <v-col cols="6">
             <div class="head-col">변경개시일</div>
-            <div class="data-col"> {{  d_TADV0040A.apply_posted_dt }}</div>
+            <div class="data-col"> {{  d_TPAT0040A.apply_posted_dt }}</div>
           </v-col>
           <v-col cols="12">
             <div class="head-col">변경상세</div>
-            <div class="data-col"> <pre class="pre">{{ d_TADV0040A.apply_content  }}</pre></div>
+            <div class="data-col"> <pre class="pre">{{ d_TPAT0040A.apply_content  }}</pre></div>
           </v-col>
           <v-col cols="4">
             <div class="head-col">담당자 성명</div>
-            <div class="data-col">{{  d_TADV0040A.nm }}</div>
+            <div class="data-col">{{  d_TPAT0040A.nm }}</div>
           </v-col>
           <v-col cols="4">
             <div class="head-col">연락처</div>
-            <div class="data-col"> {{  d_TADV0040A.tel }}</div>
+            <div class="data-col"> {{  d_TPAT0040A.tel }}</div>
           </v-col>
           <v-col cols="4">
             <div class="head-col">이메일</div>
-            <div class="data-col"> {{  d_TADV0040A.email }}</div>
+            <div class="data-col"> {{  d_TPAT0040A.email }}</div>
           </v-col>
           <v-col cols="8">
             <div class="head-col">처리일자</div>
-            <div class="data-col"> {{ d_TADV0040A.proc_dt  }}</div>
+            <div class="data-col"> {{ d_TPAT0040A.proc_dt  }}</div>
           </v-col>
           <v-col cols="4">
             <div class="head-col">처리상태</div>
-            <div class="data-col">{{  d_TADV0040A.proc_nm }} </div>
+            <div class="data-col">{{  d_TPAT0040A.proc_nm }} </div>
           </v-col>
           <!-- <v-col cols="12">
             <div class="head-col">처리내용</div>
@@ -212,8 +212,8 @@
   import VSelectWithValidation from '@/components/VSelectWithValidation.vue';
 
   
-  import apiA_TADV0030A from '@/api/api/A_TADV0030A';
-  import apiA_TADV0040A from '@/api/api/A_TADV0040A';
+  import apiA_TPAT0030A from '@/api/api/A_TPAT0030A';
+  import apiA_TPAT0040A from '@/api/api/A_TPAT0040A';
 
 
   import router from "@/router";
@@ -225,8 +225,8 @@
   // 초기정보 설정
   const messageBoxDTO = ref(new MessageBoxDTO());
 
-  const d_TADV0040A = ref(new D_T0040ADTO());
-  const d_TADV0040AList = ref<D_T0040ADTO[]>([]);
+  const d_TPAT0040A = ref(new D_T0040ADTO());
+  const d_TPAT0040AList = ref<D_T0040ADTO[]>([]);
 
   const isNoData = ref(false);
 
@@ -240,7 +240,7 @@
     {
       text: "보험계약",
       disabled: false,
-      to: "/contract/ADV/V_TADV0030A10",
+      to: "/contract/PAT/V_TPAT0030A10",
     },
     {
       text: "변경",
@@ -270,21 +270,21 @@
    async function onRegDialog() {
 
     const today = dayjs().format('YYYY-MM-DD');
-    d_TADV0040A.value.clear();
-    d_TADV0040A.value.apply_posted_dt = today;
-    d_TADV0040A.value.apply_dt = today;
-    d_TADV0040A.value.proc_cd = '10'; //접수
-    d_TADV0040A.value.user_cd = _AUTH_USER.value.userCd;
-    d_TADV0040A.value.business_cd = _AUTH_USER.value.businessCd;
+    d_TPAT0040A.value.clear();
+    d_TPAT0040A.value.apply_posted_dt = today;
+    d_TPAT0040A.value.apply_dt = today;
+    d_TPAT0040A.value.proc_cd = '10'; //접수
+    d_TPAT0040A.value.user_cd = _AUTH_USER.value.userCd;
+    d_TPAT0040A.value.business_cd = _AUTH_USER.value.businessCd;
 
-    let {data} = await apiA_TADV0030A.getDBSelStatus();
+    let {data} = await apiA_TPAT0030A.getDBSelStatus();
 
     data = data.filter(item => item.status_cd === '80');
-    
+
     if(data.length > 0) {
-      d_TADV0040A.value.insurance_no = data[0].insurance_no;
-      d_TADV0040A.value.insurance_uuid = data[0].insurance_uuid;
-      d_TADV0040A.value.insurance_user_nm = data[0].user_nm;
+      d_TPAT0040A.value.insurance_no = data[0].insurance_no;
+      d_TPAT0040A.value.insurance_uuid = data[0].insurance_uuid;
+      d_TPAT0040A.value.insurance_user_nm = data[0].user_nm;
       isRegDialog.value = true;
     }else {
       messageBoxDTO.value.setInfo( '변경신청', '가입되어 있는 보험이 없습니다.');
@@ -297,7 +297,7 @@
 
 async function checkValidation() {
   const validationSchema = InsuranceYup.MODIFY_FORM;
-  const isValidate = await validationSchema.validate(d_TADV0040A.value, { abortEarly: false })
+  const isValidate = await validationSchema.validate(d_TPAT0040A.value, { abortEarly: false })
     .then(() => {
       return true;
     })
@@ -318,7 +318,7 @@ async function checkValidation() {
 async function onSubmit() {
   if (!await checkValidation()) return false;
     
-  const retData = await apiA_TADV0040A.setDBIns(d_TADV0040A.value);
+  const retData = await apiA_TPAT0040A.setDBIns(d_TPAT0040A.value);
   if(retData.success) {
     getItems();
     messageBoxDTO.value.setInfo( '변경신청', '보험 변경신청이 접수 되었습니다.');
@@ -335,17 +335,19 @@ async function onSubmit() {
    */
   async function onViewDtl(apply_no:number) {
     const params = {apply_no:apply_no};
-    const retData = await apiA_TADV0040A.getDBSel(params);
-    d_TADV0040A.value = new D_T0040ADTO(retData.data);
+    const retData = await apiA_TPAT0040A.getDBSel(params);
+    d_TPAT0040A.value = new D_T0040ADTO(retData.data);
     isViewDialog.value = true;
 
   };
 
   const getItems = async () => {
     const params = { page: page.value, limit };
-    const { data } = await apiA_TADV0040A.getDBSelList(params);
+    const { data } = await apiA_TPAT0040A.getDBSelList(params);
 
-    d_TADV0040AList.value = data.items;
+    d_TPAT0040AList.value = data.items;
+
+    console.log(d_TPAT0040AList.value)
 
     total.value = data.tot_count;
     pages.value = Math.ceil(total.value / limit);

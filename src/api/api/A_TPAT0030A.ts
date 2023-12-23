@@ -79,7 +79,24 @@ export default {
    * @param params.insurance_type
    * @returns
    */
-  async setDBIns(params: any) {
+  async setDBIns(params: any, file: any) {
+    const reader = new FileReader();
+    const promise = new Promise((resolve, reject) => {
+      reader.onload = () => {
+        const base64Data = reader.result.split(',')[1];
+
+        params.fileName = file.name;
+        params.fileType = file.type;
+        params.fileData = base64Data;
+        resolve();
+      };
+
+      reader.onerror = reject;
+    });
+    reader.readAsDataURL(file);
+
+    await promise;
+
     return await api.commonService.post('/PAT/PAT0030A/set', { params });
   },
   /**
@@ -88,12 +105,28 @@ export default {
    * @param params.insurance_type
    * @returns
    */
-  async setDBUpd(params: any) {
-    return await api.commonService.post(
-      `/PAT/PAT0030A/set/:${params.insurance_uuid}`,
-      {
-        params
-      }
-    );
+  async setDBUpd(params: any, file: any) {
+    if(file) {
+      const reader = new FileReader();
+      const promise = new Promise((resolve, reject) => {
+        reader.onload = () => {
+          const base64Data = reader.result.split(',')[1];
+
+          params.fileName = file.name;
+          params.fileType = file.type;
+          params.fileData = base64Data;
+          resolve();
+        };
+
+        reader.onerror = reject;
+      });
+      reader.readAsDataURL(file);
+
+      await promise;
+
+      return await api.commonService.post(`/PAT/PAT0030A/set/:${params.insurance_uuid}`, {params});
+    }else {
+      return await api.commonService.post(`/PAT/PAT0030A/set/:${params.insurance_uuid}`, {params});
+    }
   }
 };

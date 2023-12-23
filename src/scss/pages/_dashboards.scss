@@ -656,3 +656,36 @@
   .v-expansion-panel-text__wrapper {height: auto;overflow-y: visible;}
 }
 
+.custom-file-upload {
+  position: relative;
+  display: inline-block;
+  font-family: 'Arial', sans-serif;
+}
+
+.file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: -1;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+.custom-file-button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px; /* 버튼과 파일명 사이 여백 조정 */
+}
+
+.selected-file-name {
+  font-style: italic;
+  color: #333;
+}

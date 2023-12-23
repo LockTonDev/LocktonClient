@@ -42,17 +42,17 @@
     <v-card>
       <v-card-title class="d-flex align-center justify-space-between">
           <div class="text-h6 font-weight-medium">
-            변호사전문인배상책임보험 상품설명 확인서 <span class="text-18">(피보험자 변호사 확인)</span>
+            변리사전문인배상책임보험 상품설명 확인서 <span class="text-18">(피보험자 변리사 확인)</span>
           </div>
       </v-card-title>   
 
       <v-divider class="mb-0"/>
       <v-card-text class="px-10 pt-8 pb-14">
         <ul class="list-style-type-none font-weight-medium">
-          <li>보험계약자	:	대한변호사협회 </li>
+          <li>보험계약자	:	대한변리사회 </li>
         </ul>
         <div class="v-board-table mt-4 d-flex justify-space-between">
-          <p class="pa-4 pr-0">변호사전문인배상책임보험의 주요사항에 대해 록톤컴퍼니즈코리아로부터 충분히 설명 받고 양지하였음을 확인합니다.<br/> 설명 받았다는 사실을 “확인” 란에 체크 해주시기 바랍니다.</p>
+          <p class="pa-4 pr-0">변리사전문인배상책임보험의 주요사항에 대해 록톤컴퍼니즈코리아로부터 충분히 설명 받고 양지하였음을 확인합니다.<br/> 설명 받았다는 사실을 “확인” 란에 체크 해주시기 바랍니다.</p>
           <p class="pa-4 text-center">
             <v-checkbox v-model="agr_yn.agr41_yn" true-value="Y" false-value="N" hide-details label="확인" :disabled="isReadonly"/>
           </p>
@@ -100,25 +100,20 @@
                 <td class="text-center">5</td>
                 <td>
                   <span class="font-weight-medium">* 배상청구기준 증권:</span> 
-                  이 보험은 보험가입일 이후 수행한 업무가 유효한 보험기간 내에 배상청구 되는 경우 보상하는 보험입니다. 따라서 보험 만기시 갱신이 계속 이뤄져야 계속적인 보험적용을 받을 수 있고, 만기시 갱신하지 않거나 또는 보험기간 중 해지하는 경우 그 때부터 보험의 효력이 소멸됩니다.  (단, 자동보고연장기간 70일 내에 보험사에 서면 통보되는 경우 보상 가능합니다.)
+                  이 보험은 보험가입일 이후 수행한 업무가 유효한 보험기간 내에 배상청구 되는 경우 보상하는 보험입니다. 따라서 보험 만기시 갱신이 계속 이뤄져야 계속적인 보험적용을 받을 수 있고, 만기시 갱신하지 않거나 또는 보험기간 중 해지하는 경우 그 때부터 보험의 효력이 소멸됩니다.  (단, 자동보고연장기간 60일 내에 보험사에 서면 통보되는 경우 보상 가능합니다.)
                 </td>
               </tr>
               <tr>
                 <td class="text-center">6</td>
                 <td>
-                  <span class="font-weight-medium">* 피보험자 및 피용인의 고의 등 행위 부담보:</span>
-                  고용직원의 부정직(또는 사기행위) 확장조항을 추가하지 않는 한, 보통약관의 담보조항에도 불구하고 ('선의의 피보험자'조항 등) 본 증권은 피보험자 또는 피보험자의 종업원에 의한 고의, 부정직, 악의, 범죄, 불법행위에 기인한 배상책임은 담보되지 않습니다.
+                  <span class="font-weight-medium">* 기술정보유출 배상책임 담보:</span>
+                  업무수행 과정이나 그러한 목적으로 소유, 사용, 관리하는 "기술정보"의 우연한 "유출"로 기인한 피험자의 법률상 손해배상책임을 보상합니다. <br/>
+                  <span class="font-weight-medium"> 보상한도액: 5백만원 (1청구당/연간총) / 자기부담금: 1백만원 (1청구당)</span> <br/>
+                  (보상한도액은 가입증명서에 명시된 청구당 보상한도액 및 연간총 보상한도액에 포함됩니다.)
                 </td>
               </tr>
               <tr>
                 <td class="text-center">7</td>
-                <td>
-                  <span class="font-weight-medium">* 고용직원의 부정직(또는 사기행위)확장 조항(Dishonesty Extension):</span>
-                  고용직원의 부정직(또는 사기행위)확장조항을 추가 가입 할 경우, 피보험자의 고용인이 피보험자를 대신하여 전문서비스를 수행하는 동안 행한 부정직(또는 사기 행위)의 직접적인 결과로 보험기간 중에 인지된 금전적인 손실을 담보합니다. <span class="font-weight-bold" style="text-decoration: underline">사고가 인지(Discovery)된 이후 30일 이내에 해당 사실을 서면으로 보험회사에 통지해야 합니다.</span> 지방 변호사회에 등록된 전 사무원의 일괄가입을 전제로 하며, 변호사는 제외됩니다.
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center">8</td>
                 <td>
                   <span class="font-weight-medium">* “약관” 및 “예상질문에 대한 답변서” 확인:</span> 
                   기타 약관에서 정한 <span class="font-weight-medium">피보험자의 범위, 보상하는 손해, 면책 규정</span> 등은 보장범위를 결정하는 중요한 사항이므로 반드시 정독, 양지하시기 바라며 문의 사항은 질의하시어 꼭 확인하시기 바랍니다<br/>(당사 홈페이지 로그인 후 알림마당 -> 자료실에서 다운로드 가능합니다.)
@@ -127,7 +122,7 @@
             </tbody>
           </table>
         </div>
-        <p class="font-weight-medium mt-4 word-break-keep-all">보험약관은 당사 및 대한변호사협회 홈페이지에 게재되었으니 반드시 확인 및 양지하시기 바랍니다.</p>
+        <p class="font-weight-medium mt-4 word-break-keep-all">보험약관은 당사 및 대한변리사회 홈페이지에 게재되었으니 반드시 확인 및 양지하시기 바랍니다.</p>
         <div class="d-flex justify-end mt-4">
           <v-btn variant="flat" color="primary" @click="close()">닫기</v-btn>
         </div> 
