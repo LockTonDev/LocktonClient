@@ -52,7 +52,8 @@
              <td class="text-center text-body-1">{{ !['10', '91'].includes(row.status_cd) ? row.insurance_no : '' }}</td>
             <template v-if="row.user_cd === user_cd">
             <td class="text-center text-body-1">
-              <p>{{ row.user_nm }}</p>
+              <p v-if="row.user_cd != 'JNT'">{{ row.user_nm }}</p>
+              <p v-if="row.user_cd == 'JNT' && row.cbr_data.length > 0">{{ row.cbr_data[0].cbr_nm }} 외 {{row.cbr_cnt - 1}} 명</p>
             </td>
             <td class="text-center text-body-1">
               <div v-if="row.insr_year === '2023' && row.status_cd !== '10'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>

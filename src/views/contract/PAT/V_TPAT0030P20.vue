@@ -51,7 +51,7 @@
                     </p>
                   </h1>
                   <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
-                    본 보험은 대한변리사회 및 흥국화재해상보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 변호사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
+                    본 보험은 대한변리사회 및 흥국화재해상보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 변리사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
                   </p>
                 </header>
                 <!--//header-->
@@ -178,10 +178,6 @@
                     </p>
                     <!--기본담보 시작-->
                     <div class="mt-1">
-                      <p class="text-12 font-weight-bold mb-1">
-                        <span class="color-primary">&#x275A;</span>&nbsp;기본담보
-                      </p>
-
                       <v-row class="table">
                         <v-col cols="6">
                           <div class="head-col">보험기간</div>
@@ -220,18 +216,18 @@
                         <v-col cols="6">
                           <div class="head-col">기일관리 프로그램</div>
                           <div class="data-col">
-                            <p v-if="insuranceDTO.insr_program_yn == 'Y'">{{ insuranceDTO.insr_program }} (10% 적용)</p>
+                            <p v-if="insuranceDTO.insr_program_yn == 'Y'">{{ insuranceDTO.insr_program }} (10%할인 적용)</p>
                             <p v-else> 사용안함</p>
                           </div>
                         </v-col>
                         <v-col cols="6">
-                          <div class="head-col">할인 및 할증률</div>
+                          <div class="head-col">할인 및 할증율</div>
                           <div class="data-col">
-                            {{ insuranceDTO.insr_sale_rt }}% 적용
+                            {{ insuranceDTO.insr_sale_rt }}%
                           </div>
                         </v-col>
                         <v-col cols="6" class="point">
-                          <div class="head-col">산출보험료</div>
+                          <div class="head-col">최종 보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
                           </div>
@@ -420,7 +416,7 @@
                       </p>
                     </h1>
                     <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
-                      본 보험은 대한변호사협회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 변호사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
+                      본 보험은 대한변리사회 및 흥국화재해상보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 변리사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
                     </p>
                   </header>
                   <!--//header-->
@@ -438,7 +434,7 @@
                             <p>보험계약자</p>
                           </div>
                           <div class="data-col">
-                            대한변호사협회
+                            대한변리사회
                           </div>
                         </v-col>
                         <v-col cols="6" class="v-col">
@@ -447,6 +443,15 @@
                           </div>
                           <div class="data-col">
                             {{ insuranceDTO.base_insr_st_dt }}(00:01) ~ {{ insuranceDTO.base_insr_cncls_dt }}(00:01)
+                          </div>
+                        </v-col>
+                        <v-col cols="12" class="v-col">
+                          <div class="head-col">
+                            <p>피보험자</p>
+                          </div>
+                          <div class="data-col">
+                            <p v-if="insuranceDTO.cbr_data.length>0 && insuranceDTO.user_cd==='JNT'">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}} 명</p>
+                            <p v-if="insuranceDTO.user_cd==='COR'">{{ insuranceDTO.user_nm }}</p>
                           </div>
                         </v-col>
                         <v-col cols="6" class="v-col">
@@ -463,15 +468,6 @@
                           </div>
                           <div class="data-col">
                             {{ insuranceDTO.corp_ceo_nm }}
-                          </div>
-                        </v-col>
-                        <v-col cols="6" class="v-col">
-                          <div class="head-col">
-                            <p>피보험자</p>
-                          </div>
-                          <div class="data-col">
-                            <p v-if="insuranceDTO.cbr_data.length>0 && insuranceDTO.user_cd==='JNT'">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}} 명</p>
-                            <p v-if="insuranceDTO.user_cd==='COR'">{{ insuranceDTO.user_nm }}</p>
                           </div>
                         </v-col>
                         <v-col cols="6" class="v-col">
@@ -528,7 +524,7 @@
                             <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_hpno" name="corp_cust_hpno" label="휴대 전화" single-line density="comfortable"/> -->
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col cols="12" class="v-col">
                           <div class="head-col">
                             <p>이메일</p>
                           </div>
@@ -559,9 +555,6 @@
                       </p>
                       <!--기본담보 시작-->
                       <div class="mt-1">
-                        <p class="text-12 font-weight-bold mb-1">
-                          <span class="color-primary">&#x275A;</span>&nbsp;기본담보
-                        </p>
                         <v-row class="table">
                           <v-col cols="6">
                             <div class="head-col">보험기간</div>
@@ -572,11 +565,8 @@
                           </v-col>
                           <v-col cols="6">
                             <div class="head-col flex-wrap">소급담보일</div>
-                            <div class="data-col">개인별 적용</div>
-                          </v-col>
-                          <v-col cols="6">
-                            <div class="head-col flex-wrap">무사고 할인</div>
-                            <div class="data-col" >개인별 적용</div>
+                            <div class="data-col" v-if="insuranceDTO.user_cd==='JNT'">개인별 적용</div>
+                            <div class="data-col" v-if="insuranceDTO.user_cd==='COR'">{{ insuranceDTO.insr_retr_dt }}</div>
                           </v-col>
                           <v-col cols="6">
                             <div class="head-col flex-wrap">보상한도</div>
@@ -586,12 +576,16 @@
                               <span class="text-10 color-gray ml-2">(1청구당/연간총)</span>
                             </div>
                           </v-col>
-                          <v-col :cols="insuranceDTO.user_cd==='JNT'?12:6">
+                          <v-col cols="6">
                             <div class="head-col flex-wrap">자기부담금</div>
                             <div class="data-col">
                               {{ insuranceDTO?.insr_psnl_brdn_amt?.getValueBySplit(1) }}
                               <span class="text-10 color-gray ml-2">(1청구당)</span>
                             </div>
+                          </v-col>
+                          <v-col cols="6" v-if="insuranceDTO.user_cd==='JNT'">
+                            <div class="head-col flex-wrap">변리사 인원수</div>
+                            <div class="data-col" >{{ insuranceDTO.cbr_cnt }}명</div>
                           </v-col>
                           <v-col cols="6" v-if="insuranceDTO.user_cd==='COR' ">
                             <div class="head-col">매출액구간</div>
@@ -605,18 +599,27 @@
                               {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
                             </div>
                           </v-col>
-                          <v-col cols="6">
-                            <div class="head-col">변호사 인원수</div>
-                            <div class="data-col">
-                              <!-- {{ insuranceDTO.cbr_data.length }} 명 -->
-                              {{ insuranceDTO.cbr_cnt  }} 명
-                            </div>
+                          <v-col cols="6" v-if="insuranceDTO.user_cd==='COR'">
+                            <div class="head-col flex-wrap">변리사 인원수</div>
+                            <div class="data-col" >{{ insuranceDTO.cbr_cnt }}명</div>
                           </v-col>
                           <v-col cols="6">
+                            <div class="head-col flex-wrap">할인 및 할증율</div>
+                            <div class="data-col" v-if="insuranceDTO.user_cd==='JNT'">개인별 적용</div>
+                            <div class="data-col" v-if="insuranceDTO.user_cd==='COR'">{{insuranceDTO.insr_sale_rt}} %</div>
+                          </v-col>
+                          <v-col cols="6">
+                            <div class="head-col">기일관리 프로그램</div>
+                            <div class="data-col">
+                              <p v-if="insuranceDTO.insr_program_yn == 'Y'">{{ insuranceDTO.insr_program }} (10%할인 적용)</p>
+                              <p v-else> 사용안함</p>
+                            </div>
+                          </v-col>
+                          <v-col cols="6" v-if="insuranceDTO.user_cd==='JNT'">
                             <div class="head-col"></div>
                           </v-col>
                           <v-col cols="6" class="point">
-                            <div class="head-col">산출 보험료</div>
+                            <div class="head-col">최종 보험료</div>
                             <div class="data-col">
                               {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
                             </div>
@@ -628,7 +631,7 @@
                       >
                         <li>
                           보험료 입금 계좌번호 :
-                          <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                          <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-005-862100</b>
                           <span class="text-10 mx-3">|</span>예금주 :
                           <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                         </li>
@@ -763,7 +766,8 @@
                             <p class="text-12">피보험자</p>
                           </div>
                           <div class="data-col py-2 justify-end pr-8">
-                            <p class="text-12" v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}} 명</p>
+                            <p class="text-12" v-if="insuranceDTO.cbr_data.length>0 && insuranceDTO.user_cd==='JNT'">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}} 명</p>
+                            <p class="text-12" v-if="insuranceDTO.user_cd==='COR'">{{ insuranceDTO.user_nm }}</p>
                           </div>
                         </v-col>
                       </v-row>
@@ -793,7 +797,7 @@
               <div class="html2pdf__page-break"></div>
 
               <!-- 가입자명단 (PDF용)-->
-              <template v-if="isPdf" v-for="chunkIndex in chunkedDivCount">
+              <template v-if="isPdf && insuranceDTO.user_cd==='JNT'" v-for="chunkIndex in chunkedDivCount">
                 <div :class="isPdf ? 'print-wrap' : ''">
                   <!-- header 영역 시작-->
                   <header v-if="isPdf">
@@ -822,7 +826,6 @@
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
-                            <col style="width: auto" />
                           </colgroup>
                           <thead>
                           <tr>
@@ -833,7 +836,6 @@
                             <th class="text-center">소급담보일</th>
                             <th class="text-center">할인할증</th>
                             <th class="text-center">1인당 보험료</th>
-                            <th class="text-center">상태</th>
                           </tr>
                           </thead>
 
@@ -848,8 +850,6 @@
                             <td>
                               {{ Number(row?.insr_amt)?.toLocaleString() }}원
                             </td>
-                            <td v-if="insuranceDTO.status_cd !== '10'"> {{  statusCdItems.find(code => code.value ==  row.status_cd)?.title}}</td>
-                            <td v-else></td>
                           </tr>
                           </tbody>
                         </table>
@@ -879,7 +879,7 @@
               </template>
 
               <!-- 가입자명단 (신청보기용)-->
-              <template v-if="!isPdf">
+              <template v-if="!isPdf && insuranceDTO.user_cd==='JNT'">
                 <div :class="isPdf?'print-wrap':''">
                   <main>
                     <div class="mt-4">
@@ -1065,7 +1065,7 @@ const onExportPDF = (viewType: string) => {
   
   let opt = {
     margin: [0, 9, 0, 9],
-    filename: '가입신청서_변호사배상책임보험.pdf',
+    filename: '가입신청서_변리사배상책임보험.pdf',
     pagebreak: {
       mode: ['avoid-all', 'css', 'legacy']
     },

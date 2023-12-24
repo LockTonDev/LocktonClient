@@ -7,7 +7,7 @@
       <v-divider class="mb-0"/>
       <v-card-text class="pa-0">
         <div>
-          <iframe src="/assets/doc/ADV/변호사_보험특별약관.pdf" width="100%" height="800px"></iframe>
+          <iframe src="/assets/doc/PAT/변호사_보험특별약관.pdf" width="100%" height="800px"></iframe>
         </div>
       </v-card-text>
     </v-card>

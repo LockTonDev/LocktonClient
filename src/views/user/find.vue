@@ -17,6 +17,8 @@
               <h2 class="text-h5 font-weight-light" v-else-if="['TAX'].includes(businessCd)">개인회원 또는 법인회원을<br/>선택해 주세요.</h2>
               <h2 class="text-h5 font-weight-light" v-else-if="['ADV'].includes(businessCd)">개인회원 또는 복수가입회원을<br/>선택해 주세요.</h2>
               <h2 class="text-h5 font-weight-light" v-else-if="['CAA'].includes(businessCd)">개인회원 또는 법인/합동사무소 가입회원을<br/>선택해 주세요.</h2>
+              <h2 class="text-h5 font-weight-light" v-else-if="['PAT'].includes(businessCd)">개인회원 또는 법인/합동 가입회원을<br/>선택해 주세요.</h2>
+
 
               <div class="mt-10">
                 <v-divider />
@@ -27,17 +29,18 @@
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
                 <v-divider />
-                <v-btn variant="text" @click="userDTO.user_cd = 'COR'; fnFindIdCOR()" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="['TAX', 'CAA'].includes(businessCd)">
+                <v-btn variant="text" @click="userDTO.user_cd = 'COR'; fnFindIdCOR()" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="['TAX', 'CAA', 'PAT'].includes(businessCd)">
                   <div class="text-left font-weight-light w-100">
                     <p>법인회원</p>
                   </div>
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
                 <v-divider />
-                <v-btn variant="text" @click="userDTO.user_cd = 'JNT'; fnFindIdCOR()" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="['ADV', 'CAA'].includes(businessCd)">
+                <v-btn variant="text" @click="userDTO.user_cd = 'JNT'; fnFindIdCOR()" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="['ADV', 'CAA', 'PAT'].includes(businessCd)">
                   <div class="text-left font-weight-light w-100">
                     <p v-if="businessCd=='ADV'">복수가입회원</p>
                     <p v-if="businessCd=='CAA'">합동사무소가입회원</p>
+                    <p v-if="businessCd=='PAT'">합동가입회원</p>
                   </div>
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
@@ -130,6 +133,7 @@
               <h2 class="text-h5 font-weight-light" v-else-if="['TAX'].includes(businessCd)">개인회원 또는 법인회원을<br/>선택해 주세요.</h2>
               <h2 class="text-h5 font-weight-light" v-else-if="['ADV'].includes(businessCd)">개인회원 또는 복수가입회원을<br/>선택해 주세요.</h2>
               <h2 class="text-h5 font-weight-light" v-else-if="['CAA'].includes(businessCd)">개인회원 또는 법인/합동사무소 가입회원을<br/>선택해 주세요.</h2>
+              <h2 class="text-h5 font-weight-light" v-else-if="['PAT'].includes(businessCd)">개인회원 또는 법인/합동 가입회원을<br/>선택해 주세요.</h2>
               <div class="mt-10">
                 <v-divider />
                 <v-btn @click="userDTO.user_cd = 'IND'; setViewPwStep(false, true, false, false);" variant="text" color="black" size="x-large" class="py-6 h-auto w-100 d-block">
@@ -139,17 +143,18 @@
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
                 <v-divider />
-                <v-btn @click="userDTO.user_cd = 'COR'; setViewPwStep(false, false, true, false);" variant="text" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="['TAX', 'CAA'].includes(businessCd)">
+                <v-btn @click="userDTO.user_cd = 'COR'; setViewPwStep(false, false, true, false);" variant="text" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="['TAX', 'CAA', 'PAT'].includes(businessCd)">
                   <div class="text-left font-weight-light w-100">
                     <p>법인회원</p>
                   </div>
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
                 <v-divider />
-                <v-btn @click="userDTO.user_cd = 'JNT'; setViewPwStep(false, false, true, false);" variant="text" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="['ADV', 'CAA'].includes(businessCd)">
+                <v-btn @click="userDTO.user_cd = 'JNT'; setViewPwStep(false, false, true, false);" variant="text" color="black" size="x-large" class="py-6 h-auto w-100 d-block" v-if="['ADV', 'CAA', 'PAT'].includes(businessCd)">
                   <div class="text-left font-weight-light w-100">
                     <p v-if="businessCd=='ADV'">복수가입회원</p>
                     <p v-if="businessCd=='CAA'">합동사무소가입회원</p>
+                    <p v-if="businessCd=='PAT'">합동가입회원</p>
                   </div>
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
@@ -195,6 +200,16 @@
                 <template v-if="route.params.business_cd == 'CAA'">
                   <div class="d-flex align-center" v-if="userDTO.user_cd==='JNT'">
                     <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="사무소 명" class="mt-2" maxlength="30"/>
+                    <v-btn variant="outlined" @click="sendVerifyEMailJNT()" color="primary" size="large" class="ml-2" :disabled="isSendEMail">인증메일 받기</v-btn >
+                  </div>
+                  <div class="d-flex align-center" v-if="userDTO.user_cd==='COR'">
+                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="법인 명" class="mt-2" maxlength="30"/>
+                    <v-btn variant="outlined" @click="sendVerifyEMailCOR()" color="primary" size="large" class="ml-2" :disabled="isSendEMail">인증메일 받기</v-btn >
+                  </div>
+                </template>
+                <template v-if="route.params.business_cd == 'PAT'">
+                  <div class="d-flex align-center" v-if="userDTO.user_cd==='JNT'">
+                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="합동 명" class="mt-2" maxlength="30"/>
                     <v-btn variant="outlined" @click="sendVerifyEMailJNT()" color="primary" size="large" class="ml-2" :disabled="isSendEMail">인증메일 받기</v-btn >
                   </div>
                   <div class="d-flex align-center" v-if="userDTO.user_cd==='COR'">

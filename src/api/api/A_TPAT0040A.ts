@@ -43,7 +43,7 @@ export default {
    */
   async setDBUpd(params: any) {
     return await api.commonService.post(
-      `/TAX/TAX0040A/set/${params.apply_no}`,
+      `/PAT/PAT0040A/set/${params.apply_no}`,
       { params }
     );
   },

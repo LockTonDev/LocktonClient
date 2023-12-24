@@ -10,6 +10,7 @@
       <v-btn v-if="businessCd ==='ACC'" color="footerbackground" size="" rounded="0" href="http://www.cpas.or.kr" target="_blank">한국공인회계사 감사반연합회</v-btn>
       <v-btn v-if="businessCd ==='TAX'" color="footerbackground" size="" rounded="0" href="https://www.kacpta.or.kr" target="_blank">한국세무사회</v-btn>
       <v-btn v-if="businessCd ==='ADV'" color="footerbackground" size="" rounded="0" href="https://www.koreanbar.or.kr/" target="_blank">대한변호사협회</v-btn>
+      <v-btn v-if="businessCd ==='PAT'" color="footerbackground" size="" rounded="0" href="https://www.kpaa.or.kr" target="_blank">대한변리사회</v-btn>
     </v-row>
     <v-row class="footer-info w-100 ma-0 pt-10 pb-10">
       <v-col cols="2" class="pa-0">

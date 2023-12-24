@@ -15,9 +15,10 @@
     <v-window-item value="1">
       <v-row class="mt-10" justify="center">
         <v-col cols="12" sm="10">
-          <h4 class="text-h5 font-weight-bold text-center">변호사배상책임보험이란?</h4>
+          <h4 class="text-h5 font-weight-bold text-center">변리사배상책임보험이란?</h4>
           <p class="text-18 text-center mt-10">
-            변호사 및 그 임직원이 전문인의 자격으로 업무를 수행함에 있어 과실로 의뢰인 또는 제 3자에게 직접적인 손해를 입힌 경우 법률상 손해배상금 및 사고처리에 드는 제반비용을 보상해주는 상품입니다.
+            변리사 및 그 임직원이 전문인의 자격으로 업무를 수행함에 있어 과실로 의뢰인 또는 제 3자에게
+            직접적인 손해를 입힌 경우 법률상 손해배상금 및 사고처리에 드는 제반비용을 보상해주는 상품입니다
           </p>
           <v-row class="my-10 px-sm-16" justify="center">
             <v-col align="center" class="pa-0">
@@ -25,22 +26,22 @@
                 <img src="../../assets/images/icon/icon-insurance-1-5-small.png" alt=""/>
               </div>
               <p class="text-20 font-weight-medium mt-6">계약자</p>
-              <p class="mt-4">대한변호사협회</p>
+              <p class="mt-4">대한변리사회</p>
             </v-col>
             <v-col align="center" class="pa-0">
               <div class="bg-background border-radius-round d-inline-block pa-10">
                 <img src="../../assets/images/icon/icon-insurance-1-6-small.png" alt=""/>
               </div>
               <p class="text-20 font-weight-medium mt-6">보험기간</p>
-              <p class="mt-4">12월 1일 00:01 ~ 다음해 12월 1일 00:01</p>
-              <p class="color-gray-shadow mt-2 text-14">※ 12월 1일 이후 신규 가입 시 가입일부터 개시</p>
+              <p class="mt-4">1월 1일 00:01 ~ 다음해 1월 1일 00:01</p>
+              <p class="color-gray-shadow mt-2 text-14">※ 1월 1일 이후 신규 가입 시 가입일부터 개시</p>
             </v-col>
             <v-col align="center" class="pa-0">
               <div class="bg-background border-radius-round d-inline-block pa-10">
                 <img src="../../assets/images/icon/icon-insurance-1-7-small.png" alt=""/>
               </div>
               <p class="text-20 font-weight-medium mt-6">보험가입대상</p>
-              <p class="mt-4">대한변호사협회 회원</p>
+              <p class="mt-4">대한변리사회 회원</p>
             </v-col>
           </v-row>
         </v-col> 
@@ -52,7 +53,7 @@
                 <img src="../../assets/images/img-insurance-1-3.jpg" alt="" class="d-block w-full"/>
                 <div class="px-6 py-9 text-left">
                   <p class="text-20 font-weight-medium">손해배상책임 위험 증가</p>
-                  <p class="mt-4 word-break-keep-all">급격한 세계화 및 사회구조 다변화로 변호사의 전문성은 더욱 강조되고 있으며, 직무가 복잡해지고 세분화되어 업무 수행에 대한 손해배상책임 위험이 점차 증가하고 있습니다.</p>
+                  <p class="mt-4 word-break-keep-all">급격한 기술 발전과 지식재산권의 폭발적 증가로 변리사의 전문성은 더욱 강조되고 있으며, 직무가 복잡해지고 세분화되어 업무 수행에 대한 손해배상책임 위험이 점차 증가하고 있습니다.</p>
                 </div>
               </v-card>
             </v-col>
@@ -61,7 +62,7 @@
                 <img src="../../assets/images/img-insurance-1-1.jpg" alt="" class="d-block w-full"/>
                 <div class="px-6 py-9 text-left">
                   <p class="text-20 font-weight-medium">전문자격사로서의 역할과 책임 확대</p>
-                  <p class="mt-4 word-break-keep-all">변호사 전문분야 등록제 등 각 업무영역에 대한 전문성이 극대화 되는 상황에서 법률 수요자에 대한 양질의 법률서비스 제공과 업무 책임도 증가하고 있습니다.</p>
+                  <p class="mt-4 word-break-keep-all">지식산업 최전선에서 지식재산권 수호자로서의 역할이 더욱 강조되고 있으며, 산업 가치 창조 수요자에 대한 양질의 서비스 제공과 업무 책임도 확대되고 있습니다.</p>
                 </div>
               </v-card>
             </v-col>
@@ -92,7 +93,7 @@
           <ul class="list-style-type-none v-box py-2 px-16 mt-10 border-color-gray">
             <li class="d-flex justify-space-between align-center py-8">
               <img src="../../assets/images/icon/icon-insurance-1-1.png" alt="" class="ml-4">
-              <p class="text-h6 w-30 ml-10">계약자<span class="text-18">(대한변호사협회)</span> 대변</p>
+              <p class="text-h6 w-30 ml-10">계약자<span class="text-18">(대한변리사회)</span> 대변</p>
               <div class="text-body-1 line-1-6 w-50">
                 <p>사고중재 / 요율작업에서 계약자에 유리하도록 적극 협상</p>
               </div>
@@ -100,9 +101,9 @@
             <v-divider />
             <li class="d-flex justify-space-between align-center py-8">
               <img src="../../assets/images/icon/icon-insurance-1-2.png" alt="" class="ml-4">
-              <p class="text-h6 w-30 ml-10">2002년부터 단체보험 운영</p>
+              <p class="text-h6 w-30 ml-10">2003년부터 단체보험 운영</p>
               <div class="text-body-1 line-1-6 w-50">
-                <p>2002년부터 단체보험 도입</p>
+                <p>2003년부터 단체보험 도입</p>
                 <p class="mt-1">- 개별 가입 대비 저렴한 보험료 제공</p>
               </div>
             </li>
@@ -134,7 +135,10 @@
         <v-col cols="12" md="10">
           <v-window v-model="tab2">
             <v-window-item value="option-1">
-              <table class="normal-table">
+              <p>피보험자인 변리사가 변리사자격 범위내의 업무를 수행함에 있어 업무상 과실로
+                의뢰인 또는 제3자에게 직접적 손해를 입힌 경우 법률상 손해배상금 및 사고처리에
+                드는 제반 비용을 보상</p>
+              <table class="normal-table mt-5">
                 <colgroup>
                   <col style="width:20%"/>
                   <col style="width:20%"/>
@@ -181,9 +185,6 @@
                       <td class="border-right-0">피보험자의 악의적 또는 사기적 부정행위</td>
                     </tr>
                     <tr>
-                      <td class="border-right-0">다른 기관 및 정부기관의 공무원 자격, 다른 단체의 임원 등 업무에 기인한 책임</td>
-                    </tr>
-                    <tr>
                       <td class="border-right-0">징벌적 손해 (Punitive Damage Exclusion Clause) : 벌금, 과태료 등</td>
                     </tr>
                     <tr>
@@ -208,12 +209,6 @@
                       <td class="border-right-0">결과적 책임 / 간접손해 (Consequential Loss Exclusion Clause)</td>
                     </tr>
                     <tr>
-                      <td class="border-right-0">고용직원의 고의 등 행위 부담보(고용직원 부정직행위 담보 특별약관 가입 시 예외)</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">선의의 피보험자 조항 적용 안함</td>
-                    </tr>
-                    <tr>
                       <td class="border-right-0">기타 보통 약관 및 특별약관 보험조건에서 정하는 사항</td>
                     </tr>
                 </tbody>
@@ -226,20 +221,7 @@
                 <tbody>
                 <tr>
                   <th rowspan="3" class="text-center">추가사항</th>
-                  <td class="border-right-0">할인 및 할증 적용 : 이 보험은 무사고 기간에 따른 할인 및 사고 할증을 적용하며, 보상한도 공유 복수가입 시 인원수에 따른 할인율이 추가됩니다.</td>
-                </tr>
-                <tr>
-                  <td class="border-right-0">복수가입 시 총 보상한도 : 변호사 3인 이상 복수가입 시에는 연간 총 보상한도액 2배수를 적용합니다. <br/>(단, 2명 복수가입 시에는 1배수 적용)</td>
-                </tr>
-                <tr>
-                  <td class="border-right-0">사고자 보험료 할증 : 보험금 수령 시 수령보험금 규모에 따라 3개년 할증이 적용됩니다. <br/>(사고조사 진행 중 갱신 시 10% 할증 적용) <br/>
-                    <v-btn
-                        variant="outlined"
-                        color="primary"
-                        class="mt-2 flex-grow-0"
-                        @click="isInsrTableDialog = true"
-                    >보험료표 보기</v-btn
-                    ></td>
+                  <td class="border-right-0">담보지역 확대 : 이 보험의 담보지역은 대한민국에 한정됩니다. 해외 지역 담보가 필요한 회원은 설문서 작성 후 개별 보험료를 안내드립니다.</td>
                 </tr>
                 </tbody>
               </table>
@@ -266,7 +248,7 @@
                     </v-card-title>
                     <v-divider class="mb-0"/>
                     <v-card-text class="pa-0">
-                      <iframe src="/assets/doc/ADV/2023 예상질문에 대한 답변서.pdf" width="100%" height="800px"></iframe>
+                      <iframe src="/assets/doc/PAT/변리사2024_예상질문에 대한 답변서.pdf" width="100%" height="800px"></iframe>
                     </v-card-text>
                   </v-card>
                 </v-dialog>
@@ -282,19 +264,19 @@
               </ul>
               <img src="../../assets/images/img-insurance-2-2.png" alt="" class="mt-4"/>
               <div class="mt-4">
-                <p class="color-gray-shadow">※ 갱신이 되지 않을 경우에는 보험가입기간 중의 업무로 발생한 사고라도 보험만기일로부터 자동보고연장담보기간 70일이 경과하면 보험혜택을 받으실 수 없습니다.</p>
+                <p class="color-gray-shadow">※ 갱신이 되지 않을 경우에는 보험가입기간 중의 업무로 발생한 사고라도 보험만기일로부터 자동보고연장담보기간 60일이 경과하면 보험혜택을 받으실 수 없습니다.</p>
                 <v-btn type="button" color="primary" variant="outlined" class="mt-2 d-block">
                   <span class="mr-1">보고기간연장담보(Extended Reporting Period) 알아보기</span>
                   <v-dialog persistent v-model="dialogERP" activator="parent" scrollable max-width="1000">
                     <v-btn variant="outlined" color="dark" @click="dialogERP = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
                     <v-card>
                       <v-card-title class="d-flex justify-space-between align-center px-6 py-4 position-relative">
-                        <p class="text-h6 font-weight-bold">변호사배상책임보험 보고기간연장담보(ERP) 안내</p>
+                        <p class="text-h6 font-weight-bold">변리사배상책임보험 보고기간연장담보(ERP) 안내</p>
                         <v-spacer />
                       </v-card-title>
                       <v-divider class="mb-0"/>
                       <v-card-text class="px-10 py-6">
-                        <p>법인의 해산, 개인사무소의 폐업 등 보험계약을 유지할 수 없는 사유가 발생한 경우 추가보험료를 납부하고 과거 보험기간에 수행한 변호사의 업무에 대한 담보를 연장할 수 있습니다.</p>
+                        <p>법인의 해산, 개인사무소의 폐업 등 보험계약을 유지할 수 없는 사유가 발생한 경우 추가보험료를 납부하고 과거 보험기간에 수행한 변리사의 업무에 대한 담보를 연장할 수 있습니다.</p>
                         <table class="normal-table mt-6">
                           <colgroup>
                             <col style="width:22%"/>
@@ -303,7 +285,7 @@
                           <tbody>
                             <tr>
                               <th>담보업무</th>
-                              <td class="border-right-0">과거 보험기간에 수행한 변호사의 업무</td>
+                              <td class="border-right-0">과거 보험기간에 수행한 변리사의 업무</td>
                             </tr>
                             <tr>
                               <th class="border-left-0">가입기간</th>
@@ -362,10 +344,10 @@
               </ul>
             </v-window-item>
             <v-window-item value="option-4">
-              <h4 class="text-body-1 font-weight-bold">고용직원 부정직행위 담보 특별약관<span class="font-weight-normal">(추가보험료발생)</span></h4>
+              <h4 class="text-body-1 font-weight-bold">기술정보유출배상책임 담보 특별약관</h4>
               <p class="mt-6  word-break-keep-all">
-                변호사가 고용한 직원의 부정직(또는 사기행위)의 직접적인 결과로 보험기간 중에 발견된 금전적인 손실을 보상 받을 수 있는 특별 약관(Dishonesty Extension) 입니다.<br/>
-                고의적이고 명백한 의도에 의한 직접 결과이거나 혹은 고용한 사무원이 변호사를 대신하여 전문서비스 업무를 수행하는 동안 사무원 자신의 경제적인 이득을 취할 목적으로 단독/타인과 공모하여 행한 부정 행위 또는 사기행위에 기인한 것을 전제로 합니다.
+                피보험자의 업무수행 과정이나 그러한 목적으로 소유, 사용, 관리하는 “기술정보＂의
+                우연한 “유출＂로 기인한 피보험자의 법률상 손해배상책임을 보상합니다.
               </p>
               <table class="normal-table mt-6">
                 <colgroup>
@@ -376,49 +358,26 @@
                 <tr>
                   <th>보상한도액</th>
                   <td class="border-right-0">
-                    2천5백만원 / 5천만원 / 1억원 중 선택<br/>
-                    <span class="color-gray">(고용직원 1인당 적용되는 보상 한도액 이 아닌 1청구당/연간 총 한도액입니다.)</span>
+                    5백만원 (1청구당/연간총)
                   </td>
                 </tr>
                 <tr>
-                  <th class="border-left-0">가입조건 </th>
+                  <th class="border-left-0">자기부담금</th>
                   <td class="border-right-0">
-                    - 기본담보의 50%적용을 원칙으로 함 <br/>
-                    - 각 지방 변호사회에 사무원으로 등록된 전 직원의 일괄가입이 조건임 <br/>(변호사 유자격자 제외)
+                    1백만원 (1청구당)
                   </td>
                 </tr>
                 <tr>
-                  <th class="border-left-0">사고 통지</th>
+                  <th class="border-left-0">기타</th>
                   <td class="border-right-0">
-                    사고 인지 후 30일 이내에 반드시 보험사로 서면 통지하여야 하며,<br/>
-                    기간 내 통지가 이루어지지 않을 경우 면책처리됨<br/>
-                    <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mt-2 px-4 py-1 text-14" href="/assets/doc/ADV/변호사_사고통보서.pdf" download>
-                      <span class="mr-1">사고 통보서 다운로드</span>
-                      <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
-                    </a>
+                    특별약관에 대한 보상한도는 가입증명서에 명시되는 청구당
+                    보상한도액 및 연간총 보상한도액에 포함됩니다.
+                    또한 구체적이고 정확한 보상내용은 보험종목에 적용되는
+                    약관의 관련규정에 따라 정해집니다.
                   </td>
                 </tr>
                 </tbody>
-
               </table>
-              <div class="mt-4">
-                <span class="color-gray-shadow">※ 자세한 사항은 약관을 참조해주세요</span>
-                <v-btn color="primary" variant="outlined" class="ml-2">특별약관 보기
-                  <v-dialog persistent v-model="isDialogTermsOfPolicy3" activator="parent" scrollable max-width="1000">
-                    <v-btn variant="outlined" color="dark" @click="isDialogTermsOfPolicy3 = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
-                    <TermsOfPolicy2></TermsOfPolicy2>
-                  </v-dialog>
-                </v-btn>
-              </div>
-              <dl class="mt-6 pa-10 bg-background">
-                <dt class="font-weight-medium"><i class="mdi mdi-alert-circle-outline mr-2"></i>유의사항</dt>
-                <dd class="text-body-1 mt-4 text-grey-darken-3">
-                  <ul class="list-style-type-bull pl-3">
-                    <li>최초 가입 이후 사고 인지 시점에도 유효하게 가입되어 있어야 하며 기본 담보의 자동보고 연장기간(70일)은 적용되지 않습니다.</li>
-                    <li>보험회사가 지급한 보험금한도 내에서 사고를 야기한 사무원 및 제3자에 대하여 구상권을 행사 할 수 있습니다.</li>
-                  </ul>
-                </dd>
-              </dl>
             </v-window-item>
           </v-window>
         </v-col>
@@ -437,7 +396,7 @@
                 <dd class="mt-1">
                   회원가입 후 로그인<br/>
                 </dd>
-                <dd class="">복수가입의 경우 하나의 아이디를 발급 받은 후 회원가입</dd>
+                <dd class="">법인/합동가입의 경우 하나의 아이디를 발급 받은 후 회원가입</dd>
               </dl>
             </li>
             <li class="px-16 mt-2 mb-1">
@@ -509,8 +468,8 @@
                 <dd class="mt-1">
                   보험 개시일 전까지 납부
                 </dd>
-                <dd class="mt-1">신규 가입 시 만기일 (매년 12월 1일)까지 일할 계산</dd>
-                <dd class="mt-1 color-gray-shadow" v-if="_AUTH_USER.userCd == 'IND'" >※ 입금자 피보험자 성명+등록번호로 반드시 기재<br/>(복수가입의 경우 사무소 명으로 일괄 납부)</dd>
+                <dd class="mt-1">신규 가입 시 만기일 (매년 1월 1일)까지 일할 계산</dd>
+                <dd class="mt-1 color-gray-shadow" v-if="_AUTH_USER.userCd == 'IND'" >※ 입금자 피보험자 성명+등록번호로 반드시 기재<br/>(법인/합동가입의 경우 사무소 명으로 일괄 납부)</dd>
                 <dd class="mt-1 color-gray-shadow" v-if="_AUTH_USER.userCd == 'JNT'" >※ 보험료를 합산하여 사무소 명으로 일괄납부</dd>
               </dl>
             </li>
@@ -540,19 +499,20 @@
             <tbody>
               <tr>
                 <th rowspan="4" class="text-18">내용</th>
-                <td colspan="2" class="border-right-0">대한변호사협회 회원만 가입 가능</td>
+                <td colspan="2" class="border-right-0">대한변리사회 회원만 가입 가능</td>
               </tr>
               <tr>
                 <td>개인 가입</td>
-                <td class="border-right-0">개인사무소에 등록변호사가 근무하는 경우 별도로 가입 해야함</td>
+                <td class="border-right-0">개인사무소에 등록변리사가 근무하는 경우 별도로 가입 해야함</td>
               </tr>
               <tr>
-                <td>소속 변호사의 복수 가입<br/>(보상한도 공유가입)</td>
-                <td class="border-right-0">소속 변호사가 보상한도를 공유하여 가입되며, <br/>3명 이상 복수 가입시 연간총보상한도액 2배수 적용</td>
+                <td>합동가입 (보상한도 공유가입)</td>
+                <td class="border-right-0">- 보험의 피보험자는 보상한도를 공유하여 가입하는 각 변리사가 됨<br/>
+                  (사무소 또는 법인이 피보험자가 되지 않으며, 가입한 변리사의 책임만 보장)</td>
               </tr>
               <tr>
-                <td>보상한도 증액</td>
-                <td>정해진 보상한도를 초과하여 가입을 희망하는 경우 개별 신청</td>
+                <td>법인 가입</td>
+                <td>보험의 피보험자는 법인이 되며, 법인의 책임이 보장됨</td>
               </tr>
             </tbody>
           </table>
@@ -578,7 +538,7 @@
                 <dt class="color-primary">사고접수 양식 다운로드</dt>
                 <dd class="mt-1">사고 인지 즉시 서면에 의한 사고 접수를 하여야 함(피보험자 상황 통지 의무)</dd>
                 <dd class="mt-2">
-                  <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mr-4 px-4 py-1 text-14" href="/assets/doc/ADV/변호사_사고통보서.pdf" download>
+                  <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mr-4 px-4 py-1 text-14" href="/assets/doc/PAT/변리사_사고통보서.pdf" download>
                     <span class="mr-1">다운로드</span>
                     <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
                   </a>
@@ -629,7 +589,7 @@
               <img src="../../assets/images/icon/icon-insurance-3-4.png" alt="" class="pl-16 ml-16"/>
               <dl class="ml-16">
                 <dt class="color-primary">사고 조사 진행 및 소송 대행</dt>
-                <dd class="mt-1">변호사의 과실 또는 부작위로 인한 법률상 배상책임액 및 사고처리 제비용 보상</dd>
+                <dd class="mt-1">변리사의 과실 또는 부작위로 인한 법률상 배상책임액 및 사고처리 제비용 보상</dd>
               </dl>
             </li>
             <li class="px-16 mt-2 mb-1">
@@ -673,7 +633,7 @@
                 <td class="border-right-0">사고 발생 시 사고 통보로부터 보험금 수령에 이르기 까지 제반 업무를 지원</td>
               </tr>
               <tr>
-                <td class="border-right-0">협상권을 가진 보험중개사로서 계약자(대한변호사협회)를 대변하여 보험 계약 내용의 해석 및 사실 관계의 판단에 개입</td>
+                <td class="border-right-0">협상권을 가진 보험중개사로서 계약자(대한변리사회)를 대변하여 보험 계약 내용의 해석 및 사실 관계의 판단에 개입</td>
               </tr>
               <tr>
                 <td>다수의 전문인 보험 운영 능력 및 전문 조직을 바탕으로 한 업무 진행</td>
@@ -725,7 +685,7 @@
       >
     </v-card-title>
     <v-card-text class="pa-0">
-      <V_TADV0030P10 />
+      <V_TPAT0030P10 />
     </v-card-text>
   </v-card>
   </v-dialog>
@@ -738,9 +698,8 @@
   import { onBeforeMount, onBeforeUpdate, onUnmounted, onMounted, onRenderTracked, onRenderTriggered, onActivated, onDeactivated} from "vue";
   import { useRoute } from 'vue-router'
   import BaseBreadcrumb from "@/components/BaseBreadcrumb.vue";
-  import V_TADV0030P10 from '../contract/ADV/V_TADV0030P10.vue';      // 보험료표
-  import TermsOfPolicy from '../contract/ADV/V_TADV0030P01.vue';      // PDF 다운로드 (약관)
-  import TermsOfPolicy2 from '../contract/ADV/V_TADV0030P04.vue';      // PDF 다운로드 (특별약관)
+  import V_TPAT0030P10 from '../contract/PAT/V_TPAT0030P10.vue';      // 보험료표
+  import TermsOfPolicy from '../contract/PAT/V_TPAT0030P01.vue';      // PDF 다운로드 (약관)
 
   import { storeToRefs } from 'pinia';
   import { useAuthStore } from '@/stores';
@@ -754,7 +713,7 @@
   const tab2 = ref("option-1");
   
   const page = ref({
-    title: "변호사배상책임보험",
+    title: "변리사배상책임보험",
     image: "/assets/images/background/bg-insurance2.jpg",
 
   });
