@@ -97,6 +97,7 @@ const 회원가입_법인_사무소정보 = yup.object({
   corp_ceo_nm: yup.string().required('대표자 성명을 선택해주세요.'),
   corp_type: yup.string().required('사무소 형태를 선택해주세요.'),
   corp_cnno: yup.string().matches(/^[0-9]{3}-[0-9]{2}-[0-9]{5}$/, '사업자번호를 정확히 입력하세요.'),
+  corp_bnno: yup.string().required('법인 번호를 입력하세요.'),
   corp_telno1: yup.string().matches(/^\d{2,3}$/, '사무소 전화를 입력해주세요.'),
   corp_telno2: yup.string().matches(/^\d{3,4}$/, '사무소 전화를 입력해주세요.'),
   corp_telno3: yup.string().matches(/^\d{4}$/, '사무소 전화를 입력해주세요.'),
@@ -172,6 +173,14 @@ const 회원수정_공통_사무소정보 = yup.object({
 const 회원수정_합동_사무소정보 = yup.object({
   ...회원가입_합동_사무소정보.fields
 });
+
+const 회원수정_변리사_법인_사무소정보 = yup.object({
+  ...회원가입_변리사_법인_사무소정보.fields
+});
+const 회원수정_변리사_합동_사무소정보 = yup.object({
+  ...회원가입_변리사_복수_사무소정보.fields
+});
+
 
 
 /** =======================================================================
@@ -416,7 +425,7 @@ export const UserYup = {
   }),
 
   MODIFY_PAT_JNT: yup.object().shape({
-    ...회원수정_합동_사무소정보.fields,
+    ...회원수정_변리사_합동_사무소정보.fields,
     ...회원가입_공통_이메일.fields
   }),
   INSERT_PAT_COR_STEP1: yup.object().shape({
@@ -430,7 +439,7 @@ export const UserYup = {
   }),
 
   MODIFY_PAT_COR: yup.object().shape({
-    ...회원수정_합동_사무소정보.fields,
+    ...회원수정_변리사_법인_사무소정보.fields,
     ...회원가입_공통_이메일.fields
   })
 };
