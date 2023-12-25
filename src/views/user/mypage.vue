@@ -1073,7 +1073,7 @@ async function isVerifyPasswordBeforeUpdate(params: any) {
 async function onUpdateUserInfoSubmit(params: any) {
 
   // selectbox 는 obejct 타입이라서 수정시에는 오류가 발생할수있다. 수정하지 않으면 string
-  if (typeof userDTO.value.corp_region_cd === 'object') {
+  if (userDTO.value.corp_region_cd && typeof userDTO.value.corp_region_cd === 'object') {
     userDTO.value.corp_region_cd = userDTO.value.corp_region_cd.value;
   }
   // console.log(`MODIFY_${userDTO.value.business_cd}_${userDTO.value.user_cd}`);

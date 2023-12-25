@@ -896,7 +896,6 @@ async function isVerifyUserRegNo() {
  * 사용자 아이디 유효성 검사
  */
 async function isVerifyUserId() {
-
   const validationSchema = UserYup.VALID_USER_ID_IND;
   const isValidate = await validationSchema.validate(userDTO.value, { abortEarly: false })
     .then(() => {
@@ -951,6 +950,7 @@ async function isVerifyUserEMail() {
 async function checkValidation() {
   // console.log(`INSERT_${userDTO.value.business_cd}_${userDTO.value.user_cd}_STEP${step.value}`);
   const validationSchema = UserYup[`INSERT_${userDTO.value.business_cd}_${userDTO.value.user_cd}_STEP${step.value}`];
+  console.log(`INSERT_${userDTO.value.business_cd}_${userDTO.value.user_cd}_STEP${step.value}`)
   const isValidate = await validationSchema.validate(userDTO.value, { abortEarly: false })
     .then(() => {
       return true;

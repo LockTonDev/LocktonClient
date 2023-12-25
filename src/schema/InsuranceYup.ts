@@ -210,7 +210,7 @@ const 보험가입_변리사법인기본명단보험계약 = yup.object({
   cbr_cnt: yup.string().required('소속 변호사 수를 입력해주세요.'),
   ...보험가입_변호사법인매출액.fields,
   ...보험가입_변리사보험계약.fields,
-  insr_income_filename: yup.string().required('손익계산서를 선택해주세요.')
+  insr_income_filename: yup.string().required('손익계산서를 첨부해주세요.')
 });
 
 

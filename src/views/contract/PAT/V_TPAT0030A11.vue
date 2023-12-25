@@ -655,6 +655,7 @@
                             v-model="insuranceDTO.cbr_cnt"
                             variant="outlined"
                             hide-details="auto"
+                            type="number"
                             @keydown.enter.prevent="blurField"
                         /><p style="font-size: 18px; margin-left: 10px">명</p>
                       </div>
@@ -854,7 +855,7 @@
                   <v-col cols="12" sm="12" class="v-col" v-if="insuranceDTO.user_cd=='COR'">
                     <div class="head-col">
                       <p>손익계산서 첨부</p>
-
+                      <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col w-100">
                       <div class="custom-file-upload">
@@ -1362,8 +1363,12 @@
             ><span class="color-primary">변리사 성명과 등록번호</span>를 함께
             기재하여 송금해주시기 바랍니다.
           </p>
+          <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'COR'">
+            <i class="mdi mdi-alert-circle-outline mr-1"></i><span class="color-primary">법인명으로 일괄
+            송금</span>하여 주시기 바랍니다.
+          </p>
           <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'JNT'">
-            <i class="mdi mdi-alert-circle-outline mr-1"></i><span class="color-primary">법인 및 사무소명으로 일괄
+            <i class="mdi mdi-alert-circle-outline mr-1"></i><span class="color-primary">사무소명으로 일괄
             송금</span>하여 주시기 바랍니다.
           </p>
 
@@ -1733,20 +1738,26 @@ const calInsrAmt = (data: any) => {
 
 
 function addCBR(list: any) {
-  try {
-    const cbrDataDTO = new CBRDataDTO();
-    cbrDataDTO.insr_retr_dt = INSR_RETR_DT_TODAY;
-    cbrDataDTO.insr_st_dt = INSR_RETR_DT_TODAY;
-    cbrDataDTO.insr_cncls_dt = insuranceDTO.value.insr_cncls_dt;
-    cbrDataDTO.status_cd = "80"; // 정상
-    list.cbr_data.push(cbrDataDTO);
-    list.cbr_cnt = list.cbr_data.length;
-    // console.log(INSR_RETR_DT_TODAY);
+  if(list.cbr_cnt < 10) {
+    try {
+      const cbrDataDTO = new CBRDataDTO();
+      cbrDataDTO.insr_retr_dt = INSR_RETR_DT_TODAY;
+      cbrDataDTO.insr_st_dt = INSR_RETR_DT_TODAY;
+      cbrDataDTO.insr_cncls_dt = insuranceDTO.value.insr_cncls_dt;
+      cbrDataDTO.status_cd = "80"; // 정상
+      list.cbr_data.push(cbrDataDTO);
+      list.cbr_cnt = list.cbr_data.length;
+      // console.log(INSR_RETR_DT_TODAY);
 
-    // 추가했을때 보험료 재계산 ( 속도가 느릴경우 개별로 추후 전환)
-    calInsrAmt(list);
-  } catch (e) {
-    console.log(e);
+      // 추가했을때 보험료 재계산 ( 속도가 느릴경우 개별로 추후 전환)
+      calInsrAmt(list);
+    } catch (e) {
+      console.log(e);
+    }
+  }else {
+    messageBoxDTO.value.setWarning( '명단추가', '11명이상 가입을 원하시는 경우 록톤코리아로 연락주시기 바랍니다.\n' +
+        '(T.02-2011-0300)');
+    return false
   }
 }
 
@@ -2202,6 +2213,8 @@ watch(() => clm_lt_amt.value
         insuranceDTO.value.insr_sale_rt,
         1
       );
+    }else {
+      calInsrAmt(insuranceDTO.value);
     }
 
     // 기본담보 - 보상한도(연보험)
@@ -2397,7 +2410,6 @@ onMounted(async () => {
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     const clm_lt_amt_value = insuranceDTO.value.insr_clm_lt_amt + '/' + insuranceDTO.value.insr_year_clm_lt_amt
     clm_lt_amt.value = INSR_RATE_TABLE.value.기본담보.보상한도.find(item => item.value == clm_lt_amt_value).code ;
-    insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
     if (insuranceDTO.value.insr_take_amt != null)
       insr_take_amt.value = insuranceDTO.value.insr_take_amt
     else
@@ -2449,7 +2461,6 @@ onMounted(async () => {
     insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
-    insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
     
     // 갱신후 : 오늘일자로 설정 / 오늘일자 > [보험료표DB]_보험시작일자  
     if(TODAY > insuranceRateDTO.value.insr_st_dt) {
@@ -2494,6 +2505,7 @@ onMounted(async () => {
 
     }
   }
+  insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
   // 재계산
   if(renewalUpdateYN.value || renewalUpdateYN.value === 'Y') {
     renewalYN.value = renewalUpdateYN.value;
