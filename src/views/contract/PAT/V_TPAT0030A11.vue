@@ -2213,6 +2213,8 @@ watch(() => clm_lt_amt.value
         insuranceDTO.value.insr_sale_rt,
         1
       );
+    }else {
+      calInsrAmt(insuranceDTO.value);
     }
 
     // 기본담보 - 보상한도(연보험)
