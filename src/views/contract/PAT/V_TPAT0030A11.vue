@@ -2410,7 +2410,6 @@ onMounted(async () => {
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     const clm_lt_amt_value = insuranceDTO.value.insr_clm_lt_amt + '/' + insuranceDTO.value.insr_year_clm_lt_amt
     clm_lt_amt.value = INSR_RATE_TABLE.value.기본담보.보상한도.find(item => item.value == clm_lt_amt_value).code ;
-    insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
     if (insuranceDTO.value.insr_take_amt != null)
       insr_take_amt.value = insuranceDTO.value.insr_take_amt
     else
@@ -2462,7 +2461,6 @@ onMounted(async () => {
     insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
-    insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
     
     // 갱신후 : 오늘일자로 설정 / 오늘일자 > [보험료표DB]_보험시작일자  
     if(TODAY > insuranceRateDTO.value.insr_st_dt) {
@@ -2507,6 +2505,7 @@ onMounted(async () => {
 
     }
   }
+  insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
   // 재계산
   if(renewalUpdateYN.value || renewalUpdateYN.value === 'Y') {
     renewalYN.value = renewalUpdateYN.value;
