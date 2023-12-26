@@ -2416,6 +2416,17 @@ onMounted(async () => {
       insr_take_amt.value = 0;
     insr_take_sec.value = insuranceDTO.value.insr_take_sec
 
+    insuranceDTO.value.agr10_yn = insuranceDTO.value.agr10_yn ? insuranceDTO.value.agr10_yn : ''
+    insuranceDTO.value.agr20_yn = insuranceDTO.value.agr20_yn ? insuranceDTO.value.agr20_yn : ''
+    insuranceDTO.value.agr30_yn = insuranceDTO.value.agr30_yn ? insuranceDTO.value.agr30_yn : ''
+    insuranceDTO.value.agr31_yn = insuranceDTO.value.agr31_yn ? insuranceDTO.value.agr31_yn : ''
+    insuranceDTO.value.agr32_yn = insuranceDTO.value.agr32_yn ? insuranceDTO.value.agr32_yn : ''
+    insuranceDTO.value.agr33_yn = insuranceDTO.value.agr33_yn ? insuranceDTO.value.agr33_yn : ''
+    insuranceDTO.value.agr34_yn = insuranceDTO.value.agr34_yn ? insuranceDTO.value.agr34_yn : ''
+    insuranceDTO.value.agr40_yn = insuranceDTO.value.agr40_yn ? insuranceDTO.value.agr40_yn : ''
+    insuranceDTO.value.agr41_yn = insuranceDTO.value.agr41_yn ? insuranceDTO.value.agr41_yn : ''
+    insuranceDTO.value.agr50_yn = insuranceDTO.value.agr50_yn ? insuranceDTO.value.agr50_yn : ''
+
 
     // 갱신자는 인증처리 완료
     insuranceDTO.value.cbr_data.forEach(function (data) {
