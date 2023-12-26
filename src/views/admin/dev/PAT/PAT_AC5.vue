@@ -258,9 +258,8 @@ import apiCOMMON from '@/api/api/A_COMMON';
 import dayjs from 'dayjs';
 import {
   DOWNLOAD_EXCEL,
-  UPLOAD_EXCEL_INSURANCE_CAA_TRE_IND,
-  UPLOAD_EXCEL_INSURANCE_CAA_TRE_COR,
-  UPLOAD_EXCEL_INSURANCE_CAA_TRE_JNT
+  UPLOAD_EXCEL_INSURANCE_PAT_TRE_IND,
+  UPLOAD_EXCEL_INSURANCE_PAT_TRE_COR
 
 } from '@/util/excelupdn';
 
@@ -314,7 +313,7 @@ async function fnSave() {
     isRun = result;
   });
   if (isRun) {
-    const resultData = await apiADMIN.setCAA_TRX([insuranceDTO.value]);
+    const resultData = await apiADMIN.setPAT_TRX([insuranceDTO.value]);
 
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', '저장 되었습니다. (자동 재조회)');
@@ -357,7 +356,7 @@ function fnAdd() {
 
 async function fnSearch() {
   InsuranceList.value = [];
-  const resultData = await apiADMIN.getCAA_TRX(searchParams.value.data);
+  const resultData = await apiADMIN.getPAT_TRX(searchParams.value.data);
 
   InsuranceList.value = resultData.data;
   if (InsuranceList.value.length == 0) {
@@ -373,8 +372,8 @@ const fileInputJNT = ref(null);
 
 async function handleFileUploadIND(event) {
   try {
-    const excelList = await UPLOAD_EXCEL_INSURANCE_CAA_TRE_IND(event);
-    const resultData = await apiADMIN.setCAA_TRX(excelList);
+    const excelList = await UPLOAD_EXCEL_INSURANCE_PAT_TRE_IND(event);
+    const resultData = await apiADMIN.setPAT_TRX(excelList);
 
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
@@ -390,8 +389,10 @@ async function handleFileUploadIND(event) {
 
 async function handleFileUploadCOR(event) {
   try {
-    const excelList = await UPLOAD_EXCEL_INSURANCE_CAA_TRE_COR(event);
-    const resultData = await apiADMIN.setCAA_TRX(excelList);
+
+    const excelList = await UPLOAD_EXCEL_INSURANCE_PAT_TRE_COR(event);
+    console.log(excelList);
+    const resultData = await apiADMIN.sePAT_TRX(excelList);
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
     } else {
@@ -406,9 +407,8 @@ async function handleFileUploadCOR(event) {
 
 async function handleFileUploadJNT(event) {
   try {
-
-    const excelList = await UPLOAD_EXCEL_INSURANCE_CAA_TRE_JNT(event);
-    const resultData = await apiADMIN.setCAA_TRX(excelList);
+    const excelList = await UPLOAD_EXCEL_INSURANCE_PAT_TRE_JNT(event);
+    const resultData = await apiADMIN.setPAT_TRX(excelList);
 
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
@@ -441,7 +441,7 @@ async function fnExcelDownload() {
 
   try {
     if (isRun) {
-      let resultData = await apiADMIN.getCAAExcel(searchParams.value.data);
+      let resultData = await apiADMIN.getPATExcel(searchParams.value.data);
 
       searchParams.value.data['excel_filenm'] = fileNm;
 

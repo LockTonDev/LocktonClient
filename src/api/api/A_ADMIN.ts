@@ -18,6 +18,20 @@ export default {
   async getApplyADVInsurance(params: any) {
     return await api.authService.post('/ADM/ADV/APPLY/get', { params });
   },
+
+  async setApplyCAAInsurance(params: any) {
+    return await api.authService.post('/ADM/CAA/APPLY/set', { params });
+  },
+  async getApplyCAAInsurance(params: any) {
+    return await api.authService.post('/ADM/CAA/APPLY/get', { params });
+  },
+
+  async setApplyPATInsurance(params: any) {
+    return await api.authService.post('/ADM/PAT/APPLY/set', { params });
+  },
+  async getApplyPATInsurance(params: any) {
+    return await api.authService.post('/ADM/PAT/APPLY/get', { params });
+  },
   /** ============================================================================
    *  [전문인명단DB]
    *  ============================================================================
@@ -159,6 +173,31 @@ export default {
     return await api.authService.post('/ADM/CAA/EXCEL/get', { params });
   },
 
+  /**  PAT  */
+  async setPAT(params: any) {
+    return await api.authService.post('/ADM/PAT/set', { params });
+  },
+  async getPAT(params: any) {
+    return await api.authService.post('/ADM/PAT/get', { params });
+  },
+  async getPATS(params: any) {
+    return await api.authService.post('/ADM/PAT/gets', { params });
+  },
+  async getPATRate(params: any) {
+    return await api.authService.post('/ADM/PAT/rate', { params });
+  },
+
+  async setPAT_TRX(params: any) {
+    return await api.authService.post('/ADM/PAT/TRX/set', { params });
+  },
+
+  async getPAT_TRX(params: any) {
+    return await api.authService.post('/ADM/PAT/TRX/get', { params });
+  },
+  async getPATExcel(params: any) {
+    return await api.authService.post('/ADM/PAT/EXCEL/get', { params });
+  },
+
 
   /** ============================================================================
    *  [갱신DB]
@@ -196,6 +235,18 @@ export default {
 
   async getCAARenewals(params: any) {
     return await api.authService.post('/ADM/CAA/RENEWAL/gets', { params });
+  },
+
+  /**  PAT  */
+  async setPATRenewal(params: any) {
+    return await api.authService.post('/ADM/PAT/RENEWAL/set', { params });
+  },
+  async getPATRenewal(params: any) {
+    return await api.authService.post('/ADM/PAT/RENEWAL/get', { params });
+  },
+
+  async getPATRenewals(params: any) {
+    return await api.authService.post('/ADM/PAT/RENEWAL/gets', { params });
   },
 
   /** ============================================================================

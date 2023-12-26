@@ -301,6 +301,9 @@
   <div v-else-if="searchParams.data['business_cd'] === 'CAA'">
     <CAA_AC5/>
   </div>
+  <div v-else-if="searchParams.data['business_cd'] === 'PAT'">
+    <PAT_AC5/>
+  </div>
 
   <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
 </template>
@@ -315,6 +318,7 @@ import { useAuthStore } from '@/stores';
 import AdminBaseBreadcrumb from '@/components/AdminBaseBreadcrumb.vue';
 import BaseCard from '@/components/BaseCard.vue';
 import CAA_AC5 from './CAA/CAA_AC5.vue';
+import PAT_AC5 from './PAT/PAT_AC5.vue';
 
 import VSelectWithValidation from '@/components/VSelectWithValidation.vue';
 import VTextFieldWithValidation from '@/components/VTextFieldWithValidation.vue';
