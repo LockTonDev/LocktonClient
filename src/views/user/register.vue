@@ -164,7 +164,7 @@
                             </div>
                             <div class="data-col">
 
-                              <VTextFieldWithValidation v-model="userDTO.user_regno" name="user_regno" label="예) 1234567" single-line density="comfortable" :maskOption="{ mask: '#######' }" :disabled="verifyUserCostoms.success" />
+                              <VTextFieldWithValidation v-model="userDTO.user_regno" name="user_regno" :label="'예) '+((businessCd != 'CAA') ? 1234567:1234)" single-line density="comfortable" :maskOption="{ mask: '#######' }" :disabled="verifyUserCostoms.success" />
                               <v-btn variant="outlined" color="primary" class="ml-2" @click="isVerifyUserRegNo()" :disabled="verifyUserCostoms.success" >인증</v-btn >
                               <div class="ml-2">
                                 <p :class=" verifyUserCostoms.success ? 'text-info' : 'text-error'">
