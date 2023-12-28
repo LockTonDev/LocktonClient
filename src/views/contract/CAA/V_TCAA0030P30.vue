@@ -615,7 +615,7 @@ const insuranceDTO = ref(new InsuranceDTO());
 
 onMounted(async () => {    
   const params = {insurance_uuid:props.insurance_uuid};
-  const resultData = await apiA_TCAA0030A.getDBSel(params);
+  const resultData = await apiA_TCAA0030A.getDBSel(params, isAdmin);
   insuranceDTO.value =  resultData.data[0];
   insuranceDTO.value.cbr_data = exList(insuranceDTO.value.cbr_data)
 

@@ -1307,6 +1307,10 @@ import V_TACC0030P20 from '@/views/contract/ACC/V_TACC0030P20.vue';
 import V_TACC0030P30 from '@/views/contract/ACC/V_TACC0030P30.vue';
 import V_TADV0030P20 from '@/views/contract/ADV/V_TADV0030P20.vue';
 import V_TADV0030P30 from '@/views/contract/ADV/V_TADV0030P30.vue';
+import V_TCAA0030P20 from '@/views/contract/CAA/V_TCAA0030P20.vue';
+import V_TCAA0030P30 from '@/views/contract/CAA/V_TCAA0030P30.vue';
+import V_TPAT0030P20 from '@/views/contract/PAT/V_TPAT0030P20.vue';
+import V_TPAT0030P30 from '@/views/contract/PAT/V_TPAT0030P30.vue';
 import AdminBaseBreadcrumb from '@/components/AdminBaseBreadcrumb.vue';
 import VTextFieldWithValidation from '@/components/VTextFieldWithValidation.vue';
 import VSelectWithValidation from '@/components/VSelectWithValidation.vue';
@@ -1510,6 +1514,10 @@ function getDynamicComponentName1() {
       return V_TACC0030P20;
     case 'ADV':
       return V_TADV0030P20;
+    case 'CAA':
+      return V_TCAA0030P20;
+    case 'PAT':
+      return V_TPAT0030P20;
   }
 }
 function getDynamicComponentName2() {
@@ -1520,6 +1528,10 @@ function getDynamicComponentName2() {
       return V_TACC0030P30;
     case 'ADV':
       return V_TADV0030P30;
+    case 'CAA':
+      return V_TCAA0030P30;
+    case 'PAT':
+      return V_TPAT0030P30;
   }
 }
 
