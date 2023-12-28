@@ -18,7 +18,7 @@ const 보험가입_공통가입정보 = yup.object({
 const 보험가입_관세사가입정보 = yup.object({
   corp_cnno: yup.string().required(/^\d{3}-\d{2}-\d{5}$/, '사업자 번호를 입력해주세요.'),
   corp_telno: yup.string().matches(/^0\d{1,2}-\d{3,4}-\d{4}$/, '사무소 전화를 입력해주세요.'),
-  corp_faxno: yup.string().matches(/^0\d{1,2}-\d{3,4}-\d{4}$$/, '사무소 팩스를 입력해주세요.'),
+  corp_faxno: yup.string().matches(/^\d{2,5}-\d{3,4}-\d{4}$$/, '사무소 팩스를 입력해주세요.'),
   corp_cust_hpno: yup.string().required('휴대전화를 입력해주세요.'),
   corp_cust_nm: yup.string().required('담당자 성명을 입력해주세요.'),
   corp_cust_email: yup.string().matches(/^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, '이메일을 정확히 입력하세요.'),

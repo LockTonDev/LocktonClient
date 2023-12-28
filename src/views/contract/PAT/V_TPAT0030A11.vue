@@ -2409,6 +2409,9 @@ onMounted(async () => {
     insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     const clm_lt_amt_value = insuranceDTO.value.insr_clm_lt_amt + '/' + insuranceDTO.value.insr_year_clm_lt_amt
+    console.log("insuranceDTO.value :",insuranceDTO.value)
+    console.log("INSR_RATE_TABLE.value :",INSR_RATE_TABLE.value)
+    console.log("clm_lt_amt_value:",clm_lt_amt_value)
     clm_lt_amt.value = INSR_RATE_TABLE.value.기본담보.보상한도.find(item => item.value == clm_lt_amt_value).code ;
     if (insuranceDTO.value.insr_take_amt != null)
       insr_take_amt.value = insuranceDTO.value.insr_take_amt

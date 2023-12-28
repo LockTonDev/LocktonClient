@@ -2744,6 +2744,7 @@ function formTelNumber() {
 
 function formFaxNumber() {
   let numericValue = insuranceDTO.value.corp_faxno.replace(/\D/g, "");
+  console.log("numericValue :",numericValue)
   // 전화번호 형식에 맞게 변환
   if (numericValue.length == 9) {
     if(numericValue.startsWith('02')) {
@@ -2770,13 +2771,21 @@ function formFaxNumber() {
           "-" +
           numericValue.substring(6, 10);
     }
-  }else if(numericValue.length > 10) {
+  }else if(numericValue.length == 11) {
     numericValue =
         numericValue.substring(0, 3) +
         "-" +
         numericValue.substring(3, 7) +
         "-" +
         numericValue.substring(7, 11);
+  }
+  else if(numericValue.length > 11) {
+    numericValue =
+        numericValue.substring(0, 4) +
+        "-" +
+        numericValue.substring(4, 8) +
+        "-" +
+        numericValue.substring(8, 12);
   }
   // 모델에 설정
   insuranceDTO.value.corp_faxno = numericValue;
