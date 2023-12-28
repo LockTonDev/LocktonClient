@@ -2409,7 +2409,13 @@ onMounted(async () => {
     insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     const clm_lt_amt_value = insuranceDTO.value.insr_clm_lt_amt + '/' + insuranceDTO.value.insr_year_clm_lt_amt
-    clm_lt_amt.value = INSR_RATE_TABLE.value.기본담보.보상한도.find(item => item.value == clm_lt_amt_value).code ;
+
+    const findItem = INSR_RATE_TABLE.value.기본담보.보상한도.find(item => item.value == clm_lt_amt_value);
+    if(findItem) {
+      clm_lt_amt.value = findItem.code;
+    }else {
+      clm_lt_amt.value = ''
+    }
     if (insuranceDTO.value.insr_take_amt != null)
       insr_take_amt.value = insuranceDTO.value.insr_take_amt
     else
