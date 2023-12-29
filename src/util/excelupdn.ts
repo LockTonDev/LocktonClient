@@ -67,9 +67,9 @@ const ROW_MAPPERS = {
   CAA_IND: mapperRow_CAA_IND,
   CAA_JNT: mapperRow_CAA_JNT,
   CAA_COR: mapperRow_CAA_COR,
-  PAT_IND: mapperRow_CAA_IND,
-  PAT_JNT: mapperRow_CAA_IND,
-  PAT_COR: mapperRow_CAA_COR,
+  PAT_IND: mapperRow_PAT_IND,
+  PAT_JNT: mapperRow_PAT_JNT,
+  PAT_COR: mapperRow_PAT_COR,
 };
 
 
