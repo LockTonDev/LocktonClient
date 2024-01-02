@@ -408,7 +408,7 @@
                             <!-- <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="" single-line density="comfortable" maxlength="25"/> -->
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd ==='ADV' || userDTO.business_cd ==='CAA' || userDTO.business_cd ==='PAT' ">
+                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd ==='TAX' || userDTO.business_cd ==='ADV' || userDTO.business_cd ==='CAA' || userDTO.business_cd ==='PAT' ">
                           <div class="head-col">
                             <p>대표자 성명</p>
                             <sup class="text-error">*</sup>
