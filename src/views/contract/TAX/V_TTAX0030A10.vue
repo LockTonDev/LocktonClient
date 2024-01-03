@@ -50,15 +50,15 @@
         </thead>
         <tbody v-if="InsuranceList.length">
           <tr v-for="(row, index) in InsuranceList">
-             <td class="text-center text-body-1">{{ row.status_cd !== '91' ? row.insurance_no : '' }}</td>
+             <td class="text-center text-body-1">{{ row.status_cd !== '91' && row.status_cd !== '10' ? row.insurance_no : '' }}</td>
             <td class="text-center text-body-1">{{ row.user_nm }}</td>
             <td class="text-center text-body-1">
-              <div v-if="row.insr_year !== currentYear.toString()">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
-              <div v-if="row.insr_year === currentYear.toString()" class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
+              <div v-if="row.insr_cncls_dt.substr(0,4) !== currentYear.toString()">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
+              <div v-if="row.insr_cncls_dt.substr(0,4) === currentYear.toString()" class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
             <td class="text-center text-body-1">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">
-              <v-icon v-if="row.insr_year === currentYear.toString()"
+              <v-icon v-if="row.insr_cncls_dt.substr(0,4) === currentYear.toString()"
                 small
                 class="text-primary cursor-pointer"
                 title="신청서 출력"
