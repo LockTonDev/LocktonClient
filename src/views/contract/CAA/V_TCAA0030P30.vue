@@ -552,9 +552,9 @@
                   <td>{{row.cbr_brdt}}</td>
                   <td>{{row.insr_retr_dt}}</td>
                   <template v-if="insuranceDTO.cons_data.cbr_data[index+1]">
-                    <td>{{insuranceDTO?.cbr_data[index+1]?.cbr_nm}}</td>
-                    <td>{{insuranceDTO?.cbr_data[index+1]?.cbr_brdt}}</td>
-                    <td>{{insuranceDTO?.cbr_data[index+1]?.insr_retr_dt}}</td>
+                    <td>{{insuranceDTO?.cons_data?.cbr_data[index+1]?.cbr_nm}}</td>
+                    <td>{{insuranceDTO?.cons_data?.cbr_data[index+1]?.cbr_brdt}}</td>
+                    <td>{{insuranceDTO?.cons_data?.cbr_data[index+1]?.insr_retr_dt}}</td>
                   </template>
                   <template v-else>
                     <td></td>
