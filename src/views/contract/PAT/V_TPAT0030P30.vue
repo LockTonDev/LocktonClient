@@ -41,7 +41,7 @@
                     </tr>
                     <tr>
                       <th class="bg-white border-gray-1">증권번호</th>
-                      <td colspan="3" class="bg-white border-gray-1">12309728930000</td>
+                      <td colspan="3" class="bg-white border-gray-1">{{ insuranceDTO.insurance_no }}</td>
                     </tr>
                     <tr>
                       <th class="bg-white border-gray-1">계약자</th>
