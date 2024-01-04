@@ -832,7 +832,7 @@ export const UPLOAD_EXCEL_INSURANCE_PAT_TRE_IND = async (event: any) => {
             let trxDataDTO2 = new TRXDataDTO();
 
             insuranceDTO.insurance_uuid = row.getCell(EXCEL_PAT_IND.보험식별번호).value;
-            insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_PAT_IND.총입금액).value;
+            insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_PAT_IND.총입금액).value ? row.getCell(EXCEL_PAT_IND.총입금액).value: 0;
             insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_PAT_IND.차액).value;
 
             insuranceDTO.status_nm = row.getCell(EXCEL_PAT_IND.상태).value;
@@ -918,7 +918,6 @@ export const UPLOAD_EXCEL_INSURANCE_PAT_TRE_JNT = async (event: any) => {
               insuranceDTO = new InsuranceDTO();
 
               insuranceDTO.insurance_uuid = row.getCell(EXCEL_PAT_JNT.보험식별번호).value;
-              // insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_ADV_JNT.총입금액).value;
               insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_PAT_JNT.총입금액).value ? row.getCell(EXCEL_PAT_JNT.총입금액).value: 0;
               insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_PAT_JNT.차액).value;
 
@@ -1014,7 +1013,6 @@ export const UPLOAD_EXCEL_INSURANCE_PAT_TRE_COR = async (event: any) => {
               insuranceDTO = new InsuranceDTO();
 
               insuranceDTO.insurance_uuid = row.getCell(EXCEL_PAT_COR.보험식별번호).value;
-              // insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_ADV_JNT.총입금액).value;
               insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_PAT_COR.총입금액).value ? row.getCell(EXCEL_PAT_COR.총입금액).value: 0;
               insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_PAT_COR.차액).value;
 
@@ -2333,7 +2331,7 @@ function mapperRow_PAT_COR(excelMapper: object, excelDataRow: any) {
 
   for (let i = 0; i < maxLength; i++) {
     let subRow = {};
-    if (insuranceDTO.cbr_data[i].status_cd=='80') cbrCnt++
+    if (insuranceDTO?.cbr_data[i]?.status_cd=='80') cbrCnt++
     if (insuranceDTO.cbr_data[i]) {
       try {
         subRow[excelMapper.상태] = statusCdItems.find(items => items.value === insuranceDTO.cbr_data[i].status_cd).title;
