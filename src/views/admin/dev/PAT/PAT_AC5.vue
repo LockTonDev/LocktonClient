@@ -259,8 +259,8 @@ import dayjs from 'dayjs';
 import {
   DOWNLOAD_EXCEL,
   UPLOAD_EXCEL_INSURANCE_PAT_TRE_IND,
-  UPLOAD_EXCEL_INSURANCE_PAT_TRE_COR
-
+  UPLOAD_EXCEL_INSURANCE_PAT_TRE_COR,
+  UPLOAD_EXCEL_INSURANCE_PAT_TRE_JNT
 } from '@/util/excelupdn';
 
 const authStore = useAuthStore();
@@ -392,7 +392,7 @@ async function handleFileUploadCOR(event) {
 
     const excelList = await UPLOAD_EXCEL_INSURANCE_PAT_TRE_COR(event);
     console.log(excelList);
-    const resultData = await apiADMIN.sePAT_TRX(excelList);
+    const resultData = await apiADMIN.setPAT_TRX(excelList);
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
     } else {
