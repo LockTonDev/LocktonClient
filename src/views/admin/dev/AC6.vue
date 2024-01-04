@@ -168,7 +168,7 @@
     </v-row>
   </div>
   <div v-else-if="searchParams.data['business_cd'] === 'CAA'">
-    <PAT_AC6/>
+    <CAA_AC6/>
   </div>
   <div v-else-if="searchParams.data['business_cd'] === 'PAT'">
     <PAT_AC6/>
