@@ -130,7 +130,7 @@
                     </tr>
                   </table>
                   <div class="bottom d-flex justify-end">
-                    <img src="../../../assets/images/img-logo-heungkuk_2024.png" alt=""/>
+                    <img src="../../../assets/images/img-logo-heungkuk2.png" alt=""/>
                   </div>
                 </main>
                 <footer>
