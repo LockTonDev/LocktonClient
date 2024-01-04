@@ -278,6 +278,7 @@ cd <template>
 
     if(data.length > 0) {
       d_TCAA0040A.value.insurance_no = data[0].insurance_no;
+      d_TCAA0040A.value.insurance_uuid = data[0].insurance_uuid;
       d_TCAA0040A.value.insurance_user_nm = data[0].user_nm;
       isRegDialog.value = true;
     }else {
