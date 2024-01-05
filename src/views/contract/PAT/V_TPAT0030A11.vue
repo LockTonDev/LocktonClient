@@ -2493,8 +2493,10 @@ onMounted(async () => {
       // 전환여부 확인
       chkSaleRtIND();
 
-    } else if (insuranceDTO.value.user_cd !== 'IND') {
+    } else if (insuranceDTO.value.user_cd == 'JNT') {
       addCBR(insuranceDTO.value);
+    } else if (insuranceDTO.value.user_cd == 'COR') {
+      insuranceDTO.value.cbr_cnt = 1;
     }
 
   /**
