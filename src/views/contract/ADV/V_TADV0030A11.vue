@@ -2638,7 +2638,7 @@ watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
   }
 
   // 과거일자로는 변경 불가, 원복시킨다.
-  if (TODAY > newValue[0] && renewalYN === 'N') {
+  if (TODAY > newValue[0] && renewalYN.value === 'N') {
     insuranceDTO.value.insr_st_dt = TODAY;
     insuranceDTO.value.insr_retr_dt = TODAY;
     showMessageBoxByInsrDt();

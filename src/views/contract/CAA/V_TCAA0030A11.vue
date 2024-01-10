@@ -3391,7 +3391,7 @@ watch(
       insuranceDTO.value.insr_retr_dt = newValue[0];
     }
     // 과거일자로는 변경 불가, 원복시킨다.
-    if (TODAY > newValue[0] && renewalYN === 'N') {
+    if (TODAY > newValue[0] && renewalYN.value === 'N') {
       insuranceDTO.value.insr_st_dt = TODAY;
       insuranceDTO.value.insr_retr_dt = TODAY;
       showMessageBoxByInsrDt();
@@ -3724,7 +3724,8 @@ onMounted(async () => {
   isReadOnlyAll.value = false;
 
   insuranceUUID.value = route.params.insuranceUUID;
-  renewalYN.value = route.query.renewal;
+
+  renewalYN.value = route.query.renewal ? route.query.renewal : 'N';
   // 보험료 조회
   const params = { user_cd: _AUTH_USER.value.userCd , business_cd: _AUTH_USER.value.businessCd };
   const resultData = await apiA_TCAA0030A.getDBSelInsuranceRate(params);
@@ -3780,7 +3781,7 @@ onMounted(async () => {
       insuranceDTO.value.spct_join_yn = 'N';
     insuranceDTO.value.base_insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
-    insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
+    //insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
     insuranceDTO.value.cons_data.insr_sale_rt = insuranceDTO.value.insr_sale_rt;
@@ -3831,6 +3832,16 @@ onMounted(async () => {
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.spct_data.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.spct_data.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
+
+    // 갱신후 : 오늘일자로 설정 / 오늘일자 > [보험료표DB]_보험시작일자
+    if(TODAY > insuranceRateDTO.value.insr_st_dt) {
+      insuranceDTO.value.insr_st_dt = TODAY;
+    } else {
+      // 갱신전 : [보험료표DB]_보험시작일자로 적용
+      insuranceDTO.value.insr_st_dt = insuranceDTO.value.base_insr_st_dt;
+    }
+    // 소급담보일도 오늘일자로 재설정
+    insuranceDTO.value.insr_retr_dt = insuranceDTO.value.insr_st_dt;
 
 
     if (insuranceDTO.value.user_cd == 'IND') {
