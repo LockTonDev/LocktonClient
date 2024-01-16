@@ -1606,6 +1606,7 @@ const onCalculateInsurance = async (confirmYn) => {
   if (isRun) {
     let totAmt = 0;
 
+
     //개인일 경우 해당 안됨
     if (insuranceDTO.value.cbr_data != undefined && insuranceDTO.value.user_cd !== 'IND') {
       for (let idx in insuranceDTO.value.cbr_data) {
@@ -1622,6 +1623,7 @@ const onCalculateInsurance = async (confirmYn) => {
       insuranceDTO.value.insr_tot_amt = totAmt;
     }
     console.log('insuranceDTO.value.spct_join_yn',insuranceDTO.value.spct_join_yn)
+
     // 특약 재계산
     //개인도 특약 가능
     if (insuranceDTO.value.spct_join_yn == 'Y') {
@@ -1630,6 +1632,22 @@ const onCalculateInsurance = async (confirmYn) => {
       // insrAmt += calInsrSpctAmt(insuranceDTO.value.spct_data);
       insuranceDTO.value.spct_data.insr_amt=calInsrSpctAmt(insuranceDTO.value.spct_data);
       insuranceDTO.value.insr_tot_amt = Number(insuranceDTO.value.insr_amt,0) + Number(insuranceDTO.value.spct_data.insr_amt,0)
+    }
+    //컨설팅 여부에 따른 계산
+    console.log('insuranceDTO.value', insuranceDTO.value.cons_data.cbr_data)
+    console.log('insuranceDTO.value.cons_join_yn',insuranceDTO.value.cons_join_yn)
+    //insuranceDTO.cons_data.cbr_data
+    if(insuranceDTO.value.cons_join_yn == 'Y'){
+      let consAmt = 0;
+      for (let idx in insuranceDTO.value.cons_data.cbr_data) {
+        // 기본담보 보험료(할인할증적용)
+        if(insuranceDTO.value.cons_data.cbr_data[idx].status_cd !='91') { //2023-12-07 미가입 상태는 제외
+          // console.log("insuranceDTO.value.cbr_data[idx].status_cd : ", insuranceDTO.value.cbr_data[idx].status_cd)
+          consAmt += Number(insuranceDTO.value.cons_data.cbr_data[idx].insr_amt, 0);
+        }
+      }
+      insuranceDTO.value.spct_data.insr_amt = consAmt
+      insuranceDTO.value.insr_tot_amt = Number(insuranceDTO.value.insr_amt,0) + consAmt
     }
 
     // 입금금액 계산
