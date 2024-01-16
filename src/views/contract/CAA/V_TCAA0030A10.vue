@@ -201,7 +201,8 @@
           if(insr_year === renewalInsrYear.value) {
             router.push({ path:'/contract/CAA/V_TCAA0030A11/' + params, query :{renewalUpdate : 'Y'} });
           }else {
-            router.push('/contract/CAA/V_TCAA0030A11/' + params);
+            // router.push('/contract/CAA/V_TCAA0030A11/' + params);
+            router.push({path:'/contract/CAA/V_TCAA0030A11/' + params, query :{update : 'Y'}} );
           }
         }
       });

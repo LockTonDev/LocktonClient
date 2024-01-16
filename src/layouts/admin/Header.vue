@@ -22,7 +22,7 @@ const convertSecondsToMinutes = seconds => {
 let intervalId = null;
 
 function extendTime() {
-    authStore.refreshAdminAccessToken().then(function(response) {
+    authStore.refreshAdminAccessToken('_AUTH_ADMIN').then(function(response) {
       _AUTH_ADMIN.value = JSON.parse(localStorage.getItem('_AUTH_ADMIN'));
       initPage()
     })
