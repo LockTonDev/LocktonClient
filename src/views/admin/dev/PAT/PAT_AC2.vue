@@ -255,7 +255,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.user_nm }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" label="법인명" single-line max-length="20" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" placeholder="법인명" single-line max-length="20" />
                             </div>
                           </v-col>
                           <v-col cols="12" sm="4" class="v-col">
@@ -265,7 +265,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.corp_ceo_nm }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_ceo_nm" name="corp_ceo_nm" label="대표자 성명" single-line max-length="20" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_ceo_nm" name="corp_ceo_nm" placeholder="대표자 성명" single-line max-length="20" />
                             </div>
                           </v-col>
 
@@ -276,7 +276,7 @@
                             </div>
                             <div class="data-col" v-if="insuranceDTO.corp_type != 'JNT'">
                               <!-- {{ insuranceDTO.corp_bnno }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_bnno" name="corp_bnno" label="법인번호" single-line :maskOption="{ mask: '######-#######' }" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_bnno" name="corp_bnno" placeholder="법인번호" single-line :maskOption="{ mask: '######-#######' }" />
                             </div>
                             <div class="data-col" v-if="insuranceDTO.corp_type == 'JNT'">해당없음</div>
                           </v-col>

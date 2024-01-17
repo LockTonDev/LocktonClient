@@ -99,7 +99,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_nm"
                         name="corp_nm"
-                        label="사무소명"
+                        placeholder="사무소명"
                         single-line
                         density="comfortable"
                         maxlength="20"
@@ -117,7 +117,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_cnno"
                         name="corp_cnno"
-                        label="사업자번호"
+                        placeholder="사업자번호"
                         :maskOption="{ mask: '###-##-#####' }"
                         single-line
                         density="comfortable"
@@ -208,7 +208,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_cust_nm"
                         name="corp_cust_nm"
-                        label="담당자 성명"
+                        placeholder="담당자 성명"
                         single-line
                         density="comfortable"
                         maxlength="20"
@@ -233,7 +233,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_post"
                         name="corp_post"
-                        label="우편번호"
+                        placeholder="우편번호"
                         single-line
                         density="comfortable"
                         readonly
@@ -250,7 +250,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_addr"
                         name="corp_addr"
-                        label="주소"
+                        placeholder="주소"
                         single-line
                         density="comfortable"
                         class="w-full"
@@ -260,7 +260,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_addr_dtl"
                         name="corp_addr_dtl"
-                        label="상세주소"
+                        placeholder="상세주소"
                         single-line
                         density="comfortable"
                         class="w-full"
@@ -351,7 +351,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.insr_st_dt"
                         name="insr_st_dt"
-                        label="보험시작일자"
+                        placeholder="보험시작일자"
                         type="date"
                         single-line
                         density="comfortable"
@@ -363,7 +363,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.insr_cncls_dt"
                         name="insr_cncls_dt"
-                        label="보험종료일자"
+                        placeholder="보험종료일자"
                         type="date"
                         single-line
                         density="comfortable"

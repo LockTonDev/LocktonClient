@@ -18,7 +18,7 @@
         <div class="d-flex justify-end" >
           <v-select
             v-model="insrItemValue"
-            label="이전 가입신청서 보기"
+            placeholder="이전 가입신청서 보기"
             :items="insrItems"
             variant="outlined"
             hide-details="auto"

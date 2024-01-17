@@ -117,7 +117,7 @@
                               <VTextFieldWithValidation
                                 v-model="userDTO.corp_ceo_nm"
                                 name="corp_ceo_nm"
-                                label="대표자 성명"
+                                placeholder="대표자 성명"
                                 single-line
                                 density="comfortable"
                                 maxlength="25"
@@ -464,7 +464,7 @@
                       <VTextFieldWithValidation
                         v-model="userDTO.corp_cnno"
                         name="corp_cnno"
-                        label="사업자번호"
+                        placeholder="사업자번호"
                         single-line
                         density="comfortable"
                         :maskOption="{ mask: '###-##-#####' }"

@@ -81,8 +81,8 @@
                                 <div class="mb-4 login-subtext">                    
                                     
                                 </div>
-                                <VTextFieldWithValidation name="IND_user_id" label="아이디" maxlength="20" />
-                                <VTextFieldWithValidation name="IND_user_pwd" label="비밀번호" type="password" maxlength="16" class="mt-4" />
+                                <VTextFieldWithValidation name="IND_user_id" placeholder="아이디" maxlength="20" />
+                                <VTextFieldWithValidation name="IND_user_pwd" placeholder="비밀번호" type="password" maxlength="16" class="mt-4" />
                               
                               </v-window-item>
                               <v-window-item value="COR"> 
@@ -99,12 +99,12 @@
                                 </div>
                                  <VTextFieldWithValidation
                                     name="COR_user_id"
-                                    label="사업자번호"
+                                    placeholder="사업자번호"
                                     density="comfortable"
                                     single-line
                                     :maskOption="{ mask: '###-##-#####' }"
                                   />
-                                  <VTextFieldWithValidation name="COR_user_pwd" label="비밀번호" type="password" maxlength="16" class="mt-4"/>
+                                  <VTextFieldWithValidation name="COR_user_pwd" placeholder="비밀번호" type="password" maxlength="16" class="mt-4"/>
                               </v-window-item>
                               <v-window-item value="two">
                                 <div class="my-4 login-subtext">
@@ -112,12 +112,12 @@
                                 </div>
                                 <VTextFieldWithValidation
                                     name="COR_user_id"
-                                    label="사업자번호"
+                                    placeholder="사업자번호"
                                     density="comfortable"
                                     single-line
                                     :maskOption="{ mask: '###-##-#####' }"
                                 />
-                                <VTextFieldWithValidation name="COR_user_pwd" label="비밀번호" type="password" maxlength="16" class="mt-4"/>
+                                <VTextFieldWithValidation name="COR_user_pwd" placeholder="비밀번호" type="password" maxlength="16" class="mt-4"/>
                               </v-window-item>
                               <v-window-item value="JNT">
                                 <div class="my-4 login-subtext">
@@ -141,12 +141,12 @@
                                 </div>
                                 <VTextFieldWithValidation
                                     name="COR_user_id"
-                                    label="사업자번호"
+                                    placeholder="사업자번호"
                                     density="comfortable"
                                     single-line
                                     :maskOption="{ mask: '###-##-#####' }"
                                 />
-                                <VTextFieldWithValidation name="COR_user_pwd" label="비밀번호" type="password" maxlength="16" class="mt-4"/>
+                                <VTextFieldWithValidation name="COR_user_pwd" placeholder="비밀번호" type="password" maxlength="16" class="mt-4"/>
                               </v-window-item>
                             </v-window>
                           </v-card-text>

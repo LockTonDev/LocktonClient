@@ -85,10 +85,10 @@
             <v-card-text v-if="isViewIDStep2">
               <h2 class="text-h5 font-weight-light">등록된 개인정보로<br/>아이디를 찾습니다.</h2>
               <div class="mt-10">
-                <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="이름" maxlength="8" />
-                <VTextFieldWithValidation v-model="userDTO.user_birth" name="user_birth" label="생년월일" placeholder="예) 780102" :maskOption="{ mask: '######' }" class="mt-2"/>
+                <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" placeholder="이름" maxlength="8" />
+                <VTextFieldWithValidation v-model="userDTO.user_birth" name="user_birth" placeholder="생년월일 예) 780102" :maskOption="{ mask: '######' }" class="mt-2"/>
                 <!-- <VTextFieldWithValidation v-model="userDTO.user_regno" name="user_regno" label="등록번호" placeholder="예) 1234567" :maskOption="{ mask: '#######' }" class="mt-2"/> -->
-                <VTextFieldWithValidation v-model="userDTO.user_hpno" name="user_hpno" label="휴대폰번호" type="number" :maskOption="{ mask: '###-####-####' }" class="mt-2" />
+                <VTextFieldWithValidation v-model="userDTO.user_hpno" name="user_hpno" placeholder="휴대폰번호" type="number" :maskOption="{ mask: '###-####-####' }" class="mt-2" />
               </div>
               <div class="d-flex justify-center mt-8">
                 <v-btn @click="setViewIdStep(false, true, false, false);" size="x-large" class="black" variant="outlined" color="black">뒤로가기</v-btn>
@@ -171,7 +171,7 @@
             <v-card-text v-if="isViewPWStep1">
               <h2 class="text-h5 font-weight-light">등록된 개인정보로<br/>비밀번호를 찾습니다.</h2>
               <div class="mt-10">
-                <VTextFieldWithValidation v-model="userDTO.user_id" name="user_id" label="아이디" />
+                <VTextFieldWithValidation v-model="userDTO.user_id" name="user_id" placeholder="아이디" />
               </div>
               <div class="d-flex justify-center mt-8">
                 <v-btn @click="setViewPwStep(true, false, false, false);" size="x-large" class="black" variant="outlined" color="black">뒤로가기</v-btn>
@@ -183,9 +183,9 @@
             <v-card-text v-if="isViewPWStep2">
               <h2 class="text-h5 font-weight-light">등록된 가입정보로<br/>비밀번호를 찾습니다.</h2>
               <div class="mt-10">
-                <VTextFieldWithValidation v-model="userDTO.user_id" name="user_id" label="아이디" :maskOption="{ mask: '###-##-#####' }" />
+                <VTextFieldWithValidation v-model="userDTO.user_id" name="user_id" placeholder="아이디" :maskOption="{ mask: '###-##-#####' }" />
                 <template v-if="route.params.business_cd == 'TAX'">
-                  <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="법인명" class="mt-2" maxlength="30"/>
+                  <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" placeholder="법인명" class="mt-2" maxlength="30"/>
                   <div class="d-flex align-center">
                     <VTextFieldWithValidation v-model="userDTO.corp_bnno" name="corp_bnno" class="mt-2" label="법인번호" :maskOption="{ mask: '######-#######' }" />
                     <v-btn variant="outlined" @click="sendVerifyEMailCOR()" color="primary" size="large" class="ml-2" :disabled="isSendEMail">인증메일 받기</v-btn >
@@ -193,31 +193,31 @@
                 </template>
                 <template v-if="route.params.business_cd == 'ADV'">
                   <div class="d-flex align-center">
-                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="사무소 명" class="mt-2" maxlength="30"/>
+                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" placeholder="사무소 명" class="mt-2" maxlength="30"/>
                     <v-btn variant="outlined" @click="sendVerifyEMailJNT()" color="primary" size="large" class="ml-2" :disabled="isSendEMail">인증메일 받기</v-btn >
                   </div>
                 </template>
                 <template v-if="route.params.business_cd == 'CAA'">
                   <div class="d-flex align-center" v-if="userDTO.user_cd==='JNT'">
-                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="사무소 명" class="mt-2" maxlength="30"/>
+                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" placeholder="사무소 명" class="mt-2" maxlength="30"/>
                     <v-btn variant="outlined" @click="sendVerifyEMailJNT()" color="primary" size="large" class="ml-2" :disabled="isSendEMail">인증메일 받기</v-btn >
                   </div>
                   <div class="d-flex align-center" v-if="userDTO.user_cd==='COR'">
-                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="법인 명" class="mt-2" maxlength="30"/>
+                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" placeholder="법인 명" class="mt-2" maxlength="30"/>
                     <v-btn variant="outlined" @click="sendVerifyEMailCOR()" color="primary" size="large" class="ml-2" :disabled="isSendEMail">인증메일 받기</v-btn >
                   </div>
                 </template>
                 <template v-if="route.params.business_cd == 'PAT'">
                   <div class="d-flex align-center" v-if="userDTO.user_cd==='JNT'">
-                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="합동 명" class="mt-2" maxlength="30"/>
+                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" placeholder="합동 명" class="mt-2" maxlength="30"/>
                     <v-btn variant="outlined" @click="sendVerifyEMailJNT()" color="primary" size="large" class="ml-2" :disabled="isSendEMail">인증메일 받기</v-btn >
                   </div>
                   <div class="d-flex align-center" v-if="userDTO.user_cd==='COR'">
-                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="법인 명" class="mt-2" maxlength="30"/>
+                    <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" placeholder="법인 명" class="mt-2" maxlength="30"/>
                     <v-btn variant="outlined" @click="sendVerifyEMailCOR()" color="primary" size="large" class="ml-2" :disabled="isSendEMail">인증메일 받기</v-btn >
                   </div>
                 </template>
-                <VTextFieldWithValidation  v-model="userDTO.auth_code" name="auth_code" label="인증번호" placeholder="숫자 6자리" :maskOption="{ mask: '######' }" maxlength="6" class="mt-2"/>
+                <VTextFieldWithValidation  v-model="userDTO.auth_code" name="auth_code" placeholder="인증번호(숫자 6자리)" :maskOption="{ mask: '######' }" maxlength="6" class="mt-2"/>
               </div>
               <div class="d-flex justify-center mt-8">
                 <v-btn @click="setViewPwStep(true, false, false, false);" size="x-large" class="black" variant="outlined" color="black">뒤로가기</v-btn>
@@ -230,8 +230,8 @@
               <h2 class="text-h5 font-weight-light">인증되었습니다.<br/>새로운 비밀번호를 설정해 주세요.</h2>
               <p class="text-body-1 font-weight-light color-gray mt-2 line-height-1-4">비밀번호는 8 ~ 20자 이하 영어, 숫자, 특수문자 조합으로 입력하세요.</p>
               <div class="mt-10">
-                <VTextFieldWithValidation v-model="userDTO.new_user_pwd" name="new_user_pwd" label="새 비밀번호" type="password" maxlength="16" />
-                <VTextFieldWithValidation v-model="userDTO.new_user_pwd_chk" name="new_user_pwd_chk" label="비밀번호 확인" type="password" maxlength="16" class="mt-2"/>
+                <VTextFieldWithValidation v-model="userDTO.new_user_pwd" name="new_user_pwd" placeholder="새 비밀번호" type="password" maxlength="16" />
+                <VTextFieldWithValidation v-model="userDTO.new_user_pwd_chk" name="new_user_pwd_chk" placeholder="비밀번호 확인" type="password" maxlength="16" class="mt-2"/>
                 <v-btn @click="onUserUpdatePassword()" size="x-large" variant="flat" color="primary"  block class="mt-8">확인</v-btn> <!--클릭 시 로그인페이지로 이동-->
               </div>
             </v-card-text>
