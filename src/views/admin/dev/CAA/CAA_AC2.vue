@@ -1676,7 +1676,7 @@ const onCalculateInsurance = async (confirmYn) => {
           consAmt += Number(insuranceDTO.value.cons_data.cbr_data[idx].insr_amt, 0);
         }
       }
-      insuranceDTO.value.spct_data.insr_amt = consAmt
+      insuranceDTO.value.cons_data.insr_amt = consAmt
       insuranceDTO.value.insr_tot_amt = Number(insuranceDTO.value.insr_amt,0) + consAmt
     }
 
