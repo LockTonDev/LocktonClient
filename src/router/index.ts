@@ -82,7 +82,7 @@ router.beforeEach(async function (to, from, next) {
       const response = await axios.get('https://api.ip.pe.kr/json');
       const ipAddress = response.data.ip;
 
-      const allowedIPs = ['110.9.11.206','121.137.148.62', '110.35.173.2'];
+      const allowedIPs = ['110.9.11.206','121.137.148.62', '110.35.173.2','183.109.121.132','222.233.19.63'];
 
       // Add your IP blocking logic here
       if (!allowedIPs.includes(ipAddress)) {
