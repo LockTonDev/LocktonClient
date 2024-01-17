@@ -5,6 +5,8 @@ import {MenuDEF, MenuACC, MenuTAX, MenuADV, MenuCAA, MenuPAT}  from "./SidebarIt
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
 import jwt_decode from 'jwt-decode';
+import { MessageBoxDTO, ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, CBRDataDTO } from '@/model';
+import MessageBox from '@/components/MessageBox.vue';
 
 const authStore = useAuthStore();
 const _AUTH_USER  = ref(JSON.parse(localStorage.getItem('_AUTH_USER')));
@@ -14,6 +16,9 @@ const admin = false;
 
 // 메뉴 구성
 const sidebarMenu = ref(MenuDEF);
+
+const warnTimeoutMin = 29//3
+const messageBoxDTO = ref(new MessageBoxDTO());
 
 // REFRESH 시 기본 설정값 셋팅
 switch(_AUTH_USER?.value?.businessCd) {
@@ -46,6 +51,12 @@ function subIsActive(input: any) {
   });
 }
 
+function extendTime() {
+  authStore.refreshAdminAccessToken('_AUTH_USER').then(function(response) {
+    _AUTH_USER.value = JSON.parse(localStorage.getItem('_AUTH_USER'));
+    initPage()
+  })
+}
 
 const timeLeft = ref('');
 
@@ -66,6 +77,7 @@ function initPage() {
     }
     const decoded = jwt_decode(_AUTH_USER.value.accessToken);
     const expiresAt = decoded.exp;
+
     intervalId = setInterval(() => {
       const currentTime = Math.floor(Date.now() / 1000);
       const remainingSeconds = expiresAt - currentTime;
@@ -77,6 +89,24 @@ function initPage() {
         timeLeft.value = convertSecondsToMinutes(remainingSeconds);
       }
     }, 1000);
+
+    /*
+          intervalId = setInterval(() => {
+            const currentTime = Math.floor(Date.now() / 1000);
+            const remainingSeconds = expiresAt - currentTime;
+            if (remainingSeconds <= 0) {
+              clearInterval(intervalId);
+              authStore.logout();
+            } else if(remainingSeconds == warnTimeoutMin * 60) {
+              messageBoxDTO.value.setConfirm('시간연장', '세션 종료까지 '+warnTimeoutMin+'분 남았습니다. 연장하시겠습니까?<br> 취소 시 연장 버튼을 통해서도 세션 연장이 가능합니다.', null, (result, params) => {
+                if (result) {
+                  extendTime()
+                }
+              });
+            } else {
+              timeLeft.value = convertSecondsToMinutes(remainingSeconds);
+            }
+          }, 1000);*/
   } catch (e) {
     console.log(e);
   }
@@ -218,11 +248,13 @@ onUnmounted(() => {
                 로그아웃<br/>{{ timeLeft }}&nbsp;
               </p>
             </v-btn>
+<!--          <button type="button" class="v-btn v-btn&#45;&#45;flat v-theme&#45;&#45;light bg-primary v-btn&#45;&#45;density-default rounded-md v-btn&#45;&#45;size-small v-btn&#45;&#45;variant-flat"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>&lt;!&ndash;&ndash;&gt;<span class="v-btn__content" data-no-activator="" @click="extendTime()">연장</span>&lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;</button>-->
         </template>
       </v-menu>
 
     </div>
   </v-app-bar>
+  <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
 </template>
 <style scoped>
   .font-size-8 {

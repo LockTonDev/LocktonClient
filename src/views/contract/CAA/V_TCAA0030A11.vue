@@ -2614,7 +2614,7 @@ const isTermsOfCCAinsurancDialog = ref(false);
 
 const isDaumPostDialog = ref(false);
 const isInsrTableDialog = ref(false);
-
+let renewalUpdateYN = ref('N');
 function onTermsOfContractClose(agrs: any) {
   isTermsOfContractDialog.value = false;
   insuranceDTO.value.agr30_yn = agrs.value.agr30_yn;
@@ -3390,10 +3390,17 @@ watch(
     } else if (insuranceDTO.value.user_cd === 'IND' && TODAY <= newValue[0]) {
       insuranceDTO.value.insr_retr_dt = newValue[0];
     }
+    // console.log("renewalYN.value :",renewalYN.value)
+    // console.log("renewalUpdateYN.value :",renewalUpdateYN.value)
     // 과거일자로는 변경 불가, 원복시킨다.
+    // 2024-01-15 갱신 또는 신규 가입후 수정 시 저장된 데이타로 처리
+    // if (TODAY > newValue[0] && renewalYN.value === 'N' && renewalUpdateYN.value != 'Y' ) {
     if (TODAY > newValue[0] && renewalYN.value === 'N') {
-      insuranceDTO.value.insr_st_dt = TODAY;
-      insuranceDTO.value.insr_retr_dt = TODAY;
+      //if(renewalUpdateYN.value != 'Y') {
+        insuranceDTO.value.insr_st_dt = TODAY;
+        insuranceDTO.value.insr_retr_dt = TODAY;
+      //}
+      // console.log("insuranceDTO.value.insr_st_dt : ",insuranceDTO.value.insr_st_dt)
       showMessageBoxByInsrDt();
     }
 
@@ -3729,6 +3736,12 @@ onMounted(async () => {
   // 보험료 조회
   const params = { user_cd: _AUTH_USER.value.userCd , business_cd: _AUTH_USER.value.businessCd };
   const resultData = await apiA_TCAA0030A.getDBSelInsuranceRate(params);
+  // console.log("resultData1 : ", resultData)
+
+
+  renewalUpdateYN.value = route.query.renewalUpdate
+
+  // console.log("renewalUpdateYN.value  : ", renewalUpdateYN.value)
   Object.assign(insuranceRateDTO.value, resultData.data[0]);
   INSR_RATE_TABLE.value = resultData.data[0].contents;
   INSR_RATE_MAX_DAYS.value = resultData.data[0].days;
@@ -3758,7 +3771,6 @@ onMounted(async () => {
       messageBoxDTO.value.setWarning('조회오류', '보험갱신 데이타를 조회 할 수 없습니다.');
       onCancel();
     } else {
-
       if(isIndtoInd) {
         Object.assign(insuranceDTO.value, renewalData.data[0]);
         if(insuranceDTO.value.spct_join_yn === 'N'){
@@ -3817,7 +3829,6 @@ onMounted(async () => {
 
     // 사용자 정보 조회
     await getUserInfoByUser();
-
     insuranceDTO.value.status_cd = '10' // 신청
     insuranceDTO.value.user_cd = userDTO.value.user_cd;
     insuranceDTO.value.user_nm = userDTO.value.user_nm;
@@ -3825,7 +3836,7 @@ onMounted(async () => {
     insuranceDTO.value.user_hpno = userDTO.value.user_hpno;
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_year = insuranceRateDTO.value.base_year;
-
+    // console.log("insuranceRateDTO.value.insr_st_dt :",insuranceRateDTO.value.insr_st_dt)
     insuranceDTO.value.base_insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
@@ -3842,55 +3853,49 @@ onMounted(async () => {
     }
     // 소급담보일도 오늘일자로 재설정
     insuranceDTO.value.insr_retr_dt = insuranceDTO.value.insr_st_dt;
+      if (insuranceDTO.value.user_cd == 'IND') {
+        insuranceDTO.value.user_birth = userDTO.value.user_birth;
+        insuranceDTO.value.user_regno = userDTO.value.user_regno;
 
-
-    if (insuranceDTO.value.user_cd == 'IND') {
-      insuranceDTO.value.user_birth = userDTO.value.user_birth;
-      insuranceDTO.value.user_regno = userDTO.value.user_regno;
-
-      // 개인일 경우에는 명단이 없으나 총 1명으로 계산한다.
-      insuranceDTO.value.cbr_cnt = 1;
-    } else {
-      insuranceDTO.value.corp_nm = userDTO.value.corp_nm;
-      insuranceDTO.value.corp_type = userDTO.value.corp_type;
-      insuranceDTO.value.corp_cnno = userDTO.value.corp_cnno;
-      insuranceDTO.value.corp_bnno = userDTO.value.corp_bnno;
-
-      insuranceDTO.value.cons_join_yn = 'N';
-      addCBR(insuranceDTO.value, '통관');
-    }
-
-    insuranceDTO.value.spct_join_yn = 'N';
-
-    // 기본담보 시작,종료일
-    insuranceDTO.value.insurance_no = insuranceNO.value;
-
-    // 컨설팅 시작,종료일
-    // insuranceDTO.value.cons_data.insr_st_dt = today;
-    // insuranceDTO.value.cons_data.insr_cncls_dt = lastDay;
-
-    // 특약 시작,종료일
-    // insuranceDTO.value.spct_data.insr_st_dt = today;
-    // insuranceDTO.value.spct_data.insr_cncls_dt = lastDay;
-    // insuranceDTO.value = testData.data[0].contents.관세사_기본담보;
-    // INSR_SPEC_DATA.value = testData.data[0].contents.관세사_특약;
-  } else {
-    const params = { insurance_uuid: insuranceUUID.value };
-    const resultData = await apiA_TCAA0030A.getDBSel(params);
-
-    if (resultData.data.length == 0) {
-      router.push('/404');
-    } else {
-      Object.assign(insuranceDTO.value, resultData.data[0]);
-      if(insuranceDTO.value.cons_join_yn != null && insuranceDTO.value.cons_join_yn == 'Y' ){
-        if(insuranceDTO.value.cons_data.insr_retr_dt == null || insuranceDTO.value.cons_data.insr_retr_dt == ''){
-          insuranceDTO.value.cons_data.insr_retr_dt = insuranceDTO.value.insr_retr_dt
-        }
+        // 개인일 경우에는 명단이 없으나 총 1명으로 계산한다.
+        insuranceDTO.value.cbr_cnt = 1;
+      } else {
+        insuranceDTO.value.corp_nm = userDTO.value.corp_nm;
+        insuranceDTO.value.corp_type = userDTO.value.corp_type;
+        insuranceDTO.value.corp_cnno = userDTO.value.corp_cnno;
+        insuranceDTO.value.corp_bnno = userDTO.value.corp_bnno;
+        insuranceDTO.value.cons_join_yn = 'N';
+        addCBR(insuranceDTO.value, '통관');
       }
-    }
+      insuranceDTO.value.spct_join_yn = 'N';
+      // 기본담보 시작,종료일
+      insuranceDTO.value.insurance_no = insuranceNO.value;
+      // 컨설팅 시작,종료일
+      // insuranceDTO.value.cons_data.insr_st_dt = today;
+      // insuranceDTO.value.cons_data.insr_cncls_dt = lastDay;
+
+      // 특약 시작,종료일
+      // insuranceDTO.value.spct_data.insr_st_dt = today;
+      // insuranceDTO.value.spct_data.insr_cncls_dt = lastDay;
+      // insuranceDTO.value = testData.data[0].contents.관세사_기본담보;
+      // INSR_SPEC_DATA.value = testData.data[0].contents.관세사_특약;
+  } else {
+      const params = { insurance_uuid: insuranceUUID.value };
+      const resultData = await apiA_TCAA0030A.getDBSel(params);
+
+      if (resultData.data.length == 0) {
+        router.push('/404');
+      } else {
+          Object.assign(insuranceDTO.value, resultData.data[0]);
+          // console.log("insuranceDTO.value : ", insuranceDTO.value)
+          if(insuranceDTO.value.cons_join_yn != null && insuranceDTO.value.cons_join_yn == 'Y' ){
+            if(insuranceDTO.value.cons_data.insr_retr_dt == null || insuranceDTO.value.cons_data.insr_retr_dt == ''){
+              insuranceDTO.value.cons_data.insr_retr_dt = insuranceDTO.value.insr_retr_dt
+            }
+          }
+      }
   }
   insuranceDTOBackup.value = JSON.parse(JSON.stringify(insuranceDTO.value));
-
   onLoading.value = true;
 });
 
@@ -3899,16 +3904,15 @@ onMounted(async () => {
  *
  * @param values
  */
-function resetCBRData() {
-  messageBoxDTO.value.setConfirm('관세사 명단', '관세사 명단을 초기 조회상태로 초기화 하시겠습니까?', null, (result, params) => {
-    if (result) {
-      insuranceDTO.value.cbr_data = JSON.parse(JSON.stringify(insuranceDTOBackup.value.cbr_data));
-      insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
-      calInsrAmt(insuranceDTO.value);
-    }
-  });
-}
-
+  function resetCBRData() {
+    messageBoxDTO.value.setConfirm('관세사 명단', '관세사 명단을 초기 조회상태로 초기화 하시겠습니까?', null, (result, params) => {
+      if (result) {
+        insuranceDTO.value.cbr_data = JSON.parse(JSON.stringify(insuranceDTOBackup.value.cbr_data));
+        insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
+        calInsrAmt(insuranceDTO.value);
+      }
+    });
+  }
 /**
  * 관세사 컨설팅 명단 초기화
  *

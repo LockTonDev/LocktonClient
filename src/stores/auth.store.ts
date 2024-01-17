@@ -108,17 +108,17 @@ export const useAuthStore = defineStore({
       }
       return true;
     },
-     async refreshAdminAccessToken() {
+     async refreshAdminAccessToken(type) {
       try {
 
-        let userInfo = JSON.parse(localStorage.getItem('_AUTH_ADMIN'));
+        let userInfo = JSON.parse(localStorage.getItem(type));
         const decoded = jwt_decode(userInfo.accessToken);
         userInfo["userUuid"] = decoded.uuid
         let retData = await apiUser.getRefreshLogin(userInfo);
         if (retData.success) {
           userInfo.accessToken = retData.data.accessToken
           userInfo.refreshToken = retData.data.refreshToken
-          localStorage.setItem('_AUTH_ADMIN', JSON.stringify(userInfo));
+          localStorage.setItem(type, JSON.stringify(userInfo));
         }
       } catch (error) {
         return false;
