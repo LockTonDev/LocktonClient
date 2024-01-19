@@ -172,7 +172,9 @@ export default {
   async getCAAExcel(params: any) {
     return await api.authService.post('/ADM/CAA/EXCEL/get', { params });
   },
-
+  async deleteCAA(params: any) {
+    return await api.authService.delete('/ADM/CAA/del', { params });
+  },
   /**  PAT  */
   async setPAT(params: any) {
     return await api.authService.post('/ADM/PAT/set', { params });

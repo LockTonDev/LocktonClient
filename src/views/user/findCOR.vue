@@ -142,8 +142,8 @@
               <h2 class="text-h5 font-weight-light">웹사이트에 등록된 법인정보를<br/>입력해 주세요.</h2>
               <div class="mt-10">
                 <VTextFieldWithValidation name="" label="아이디" />
-                <VTextFieldWithValidation name="user_nm" label="법인명" maxlength="25" class="mt-2"/> 
-                <VTextFieldWithValidation name="corp_bnno" label="법인번호" :maskOption="{ mask: '######-#######' }" class="mt-2"/>
+                <VTextFieldWithValidation name="user_nm" placeholder="법인명" maxlength="25" class="mt-2"/>
+                <VTextFieldWithValidation name="corp_bnno" placeholder="법인번호" :maskOption="{ mask: '######-#######' }" class="mt-2"/>
                 <v-btn size="large" variant="tonal" block class="mt-4">확인</v-btn>    
                 <p class="text-error mt-2 "><i class="mdi mdi-alert-circle-outline mr-2"></i>일치하는 회원 정보가 없습니다.</p>
               </div>

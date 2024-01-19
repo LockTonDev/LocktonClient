@@ -7,8 +7,8 @@
           로그인
         </v-card-title>
         <v-card-text class="px-10 py-4">
-          <v-text-field v-model="user_id" label="아이디" clearable variant="outlined" hide-details="auto"/>
-          <v-text-field v-model="user_pwd" label="비밀번호" type="password" clearable variant="outlined" hide-details="auto" class="mt-2"  @keyup.enter="onSubmit()"/>
+          <v-text-field v-model="user_id" placeholder="아이디" clearable variant="outlined" hide-details="auto"/>
+          <v-text-field v-model="user_pwd" placeholder="비밀번호" type="password" clearable variant="outlined" hide-details="auto" class="mt-2"  @keyup.enter="onSubmit()"/>
             <!-- 에레메시지 영역 -->
             <div class="ml-8 text-error text-14 text-left">                    
               <span> {{ loginErrorMessage }} </span>  

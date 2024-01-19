@@ -128,7 +128,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col extend">
-                              <VTextFieldWithValidation v-model="userDTO.user_hpno" name="user_hpno" label="본인인증 확인" single-line density="comfortable" :disabled="true" />
+                              <VTextFieldWithValidation v-model="userDTO.user_hpno" name="user_hpno" placeholder="본인인증 확인" single-line density="comfortable" :disabled="true" />
                               <v-btn variant="outlined" color="primary" class="ml-2" @click="isVerifyUserAuth()" :disabled="userDTO.user_hpno != ''" >본인인증</v-btn >
                               <div class="ml-2">
                                 <p :class="verifyHp.success ? 'text-info' : 'text-error'">
@@ -144,7 +144,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="본인인증 확인" single-line density="comfortable" :disabled="true"/>
+                              <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" placeholder="본인인증 확인" single-line density="comfortable" :disabled="true"/>
                             </div>
                           </v-col>
                           <v-col cols="12" sm="6" class="v-col">
@@ -153,7 +153,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="userDTO.user_birth" name="user_birth" label="본인인증 확인" single-line density="comfortable" :disabled="true" />
+                              <VTextFieldWithValidation v-model="userDTO.user_birth" name="user_birth" placeholder="본인인증 확인" single-line density="comfortable" :disabled="true" />
                             </div>
                           </v-col>
                           <!-- 세무사 등록번호 시작 -->
@@ -181,7 +181,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col extend">
-                              <VTextFieldWithValidation v-model="userDTO.user_email" name="user_email" label="ex) user@locktonpi.com" single-line density="comfortable" maxlength="40"/>
+                              <VTextFieldWithValidation v-model="userDTO.user_email" name="user_email" placeholder="ex) user@locktonpi.com" single-line density="comfortable" maxlength="40"/>
                               <v-btn variant="outlined" color="primary" class="ml-2" @click="isVerifyUserEMail()" :disabled="userDTO.is_user_email">중복확인</v-btn >
                               <div class="ml-2">
                                 <p :class="verifyEMail.success ? 'text-info' : 'text-error'">
@@ -206,7 +206,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="userDTO.user_id" name="user_id" label="아이디" single-line density="comfortable" maxlength="20"/>
+                              <VTextFieldWithValidation v-model="userDTO.user_id" name="user_id" placeholder="아이디" single-line density="comfortable" maxlength="20"/>
                               <v-btn variant="outlined" color="primary" class="ml-2" @click="isVerifyUserId()" :disabled="userDTO.is_user_id">중복확인</v-btn >
                               <div class="mt-1 flex-grow-1">
                                 <p :class=" verifyUser.success ? 'text-info' : 'text-error'">
@@ -262,7 +262,7 @@
                               <VTextFieldWithValidation
                                 v-model="userDTO.corp_cnno"
                                 name="corp_cnno"
-                                label="사업자번호"
+                                placeholder="사업자번호"
                                 :maskOption="{ mask: '###-##-#####' }"
                                 single-line
                                 density="comfortable"
@@ -417,7 +417,7 @@
                             <VTextFieldWithValidation
                                 v-model="userDTO.corp_ceo_nm"
                                 name="corp_ceo_nm"
-                                label="대표자 성명"
+                                placeholder="대표자 성명"
                                 single-line
                                 density="comfortable"
                             />
@@ -456,7 +456,7 @@
                             <VTextFieldWithValidation
                                 v-model="userDTO.corp_cnno"
                                 name="corp_cnno"
-                                label="사업자번호"
+                                placeholder="사업자번호"
                                 :maskOption="{ mask: '###-##-#####' }"
                                 single-line
                                 density="comfortable"
@@ -474,7 +474,7 @@
                               <VTextFieldWithValidation
                                 v-model="userDTO.corp_bnno"
                                 name="corp_bnno"
-                                label="법인번호"
+                                placeholder="법인번호"
                                 :maskOption="{ mask: '######-#######' }"
                                 single-line
                                 density="comfortable"
@@ -517,7 +517,7 @@
                             <sup class="text-error">*</sup>
                           </div>
                           <div class="data-col">
-                            <VTextFieldWithValidation v-model="userDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line density="comfortable"  maxlength="20"/>
+                            <VTextFieldWithValidation v-model="userDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line density="comfortable"  maxlength="20"/>
                           </div>
                         </v-col>
                         <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd != 'ACC' && userDTO.business_cd != 'CAA' &&  userDTO.business_cd != 'PAT'">
@@ -560,11 +560,11 @@
                             <sup class="text-error">*</sup>
                           </div>
                           <div class="data-col">
-                            <VTextFieldWithValidation v-model="userDTO.corp_post" name="corp_post" label="우편번호" single-line density="comfortable"  :readonly="true"/>
+                            <VTextFieldWithValidation v-model="userDTO.corp_post" name="corp_post" placeholder="우편번호" single-line density="comfortable"  :readonly="true"/>
                             <v-btn variant="outlined"  color="primary" @click="isDaumPostDialog=true" class="ml-2">사무소 주소검색</v-btn>
                             <v-divider class="border-0"/>
-                            <VTextFieldWithValidation v-model="userDTO.corp_addr" name="corp_addr" label="주소" single-line density="comfortable" class="w-full" :readonly="true"/>                            
-                            <VTextFieldWithValidation v-model="userDTO.corp_addr_dtl" name="corp_addr_dtl" label="상세주소" single-line density="comfortable" class="w-full" maxlength="25"/>
+                            <VTextFieldWithValidation v-model="userDTO.corp_addr" name="corp_addr" placeholder="주소" single-line density="comfortable" class="w-full" :readonly="true"/>
+                            <VTextFieldWithValidation v-model="userDTO.corp_addr_dtl" name="corp_addr_dtl" placeholder="상세주소" single-line density="comfortable" class="w-full" maxlength="25"/>
                           </div>
                         </v-col>
                       </v-row>

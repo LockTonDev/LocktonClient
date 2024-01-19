@@ -127,7 +127,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.user_nm }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" label="이름" single-line maxlength="25"/>
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" placeholder="이름" single-line maxlength="25"/>
                             </div>
                           </v-col>
                           <v-col cols="12" sm="4" class="v-col">
@@ -137,7 +137,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.user_birth }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.user_birth" name="user_birth" label="생년월일" single-line :maskOption="{ mask: '######' }" type="date"/>
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_birth" name="user_birth" placeholder="생년월일" single-line :maskOption="{ mask: '######' }" type="date"/>
                             </div>
                           </v-col>
                           <v-col cols="12" sm="4" class="v-col">
@@ -147,7 +147,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.user_regno }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.user_regno" name="user_regno" label="등록번호" single-line :maskOption="{ mask: '#######' }" type="date"/>
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_regno" name="user_regno" placeholder="등록번호" single-line :maskOption="{ mask: '#######' }" type="date"/>
                             </div>
                           </v-col>
 
@@ -167,7 +167,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line maxlength="20" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
                             </div>
                           </v-col>
                           <!--
@@ -193,7 +193,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.user_nm }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" label="법인명" single-line max-length="20" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" placeholder="법인명" single-line max-length="20" />
                             </div>
                           </v-col>
                           <v-col cols="12" sm="4" class="v-col">
@@ -203,7 +203,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.corp_ceo_nm }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_ceo_nm" name="corp_ceo_nm" label="대표자 성명" single-line max-length="20"/>
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_ceo_nm" name="corp_ceo_nm" placeholder="대표자 성명" single-line max-length="20"/>
                             </div>
                           </v-col>
 
@@ -228,7 +228,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.corp_cnno }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cnno" name="corp_cnno" label="사업자번호" single-line :maskOption="{ mask: '###-##-#####' }"/>
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cnno" name="corp_cnno" placeholder="사업자번호" single-line :maskOption="{ mask: '###-##-#####' }"/>
                             </div>
                           </v-col>
                           <v-col cols="12" sm="4" class="v-col">

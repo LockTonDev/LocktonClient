@@ -95,7 +95,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_nm"
                         name="corp_nm"
-                        label="사무소명"
+                        placeholder="사무소명"
                         single-line
                         density="comfortable"
                         maxlength="20"
@@ -113,7 +113,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_cnno"
                         name="corp_cnno"
-                        label="사업자번호"
+                        placeholder="사업자번호"
                         single-line
                         density="comfortable"
                         :readonly="isReadOnlyAll"
@@ -130,7 +130,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_telno"
                         name="corp_telno"
-                        label="사무소 전화"
+                        placeholder="사무소 전화"
                         single-line
                         density="comfortable"
                         :readonly="isReadOnlyAll"
@@ -147,7 +147,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_faxno"
                         name="corp_taxno"
-                        label="사무소 팩스"
+                        placeholder="사무소 팩스"
                         single-line
                         density="comfortable"
                         :readonly="isReadOnlyAll"
@@ -164,7 +164,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_cust_nm"
                         name="corp_cust_nm"
-                        label="담당자 성명"
+                        placeholder="담당자 성명"
                         single-line
                         density="comfortable"
                         maxlength="20"
@@ -181,7 +181,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_cust_hpno"
                         name="corp_cust_hpno"
-                        label="휴대전화"
+                        placeholder="휴대전화"
                         single-line
                         density="comfortable"
                         :readonly="isReadOnlyAll"
@@ -199,7 +199,7 @@
                           class="w-50"
                         v-model="insuranceDTO.corp_cust_email"
                         name="user_email"
-                        label="이메일"
+                          placeholder="이메일"
                         single-line
                         density="comfortable"
                         :readonly="isReadOnlyAll"
@@ -214,7 +214,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_post"
                         name="corp_post"
-                        label="우편번호"
+                        placeholder="우편번호"
                         single-line
                         density="comfortable"
                         readonly
@@ -231,7 +231,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_addr"
                         name="corp_addr"
-                        label="주소"
+                        placeholder="주소"
                         single-line
                         density="comfortable"
                         class="w-full"
@@ -241,7 +241,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_addr_dtl"
                         name="corp_addr_dtl"
-                        label="상세주소"
+                        placeholder="상세주소"
                         single-line
                         density="comfortable"
                         class="w-full"
@@ -321,7 +321,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_telno"
                         name="corp_telno"
-                        label="사무소 전화"
+                        placeholder="사무소 전화"
                         single-line
                         density="comfortable"
                         :readonly="isReadOnlyAll"
@@ -338,7 +338,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_faxno"
                         name="corp_taxno"
-                        label="사무소 팩스"
+                        placeholder="사무소 팩스"
                         single-line
                         density="comfortable"
                         :readonly="isReadOnlyAll"
@@ -355,7 +355,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_cust_nm"
                         name="corp_cust_nm"
-                        label="담당자 성명"
+                        placeholder="담당자 성명"
                         single-line
                         density="comfortable"
                         maxlength="20"
@@ -372,7 +372,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_cust_hpno"
                         name="corp_cust_hpno"
-                        label="휴대전화"
+                        placeholder="휴대전화"
                         single-line
                         density="comfortable"
                         :readonly="isReadOnlyAll"
@@ -390,7 +390,7 @@
                         class="w-50"
                         v-model="insuranceDTO.corp_cust_email"
                         name="user_email"
-                        label="이메일"
+                        placeholder="이메일"
                         single-line
                         density="comfortable"
                         :readonly="isReadOnlyAll"
@@ -406,7 +406,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_post"
                         name="corp_post"
-                        label="우편번호"
+                        placeholder="우편번호"
                         single-line
                         density="comfortable"
                         readonly
@@ -423,7 +423,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_addr"
                         name="corp_addr"
-                        label="주소"
+                        placeholder="주소"
                         single-line
                         density="comfortable"
                         class="w-full"
@@ -433,7 +433,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_addr_dtl"
                         name="corp_addr_dtl"
-                        label="상세주소"
+                        placeholder="상세주소"
                         single-line
                         density="comfortable"
                         class="w-full"
@@ -579,7 +579,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.insr_st_dt"
                         name="insr_st_dt"
-                        label="보험시작일자"
+                        placeholder="보험시작일자"
                         type="date"
                         single-line
                         density="comfortable"
@@ -591,7 +591,7 @@
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.insr_cncls_dt"
                         name="insr_cncls_dt"
-                        label="보험종료일자"
+                        placeholder="보험종료일자"
                         type="date"
                         single-line
                         density="comfortable"
@@ -882,7 +882,7 @@
                       <VTextFieldWithValidation
                           v-model="row.cbr_nm"
                           name="cbr_nm"
-                          label="성명"
+                          placeholder="성명"
                           density="compact"
                           color="primary"
                           variant="underlined"
@@ -894,7 +894,7 @@
                       <VTextFieldWithValidation
                           v-model="row.cbr_brdt"
                           name="cbr_brdt"
-                          label="생년월일"
+                          placeholder="생년월일"
                           density="compact"
                           color="primary"
                           variant="underlined"
@@ -907,7 +907,7 @@
                       <VTextFieldWithValidation
                           v-model="row.cbr_regno"
                           name="cbr_regno"
-                          label="등록번호"
+                          placeholder="등록번호"
                           color="primary"
                           density="compact"
                           variant="underlined"
@@ -1226,7 +1226,7 @@
                           <VTextFieldWithValidation
                               v-model="row.cbr_nm"
                               name="cbr_nm"
-                              label="성명"
+                              placeholder="성명"
                               density="compact"
                               color="primary"
                               variant="underlined"
@@ -1238,7 +1238,7 @@
                           <VTextFieldWithValidation
                               v-model="row.cbr_brdt"
                               name="cbr_brdt"
-                              label="생년월일"
+                              placeholder="생년월일"
                               density="compact"
                               color="primary"
                               variant="underlined"
@@ -1508,7 +1508,7 @@
                               density="compact"
                               class="text-body-2"
                               single-line
-                              label="성명"
+                              placeholder="성명"
                               :readonly="isReadOnlyAll"
                             />
                           </td>
@@ -1520,7 +1520,7 @@
                               density="compact"
                               class="text-body-2"
                               single-line
-                              label="생년월일"
+                              placeholder="생년월일"
                               :readonly="isReadOnlyAll"
                               maxLength="6"
                             />
@@ -2203,7 +2203,7 @@
                   variant="outlined"
                   hide-details="auto"
                   density="compact"
-                  label="성명"
+                  placeholder="성명"
                 />
               </td>
               <td class="text-body-1 text-center py-2">
@@ -2212,7 +2212,7 @@
                   variant="outlined"
                   hide-details="auto"
                   density="compact"
-                  label="19990101"
+                  placeholder="19990101"
                 />
               </td>
               <td class="text-body-1 text-center py-2">
@@ -2221,7 +2221,7 @@
                   variant="outlined"
                   hide-details="auto"
                   density="compact"
-                  label="123456789012"
+                  placeholder="123456789012"
                 />
               </td>
               <td class="text-body-1 text-center py-2">
@@ -2239,7 +2239,7 @@
                   variant="outlined"
                   hide-details="auto"
                   density="compact"
-                  label="0"
+                  placeholder="0"
                 />
               </td>
               <td class="text-body-1 text-center py-2">
@@ -2391,7 +2391,8 @@ let INSR_RETR_DT_TODAY = dayjs().format('YYYY-MM-DD');
 const isSpctNew = ref(false)
 
 const today = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
-
+//중복 최종제출을 막기 위한 FLAG
+let preventDupClick = false
 /**
  * 보험료 계산
  *
@@ -2948,6 +2949,12 @@ async function onSubmit2(values, actions) {
  * @param values 가입 정보
  */
 async function onSubmit(params: any) {
+  if(preventDupClick) {
+    alert("최종 제출이 진행 중입니다. 잠시만 기다려주세요.")
+    return false
+  }
+  preventDupClick = true;
+
   if(!chkValiation()) return false;
 
   let result;
@@ -2967,6 +2974,7 @@ async function onSubmit(params: any) {
     console.log(result);
     alert('보험가입 실패');
   }
+  preventDupClick = false;
 }
 
 /**

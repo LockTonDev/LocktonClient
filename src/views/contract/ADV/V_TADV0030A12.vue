@@ -330,7 +330,7 @@
                       <VTextFieldWithValidation
                           v-model="insuranceDTO.insr_st_dt"
                           name="insr_st_dt"
-                          label="보험시작일자"
+                          placeholder="보험시작일자"
                           type="date"
                           single-line
                           density="comfortable"
@@ -342,7 +342,7 @@
                       <VTextFieldWithValidation
                           v-model="insuranceDTO.insr_cncls_dt"
                           name="insr_cncls_dt"
-                          label="보험종료일자"
+                          placeholder="보험종료일자"
                           type="date"
                           single-line
                           density="comfortable"

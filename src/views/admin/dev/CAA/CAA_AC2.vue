@@ -34,6 +34,7 @@
             <v-btn variant="outlined" size="small" @click="fnAdd('IND')" class="mx-1">개인 신규</v-btn>
             <v-btn variant="outlined" size="small" @click="fnAdd('COR')" class="mx-1">법인 신규</v-btn>
             <v-btn variant="outlined" size="small" @click="fnAdd('JNT')" class="mx-1">합동 신규</v-btn>
+            <v-btn v-if="isShowDeleteRadio" variant="outlined" outlined  color="red" size="small" @click="fnDelete()" class="mx-1" :disabled="deleteData === ''">삭제</v-btn>
           </div>
         </v-card-title>
         <v-card-text class="pa-0 v-result-box">
@@ -42,6 +43,7 @@
               계약 조회 결과
             </caption>
             <colgroup>
+              <col v-if="isShowDeleteRadio" style="width: auto" />
               <col style="width: auto" />
               <col style="width: auto" />
               <col style="width: auto" />
@@ -57,6 +59,7 @@
             </colgroup>
             <thead>
             <tr>
+              <th v-if="isShowDeleteRadio"></th>
               <th>번호</th>
               <th>구분</th>
               <th>보험년도</th>
@@ -73,6 +76,13 @@
             </thead>
             <tbody v-if="InsuranceList.length" class="">
             <tr v-for="(row, index) in InsuranceList" :key="index" @click="selectedRow = row" @click.prevent="fnSearchDtl(row.insurance_uuid)" :class="{ selected: selectedRow === row, 'cursor-pointer': true }">
+              <td v-if="isShowDeleteRadio" >
+                <v-radio-group v-model="deleteData" hide-details="auto">
+                  <v-radio style="font-size:13px;" class="mr-0" @click="fnDeleteData(row.insurance_uuid)"
+                                                      :key="row.insurance_uuid"
+                                                      :value="row.insurance_uuid"></v-radio>
+                </v-radio-group>
+              </td>
               <td>{{ index + 1 }}</td>
               <td>{{ row.user_cd_nm }}</td>
               <td>{{ row.insr_year }}</td>
@@ -130,7 +140,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.user_nm }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" label="이름" single-line maxlength="25" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" placeholder="이름" single-line maxlength="25" />
                             </div>
                           </v-col>
                           <v-col cols="12" sm="4" class="v-col">
@@ -140,7 +150,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.user_birth }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.user_birth" name="user_birth" label="생년월일" single-line :maskOption="{ mask: '######' }" type="date" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_birth" name="user_birth" placeholder="생년월일" single-line :maskOption="{ mask: '######' }" type="date" />
                             </div>
                           </v-col>
                           <v-col cols="12" sm="4" class="v-col">
@@ -150,7 +160,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.user_regno }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.user_regno" name="user_regno" label="등록번호" single-line :maskOption="{ mask: '#######' }" type="date" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_regno" name="user_regno" placeholder="등록번호" single-line :maskOption="{ mask: '#######' }" type="date" />
                             </div>
                           </v-col>
 
@@ -170,7 +180,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_nm" name="corp_nm" label="사무소명" single-line maxlength="20" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_nm" name="corp_nm" placeholder="사무소명" single-line maxlength="20" />
                             </div>
                           </v-col>
 
@@ -180,7 +190,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cnno" name="corp_cnno" label="사업자번호" :maskOption="{ mask: '###-##-#####' }" single-line />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cnno" name="corp_cnno" placeholder="사업자번호" :maskOption="{ mask: '###-##-#####' }" single-line />
                             </div>
                           </v-col>
                           <v-col cols="12" sm="4" class="v-col">
@@ -207,7 +217,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line maxlength="20" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
                             </div>
                           </v-col>
                           <!--
@@ -227,7 +237,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" label="이메일" single-line />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" placeholder="이메일" single-line />
                             </div>
                           </v-col>
                           <v-col cols="12" sm="12" class="v-col">
@@ -235,11 +245,11 @@
                               <p>사무소 주소<sup class="text-error">*</sup></p>
                             </div>
                             <div class="data-col w-full">
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_post" name="corp_post" label="우편번호" single-line class="w-229" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_post" name="corp_post" placeholder="우편번호" single-line class="w-229" />
                               <v-btn variant="outlined" color="primary" @click="isDaumPostDialog = true" class="ml-1">사무소 주소검색</v-btn>
                               <div class="d-flex flex-grow-1 w-full">
-                                <VTextFieldWithValidation v-model="insuranceDTO.corp_addr" name="corp_addr" label="주소" single-line class="w-60" maxlength="40" />
-                                <VTextFieldWithValidation v-model="insuranceDTO.corp_addr_dtl" name="corp_addr_dtl" label="상세주소" single-line class="w-40" maxlength="25" />
+                                <VTextFieldWithValidation v-model="insuranceDTO.corp_addr" name="corp_addr" placeholder="주소" single-line class="w-60" maxlength="40" />
+                                <VTextFieldWithValidation v-model="insuranceDTO.corp_addr_dtl" name="corp_addr_dtl" placeholder="상세주소" single-line class="w-40" maxlength="25" />
                               </div>
                             </div>
                           </v-col>
@@ -255,7 +265,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.user_nm }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" label="법인명" single-line max-length="20" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" placeholder="법인명" single-line max-length="20" />
                             </div>
                           </v-col>
                           <v-col cols="12" sm="4" class="v-col">
@@ -276,7 +286,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.corp_ceo_nm }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_ceo_nm" name="corp_ceo_nm" label="대표자 성명" single-line max-length="20" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_ceo_nm" name="corp_ceo_nm" placeholder="대표자 성명" single-line max-length="20" />
                             </div>
                           </v-col>
 
@@ -287,7 +297,7 @@
                             </div>
                             <div class="data-col" v-if="insuranceDTO.corp_type != 'JNT'">
                               <!-- {{ insuranceDTO.corp_bnno }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_bnno" name="corp_bnno" label="법인번호" single-line :maskOption="{ mask: '######-#######' }" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_bnno" name="corp_bnno" placeholder="법인번호" single-line :maskOption="{ mask: '######-#######' }" />
                             </div>
                             <div class="data-col" v-if="insuranceDTO.corp_type == 'JNT'">해당없음</div>
                           </v-col>
@@ -299,7 +309,7 @@
                             </div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.corp_cnno }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cnno" name="corp_cnno" label="사업자번호" single-line :maskOption="{ mask: '###-##-#####' }" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cnno" name="corp_cnno" placeholder="사업자번호" single-line :maskOption="{ mask: '###-##-#####' }" />
                             </div>
                           </v-col>
                           <v-col cols="12" sm="4" class="v-col">
@@ -326,7 +336,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line maxlength="20" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
                             </div>
                           </v-col>
                           <v-col cols="12" sm="4" class="v-col">
@@ -343,7 +353,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" label="이메일" single-line />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" placeholder="이메일" single-line />
                             </div>
                           </v-col>
                           <!--
@@ -362,11 +372,11 @@
                               <p>사무소 주소<sup class="text-error">*</sup></p>
                             </div>
                             <div class="data-col w-full">
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_post" name="corp_post" label="우편번호" single-line class="w-229" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_post" name="corp_post" placeholder="우편번호" single-line class="w-229" />
                               <v-btn variant="outlined" color="primary" @click="isDaumPostDialog = true" class="ml-1">사무소 주소검색</v-btn>
                               <div class="d-flex flex-grow-1 w-full">
-                                <VTextFieldWithValidation v-model="insuranceDTO.corp_addr" name="corp_addr" label="주소" single-line class="w-60" maxlength="40" />
-                                <VTextFieldWithValidation v-model="insuranceDTO.corp_addr_dtl" name="corp_addr_dtl" label="상세주소" single-line class="w-40" maxlength="25" />
+                                <VTextFieldWithValidation v-model="insuranceDTO.corp_addr" name="corp_addr" placeholder="주소" single-line class="w-60" maxlength="40" />
+                                <VTextFieldWithValidation v-model="insuranceDTO.corp_addr_dtl" name="corp_addr_dtl" placeholder="상세주소" single-line class="w-40" maxlength="25" />
                               </div>
                             </div>
                           </v-col>
@@ -408,7 +418,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col" :style='(insuranceDTO.insr_reg_dt >= stockStartDt)?"color:blue;":"color:black"'>
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_reg_dt" name="insr_reg_dt" label="신청일자" type="date" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_reg_dt" name="insr_reg_dt" placeholder="신청일자" type="date" single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -417,7 +427,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col" :style='(insuranceDTO.insr_st_dt >= stockStartDt)?"color:blue;":"color:black"'>
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_st_dt" name="insr_st_dt" label="보험시작일자" type="date" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_st_dt" name="insr_st_dt" placeholder="보험시작일자" type="date" single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -426,7 +436,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col" :style='(insuranceDTO.insr_cncls_dt >= stockStartDt)?"color:blue;":"color:black"'>
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_cncls_dt" name="insr_cncls_dt" label="보험종료일자" type="date" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_cncls_dt" name="insr_cncls_dt" placeholder="보험종료일자" type="date" single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -438,7 +448,7 @@
                                 </div>
                                 <div class="data-col" :style='(insuranceDTO.insr_retr_dt >= stockStartDt)?"color:blue;":"color:black"'>
                                   <!-- {{ insuranceDTO.insr_retr_dt }} -->
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_retr_dt" name="insr_retr_dt" label="소급담보일" type="date" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_retr_dt" name="insr_retr_dt" placeholder="소급담보일" type="date" single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -714,7 +724,7 @@
                                 </div>
                                 <div class="data-col" :style='(insuranceDTO.cons_data.insr_retr_dt >= stockStartDt)?"color:blue;":"color:black"'>
                                   <!-- {{ insuranceDTO.insr_retr_dt }} -->
-                                  <VTextFieldWithValidation v-model="insuranceDTO.cons_data.insr_retr_dt" name="insr_retr_dt" label="소급담보일" type="date" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.cons_data.insr_retr_dt" name="insr_retr_dt" placeholder="소급담보일" type="date" single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -1336,8 +1346,10 @@ const dynamicComponentName2 = ref();
 let validUserCount = ref(0);
 let validConsUserCount = ref(0);
 const statusCdItemsData = ref(['']);
-
+let isShowDeleteRadio = ref(false)
 let stockStartDt = ref('');
+
+let deleteData = ref('')
 function getTrxCdTitle(trxCd) {
   try {
     // trxCd에 해당하는 title을 찾아 반환합니다.
@@ -1352,6 +1364,12 @@ async function fnSearch() {
   const resultData = await apiADMIN.getCAAS(searchParams.value.data);
   insuranceDTO.value.insurance_uuid = null;
   InsuranceList.value = resultData.data;
+  deleteData.value = ''
+  if(searchParams.value.data['user_nm'] != null && searchParams.value.data['user_nm'] != '') {
+    // isShowDeleteRadio.value = true
+  } else {
+    isShowDeleteRadio.value = false
+  }
   if (InsuranceList.value.length == 0) {
     isNoData.value = true;
   } else {
@@ -1448,6 +1466,9 @@ async function fnSearchDtl(insurance_uuid: string) {
   }
 }
 
+function fnDeleteData(uuid) {
+  deleteData.value = uuid
+}
 function getDynamicComponentName1() {
   return V_TCAA0030P20;
 }
@@ -1465,6 +1486,15 @@ async function fnAdd(user_cd: string) {
   fnSetInsuranceRateCombo();
 }
 
+async function fnDelete() {
+
+  // await messageBoxDTO.value.setConfirm('확인', '선택한 데이타를 삭제 하시겠습니까?<br>삭제 후 복구할 수 없습니다.', null, (result, params) => {
+  //   if(result) {
+  //     const params = { insurance_uuid: deleteData.value };
+  //     let resultData =  apiADMIN.deleteCAA(params);
+  //   }
+  // });
+}
 function fnAddTrx() {
   try {
     const trxDataDTO = new TRXDataDTO();
