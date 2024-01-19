@@ -1527,6 +1527,9 @@ const insuranceRateDTO = ref(new InsuranceRateDTO());
 const insuranceDTOBackup = ref(new InsuranceDTO());
 const messageBoxDTO = ref(new MessageBoxDTO());
 
+//중복 최종제출을 막기 위한 FLAG
+let preventDupClick = false
+
 // 오늘일자
 let TODAY = dayjs().format('YYYY-MM-DD');
 let INSR_RETR_DT_TODAY = dayjs().format('YYYY-MM-DD');
@@ -2031,6 +2034,12 @@ function isNotPsnlBrdn(value: any) {
  * @param values 가입 정보
  */
 async function onSubmit(params: any) {
+  if(preventDupClick) {
+    alert("최종 제출이 진행 중입니다. 잠시만 기다려주세요.")
+    return false
+  }
+  preventDupClick = true;
+
   if (!await checkValidation()) return false;
 
 

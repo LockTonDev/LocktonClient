@@ -1829,6 +1829,9 @@ const isTermsOfPolicyDialog = ref(false);
 const isDaumPostDialog = ref(false);
 const isInsrTableDialog = ref(false);
 
+//중복 최종제출을 막기 위한 FLAG
+let preventDupClick = false
+
 function isReadonlyByInsrStDt()
 {
   // console.log(insuranceDTO.value.base_insr_st_dt + ":" + TODAY + ":" + renewalYN.value + ":" + insuranceDTO.value.insr_retr_yn);///
@@ -2371,6 +2374,12 @@ async function checkValidation() {
  * @param values 가입 정보
  */
 async function onSubmit(params: any) {
+  if(preventDupClick) {
+    alert("최종 제출이 진행 중입니다. 잠시만 기다려주세요.")
+    return false
+  }
+  preventDupClick = true;
+
   if (!await checkValidation()) return false;
 
 

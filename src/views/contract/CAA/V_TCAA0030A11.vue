@@ -2391,7 +2391,8 @@ let INSR_RETR_DT_TODAY = dayjs().format('YYYY-MM-DD');
 const isSpctNew = ref(false)
 
 const today = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
-
+//중복 최종제출을 막기 위한 FLAG
+let preventDupClick = false
 /**
  * 보험료 계산
  *
@@ -2948,6 +2949,12 @@ async function onSubmit2(values, actions) {
  * @param values 가입 정보
  */
 async function onSubmit(params: any) {
+  if(preventDupClick) {
+    alert("최종 제출이 진행 중입니다. 잠시만 기다려주세요.")
+    return false
+  }
+  preventDupClick = true;
+
   if(!chkValiation()) return false;
 
   let result;
@@ -2967,6 +2974,7 @@ async function onSubmit(params: any) {
     console.log(result);
     alert('보험가입 실패');
   }
+  preventDupClick = false;
 }
 
 /**
