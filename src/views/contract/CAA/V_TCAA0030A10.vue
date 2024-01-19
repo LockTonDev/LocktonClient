@@ -243,10 +243,10 @@
    * @param param 
    */
   const onCertificatePrintFrameOpen = (status_cd:string, insurance_uuid:string) => {
-    if(status_cd == '80') {
+    //if(status_cd == '80') {
       insuranceUUID.value = insurance_uuid;
       isCertificatePrintFramDialog.value = true;
-    }
+    //}
     
   };
 
