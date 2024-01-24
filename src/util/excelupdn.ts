@@ -1,7 +1,8 @@
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver';
 import { EXCEL_TAX_IND, EXCEL_TAX_COR, EXCEL_ACC_IND, InsuranceDTO, TRXDataDTO, UserDTO, CommonCode, ParamsDTO,
-  EXCEL_ADV_IND, EXCEL_ADV_JNT, EXCEL_CAA_IND, EXCEL_CAA_JNT, EXCEL_CAA_COR, EXCEL_PAT_IND, EXCEL_PAT_JNT, EXCEL_PAT_COR } from '@/model';
+  EXCEL_ADV_IND, EXCEL_ADV_JNT, EXCEL_CAA_IND, EXCEL_CAA_JNT, EXCEL_CAA_COR, EXCEL_PAT_IND, EXCEL_PAT_JNT,
+  EXCEL_PAT_COR, EXCEL_LAW_IND, EXCEL_LAW_JNT } from '@/model';
 import { convertStringToNumber, getEmpty } from '../util/util';
 import dayjs from 'dayjs';
 
@@ -56,6 +57,8 @@ const EXCEL_MAPPERS = {
   PAT_IND: EXCEL_PAT_IND,
   PAT_JNT: EXCEL_PAT_JNT,
   PAT_COR: EXCEL_PAT_COR,
+  LAW_IND: EXCEL_LAW_IND,
+  LAW_JNT: EXCEL_LAW_JNT
 };
 
 const ROW_MAPPERS = {
@@ -70,6 +73,8 @@ const ROW_MAPPERS = {
   PAT_IND: mapperRow_PAT_IND,
   PAT_JNT: mapperRow_PAT_JNT,
   PAT_COR: mapperRow_PAT_COR,
+  LAW_IND: mapperRow_LAW_IND,
+  LAW_JNT: mapperRow_LAW_JNT,
 };
 
 
@@ -1737,7 +1742,7 @@ function mapperRow_CAA_JNT(excelMapper: object, excelDataRow: any) {
     row[excelMapper.입금구분] = '';
     // console.log(e);
   }
-
+  console.log(insuranceDTO)
   row[excelMapper.입금금액] = insuranceDTO?.trx_data[0]?.trx_amt;
   row[excelMapper.처리일자] = insuranceDTO?.trx_data[0]?.trx_dt;
   row[excelMapper.비고] = insuranceDTO?.trx_data[0]?.rmk;
@@ -2364,3 +2369,212 @@ function mapperRow_PAT_COR(excelMapper: object, excelDataRow: any) {
   }
   return rows;
 }
+
+/**
+ * 법무사_개인 Mapper
+ *
+ * @param excelMapper
+ * @param excelDataRow
+ * @returns
+ */
+function mapperRow_LAW_IND(excelMapper: object, excelDataRow: any) {
+  let insuranceDTO = new InsuranceDTO();
+  Object.assign(insuranceDTO, excelDataRow);
+  let row = {};
+  row[excelMapper.순번] = insuranceDTO.index + 1;
+  row[excelMapper.보험식별번호] = insuranceDTO.insurance_uuid;
+  row[excelMapper.보험개시일] = insuranceDTO.insr_st_dt;
+  row[excelMapper.보험종료일] = insuranceDTO.insr_cncls_dt;
+  row[excelMapper.상태] = insuranceDTO.status_nm;
+  row[excelMapper.피보험자] = insuranceDTO.user_nm;
+  row[excelMapper.생년월일] = insuranceDTO.user_birth;
+  row[excelMapper.사업자번호] = insuranceDTO.corp_cnno;
+  row[excelMapper.등록번호] = insuranceDTO.user_regno;
+  row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt?.getValueBySplit(1);
+  row[excelMapper.보상한도_총한도] = insuranceDTO.insr_year_clm_lt_amt;
+  row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt?.getValueBySplit(1);
+  row[excelMapper.소급담보일] = insuranceDTO.insr_retr_dt;
+  row[excelMapper.기준보험료] = insuranceDTO.insr_base_amt;
+  row[excelMapper.할인할증기준] = insuranceDTO.insr_sale_year;
+  row[excelMapper.할인할증] = insuranceDTO.insr_sale_rt;
+  row[excelMapper.매출액] = insuranceDTO.insr_take_amt;
+  row[excelMapper.매출액구간] = insuranceDTO.insr_take_sec?.getValueBySplit(1);
+  row[excelMapper.지원금] = insuranceDTO.insr_relief;
+  row[excelMapper.최종보험료] = insuranceDTO.insr_tot_amt;
+  row[excelMapper.특약가입여부] = insuranceDTO.spct_join_yn=='Y'?'가입':'미가입';
+  row[excelMapper.특약보상한도] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_clm_lt_amt?.getValueBySplit(1):'';
+  row[excelMapper.특약자기부담금] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_psnl_brdn_amt?.getValueBySplit(1):'';
+  row[excelMapper.사무원인원수] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.cbr_cnt:'';
+  row[excelMapper.특약소급담보일] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_retr_dt:'';
+  row[excelMapper.특약산출보험료] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_amt:'';
+  row[excelMapper.전화] = insuranceDTO.corp_telno;
+  row[excelMapper.팩스] = insuranceDTO.corp_faxno;
+  row[excelMapper.휴대폰] = insuranceDTO.corp_cust_hpno;
+  row[excelMapper.담당자] = insuranceDTO.corp_cust_nm;
+  row[excelMapper.우편번호] = insuranceDTO.corp_post;
+  row[excelMapper.지역] = insuranceDTO.corp_region_nm;
+  row[excelMapper.주소] = insuranceDTO.corp_addr;
+  row[excelMapper.주소상세] = insuranceDTO.corp_addr_dtl;
+  row[excelMapper.사무소명] = insuranceDTO.corp_nm;
+  row[excelMapper.이메일] = insuranceDTO.corp_cust_email;
+  row[excelMapper.총입금액] = insuranceDTO.insr_tot_paid_amt;
+  row[excelMapper.차액] = insuranceDTO.insr_tot_unpaid_amt;
+
+  try {
+    row[excelMapper.입금구분1] = trxCdItems.find(item => item.value == insuranceDTO?.trx_data[0]?.trx_cd).title;
+  } catch (e) {
+    row[excelMapper.입금구분1] = '';
+    // console.log(e);
+  }
+
+  row[excelMapper.입금금액1] = insuranceDTO?.trx_data[0]?.trx_amt;
+  row[excelMapper.처리일자1] = insuranceDTO?.trx_data[0]?.trx_dt;
+  row[excelMapper.비고1] = insuranceDTO?.trx_data[0]?.rmk;
+  row[excelMapper.예금주명1] = insuranceDTO?.trx_data[0]?.acct_nm;
+
+  // console.log('row[excelMapper.특약가입여부]',row[excelMapper.특약가입여부])
+  try {
+    row[excelMapper.입금구분2] = trxCdItems.find(item => item.value == insuranceDTO?.trx_data[1]?.trx_cd).title;
+  } catch (e) {
+    row[excelMapper.입금구분2] = '';
+    // console.log(e);
+  }
+
+  row[excelMapper.입금금액2] = insuranceDTO?.trx_data[1]?.trx_amt;
+  row[excelMapper.처리일자2] = insuranceDTO?.trx_data[1]?.trx_dt;
+  row[excelMapper.비고2] = insuranceDTO?.trx_data[1]?.rmk;
+  row[excelMapper.예금주명2] = insuranceDTO?.trx_data[1]?.acct_nm;
+  row[excelMapper.ERP시작일] = insuranceDTO.erp_st_dt;
+  row[excelMapper.ERP종료일] = insuranceDTO.erp_cncls_dt;
+  row[excelMapper.ERP보험료] = insuranceDTO.erp_amt;
+  row[excelMapper.ERP납입일] = insuranceDTO.erp_dt;
+  row[excelMapper.변경일자] = insuranceDTO.change_dt;
+  row[excelMapper.변경내용] = insuranceDTO.change_rmk;
+  row[excelMapper.담보한정] = insuranceDTO?.limited_collateral;
+  return [row];
+}
+
+/**
+ * 법무사_복수 Mapper
+ *
+ * @param excelMapper
+ * @param excelDataRow
+ * @returns
+ */
+function mapperRow_LAW_JNT(excelMapper: object, excelDataRow: any) {
+  let insuranceDTO = new InsuranceDTO();
+  Object.assign(insuranceDTO, excelDataRow);
+  let rows = [];
+  let row = {};
+  row[excelMapper.순번] = insuranceDTO.index + 1;
+  row[excelMapper.보험식별번호] = insuranceDTO.insurance_uuid;
+  row[excelMapper.보험개시일] = insuranceDTO.insr_st_dt;
+  row[excelMapper.보험종료일] = insuranceDTO.insr_cncls_dt;
+  row[excelMapper.상태] = insuranceDTO.status_nm;
+  row[excelMapper.대표자성명] = insuranceDTO.corp_ceo_nm;
+  row[excelMapper.피보험자] = insuranceDTO.user_nm;
+  row[excelMapper.생년월일] = insuranceDTO.user_birth;
+  row[excelMapper.등록번호] = insuranceDTO.user_regno;
+  row[excelMapper.소급담보일] = insuranceDTO.insr_retr_dt;
+  row[excelMapper.사업자번호] = insuranceDTO.corp_cnno;
+  row[excelMapper.법인번호] = insuranceDTO.corp_bnno;
+  row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt?.getValueBySplit(1);
+  row[excelMapper.보상한도_총한도] = insuranceDTO.insr_year_clm_lt_amt;
+  row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt?.getValueBySplit(1);
+  row[excelMapper.기준보험료] = insuranceDTO.insr_base_amt;
+  row[excelMapper.인원수] = insuranceDTO.cbr_cnt;
+  row[excelMapper.인원수할인] = insuranceDTO.insr_pcnt_sale_rt;
+  row[excelMapper.할인할증기준] = insuranceDTO.insr_sale_year;
+  row[excelMapper.할인할증] = insuranceDTO.insr_sale_rt;
+  row[excelMapper.매출액] = insuranceDTO.insr_take_amt;
+  row[excelMapper.매출액구간] = insuranceDTO.insr_take_sec?.getValueBySplit(1);
+  row[excelMapper.지원금] = insuranceDTO.insr_relief;
+  row[excelMapper.최종보험료] = insuranceDTO.insr_tot_amt;
+  row[excelMapper.특약가입여부] = insuranceDTO.spct_join_yn=='Y'?'가입':'미가입';
+  row[excelMapper.특약보상한도] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_clm_lt_amt?.getValueBySplit(1):'';
+  row[excelMapper.특약자기부담금] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_psnl_brdn_amt?.getValueBySplit(1):'';
+  row[excelMapper.사무원인원수] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.cbr_cnt:'';
+  row[excelMapper.특약소급담보일] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_retr_dt:'';
+  row[excelMapper.특약산출보험료] = insuranceDTO.spct_join_yn=='Y'?insuranceDTO.spct_data?.insr_amt:'';
+  row[excelMapper.전화] = insuranceDTO.corp_telno;
+  row[excelMapper.팩스] = insuranceDTO.corp_faxno;
+  row[excelMapper.휴대폰] = insuranceDTO.corp_cust_hpno;
+  row[excelMapper.담당자] = insuranceDTO.corp_cust_nm;
+  row[excelMapper.우편번호] = insuranceDTO.corp_post;
+  row[excelMapper.지역] = insuranceDTO.corp_region_nm;
+  row[excelMapper.주소] = insuranceDTO.corp_addr;
+  row[excelMapper.주소상세] = insuranceDTO.corp_addr_dtl;
+  row[excelMapper.사무소명] = insuranceDTO.corp_nm;
+  row[excelMapper.이메일] = insuranceDTO.corp_cust_email;
+  row[excelMapper.총입금액] = insuranceDTO.insr_tot_paid_amt;
+  row[excelMapper.차액] = insuranceDTO.insr_tot_unpaid_amt;
+  row[excelMapper.ERP시작일] = insuranceDTO.erp_st_dt;
+  row[excelMapper.ERP종료일] = insuranceDTO.erp_cncls_dt;
+  row[excelMapper.ERP보험료] = insuranceDTO.erp_amt;
+  row[excelMapper.ERP납입일] = insuranceDTO.erp_dt;
+  row[excelMapper.변경일자] = insuranceDTO.change_dt;
+  row[excelMapper.변경내용] = insuranceDTO.change_rmk;
+
+  try {
+
+    row[excelMapper.입금구분] = trxCdItems.find(item => item.value == insuranceDTO?.trx_data[0]?.trx_cd).title;
+  } catch (e) {
+    row[excelMapper.입금구분] = '';
+    // console.log(e);
+  }
+
+  row[excelMapper.입금금액] = insuranceDTO?.trx_data[0]?.trx_amt;
+  row[excelMapper.처리일자] = insuranceDTO?.trx_data[0]?.trx_dt;
+  row[excelMapper.비고] = insuranceDTO?.trx_data[0]?.rmk;
+  row[excelMapper.예금주명] = insuranceDTO?.trx_data[0]?.acct_nm;
+
+  row[excelMapper.담보한정] = insuranceDTO?.limited_collateral;
+
+  rows.push(row);
+
+  let maxLength = Math.max(insuranceDTO.cbr_data.length, insuranceDTO.trx_data.length);
+  let cbrCnt = 0;
+
+  for (let i = 0; i < maxLength; i++) {
+    let subRow = {};
+    if (insuranceDTO.cbr_data[i].status_cd=='80') cbrCnt++
+    if (insuranceDTO.cbr_data[i]) {
+      subRow[excelMapper.보험개시일] = insuranceDTO.cbr_data[i].insr_st_dt;
+      subRow[excelMapper.보험종료일] = insuranceDTO.cbr_data[i].insr_cncls_dt;
+
+      try {
+        subRow[excelMapper.상태] = statusCdItems.find(items => items.value === insuranceDTO.cbr_data[i].status_cd).title;
+      } catch (e) {
+        subRow[excelMapper.상태] = '';
+        // console.log(e);
+      }
+
+      subRow[excelMapper.피보험자] = insuranceDTO?.cbr_data[i]?.cbr_nm;
+      subRow[excelMapper.생년월일] = insuranceDTO?.cbr_data[i]?.cbr_brdt;
+      subRow[excelMapper.등록번호] = insuranceDTO?.cbr_data[i]?.cbr_regno;
+      subRow[excelMapper.소급담보일] = insuranceDTO?.cbr_data[i]?.insr_retr_dt;
+      subRow[excelMapper.할인할증기준] = insuranceDTO?.cbr_data[i]?.insr_sale_year;
+      subRow[excelMapper.할인할증] = insuranceDTO?.cbr_data[i]?.insr_sale_rt;
+      subRow[excelMapper.보험료] = insuranceDTO?.cbr_data[i]?.insr_amt;
+    }
+
+    if (insuranceDTO.trx_data[i + 1]) {
+      try {
+        subRow[excelMapper.입금구분] = trxCdItems.find(item => item.value == insuranceDTO?.trx_data[i + 1]?.trx_cd).title;
+      } catch (e) {
+        subRow[excelMapper.입금구분] = '';
+        // console.log(e);
+      }
+      subRow[excelMapper.입금금액] = insuranceDTO?.trx_data[i + 1]?.trx_amt;
+      subRow[excelMapper.처리일자] = insuranceDTO?.trx_data[i + 1]?.trx_dt;
+      subRow[excelMapper.비고] = insuranceDTO?.trx_data[i + 1]?.rmk;
+      subRow[excelMapper.예금주명] = insuranceDTO?.trx_data[i + 1]?.acct_nm;
+    }
+
+    row[excelMapper.인원수] = cbrCnt;
+
+    rows.push(subRow);
+  }
+  return rows;
+}
+

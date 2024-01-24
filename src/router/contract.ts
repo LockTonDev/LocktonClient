@@ -5,6 +5,36 @@ export default {
   component: Layout,
   children: [
     /**
+     * 법무사
+     */
+    {
+      name: '[법무사] 보험계약신청/갱신',
+      path: '/contract/LAW/V_TLAW0030A11',
+      component: () => import('@/views/contract/LAW/V_TLAW0030A11.vue')
+    },
+    {
+      name: '[법무사] 보험계약수정',
+      path: '/contract/LAW/V_TLAW0030A11/:insuranceUUID?',
+      component: () => import('@/views/contract/LAW/V_TLAW0030A11.vue')
+    },
+    {
+      name: '[법무사] 보험계약상세조회',
+      path: '/contract/LAW/V_TLAW0030A12/:insuranceUUID?',
+      component: () => import('@/views/contract/LAW/V_TLAW0030A12.vue')
+    },
+    {
+      name: '[법무사] 가입/조회/출력',
+      path: '/contract/LAW/V_TLAW0030A10',
+      component: () => import('@/views/contract/LAW/V_TLAW0030A10.vue')
+    },
+
+    {
+      name: '[법무사] 변경',
+      path: '/contract/LAW/V_TLAW0040A10',
+      component: () => import('@/views/contract/LAW/V_TLAW0040A10.vue')
+    },
+      
+    /**
      * 변리사
      */
     {

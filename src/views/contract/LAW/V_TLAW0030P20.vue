@@ -52,7 +52,7 @@
                     </p>
                   </h1>
                   <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
-                    본 보험은 대한변호사협회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 변호사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
+                    본 보험은 대한법무사협회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 법무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
                   </p>
                 </header>
                 <!--//header-->
@@ -69,7 +69,7 @@
                           <p>보험계약자</p>
                         </div>
                         <div class="data-col">
-                          대한변호사협회
+                          대한법무사협회
                         </div>
                       </v-col>
                       <v-col cols="6" class="v-col">
@@ -206,7 +206,7 @@
                           <v-col cols="6">
                             <div class="head-col flex-wrap">보상한도</div>
                             <div class="data-col">
-                              {{ insuranceDTO?.insr_clm_lt_amt?.getValueBySplit(1) }} /
+                              {{ insuranceDTO?.insr_clm_lt_amt }} /
                               {{ insuranceDTO?.insr_year_clm_lt_amt
                               }}<span class="text-10 color-gray ml-2"
                                 >(1청구당/연간총)</span
@@ -349,7 +349,7 @@
                         </p>
                       </li>
                       <li class="color-error line-height-1-2">
-                        변호사 성명과 등록번호를 함께 기재하여 송금하여 주시기 바랍니다.
+                        법무사 성명과 등록번호를 함께 기재하여 송금하여 주시기 바랍니다.
                       </li>
                     </ul>
                   </div>
@@ -553,7 +553,7 @@
                     </p>
                   </h1>
                   <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
-                    본 보험은 대한변호사협회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 변호사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
+                    본 보험은 대한법무사협회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 법무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
                   </p>
                 </header>
                 <!--//header-->
@@ -570,7 +570,7 @@
                           <p>보험계약자</p>
                         </div>
                         <div class="data-col">
-                          대한변호사협회
+                          대한법무사협회
                         </div>
                       </v-col>
                       <v-col cols="6" class="v-col">
@@ -759,7 +759,7 @@
                         </p>
                       </li>
                       <li class="color-error line-height-1-2">
-                        변호사 성명과 등록번호를 함께 기재하여 송금하여 주시기 바랍니다.
+                        법무사 성명과 등록번호를 함께 기재하여 송금하여 주시기 바랍니다.
                       </li>
                     </ul>
                   </div>
@@ -930,7 +930,7 @@
                     </p>
                   </h1>
                   <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
-                    본 보험은 대한변호사협회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 변호사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
+                    본 보험은 대한법무사협회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 법무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
                   </p>
                 </header>
                 <!--//header-->
@@ -948,7 +948,7 @@
                           <p>보험계약자</p>
                         </div>
                         <div class="data-col">
-                          대한변호사협회
+                          대한법무사협회
                         </div>
                       </v-col>
                       <v-col cols="6" class="v-col">
@@ -1134,7 +1134,7 @@
                           </div>
                         </v-col>
                         <v-col cols="6">
-                          <div class="head-col">변호사 인원수</div>
+                          <div class="head-col">법무사 인원수</div>
                           <div class="data-col">
                             <!-- {{ insuranceDTO.cbr_data.length }} 명 -->
                             {{ insuranceDTO.cbr_cnt  }} 명
@@ -1606,7 +1606,7 @@
                       </p>
                     </h1>
                     <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
-                      본 보험은 대한변호사협회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 변호사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
+                      본 보험은 대한법무사협회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 법무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
                     </p>
                   </header>
                   <!--//header-->
@@ -1624,7 +1624,7 @@
                             <p>보험계약자</p>
                           </div>
                           <div class="data-col">
-                            대한변호사협회
+                            대한법무사협회
                           </div>
                         </v-col>
                         <v-col cols="6" class="v-col">
@@ -1810,7 +1810,7 @@
                             </div>
                           </v-col>
                           <v-col cols="6">
-                            <div class="head-col">변호사 인원수</div>
+                            <div class="head-col">법무사 인원수</div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.cbr_data.length }} 명 -->
                               {{ insuranceDTO.cbr_cnt  }} 명
@@ -2175,7 +2175,7 @@ import { InsuranceDTO, CommonCode } from '@/model';
 import VTextFieldWithValidation from '@/components/VTextFieldWithValidation.vue';
 import VCheckBoxWithValidation from '@/components/VCheckBoxWithValidation.vue';
 
-import apiADV0030a from '@/api/api/A_TADV0030A';
+import apiLAW0030a from '@/api/api/A_TLAW0030A';
 import html2pdf from 'html2pdf.js';
 
 import '../../../assets/css/printpdf.css';
@@ -2214,7 +2214,6 @@ const isOpenDialog = ref(true);
 
 const statusCdItems = ref([""]);
 const corpTypeItems = ref([]);
-const relief = ref(0);
 
 const emit = defineEmits(['close']);
 
@@ -2267,7 +2266,7 @@ const onExportPDF = (viewType: string) => {
   
   let opt = {
     margin: [0, 9, 0, 9],
-    filename: '가입신청서_변호사배상책임보험.pdf',
+    filename: '가입신청서_법무사배상책임보험.pdf',
     pagebreak: {
       mode: ['avoid-all', 'css', 'legacy']
     },
@@ -2324,7 +2323,7 @@ onMounted(async () => {
   isNotAuth.value = props.isNotAuth;
   if (props.insurance_uuid) {
     const params = { insurance_uuid: props.insurance_uuid };
-    resultData.value = await apiADV0030a.getDBSelHistory(params, isAdmin);
+    resultData.value = await apiLAW0030a.getDBSelHistory(params, isAdmin);
     Object.assign(insuranceDTO.value, resultData.value.data[0]);
 
     resultData.value.data.forEach((item, index) => {

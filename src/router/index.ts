@@ -66,9 +66,9 @@ router.beforeEach(async function (to, from, next) {
 
   const userPages = ['/', '/error', '/device/mobile', '/introduce', '/user/login',
     '/user/find', '/user/find/ACC', '/user/find/TAX', '/user/find/ADV',
-    '/user/find/CAA', '/user/find/PAT',
+    '/user/find/CAA', '/user/find/PAT', '/user/find/LAW',
     '/user/register/CAA', '/user/register/TAX', '/user/register/ACC',
-    '/user/register/PAT', '/user/register/ADV'];
+    '/user/register/PAT', '/user/register/ADV', '/user/register/LAW'];
 
   const authUserRequired = !userPages.includes(to.path);
   const authAdminRequired = !adminPages.includes(to.path);

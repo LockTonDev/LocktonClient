@@ -28,6 +28,11 @@ export default {
       name: 'insurance_CAA',
       path: '/insurance/V_PCAA10/:mainTabIdx',
       component: () => import('@/views/insurance/V_PCAA10.vue')
+    },
+    {
+      name: 'insurance_LAW',
+      path: '/insurance/V_PLAW10/:mainTabIdx',
+      component: () => import('@/views/insurance/V_PLAW10.vue')
     }
   ]
 };
