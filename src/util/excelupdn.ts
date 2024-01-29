@@ -2300,6 +2300,7 @@ function mapperRow_PAT_COR(excelMapper: object, excelDataRow: any) {
   row[excelMapper.기일관리프로그램할인] = insuranceDTO.insr_program_yn;
   row[excelMapper.기일관리프로그램명] = insuranceDTO.insr_program;
   row[excelMapper.서비스제공사] = insuranceDTO.insr_service;
+  row[excelMapper.보험료] = insuranceDTO.insr_amt;
   row[excelMapper.최종보험료] = insuranceDTO.insr_tot_amt;
   row[excelMapper.전화] = insuranceDTO.corp_telno;
   row[excelMapper.팩스] = insuranceDTO.corp_faxno;
