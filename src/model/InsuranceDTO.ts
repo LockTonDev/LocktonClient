@@ -152,6 +152,7 @@ class InsuranceDTO {
   insr_service: string;
   insr_sale_year: number;
   insr_sale_rt: number;
+  insr_relief: number;
   insr_pcnt_sale_rt: number;
   insr_base_amt: number;
   insr_amt: number;

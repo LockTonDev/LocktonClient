@@ -33,6 +33,10 @@ export default [
       {
         title: `변리사`,
         to: `/${adminPath}/dev/AC2/PAT`
+      },
+      {
+        title: `법무사`,
+        to: `/${adminPath}/dev/AC2/LAW`
       }
     ]
   },
@@ -62,6 +66,10 @@ export default [
       {
         title: `변리사`,
         to: `/${adminPath}/dev/AC4/PAT`
+      },
+      {
+        title: `법무사`,
+        to: `/${adminPath}/dev/AC4/LAW`
       }
     ]
   },
@@ -92,6 +100,10 @@ export default [
       {
         title: `변리사`,
         to: `/${adminPath}/dev/AC5/PAT`
+      },
+      {
+        title: `법무사`,
+        to: `/${adminPath}/dev/AC5/LAW`
       }
     ]
   },
@@ -121,6 +133,10 @@ export default [
       {
         title: `변리사`,
         to: `/${adminPath}/dev/AC6/PAT`
+      },
+      {
+        title: `법무사`,
+        to: `/${adminPath}/dev/AC6/LAW`
       }
     ]
   },

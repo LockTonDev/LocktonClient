@@ -199,7 +199,30 @@ export default {
   async getPATExcel(params: any) {
     return await api.authService.post('/ADM/PAT/EXCEL/get', { params });
   },
+  /**  LAW  */
+  async setLAW(params: any) {
+    return await api.authService.post('/ADM/LAW/set', { params });
+  },
+  async getLAW(params: any) {
+    return await api.authService.post('/ADM/LAW/get', { params });
+  },
+  async getLAWS(params: any) {
+    return await api.authService.post('/ADM/LAW/gets', { params });
+  },
+  async getLAWRate(params: any) {
+    return await api.authService.post('/ADM/LAW/rate', { params });
+  },
 
+  async setLAW_TRX(params: any) {
+    return await api.authService.post('/ADM/LAW/TRX/set', { params });
+  },
+
+  async getLAW_TRX(params: any) {
+    return await api.authService.post('/ADM/LAW/TRX/get', { params });
+  },
+  async getLAWExcel(params: any) {
+    return await api.authService.post('/ADM/LAW/EXCEL/get', { params });
+  },
 
   /** ============================================================================
    *  [갱신DB]
@@ -249,6 +272,18 @@ export default {
 
   async getPATRenewals(params: any) {
     return await api.authService.post('/ADM/PAT/RENEWAL/gets', { params });
+  },
+
+  /**  LAW  */
+  async setLAWRenewal(params: any) {
+    return await api.authService.post('/ADM/LAW/RENEWAL/set', { params });
+  },
+  async getLAWRenewal(params: any) {
+    return await api.authService.post('/ADM/LAW/RENEWAL/get', { params });
+  },
+
+  async getLAWRenewals(params: any) {
+    return await api.authService.post('/ADM/LAW/RENEWAL/gets', { params });
   },
 
   /** ============================================================================

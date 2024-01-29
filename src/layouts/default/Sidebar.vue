@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, onUnmounted} from "vue";
-import {MenuDEF, MenuACC, MenuTAX, MenuADV, MenuCAA, MenuPAT}  from "./SidebarItems";
+import {MenuDEF, MenuACC, MenuTAX, MenuADV, MenuCAA, MenuPAT, MenuLAW}  from "./SidebarItems";
 
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
@@ -27,6 +27,7 @@ switch(_AUTH_USER?.value?.businessCd) {
   case "ADV": sidebarMenu.value = MenuADV; break;
   case "CAA": sidebarMenu.value = MenuCAA; break;
   case "PAT": sidebarMenu.value = MenuPAT; break;
+  case "LAW": sidebarMenu.value = MenuLAW; break;
   default: sidebarMenu.value = MenuDEF; break;
 }
 
@@ -39,6 +40,7 @@ watch(() => _AUTH_USER?.value?.businessCd, (newValue, oldValue) => {
     case "ADV": sidebarMenu.value = MenuADV; break;
     case "CAA": sidebarMenu.value = MenuCAA; break;
     case "PAT": sidebarMenu.value = MenuPAT; break;
+    case "LAW": sidebarMenu.value = MenuLAW; break;
     default: sidebarMenu.value = MenuDEF; break;
   }
 });
