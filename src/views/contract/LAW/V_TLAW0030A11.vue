@@ -959,7 +959,7 @@
                     <th class="text-center">보험종료일</th> -->
                     <th class="text-center">소급담보일 / 보험개시일</th>
                     <th class="text-center">할인 할증</th>
-                    <th class="text-center">1인당 보험료</th>
+                    <th class="text-center">1인당 보험료<p v-if="insuranceDTO.corp_region_cd==='010'">(지원금차감금액)</p></th>
                     <th></th>
                   </tr>
                   </thead>
@@ -1011,7 +1011,7 @@
                     <td>{{row.insr_retr_dt}} / {{row.insr_st_dt}}</td>
                     <td v-if="row.isCheck">{{row.insr_sale_rt}}%</td>
                     <td v-if="row.isCheck">
-                      {{ Number(row.insr_amt).toLocaleString() }}원
+                      {{ Number(row.insr_amt - row.insr_relief).toLocaleString() }}원
                     </td>
                     <td colspan="2" v-if="!row.isCheck"><v-btn variant="outlined" @click="chkSaleRtJNT(insuranceDTO, index)">인증</v-btn></td>
                     <td>
@@ -1552,7 +1552,7 @@
             </v-col>
             <!-- 개인만 보여주는 영역 끝 -->
 
-            <v-col cols="12">
+            <v-col cols="12" v-if="insuranceDTO.corp_region_cd==='010'">
               <p class="text-body-2 color-gray-shadow">지원금</p>
               <p class="text-body-2 text-right">
                 {{ Number(insuranceDTO?.insr_relief).toLocaleString() }} 원
@@ -2205,6 +2205,33 @@ const calInsrAmt = (data: any) => {
   }
 };
 
+/**
+ * 보험계약[기본담보] 지원금 재계산
+ *
+ * @param data 보험 명단 데이터
+ */
+const calInsrRelief = (data: any, region_cd: string, clm_code: number) => {
+
+  let totAmt = 0;
+
+  if (data.cbr_data != undefined) {
+
+    for (var idx in data.cbr_data) {
+      data.cbr_data[idx].insr_relief = getInsrRelief(
+          insuranceDTO.value.insr_st_dt,
+          insuranceDTO.value.insr_cncls_dt,
+          region_cd,
+          clm_code
+      )
+
+      totAmt += data.cbr_data[idx].insr_relief;
+
+    }
+
+    data.insr_relief = totAmt;
+
+  }
+};
 
 /**
  * 보험계약[특별] 보험료 재계산
@@ -2618,7 +2645,7 @@ watch(() => [
   insuranceDTO.value.corp_telno = newValue[0] + '-' + newValue[1] + '-' + newValue[2]
 })
 
-watch(() => [clm_lt_amt.value, insuranceDTO.value.corp_region_cd]
+watch(() => [clm_lt_amt.value, insuranceDTO.value.corp_region_cd, insuranceDTO.value.cbr_cnt, insuranceDTO.value.insr_st_dt]
     ,
     (newValue, oldValue) => {
       const clm_lt_amt = newValue[0]
@@ -2633,12 +2660,16 @@ watch(() => [clm_lt_amt.value, insuranceDTO.value.corp_region_cd]
         insuranceDTO.value.insr_clm_lt_amt = '';
         insuranceDTO.value.insr_year_clm_lt_amt = '';
       }
-      insuranceDTO.value.insr_relief = getInsrRelief(
-          insuranceDTO.value.insr_st_dt,
-          insuranceDTO.value.insr_cncls_dt,
-          region_cd,
-          clm_code
-      )
+      if(insuranceDTO.value.user_cd == 'IND') {
+        insuranceDTO.value.insr_relief = getInsrRelief(
+            insuranceDTO.value.insr_st_dt,
+            insuranceDTO.value.insr_cncls_dt,
+            region_cd,
+            clm_code
+        )
+      }else {
+        calInsrRelief(insuranceDTO.value, region_cd, clm_code);
+      }
     })
 watch(() => psnl_yn.value, (newValue, oldValue) => {
   if(!newValue){

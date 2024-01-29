@@ -597,7 +597,7 @@
                     </v-btn-toggle>
                     <p><i class="mdi mdi-alert-circle-outline mr-2"></i>자기부담금 선택 안함 시 기본 3백만원 선택.</p>
                     <p><i class="mdi mdi-alert-circle-outline mr-2"></i>5백만원 선택 시 5%, 1천만원 선택 시 10% 할인 : 변경신청</p>
-                    <v-checkbox-btn v-model="psnl_yn"></v-checkbox-btn>
+                    <v-checkbox-btn v-model="psnl_yn" :disabled="isReadOnlyAll"></v-checkbox-btn>
                   </div>
                 </v-col>
                 <v-col cols="12" sm="12" class="v-col" v-if="psnl_yn">
@@ -649,15 +649,6 @@
                   총
                   <span class="color-primary">{{ insuranceDTO.cbr_data.length }}</span>명
                 </p>
-                <div class="ml-auto">
-                  <v-btn variant="outlined" @click="resetCBRData()" size="small" class="min-width-auto px-1 mr-1">
-                    초기화<v-icon icon="mdi-autorenew"></v-icon>
-                  </v-btn>
-                  <v-btn variant="elevated" color="white" @click="addCBR(insuranceDTO)" size="small" class="min-width-auto pa-0">
-                    <vue-feather type="plus-square" class="text-primary">
-                    </vue-feather>
-                  </v-btn>
-                </div>
               </div>
               <v-table class="v-board-table size-small">
                 <colgroup>
@@ -682,7 +673,7 @@
                   <th class="text-center">보험종료일</th> -->
                   <th class="text-center">소급담보일 / 보험개시일</th>
                   <th class="text-center">할인 할증</th>
-                  <th class="text-center">1인당 보험료</th>
+                  <th class="text-center">1인당 보험료<p v-if="insuranceDTO.corp_region_cd==='010'">(지원금차감금액)</p></th>
                   <th></th>
                 </tr>
                 </thead>
@@ -734,13 +725,7 @@
                   <td>{{row.insr_retr_dt}} / {{row.insr_st_dt}}</td>
                   <td v-if="row.isCheck">{{row.insr_sale_rt}}%</td>
                   <td v-if="row.isCheck">
-                    {{ Number(row.insr_amt).toLocaleString() }}원
-                  </td>
-                  <td colspan="2" v-if="!row.isCheck"><v-btn variant="outlined" @click="chkSaleRtJNT(insuranceDTO, index)">인증</v-btn></td>
-                  <td>
-                    <v-btn variant="elevated" color="white" @click="delCBR(insuranceDTO, index)" size="small" class="min-width-auto pa-0" v-if="!isReadOnlyAll">
-                      <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle"></vue-feather>
-                    </v-btn>
+                    {{ Number(row.insr_amt - row.insr_relief).toLocaleString() }}원
                   </td>
                 </tr>
                 </tbody>

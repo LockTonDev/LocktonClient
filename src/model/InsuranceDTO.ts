@@ -57,6 +57,7 @@ class CBRDataDTO {
   insr_cncls_dt: string;
   insr_retr_yn: string;
   insr_retr_dt: string;
+  insr_relief: number;
   insr_sale_year: number;
   insr_sale_rt: number;
   insr_amt: number;
@@ -76,6 +77,7 @@ class CBRDataDTO {
     this.insr_sale_year = data.insr_sale_year || 0;
     this.insr_sale_rt = data.insr_sale_rt || 0;
     this.insr_amt = data.insr_amt || 0;
+    this.insr_relief = data.insr_relief || 0;
     this.insr_base_amt = data.insr_base_amt || 0;
     this.isCheck = false;
     this.status_cd = data.status_cd || '';
@@ -279,6 +281,7 @@ class InsuranceDTO {
     this.insr_pblc_brdn_rt = data.insr_pblc_brdn_rt || '';
     this.insr_take_amt = data.insr_take_amt || 0;
     this.insr_take_sec = data.insr_take_sec || '';
+    this.insr_relief = data.insr_relief || 0;
     this.insr_year_clm_lt_amt = data.insr_year_clm_lt_amt || '';
     this.insr_clm_lt_amt = data.insr_clm_lt_amt || '';
     this.insr_psnl_brdn_amt = data.insr_psnl_brdn_amt || '';

@@ -321,6 +321,15 @@
                           ).toLocaleString()
                         }}원</span
                       >
+                      <span v-if="insuranceDTO.corp_region_cd==='010'">
+                        <span>-</span>
+                        <span class="text-12 mx-4">지원금</span>
+                        <span class="text-14 mx-4 font-weight-medium"
+                        >{{
+                            Number(insuranceDTO?.insr_relief).toLocaleString()
+                          }}원</span
+                        >
+                      </span>
                       <span>+</span>
                       <span class="text-12 mx-4">특약 보험료</span>
                       <span class="text-14 mx-4 font-weight-medium"
@@ -1217,26 +1226,35 @@
                   <div class="mt-4">
                     <p class="font-weight-bold text-14 mb-2">총 납입보험료 정보</p>
                     <div class="table pa-4 text-center">
-                      <span class="text-12 mx-4">기본 보험료</span>
-                      <span class="text-14 mx-4 font-weight-medium"
+                      <span class="text-12 mx-2">기본 보험료</span>
+                      <span class="text-14 mx-2 font-weight-medium"
                       >{{
                           Number(
                               insuranceDTO?.insr_amt
                           ).toLocaleString()
                         }}원</span
                       >
+                      <span v-if="insuranceDTO.corp_region_cd==='010'">
+                        <span>-</span>
+                        <span class="text-12 mx-2">지원금</span>
+                        <span class="text-14 mx-2 font-weight-medium"
+                        >{{
+                            Number(insuranceDTO?.insr_relief).toLocaleString()
+                          }}원</span
+                        >
+                      </span>
                       <span>+</span>
-                      <span class="text-12 mx-4">특약 보험료</span>
-                      <span class="text-14 mx-4 font-weight-medium"
+                      <span class="text-12 mx-2">특약 보험료</span>
+                      <span class="text-14 mx-2 font-weight-medium"
                       >{{
                           Number(insuranceDTO?.spct_data?.insr_amt).toLocaleString()
                         }}원</span
                       >
                       <span>=</span>
-                      <span class="text-12 mx-4">최종 보험료</span>
-                      <span class="text-14 mx-4 font-weight-medium color-primary"
+                      <span class="text-12 mx-2">최종 보험료</span>
+                      <span class="text-14 mx-2 font-weight-medium color-primary"
                       >{{
-                          Number(insuranceDTO?.insr_tot_amt).toLocaleString()
+                          Number(insuranceDTO?.insr_tot_amt - insuranceDTO?.insr_relief).toLocaleString()
                         }}
                         <!--{{
                           (Number(
