@@ -701,11 +701,15 @@
               </v-col>
 
               <!--보험계약(컨설팅)-->
-              <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.cons_join_yn === 'Y'">
+<!--              <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.cons_join_yn === 'Y'">-->
+              <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-4">
                     <v-card-title>
                       <h3 class="font-weight-bold">보험 계약(컨설팅)</h3>
+                      <div class="data-col">
+                        <VCheckBoxWithValidation v-model="insuranceDTO.cons_join_yn" name="cons_join_yn" label="컨설팅 여부" class="v-checkbox" density="compact" />
+                      </div>
                       <v-spacer />
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
                     </v-card-title>
@@ -832,7 +836,7 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="12" class="pb-0" ref="refPage5" v-if="(insuranceDTO.cons_join_yn==='Y')&&(insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT')">
+              <v-col cols="12" class="pb-0" ref="refPage5" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-5">
                     <v-card-title>
@@ -1441,8 +1445,14 @@ async function fnSearchDtl(insurance_uuid: string) {
     })
 
     //메모 데이타 있을 경우 panel 확장, 2023-11-08 By Moon
+
+    if(insuranceDTO.value.cons_join_yn !== 'Y') {
+      panel = ['panel-1', 'panel-2', 'panel-3', 'panel-6', 'panel-8', 'panel-9','panel-10', 'panel-12'];
+    }else{
+      panel = ['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-6', 'panel-8', 'panel-9','panel-10', 'panel-12'];
+    }
     if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '' && panel.value.length < 9 ) panel.value.push("panel-11")
-    else if((insuranceDTO.value.rmk == null || insuranceDTO.value.rmk == '') && panel.value.length > 7 ) panel.value.pop();
+    else if((insuranceDTO.value.rmk == null || insuranceDTO.value.rmk == '') && panel.value.length > 7) panel.value.pop();
 
     const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
     //const filter1 = []
@@ -1992,5 +2002,5 @@ onMounted(async () => {
  */
 
 // 조회결과 아코디언
-const panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-6', 'panel-8', 'panel-9','panel-10', 'panel-12']);
+let panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-6', 'panel-8', 'panel-9','panel-10', 'panel-12']);
 </script>

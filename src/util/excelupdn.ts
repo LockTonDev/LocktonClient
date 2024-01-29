@@ -2086,7 +2086,8 @@ function mapperRow_PAT_IND(excelMapper: object, excelDataRow: any) {
   row[excelMapper.생년월일] = insuranceDTO.user_birth;
   row[excelMapper.사업자번호] = insuranceDTO.corp_cnno;
   row[excelMapper.등록번호] = insuranceDTO.user_regno;
-  row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt?.getValueBySplit(1);
+  row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt;
+  //row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt?.getValueBySplit(1);
   row[excelMapper.보상한도_총한도] = insuranceDTO.insr_year_clm_lt_amt;
   row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt?.getValueBySplit(1);
   row[excelMapper.소급담보일] = insuranceDTO.insr_retr_dt;
@@ -2166,7 +2167,8 @@ function mapperRow_PAT_JNT(excelMapper: object, excelDataRow: any) {
   row[excelMapper.소급담보일] = insuranceDTO.insr_retr_dt;
   row[excelMapper.사업자번호] = insuranceDTO.corp_cnno;
   //row[excelMapper.법인번호] = insuranceDTO.corp_bnno;
-  row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt?.getValueBySplit(1);
+  //row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt?.getValueBySplit(1);
+  row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt
   row[excelMapper.보상한도_총한도] = insuranceDTO.insr_year_clm_lt_amt;
   row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt?.getValueBySplit(1);
   row[excelMapper.기준보험료] = insuranceDTO.insr_base_amt;
@@ -2280,7 +2282,8 @@ function mapperRow_PAT_COR(excelMapper: object, excelDataRow: any) {
   row[excelMapper.소급담보일] = insuranceDTO.insr_retr_dt;
   row[excelMapper.사업자번호] = insuranceDTO.corp_cnno;
   row[excelMapper.법인번호] = insuranceDTO.corp_bnno;
-  row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt?.getValueBySplit(1);
+  //row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt?.getValueBySplit(1);
+  row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt
   row[excelMapper.보상한도_총한도] = insuranceDTO.insr_year_clm_lt_amt;
   row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt?.getValueBySplit(1);
   row[excelMapper.기준보험료] = insuranceDTO.insr_base_amt;
