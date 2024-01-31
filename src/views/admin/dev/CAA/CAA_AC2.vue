@@ -1451,12 +1451,12 @@ async function fnSearchDtl(insurance_uuid: string) {
     }else{
       panel = ['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-6', 'panel-8', 'panel-9','panel-10', 'panel-12'];
     }
-    if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '' && panel.value.length < 9 ) panel.value.push("panel-11")
-    else if((insuranceDTO.value.rmk == null || insuranceDTO.value.rmk == '') && panel.value.length > 7) panel.value.pop();
+    if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '' && panel.length < 9 ) panel.push("panel-11")
+    else if((insuranceDTO.value.rmk == null || insuranceDTO.value.rmk == '') && panel.length > 7) panel.pop();
 
     const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
     //const filter1 = []
-
+    //console.lof('filter1',filter1)
     validUserCount.value = filter1.length;
 
     if(insuranceDTO.value.cons_data && insuranceDTO.value.cons_join_yn === 'Y')  {
