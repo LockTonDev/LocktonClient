@@ -2955,7 +2955,10 @@ async function onSubmit(params: any) {
   }
   preventDupClick = true;
 
-  if(!chkValiation()) return false;
+  if(!chkValiation()) {
+    preventDupClick = false;
+    return false;
+  }
 
   let result;
   // 사용자 등록
@@ -2965,13 +2968,13 @@ async function onSubmit(params: any) {
     result = await apiA_TCAA0030A.setDBUpd(insuranceDTO.value);
   } else {
     alert('조회 상태에서는 저장할 수 없습니다.');
+    preventDupClick = false;
     return false;
   }
 
   if (result.success) {
     isSubmit.value = true;
   } else {
-    console.log(result);
     alert('보험가입 실패');
   }
   preventDupClick = false;
