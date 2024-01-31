@@ -1856,7 +1856,7 @@ function mapperRow_CAA_JNT(excelMapper: object, excelDataRow: any) {
         subRow[excelMapper.소급담보일] = insuranceDTO?.cons_data.cbr_data[i]?.insr_retr_dt;
         subRow[excelMapper.할인할증기준] = insuranceDTO?.cons_data.cbr_data[i]?.insr_sale_year;
         subRow[excelMapper.할인할증] = insuranceDTO?.cons_data.cbr_data[i]?.insr_sale_rt;
-        subRow[excelMapper.보험료] = insuranceDTO?.cons_data.cbr_data[i]?.insr_amt;
+        subRow[excelMapper.개인보험료] = insuranceDTO?.cons_data.cbr_data[i]?.insr_amt;
       }
 
       row[excelMapper.인원수] = cbrCnt;
@@ -2059,7 +2059,7 @@ function mapperRow_CAA_COR(excelMapper: object, excelDataRow: any) {
         subRow[excelMapper.소급담보일] = insuranceDTO?.cons_data.cbr_data[i]?.insr_retr_dt;
         subRow[excelMapper.할인할증기준] = insuranceDTO?.cons_data.cbr_data[i]?.insr_sale_year;
         subRow[excelMapper.할인할증] = insuranceDTO?.cons_data.cbr_data[i]?.insr_sale_rt;
-        subRow[excelMapper.보험료] = insuranceDTO?.cons_data.cbr_data[i]?.insr_amt;
+        subRow[excelMapper.개인보험료] = insuranceDTO?.cons_data.cbr_data[i]?.insr_amt;
       }
 
       row[excelMapper.인원수] = cbrCnt;
