@@ -584,7 +584,7 @@
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-3">
                     <v-card-title>
-                      <h3 class="font-weight-bold">관세사 명단</h3>
+                      <h3 class="font-weight-bold">변호사 명단</h3>
                       <p class="text-body-2 color-gray-shadow ml-4">
                         총
                         <span class="color-primary">{{ validUserCount }}</span>명
