@@ -1567,6 +1567,9 @@ function onInsuranceFormClose() {
 function onNextPage(values: any) {
   tab.value = (parseInt(tab.value) + 1).toString();
 }
+function onPrevPage(values: any) {
+  tab.value = (parseInt(tab.value) - 1).toString();
+}
 
 
 

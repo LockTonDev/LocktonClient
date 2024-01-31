@@ -70,7 +70,7 @@
                             <v-tabs v-model="userCd" fixed-tabs color="primary">
                               <v-tab value="IND">개인 회원</v-tab>
                               <v-tab value="two" v-if="businessInfo.value === 'CAA'">법인/합동가입 회원</v-tab>
-                              <v-tab value="JNT" v-if="businessInfo.value === 'ADV'">복수가입 회원</v-tab>
+                              <v-tab value="JNT" v-if="businessInfo.value === 'ADV' || businessInfo.value === 'LAW'">복수가입 회원</v-tab>
                               <v-tab value="JNT" v-if="businessInfo.value === 'PAT'">합동가입 회원</v-tab>
                               <v-tab value="COR" v-if="businessInfo.value === 'PAT'">법인가입 회원</v-tab>
                               <v-tab value="COR" v-if="businessInfo.value === 'TAX'">법인 회원</v-tab>
@@ -127,6 +127,14 @@
                                       복수가입 안내<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
                                       <v-divider class="my-1"/>
                                       복수가입 시, 보험의 피보험자는 보상한도를 공유하여 가입하는 각 변호사가 되며, <br/>사무소 또는 법인이 피보험자가 되지 않습니다.
+                                    </v-tooltip>
+                                  </p>
+                                  <p v-if="businessInfo.value === 'LAW'">복수가입(보상한도 공유가입)회원은 사무소 또는 법인명으로 하나의 아이디만 부여되며 본점, 지점별로 중복가입 되지 않습니다.
+                                    <v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
+                                    <v-tooltip activator="parent" location="top">
+                                      복수가입 안내<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
+                                      <v-divider class="my-1"/>
+                                      복수가입 시, 보험의 피보험자는 보상한도를 공유하여 가입하는 각 법무사가 되며, <br/>사무소 또는 법인이 피보험자가 되지 않습니다.
                                     </v-tooltip>
                                   </p>
                                   <p v-if="businessInfo.value === 'PAT'">합동가입(보상한도 공유가입)회원은 사무소 또는 법인명으로 하나의 아이디만 부여되며 본점, 지점별로 중복가입 되지 않습니다.

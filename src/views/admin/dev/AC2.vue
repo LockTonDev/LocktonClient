@@ -1259,6 +1259,9 @@
   <div v-else-if="searchParams.data['business_cd'] === 'PAT'">
     <PAT_AC2/>
   </div>
+  <div v-else-if="searchParams.data['business_cd'] === 'LAW'">
+    <LAW_AC2/>
+  </div>
   <p style="height:20px;"></p>
   <!--LAYER : 주소검색 -->
   <v-dialog persistent v-model="isDaumPostDialog" width="600">
@@ -1301,6 +1304,7 @@ import { MessageBoxDTO, ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, C
 import MessageBox from '@/components/MessageBox.vue';
 import CAA_AC2 from './CAA/CAA_AC2.vue'
 import PAT_AC2 from './PAT/PAT_AC2.vue'
+import LAW_AC2 from './LAW/LAW_AC2.vue'
 import V_TTAX0030P20 from '@/views/contract/TAX/V_TTAX0030P20.vue';
 import V_TTAX0030P30 from '@/views/contract/TAX/V_TTAX0030P30.vue';
 import V_TACC0030P20 from '@/views/contract/ACC/V_TACC0030P20.vue';
