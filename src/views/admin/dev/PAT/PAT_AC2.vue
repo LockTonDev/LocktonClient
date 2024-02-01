@@ -1501,17 +1501,9 @@ async function initPage() {
 
   console.log("stockStartDt>>", stockStartDt)
 
-  // CAA는 2024년 추가 2023-12-22
-  let curDate = new Date()
-  curDate.setFullYear(curDate.getFullYear() + 1);
-  for (let year = curDate.getFullYear(); year >= 2022; year--) {
-    insrYearCdItems.value.push({ title: year.toString(), value: year.toString(), rmk: null });
-  }
-  /*
   for (let year = new Date().getFullYear(); year >= 2022; year--) {
     insrYearCdItems.value.push({ title: year.toString(), value: year.toString(), rmk: null });
   }
-   */
 
   searchParams.value.data['business_cd'] = businessCd;
   searchParams.value.data['insr_year'] = '%';
