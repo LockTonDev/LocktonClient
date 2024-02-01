@@ -1716,11 +1716,11 @@ const onCalculateInsurance = async (confirmYn) => {
       insuranceDTO.value.insr_amt = totAmt;
       insuranceDTO.value.insr_tot_amt = totAmt;
     }
-    console.log('insuranceDTO.value.spct_join_yn',insuranceDTO.value.spct_join_yn)
+   // console.log('insuranceDTO.value.spct_join_yn',insuranceDTO.value.spct_join_yn)
     // 특약 재계산
     //개인도 특약 가능
     if (insuranceDTO.value.spct_join_yn == 'Y') {
-      console.log('insuranceDTO.value.spct_join_yn')
+     // console.log('insuranceDTO.value.spct_join_yn')
       // let insrAmt = 0;
       // insrAmt += calInsrSpctAmt(insuranceDTO.value.spct_data);
       //insuranceDTO.value.spct_data.insr_amt=calInsrSpctAmt(insuranceDTO.value.spct_data);
@@ -1894,7 +1894,6 @@ async function initPage() {
     if(item.business_cd == businessCd) stockStartDt = item.start_dt
   })
 
-  console.log("stockStartDt>>", stockStartDt)
 
   for (let year = new Date().getFullYear(); year >= 2022; year--) {
     insrYearCdItems.value.push({ title: year.toString(), value: year.toString(), rmk: null });
