@@ -17,7 +17,7 @@
         <v-col cols="12" sm="10">
           <h4 class="text-h5 font-weight-bold text-center">법무사배상책임보험이란?</h4>
           <p class="text-18 text-center mt-10">
-            법무사 및 그 임직원이 전문인의 자격으로 업무를 수행함에 있어 과실로 의뢰인 또는 제 3자에게 직접적인 손해를 입힌 경우 법률상 손해배상금 및 사고처리에 드는 제반비용을 보상해주는 상품입니다.
+            법무사 및 그 임직원이 전문인의 자격으로 업무를 수행함에 있어 과실로 의뢰인 또는 제 3자에게 직접적인 손해를 입힌 경우 <br/> 법률상 손해배상금 및 사고처리에 드는 제반비용을 보상해주는 상품입니다.
           </p>
           <v-row class="my-10 px-sm-16" justify="center">
             <v-col align="center" class="pa-0">
@@ -32,8 +32,8 @@
                 <img src="../../assets/images/icon/icon-insurance-1-6-small.png" alt=""/>
               </div>
               <p class="text-20 font-weight-medium mt-6">보험기간</p>
-              <p class="mt-4">12월 1일 00:01 ~ 다음해 12월 1일 00:01</p>
-              <p class="color-gray-shadow mt-2 text-14">※ 12월 1일 이후 신규 가입 시 가입일부터 개시</p>
+              <p class="mt-4">8월 2일 00:01 ~ 다음해 8월 2일 00:01</p>
+              <p class="color-gray-shadow mt-2 text-14">※ 8월 2일 이후 신규 가입 시 가입일부터 개시</p>
             </v-col>
             <v-col align="center" class="pa-0">
               <div class="bg-background border-radius-round d-inline-block pa-10">
@@ -100,9 +100,9 @@
             <v-divider />
             <li class="d-flex justify-space-between align-center py-8">
               <img src="../../assets/images/icon/icon-insurance-1-2.png" alt="" class="ml-4">
-              <p class="text-h6 w-30 ml-10">2002년부터 단체보험 운영</p>
+              <p class="text-h6 w-30 ml-10">2010년부터 단체보험 운영</p>
               <div class="text-body-1 line-1-6 w-50">
-                <p>2002년부터 단체보험 도입</p>
+                <p>2010년부터 단체보험 도입</p>
                 <p class="mt-1">- 개별 가입 대비 저렴한 보험료 제공</p>
               </div>
             </li>
@@ -148,7 +148,7 @@
                     </tr>
                     <tr>
                       <td rowspan="6" class="text-center">사고처리 제비용</td>
-                      <td class="border-right-0">법무사 비용</td>
+                      <td class="border-right-0">변호사 비용</td>
                     </tr>
                     <tr>
                       <td class="border-right-0">전문조사인 비용</td>
@@ -158,6 +158,9 @@
                     </tr>
                     <tr>
                       <td class="border-right-0">중재나 화해에 드는 비용</td>
+                    </tr>
+                    <tr>
+                      <td class="border-right-0">공탁보증보험료</td>
                     </tr>
                     <tr>
                       <td class="border-right-0">대위권 보전 비용</td>
@@ -179,9 +182,6 @@
                     <tr>
                       <th rowspan="13" class="text-center">주요 보상하지 않는 손해</th>
                       <td class="border-right-0">피보험자의 악의적 또는 사기적 부정행위</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">다른 기관 및 정부기관의 공무원 자격, 다른 단체의 임원 등 업무에 기인한 책임</td>
                     </tr>
                     <tr>
                       <td class="border-right-0">징벌적 손해 (Punitive Damage Exclusion Clause) : 벌금, 과태료 등</td>
@@ -208,10 +208,7 @@
                       <td class="border-right-0">결과적 책임 / 간접손해 (Consequential Loss Exclusion Clause)</td>
                     </tr>
                     <tr>
-                      <td class="border-right-0">고용직원의 고의 등 행위 부담보(고용직원 부정직행위 담보 특별약관 가입 시 예외)</td>
-                    </tr>
-                    <tr>
-                      <td class="border-right-0">선의의 피보험자 조항 적용 안함</td>
+                      <td class="border-right-0">사무원의 고의 등 행위 부담보(고용직원 부정직행위 담보 특별약관 가입 시 예외)</td>
                     </tr>
                     <tr>
                       <td class="border-right-0">기타 보통 약관 및 특별약관 보험조건에서 정하는 사항</td>
@@ -232,7 +229,7 @@
                   <td class="border-right-0">복수가입 시 총 보상한도 : 법무사 3인 이상 복수가입 시에는 연간 총 보상한도액 2배수를 적용합니다. <br/>(단, 2명 복수가입 시에는 1배수 적용)</td>
                 </tr>
                 <tr>
-                  <td class="border-right-0">사고자 보험료 할증 : 보험금 수령 시 수령보험금 규모에 따라 3개년 할증이 적용됩니다. <br/>(사고조사 진행 중 갱신 시 10% 할증 적용) <br/>
+                  <td class="border-right-0">사고자 보험료 할증 : 보험금 수령 시 수령보험금 규모에 따라 3개년 할증이 적용됩니다. <br/>(사고조사 진행 중 갱신 시 0% 할증 적용) <br/>
                     <v-btn
                         variant="outlined"
                         color="primary"
@@ -334,7 +331,7 @@
               <h4 class="text-body-1 font-weight-bold">보상한도액</h4>
               <ul class="list-style-type-bull word-break-keep-all mt-6 ml-3">
                 <li>사고 발생시 보험회사에서 지급되는 보험금의 상한선을 뜻합니다.</li>
-                <li class="mt-1">약관상 보상되는 손해 및 그와 관련된 소송 비용, 법무사 비용 등 방어 비용은 보상한도액을 넘지 않는 범위내에서 보상됩니다.<br/> (All Costs & Expenses are included within the Limit of Liability 조항)</li>
+                <li class="mt-1">약관상 보상되는 손해 및 그와 관련된 소송 비용, 변호사 비용 등 방어 비용은 보상한도액을 넘지 않는 범위내에서 보상됩니다.<br/> (All Costs & Expenses are included within the Limit of Liability 조항)</li>
               </ul>
               <table class="normal-table mt-6">
                 <colgroup>
@@ -362,9 +359,9 @@
               </ul>
             </v-window-item>
             <v-window-item value="option-4">
-              <h4 class="text-body-1 font-weight-bold">고용직원 부정직행위 담보 특별약관<span class="font-weight-normal">(추가보험료발생)</span></h4>
+              <h4 class="text-body-1 font-weight-bold">사무원 부정직행위 담보 특별약관<span class="font-weight-normal">(추가보험료발생)</span></h4>
               <p class="mt-6  word-break-keep-all">
-                법무사가 고용한 직원의 부정직(또는 사기행위)의 직접적인 결과로 보험기간 중에 발견된 금전적인 손실을 보상 받을 수 있는 특별 약관(Dishonesty Extension) 입니다.<br/>
+                법무사가 고용한 사무원의 부정직(또는 사기행위)의 직접적인 결과로 보험기간 중에 발견된 금전적인 손실을 보상 받을 수 있는 특별 약관(Dishonesty Extension) 입니다.<br/>
                 고의적이고 명백한 의도에 의한 직접 결과이거나 혹은 고용한 사무원이 법무사를 대신하여 전문서비스 업무를 수행하는 동안 사무원 자신의 경제적인 이득을 취할 목적으로 단독/타인과 공모하여 행한 부정 행위 또는 사기행위에 기인한 것을 전제로 합니다.
               </p>
               <table class="normal-table mt-6">
@@ -377,7 +374,7 @@
                   <th>보상한도액</th>
                   <td class="border-right-0">
                     2천5백만원 / 5천만원 / 1억원 중 선택<br/>
-                    <span class="color-gray">(고용직원 1인당 적용되는 보상 한도액 이 아닌 1청구당/연간 총 한도액입니다.)</span>
+                    <span class="color-gray">(사무원 1인당 적용되는 보상 한도액 이 아닌 1청구당/연간 총 한도액입니다.)</span>
                   </td>
                 </tr>
                 <tr>
@@ -509,7 +506,7 @@
                 <dd class="mt-1">
                   보험 개시일 전까지 납부
                 </dd>
-                <dd class="mt-1">신규 가입 시 만기일 (매년 12월 1일)까지 일할 계산</dd>
+                <dd class="mt-1">신규 가입 시 만기일 (매년 8월 2일)까지 일할 계산</dd>
                 <dd class="mt-1 color-gray-shadow" v-if="_AUTH_USER.userCd == 'IND'" >※ 입금자 피보험자 성명+등록번호로 반드시 기재<br/>(복수가입의 경우 사무소 명으로 일괄 납부)</dd>
                 <dd class="mt-1 color-gray-shadow" v-if="_AUTH_USER.userCd == 'JNT'" >※ 보험료를 합산하여 사무소 명으로 일괄납부</dd>
               </dl>

@@ -173,6 +173,9 @@
   <div v-else-if="searchParams.data['business_cd'] === 'PAT'">
     <PAT_AC6/>
   </div>
+  <div v-else-if="searchParams.data['business_cd'] === 'LAW'">
+    <LAW_AC6/>
+  </div>
 
   <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
 
@@ -189,6 +192,7 @@ import AdminBaseBreadcrumb from "@/components/AdminBaseBreadcrumb.vue";
 import BaseCard from "@/components/BaseCard.vue";
 import CAA_AC6 from './CAA/CAA_AC6.vue';
 import PAT_AC6 from './PAT/PAT_AC6.vue';
+import LAW_AC6 from './LAW/LAW_AC6.vue';
 
 import VSelectWithValidation from '@/components/VSelectWithValidation.vue';
 import VTextFieldWithValidation from '@/components/VTextFieldWithValidation.vue';
