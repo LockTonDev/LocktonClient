@@ -453,11 +453,11 @@
                               </v-col>
                               <v-col cols="12" class="v-col">
                                 <div class="head-col">
-                                  <p>보상한도</p>
+                                  <p>보상한도 / 보상한도(연간총)</p>
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VSelectWithValidation v-model="insuranceDTO.insr_clm_lt_amt" name="insr_clm_lt_amt" label="보상한도" :items="insrClmLtAmtItems" single-line density="compact"></VSelectWithValidation>
+                                  <VSelectWithValidation v-model="clmLtAmt" name="insr_clm_lt_amt" label="보상한도" :items="insrClmLtAmtItems" single-line density="compact"></VSelectWithValidation>
                                   <v-divider class="border-0" />
                                 </div>
                               </v-col>
@@ -468,15 +468,6 @@
                                 </div>
                                 <div class="data-col">
                                   <VSelectWithValidation v-model="insuranceDTO.insr_psnl_brdn_amt" name="insr_psnl_brdn_amt" label="자기부담금" :items="insrPsnlBrdnAmtItems" density="compact" single-line></VSelectWithValidation>
-                                </div>
-                              </v-col>
-                              <v-col cols="12" class="v-col">
-                                <div class="head-col">
-                                  <p>보상한도(연간총)</p>
-                                  <sup class="text-error">*</sup>
-                                </div>
-                                <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_year_clm_lt_amt" name="insr_year_clm_lt_amt" label="" single-line />
                                 </div>
                               </v-col>
                               <v-divider class="border-0" />
@@ -509,6 +500,17 @@
                                 <div class="data-col text-center">
                                   <!-- {{ insuranceDTO.insr_sale_rt }} % -->
                                   <VTextFieldWithValidation v-model="insuranceDTO.insr_sale_rt" name="insr_sale_rt" label="" type="number" suffix="%" single-line />
+                                </div>
+                              </v-col>
+                              <v-col cols="12" class="v-col">
+                                <div class="head-col">
+                                  <p>기일관리프로그램</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col">
+                                  <!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_program" name="insr_program" label="" single-line />
+                                  <VCheckBoxWithValidation v-model="insuranceDTO.insr_program_yn" name="insr_program_yn" label="프로그램여부" class="v-checkbox" density="compact" />
                                 </div>
                               </v-col>
                             </v-row>
@@ -1066,6 +1068,7 @@ const insrTakesSectionItems = ref([]);
 const insrPblcBrdnRtItems = ref([]);
 const insrClmLtAmtItems = ref([]);
 const insrPsnlBrdnAmtItems = ref([]);
+const clmLtAmt = ref('');
 
 //변호사 특약 selectList
 const insrSpctClmLtAmtItems = ref([]);
@@ -1126,11 +1129,11 @@ async function fnSetInsuranceRateCombo() {
       value: `${code}|${value}`
     }));
   }
-
   insrClmLtAmtItems.value = insuranceRateDTO.value.contents['기본담보']['보상한도'].map(({ code, value }) => ({
     title: value,
-    value: `${code}`
+    value: `${value}`
   }));
+  console.log(insrClmLtAmtItems.value)
 
   insrPsnlBrdnAmtItems.value = insuranceRateDTO.value.contents['기본담보']['자기부담금'].map(({ code, value }) => ({
     title: value,
@@ -1148,6 +1151,7 @@ async function fnSearchDtl(insurance_uuid: string) {
     insuranceDTO.value = new InsuranceDTO();
 
     Object.assign(insuranceDTO.value, resultData.data[0]);
+    clmLtAmt.value = insuranceDTO.value.insr_clm_lt_amt + "/" + insuranceDTO.value.insr_year_clm_lt_amt;
 
     insuranceDTO.value.cbr_data.sort(function(a, b) {
       if(a.status_cd=='90' || a.status_cd=='91') {
@@ -1364,6 +1368,26 @@ watch(
       initPage();
     },
 );
+
+watch(() => clmLtAmt.value,
+    newValue => {
+      if(newValue != null){
+        insuranceDTO.value.insr_clm_lt_amt = newValue.split('/')[0]
+        insuranceDTO.value.insr_year_clm_lt_amt = newValue.split('/')[1]
+      }
+    }
+)
+
+
+watch(() => [insuranceDTO.value.insr_program_yn, insuranceDTO.value.insr_program],
+    newValue => {
+      if(newValue[0] === 'N'){
+        insuranceDTO.value.insr_program = null
+      }else if(newValue[1] != null && newValue[1] != ''){
+        insuranceDTO.value.insr_program_yn = 'Y'
+      }
+    }
+)
 
 
 

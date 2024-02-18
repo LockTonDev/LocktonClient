@@ -32,6 +32,13 @@ export default {
   async getApplyPATInsurance(params: any) {
     return await api.authService.post('/ADM/PAT/APPLY/get', { params });
   },
+
+  async setApplyLAWInsurance(params: any) {
+    return await api.authService.post('/ADM/LAW/APPLY/set', { params });
+  },
+  async getApplyLAWInsurance(params: any) {
+    return await api.authService.post('/ADM/LAW/APPLY/get', { params });
+  },
   /** ============================================================================
    *  [전문인명단DB]
    *  ============================================================================

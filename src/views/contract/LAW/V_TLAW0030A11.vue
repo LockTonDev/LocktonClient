@@ -230,7 +230,7 @@
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col">
-                      <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" class="w-200"  single-line density="comfortable"></VSelectWithValidation>
+                      <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" class="w-200"  single-line density="comfortable" disabled="true"></VSelectWithValidation>
                      
                     </div>
                   </v-col>
@@ -2941,7 +2941,7 @@ onMounted(async () => {
    *  LAW001 - 소속 중앙회
    */
   regionCdItems.value = await CommonCode.getCodeList('LAW001');
-  corpTypeItems.value = await CommonCode.getCodeList('COM050');
+  corpTypeItems.value = await CommonCode.getCodeList('COM052');
 
   isReadOnlyAll.value = false;
 

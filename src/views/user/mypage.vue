@@ -564,7 +564,7 @@
                       />
                     </div>
                   </v-col>
-                  <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd == 'TAX'">
+                  <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd == 'TAX' || userDTO.business_cd === 'LAW'">
                     <div class="head-col">
                       <p>소속 지방회</p>
                       <sup class="text-error">*</sup>
@@ -1239,7 +1239,7 @@ onMounted(async () => {
   let regionCode = 'TAX001'
   if(_AUTH_USER.value.businessCd == 'LAW')
     regionCode = 'LAW001';
-  regionCdItems.value = await CommonCode.getCodeList(_AUTH_USER);
+  regionCdItems.value = await CommonCode.getCodeList(regionCode);
   corpTypeItems.value = await CommonCode.getCodeList('COM050');
   userDTO.value.is_user_email = true;
 });

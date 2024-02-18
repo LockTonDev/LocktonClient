@@ -676,6 +676,9 @@
   <div v-else-if="searchParams.data['business_cd'] === 'PAT'">
     <PAT_AC4/>
   </div>
+  <div v-else-if="searchParams.data['business_cd'] === 'LAW'">
+    <LAW_AC4/>
+  </div>
 	<!--LAYER : 주소검색 -->
 	<v-dialog persistent v-model="isDaumPostDialog" width="600">
 		<v-card>
@@ -722,6 +725,7 @@ import V_TTAX0030P20 from "@/views/contract/TAX/V_TTAX0030P20.vue";
 import V_TTAX0030P30 from "@/views/contract/TAX/V_TTAX0030P30.vue";
 import CAA_AC4 from './CAA/CAA_AC4.vue';
 import PAT_AC4 from './PAT/PAT_AC4.vue';
+import LAW_AC4 from './LAW/LAW_AC4.vue';
 
 import AdminBaseBreadcrumb from "@/components/AdminBaseBreadcrumb.vue";
 import VTextFieldWithValidation from '@/components/VTextFieldWithValidation.vue';
