@@ -230,6 +230,7 @@
                               <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" label="이메일" single-line />
                             </div>
                           </v-col>
+
                           <v-col cols="12" sm="12" class="v-col">
                             <div class="head-col">
                               <p>사무소 주소<sup class="text-error">*</sup></p>
@@ -335,17 +336,17 @@
                               <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" label="이메일" single-line />
                             </div>
                           </v-col>
-                          <!--
-                          <v-col cols="12" sm="12" class="v-col">
+
+                          <v-col cols="12" sm="4" class="v-col" v-if="insuranceDTO.user_cd === 'COR'">
                             <div class="head-col">
-                              <p>소속 지방회</p>
+                              <p>소속 변리사 수</p>
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" density="compact" single-line></VSelectWithValidation>
+                              <VTextFieldWithValidation v-model="insuranceDTO.cbr_cnt" name="cbr_cnt" label="소속 변리사 수" single-line></VTextFieldWithValidation>
                             </div>
                           </v-col>
-                          -->
+
                           <v-col cols="12" sm="12" class="v-col">
                             <div class="head-col">
                               <p>사무소 주소<sup class="text-error">*</sup></p>

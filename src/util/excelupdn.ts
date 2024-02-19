@@ -2470,6 +2470,7 @@ function mapperRow_PAT_COR(excelMapper: object, excelDataRow: any) {
   row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt?.getValueBySplit(1);
   row[excelMapper.기준보험료] = insuranceDTO.insr_base_amt;
   row[excelMapper.인원수] = insuranceDTO.cbr_cnt;
+  row[excelMapper.소속변리사수] = insuranceDTO.cbr_cnt;
   row[excelMapper.할인할증기준] = insuranceDTO.insr_sale_year;
   row[excelMapper.할인할증] = insuranceDTO.insr_sale_rt;
   row[excelMapper.매출액구간] = insuranceDTO.insr_take_sec;
