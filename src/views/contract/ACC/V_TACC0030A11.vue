@@ -1216,7 +1216,10 @@ async function onSubmit(params: any) {
   }
   preventDupClick = true;
 
-  if (!await checkValidation()) return false;
+  if (!await checkValidation()) {
+    preventDupClick = false;
+    return false;
+  }
   
   let result;
   if(insuranceDTO.value.insurance_uuid == '') {
@@ -1226,6 +1229,7 @@ async function onSubmit(params: any) {
     result = await apiContract.setDBUpd(insuranceDTO.value);
   }else {
     alert('조회 상태에서는 저장할 수 없습니다.');
+    preventDupClick = false;
     return false;
 
   }
@@ -1244,6 +1248,7 @@ async function onSubmit(params: any) {
       alert("보험가입 실패");
     }
   }
+  preventDupClick = false;
 }
 
 /**
