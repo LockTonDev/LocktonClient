@@ -52,7 +52,7 @@
                 <img src="../../assets/images/img-insurance-1-3.jpg" alt="" class="d-block w-full"/>
                 <div class="px-6 py-9 text-left">
                   <p class="text-20 font-weight-medium">손해배상책임 위험 증가</p>
-                  <p class="mt-4 word-break-keep-all">급격한 세계화 및 사회구조 다변화로 법무사의 전문성은 더욱 강조되고 있으며, 직무가 복잡해지고 세분화되어 업무 수행에 대한 손해배상책임 위험이 점차 증가하고 있습니다.</p>
+                  <p class="mt-4 word-break-keep-all">국민의 재산권을 보호하는 권리보장 전문가로서 법무사의 전문성은 더욱 강조되고 있으며, 직무가 복잡해지고 세분화되어 업무 수행에 대한 손해배상책임 위험이 점차 증가하고 있습니다.</p>
                 </div>
               </v-card>
             </v-col>
@@ -61,7 +61,9 @@
                 <img src="../../assets/images/img-insurance-1-1.jpg" alt="" class="d-block w-full"/>
                 <div class="px-6 py-9 text-left">
                   <p class="text-20 font-weight-medium">전문자격사로서의 역할과 책임 확대</p>
-                  <p class="mt-4 word-break-keep-all">법무사 전문분야 등록제 등 각 업무영역에 대한 전문성이 극대화 되는 상황에서 법률 수요자에 대한 양질의 법률서비스 제공과 업무 책임도 증가하고 있습니다.</p>
+                  <p class="mt-4 word-break-keep-all">국민의 가장 가까이에서 일상 속 생활법률 문제에 대한
+                    전문적인 서비스를 제공하여 법무사의 역할과 책임은
+                    나날이 증가하고 있습니다.</p>
                 </div>
               </v-card>
             </v-col>
@@ -142,12 +144,12 @@
                 </colgroup>
                 <tbody>
                     <tr>
-                      <th rowspan="8" class="text-center">주요 보상하는 손해</th>
+                      <th rowspan="9" class="text-center">주요 보상하는 손해</th>
                       <td class="text-center">법률적 손해배상금</td>
                       <td class="border-right-0">판결액, 최종합의 및 화해액<br/>(단, 징벌적 손해, 벌과금, 과태료 등과 서비스 수수료 반환금은 포함되지 않음)</td>
                     </tr>
                     <tr>
-                      <td rowspan="6" class="text-center">사고처리 제비용</td>
+                      <td rowspan="7" class="text-center">사고처리 제비용</td>
                       <td class="border-right-0">변호사 비용</td>
                     </tr>
                     <tr>
@@ -229,7 +231,7 @@
                   <td class="border-right-0">복수가입 시 총 보상한도 : 법무사 3인 이상 복수가입 시에는 연간 총 보상한도액 2배수를 적용합니다. <br/>(단, 2명 복수가입 시에는 1배수 적용)</td>
                 </tr>
                 <tr>
-                  <td class="border-right-0">사고자 보험료 할증 : 보험금 수령 시 수령보험금 규모에 따라 3개년 할증이 적용됩니다. <br/>(사고조사 진행 중 갱신 시 0% 할증 적용) <br/>
+                  <td class="border-right-0">사고자 보험료 할증 : 보험금 수령 시 수령보험금 규모에 따라 3개년 할증이 적용됩니다. <br/>(사고조사 진행 중 갱신 시 0% 적용) <br/>
                     <v-btn
                         variant="outlined"
                         color="primary"

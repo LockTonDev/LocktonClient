@@ -5,7 +5,15 @@ html{
   max-width: initial;
 }
 .v-main {
-  min-width: $content-width;
+  @media screen and (min-width:960px) {
+    min-width: $content-width;
+    min-height: 100vh;
+  }
+  @media screen and (max-width:959px) {
+    min-width: $mobile-content-width;
+    min-height: 100vh;
+  }
+
   min-height: 100vh;
   word-break: keep-all;
 }
@@ -24,7 +32,7 @@ html{
 
 .v-container{
   max-width: 100%;
-  @media screen and (min-width:960px) {    
+  @media screen and (min-width:960px) {
     min-height: $content-height;
   }
 }
@@ -40,7 +48,6 @@ html{
 
   .v-toolbar__content{
     padding: 48px 0;    
-    
 
     .toolbar-stepbar{
       margin-left:auto;

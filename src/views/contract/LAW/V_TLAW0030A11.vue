@@ -671,7 +671,7 @@
                   <v-col cols="12" sm="12" class="v-col">
                     <div class="head-col">
                       <p v-if="insuranceDTO.user_cd === 'IND'">연 매출액</p>
-                      <p v-if="insuranceDTO.user_cd === 'JNT'">변호사 1인당<br/>평균 매출액</p>
+                      <p v-if="insuranceDTO.user_cd === 'JNT'">법무사 1인당<br/>평균 매출액</p>
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col w-100">
@@ -689,10 +689,11 @@
                     /><p style="font-size: 18px; margin-left: 10px">원</p>
                     </div>
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
-                        >전년도 부가세과세표준증명 또는 손익계산서상의 매출액 기재 (전년도 1.1 ~ 12월말까지 매출)<br/>
+                        >매출액은 연초에 업무보고한 직전년도 매출액을 반드시 기재요망 (전년도 1.1 ~ 12월말까지 매출)<br/>
+                      <p class="ml-4"> * 대한 법무사협회 전산신고한 업무보고서 매출 확인 </p>
                       <span v-if="insuranceDTO.user_cd=='JNT'">
                       <i class="mdi mdi-alert-circle-outline mr-2"></i
-                      >법무법인, 합동사무소의 연간총매출액을 변호사 수로 나눠 1인당 평균 매출액 기재<br/></span>
+                      >법무법인, 합동사무소의 연간총매출액을 법무사 수로 나눠 1인당 평균 매출액 기재<br/></span>
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
                         >전년 매출이 없는 경우 1년 예상 매출액 기재
                       </p>
@@ -765,7 +766,7 @@
                       </v-btn-toggle>
                     </div>
                   </v-col>
-                  <v-col cols="12" sm="12" class="v-col" style="height: 200px">
+                  <v-col cols="12" sm="12" class="v-col" style="height: 260px">
                     <div class="head-col">
                       <p>보상한도</p>
                       <sup class="text-error">*</sup>
@@ -784,6 +785,7 @@
                           class="flex-grow-0"
                           style="flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;"
                           value="1|5천만원/1억원"
+                          :disabled="insuranceDTO.corp_region_cd=='010'&&!relief_yn"
                           ><p><span style="font-size: 80%; ">case 1)</span> <br/> 5천만원/1억원</p></v-btn
                         >
                         <v-btn
@@ -791,6 +793,7 @@
                           class="flex-grow-0"
                           style="flex-basis: 30%; border: 1px solid #EEEEEE"
                           value="2|1억원/1억원"
+                          :disabled="insuranceDTO.corp_region_cd=='010'&&!relief_yn"
                           ><p><span style="font-size: 80%; ">case 2)</span> <br/> 1억원/1억원</p></v-btn
                         >
                         <v-btn
@@ -798,6 +801,7 @@
                           class="flex-grow-0"
                           style="flex-basis: 30%; border: 1px solid #EEEEEE"
                           value="3|1억원/2억원"
+                          :disabled="insuranceDTO.corp_region_cd=='010'&&!relief_yn"
                           ><p><span style="font-size: 80%; ">case 3)</span> <br/> 1억원/2억원</p></v-btn
                         >
                         <v-btn
@@ -805,6 +809,7 @@
                             class="flex-grow-0"
                             style="flex-basis: 30%; border: 1px solid #EEEEEE"
                             value="4|1억원/3억원"
+                            :disabled="insuranceDTO.corp_region_cd=='010'&&!relief_yn"
                         ><p><span style="font-size: 80%; ">case 4)</span> <br/> 1억원/3억원</p></v-btn
                         >
                         <v-btn
@@ -812,6 +817,7 @@
                             class="flex-grow-0"
                             style="flex-basis: 30%; border: 1px solid #EEEEEE"
                             value="5|1억원/5억원"
+                            :disabled="insuranceDTO.corp_region_cd=='010'&&!relief_yn"
                         ><p><span style="font-size: 80%; ">case 5)</span> <br/> 1억원/5억원</p></v-btn
                         >
                         <v-btn
@@ -819,6 +825,7 @@
                             class="flex-grow-0"
                             style="flex-basis: 30%; border: 1px solid #EEEEEE"
                             value="6|2억원/2억원"
+                            :disabled="insuranceDTO.corp_region_cd=='010'&&relief_yn"
                         ><p><span style="font-size: 80%; ">case 6)</span> <br/> 2억원/2억원</p></v-btn
                         >
                         <v-btn
@@ -826,6 +833,7 @@
                             class="flex-grow-0"
                             style="flex-basis: 30%; border: 1px solid #EEEEEE"
                             value="7|2억원/4억원"
+                            :disabled="insuranceDTO.corp_region_cd=='010'&&relief_yn"
                         ><p><span style="font-size: 80%; ">case 7)</span> <br/> 2억원/4억원</p></v-btn
                         >
                         <v-btn
@@ -833,6 +841,7 @@
                             class="flex-grow-0"
                             style="flex-basis: 30%; border: 1px solid #EEEEEE"
                             value="8|3억원/3억원"
+                            :disabled="insuranceDTO.corp_region_cd=='010'&&relief_yn"
                         ><p><span style="font-size: 80%; ">case 8)</span> <br/> 3억원/3억원</p></v-btn
                         >
                         <v-btn
@@ -840,13 +849,22 @@
                             class="flex-grow-0"
                             style="flex-basis: 30%; border: 1px solid #EEEEEE"
                             value="9|5억원/5억원"
+                            :disabled="insuranceDTO.corp_region_cd=='010'&&relief_yn"
                         ><p><span style="font-size: 80%; ">case 9)</span> <br/> 5억원/5억원</p></v-btn
                         >
                       </v-btn-toggle>
-                      <p class="text-caption font-weight-light color-gray" style="margin-top: 110px" >
+                      <span class="text-caption font-weight-light color-gray" style="margin-top: 110px">
+                      <p  >
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>1
-                        청구당 / 연간총보상한도<span v-if="insuranceDTO.user_cd === 'JNT'">(3명 이상 가입시 연간 총 보상한도는 2배수 적용)</span>
+                        청구당 / 연간총보상한도
                       </p>
+                        <span v-if="insuranceDTO.corp_region_cd=='010'">
+                        <p><i class="mdi mdi-alert-circle-outline mr-2"></i>보상한도 Case6 이상 선택시 서울중앙지방법무사회 지원금 10만원이 적용됩니다.</p>
+                        <p>(8월 2일 이후 신규 가입시 지원금 일할계산 적용)</p>
+                      <p class="d-flex align-center mt-minus-4"><i class="mdi mdi-alert-circle-outline mr-2"></i>보상한도 Case1~5 선택시 지원금 미적용: 미적용 선택 <v-checkbox-btn v-model="relief_yn"></v-checkbox-btn></p>
+                        </span>
+                      </span>
+
                       <v-divider class="border-0" />
                     </div>
                   </v-col>
@@ -872,9 +890,14 @@
                         >3백만원</v-btn
                         >
                       </v-btn-toggle>
-                      <p><i class="mdi mdi-alert-circle-outline mr-2"></i>자기부담금 선택 안함 시 기본 3백만원 선택.</p>
-                      <p><i class="mdi mdi-alert-circle-outline mr-2"></i>5백만원 선택 시 5%, 1천만원 선택 시 10% 할인 : 변경신청</p>
-                      <v-checkbox-btn v-model="psnl_yn"></v-checkbox-btn>
+                      <span class="text-caption font-weight-light color-gray">
+                        <p><i class="mdi mdi-alert-circle-outline mr-2"></i>자기부담금 3백만원을 기본으로 함.</p>
+                        <p class="d-flex align-center mt-minus-4">
+                          <i class="mdi mdi-alert-circle-outline mr-2"></i>5백만원 선택 시 5%, 1천만원 선택 시 10% 할인 : 변경신청
+                          <v-checkbox-btn v-model="psnl_yn"></v-checkbox-btn>
+                        </p>
+
+                      </span>
                     </div>
                   </v-col>
                   <v-col cols="12" sm="12" class="v-col" v-if="psnl_yn">
@@ -921,7 +944,7 @@
                     <line x1="7" y1="5" x2="0" y2="12" stroke="#222222"></line>
                     <line x1="0" y1="0" x2="8" y2="7" stroke="#00AEEF"></line>
                   </svg>
-                  <p class="text-body-1 font-weight-bold">변호사 명단</p>
+                  <p class="text-body-1 font-weight-bold">법무사 명단</p>
                   <p class="text-body-2 color-gray-shadow ml-4">
                     총
                     <span class="color-primary">{{ insuranceDTO.cbr_data.length }}</span>명
@@ -1077,7 +1100,7 @@
                           single-line
                           class="w-100 readonly"
                           density="comfortable"
-                      >고용 직원의 부정직행위 담보 특별약관(Dishonesty
+                      >사무원의 부정직행위 담보 특별약관(Dishonesty
                         Extension)</v-text-field
                       >
                     </div>
@@ -1218,7 +1241,7 @@
                       /> <p style="margin-left: 4px">명</p>
                       <p class="text-caption font-weight-light mt-2">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>
-                        각 지방 변호사회에 사무원으로 등록된 전 직원의 일괄가입 조건이며, 변호사 유자격자는 제외.<br/>
+                        각 지방 법무사회에 사무원으로 등록된 전 직원의 일괄가입 조건이며, 법무사 유자격자는 제외.<br/>
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>
                         직원수 10명 초과시 개별 문의
                       </p>
@@ -1402,7 +1425,7 @@
                   class="list-style-size-small list-style-type-disc text-14 mt-8 pl-5"
                 >
                   <li>
-                    이 보험상품은 대한변호사협회를 단체계약자, 가입 회원을
+                    이 보험상품은 대한법무사협회를 단체계약자, 가입 회원을
                     피보험자로 하는 단체계약 프로그램입니다.
                   </li>
                   <li>
@@ -1411,7 +1434,7 @@
                   <li>
                     보험료 입금 계좌번호 :
                     <b class="font-weight-medium text-error text-18"
-                      >신한은행 140-009-057480</b
+                      >신한은행 140-005-862100</b
                     ><span class="text-caption mx-3">|</span>예금주 :
                     <b class="font-weight-medium text-error text-18"
                       >록톤컴퍼니즈코리아</b
@@ -1552,16 +1575,9 @@
             </v-col>
             <!-- 개인만 보여주는 영역 끝 -->
 
-            <v-col cols="12" v-if="insuranceDTO.corp_region_cd==='010'">
-              <p class="text-body-2 color-gray-shadow">지원금</p>
-              <p class="text-body-2 text-right">
-                {{ Number(insuranceDTO?.insr_relief).toLocaleString() }} 원
-              </p>
-            </v-col>
-
             <!-- 법인만 보여주는 영역 시작 -->
             <v-col cols="12" v-if="insuranceDTO.user_cd != 'IND'">
-              <p class="text-body-2 color-gray-shadow">변호사 인원수</p>
+              <p class="text-body-2 color-gray-shadow">법무사 인원수</p>
               <p class="text-body-2 text-right">
                 {{ insuranceDTO.cbr_cnt }} 명
               </p>
@@ -1592,7 +1608,17 @@
               </p>
               <!-- <p class="text-body-1 font-weight-medium text-right">{{(insuranceDTO.insr_amt + insuranceDTO.cons_data.insr_amt)?.toLocaleString()}}원</p> -->
               <p class="text-body-1 font-weight-medium text-right">
-                {{ Number(insuranceDTO?.insr_amt - insuranceDTO?.insr_relief)?.toLocaleString() }}원
+                {{ Number(insuranceDTO?.insr_amt)?.toLocaleString() }}원
+              </p>
+            </v-col>
+            <v-col cols="12" v-if="insuranceDTO.corp_region_cd==='010'">
+              <p class="text-body-1 font-weight-medium">
+                <vue-feather type="minus" class="vertical-align-middle" />
+                지원금 차감액
+              </p>
+              <!-- <p class="text-body-1 font-weight-medium text-right">{{(insuranceDTO.insr_amt + insuranceDTO.cons_data.insr_amt)?.toLocaleString()}}원</p> -->
+              <p class="text-body-1 font-weight-medium text-right">
+                {{ Number(insuranceDTO?.insr_relief)?.toLocaleString() }}원
               </p>
             </v-col>
           </v-row>
@@ -1609,7 +1635,7 @@
             <v-col cols="12" class="flex-wrap">
               <p class="text-body-2 color-gray-shadow">특약명</p>
               <p class="text-body-2 text-right">
-                고용 직원 부정직행위 담보 특별약관<br/>(Dishonesty Extension)
+                사무원 부정직행위 담보 특별약관<br/>(Dishonesty Extension)
               </p>
             </v-col>
             <v-col cols="12">
@@ -1702,7 +1728,7 @@
           </p>
           <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'IND'">
             <i class="mdi mdi-alert-circle-outline mr-1"></i
-            ><span class="color-primary">변호사 성명과 등록번호</span>를 함께
+            ><span class="color-primary">법무사 성명과 등록번호</span>를 함께
             기재하여 송금해주시기 바랍니다.
           </p>
           <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'JNT'">
@@ -1864,6 +1890,7 @@ const insuranceDTOBackup = ref(new InsuranceDTO());
 const messageBoxDTO = ref(new MessageBoxDTO());
 const isSpctNew = ref(false)
 const psnl_yn = ref(false);
+const relief_yn = ref(false);
 
 // 오늘일자
 let TODAY = dayjs().format('YYYY-MM-DD');
@@ -2548,7 +2575,7 @@ async function onSubmit(params: any) {
     if (result.message === "DUPLICATION_FAILED") {
       messageBoxDTO.value.setWarning(
         '가입 이력이 있습니다.',
-        `변호사 명단 중 이미 보험계약이 되어있는 회원이 있습니다.<br/>퇴사자 등이 있는 경우 명단에서 삭제 후 재신청 바랍니다.
+        `법무사 명단 중 이미 보험계약이 되어있는 회원이 있습니다.<br/>퇴사자 등이 있는 경우 명단에서 삭제 후 재신청 바랍니다.
          <br/>(추가문의 : 록톤코리아 02-2011-0300)`
       );
     } else {
@@ -2603,7 +2630,7 @@ async function getUserInfoToSetUserInfoByInsurance() {
     insuranceDTO.value.user_birth = userDTO.value.user_birth;
     insuranceDTO.value.user_regno = userDTO.value.user_regno;
 
-    // 개인일 경우에는 명단이 없으나 총 1명으로 계산한다.
+    // 개인일 경우에는 명단이 없으나 총 1명으계산한다.
     insuranceDTO.value.cbr_cnt = 1;
     insuranceDTO.value.corp_type = '';
     insuranceDTO.value.corp_bnno = '';
@@ -2680,6 +2707,24 @@ watch(() => psnl_yn.value, (newValue, oldValue) => {
     }
   }
 })
+
+/**
+ * 보험계약 - 보험료 계산
+ */
+watch(
+    () =>
+      relief_yn.value
+    ,
+    (newValue, oldValue) => {
+      // 읽기전용일 경우 해당로직 제외
+      if (isReadOnlyAll.value) return false;
+      if(insuranceDTO.value.corp_region_cd == '010'){
+        if((!newValue && clm_lt_amt.value.getValueBySplit(0) < 6)||( newValue && clm_lt_amt.value.getValueBySplit(0) > 5)){
+          clm_lt_amt.value = ""
+        }
+      }
+    }
+);
 
 /**
  * 보험계약 - 보험료 계산
@@ -3027,6 +3072,9 @@ onMounted(async () => {
       insr_take_amt.value = 0;
     const clm = insuranceDTO.value.insr_clm_lt_amt + '/' + insuranceDTO.value.insr_year_clm_lt_amt;
     clm_lt_amt.value = INSR_RATE_TABLE.value.기본담보.구분.find(item => item.value == clm).code + '|' + INSR_RATE_TABLE.value.기본담보.구분.find(item => item.value == clm).value
+    if(insuranceDTO.value.corp_region_cd === '010' && Number(clm_lt_amt.value.getValueBySplit(0)) < 6 ){
+      relief_yn.value = true;
+    }
 
     insr_take_sec.value = insuranceDTO.value.insr_take_sec
     if(insuranceDTO.value.spct_data && insuranceDTO.value.spct_data != null)
@@ -3118,6 +3166,9 @@ onMounted(async () => {
 
       const clm = insuranceDTO.value.insr_clm_lt_amt + '/' + insuranceDTO.value.insr_year_clm_lt_amt;
       clm_lt_amt.value = INSR_RATE_TABLE.value.기본담보.구분.find(item => item.value == clm).code + '|' + INSR_RATE_TABLE.value.기본담보.구분.find(item => item.value == clm).value
+      if(insuranceDTO.value.corp_region_cd === '010' && Number(clm_lt_amt.value.getValueBySplit(0)) < 6 ){
+        relief_yn.value = true;
+      }
       if(insuranceDTO.value.insr_psnl_brdn_amt.getValueBySplit(0) != '3000000'){
         psnl_yn.value = true
       }else {
@@ -3151,34 +3202,44 @@ function changeTakeAmount() {
     take_amt =  take_amt.replace(/^0+/, '');
   }
   const num_insr_take_amt = Number(take_amt) * insuranceDTO.value.cbr_cnt
-  //sconsole.log(typeof(num_insr_take_amt))
-  if(num_insr_take_amt == 0) {
-    insr_take_sec.value = ''
+
+  if(Number(num_insr_take_amt)>1000000000){
+    messageBoxDTO.value.setWarning( '매출액 초과', '매출액 10억원 초과시 록톤코리아로 연락주시기 바랍니다.<br/>\n' +
+        '(T.02-2011-0300)');
+    insuranceDTO.value.insr_take_amt = 0;
+    insuranceDTO.value.insr_take_sec = '';
+    insr_take_sec.value = '';
+    insr_take_amt.value = 0;
+  }else {
+    if(num_insr_take_amt == 0) {
+      insr_take_sec.value = ''
+    }
+    else if (num_insr_take_amt <= 50000000){
+      insr_take_sec.value = '1|5천만원이하'
+    }else if (num_insr_take_amt <= 100000000){
+      insr_take_sec.value = '2|1억원이하'
+    }else if (num_insr_take_amt <= 200000000){
+      insr_take_sec.value = '3|2억원이하'
+    }else if (num_insr_take_amt <= 300000000){
+      insr_take_sec.value = '4|3억원이하'
+    }else if (num_insr_take_amt <= 500000000){
+      insr_take_sec.value = '5|5억원이하'
+    }else if (num_insr_take_amt <= 700000000){
+      insr_take_sec.value = '6|7억원이하'
+    }else if (num_insr_take_amt <= 1000000000){
+      insr_take_sec.value = '7|10억원이하'
+    }
+    insuranceDTO.value.insr_take_amt = take_amt
+    insuranceDTO.value.insr_take_sec = insr_take_sec.value
+
+
+    // 천의 자리마다 쉼표(,) 추가
+    take_amt = take_amt.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    // 사용자 입력 필드에 쉼표(,)가 추가된 값 설정
+    insr_take_amt.value = take_amt;
   }
-  else if (num_insr_take_amt <= 50000000){
-    insr_take_sec.value = '1|5천만원이하'
-  }else if (num_insr_take_amt <= 100000000){
-    insr_take_sec.value = '2|1억원이하'
-  }else if (num_insr_take_amt <= 200000000){
-    insr_take_sec.value = '3|2억원이하'
-  }else if (num_insr_take_amt <= 300000000){
-    insr_take_sec.value = '4|3억원이하'
-  }else if (num_insr_take_amt <= 500000000){
-    insr_take_sec.value = '5|5억원이하'
-  }else if (num_insr_take_amt <= 700000000){
-    insr_take_sec.value = '6|7억원이하'
-  }else if (num_insr_take_amt <= 1000000000){
-    insr_take_sec.value = '7|10억원이하'
-  }
-  insuranceDTO.value.insr_take_amt = take_amt
-  insuranceDTO.value.insr_take_sec = insr_take_sec.value
 
-
-  // 천의 자리마다 쉼표(,) 추가
-  take_amt = take_amt.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-  // 사용자 입력 필드에 쉼표(,)가 추가된 값 설정
-  insr_take_amt.value = take_amt;
 }
 
 function preventClickEvent(event) {

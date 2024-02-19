@@ -412,7 +412,8 @@
                       /><p style="font-size: 18px; margin-left: 10px">원</p>
                     </div>
                     <i class="mdi mdi-alert-circle-outline mr-2"></i
-                    >전년도 부가세과세표준증명 또는 손익계산서상의 매출액 기재 (전년도 1.1 ~ 12월말까지 매출)<br/>
+                    >매출액은 연초에 업무보고한 직전년도 매출액을 반드시 기재요망 (전년도 1.1 ~ 12월말까지 매출)<br/>
+                    <p class="ml-4"> * 대한 법무사협회 전산신고한 업무보고서 매출 확인 </p>
                     <span v-if="insuranceDTO.user_cd=='JNT'">
                       <i class="mdi mdi-alert-circle-outline mr-2"></i
                       >법무법인, 합동사무소의 연간총매출액을 법무사 수로 나눠 1인당 평균 매출액 기재<br/></span>
@@ -488,7 +489,7 @@
                     </v-btn-toggle>
                   </div>
                 </v-col>
-                <v-col cols="12" sm="12" class="v-col" style="height: 200px">
+                <v-col cols="12" sm="12" class="v-col" style="height: 260px">
                   <div class="head-col">
                     <p>보상한도</p>
                     <sup class="text-error">*</sup>
@@ -520,7 +521,7 @@
                           color="primary"
                           class="flex-grow-0"
                           style="flex-basis: 30%; border: 1px solid #EEEEEE"
-                          value="3|1억원/2억원"
+                          value="1억원/2억원"
                       >1억원/2억원</v-btn
                       >
                       <v-btn
@@ -566,10 +567,17 @@
                       >5억원/5억원</v-btn
                       >
                     </v-btn-toggle>
-                    <p class="text-caption font-weight-light color-gray" style="margin-top: 110px" >
-                      <i class="mdi mdi-alert-circle-outline mr-2"></i>1
-                      청구당 / 연간총보상한도<span v-if="insuranceDTO.user_cd === 'JNT'">(3명 이상 가입시 연간 총 보상한도는 2배수 적용)</span>
-                    </p>
+                    <span class="text-caption font-weight-light color-gray" style="margin-top: 110px">
+                      <p  >
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1
+                        청구당 / 연간총보상한도
+                      </p>
+                      <span v-if="insuranceDTO.corp_region_cd=='010'">
+                        <p><i class="mdi mdi-alert-circle-outline mr-2"></i>보상한도 Case6 이상 선택시 서울중앙지방법무사회 지원금 10만원이 적용됩니다.</p>
+                        <p>(8월 2일 이후 신규 가입시 지원금 일할계산 적용)</p>
+                      <p class="d-flex align-center mt-minus-4"><i class="mdi mdi-alert-circle-outline mr-2"></i>보상한도 Case1~5 선택시 지원금 미적용: 미적용 선택 <v-checkbox-btn v-model="relief_yn" :disabled="isReadOnlyAll"></v-checkbox-btn></p>
+                      </span>
+                      </span>
                     <v-divider class="border-0" />
                   </div>
                 </v-col>
@@ -595,9 +603,14 @@
                       >3백만원</v-btn
                       >
                     </v-btn-toggle>
-                    <p><i class="mdi mdi-alert-circle-outline mr-2"></i>자기부담금 선택 안함 시 기본 3백만원 선택.</p>
-                    <p><i class="mdi mdi-alert-circle-outline mr-2"></i>5백만원 선택 시 5%, 1천만원 선택 시 10% 할인 : 변경신청</p>
-                    <v-checkbox-btn v-model="psnl_yn" :disabled="isReadOnlyAll"></v-checkbox-btn>
+                    <span class="text-caption font-weight-light color-gray">
+                      <p><i class="mdi mdi-alert-circle-outline mr-2"></i>자기부담금 3백만원을 기본으로 함.</p>
+                      <p class="d-flex align-center mt-minus-4">
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>5백만원 선택 시 5%, 1천만원 선택 시 10% 할인 : 변경신청
+                        <v-checkbox-btn v-model="psnl_yn" :disabled="isReadOnlyAll"></v-checkbox-btn>
+                      </p>
+                    </span>
+
                   </div>
                 </v-col>
                 <v-col cols="12" sm="12" class="v-col" v-if="psnl_yn">
@@ -785,7 +798,7 @@
                         single-line
                         class="w-100 readonly"
                         density="comfortable"
-                    >고용 직원의 횡령 등 부정직행위 담보 특별약관(Dishonesty
+                    >사무원의 횡령 등 부정직행위 담보 특별약관(Dishonesty
                       Extension)</v-text-field
                     >
                   </div>
@@ -1111,7 +1124,7 @@
                 <li>
                   보험료 입금 계좌번호 :
                   <b class="font-weight-medium text-error text-18"
-                  >신한은행 140-009-057480</b
+                  >신한은행 140-005-862100</b
                   ><span class="text-caption mx-3">|</span>예금주 :
                   <b class="font-weight-medium text-error text-18"
                   >록톤컴퍼니즈코리아</b
@@ -1252,13 +1265,6 @@
           </v-col>
           <!-- 개인만 보여주는 영역 끝 -->
 
-          <v-col cols="12">
-            <p class="text-body-2 color-gray-shadow">지원금</p>
-            <p class="text-body-2 text-right">
-              {{ Number(insuranceDTO.insr_relief).toLocaleString() }} 원
-            </p>
-          </v-col>
-
           <!-- 법인만 보여주는 영역 시작 -->
           <v-col cols="12" v-if="insuranceDTO.user_cd != 'IND'">
             <p class="text-body-2 color-gray-shadow">법무사 인원수</p>
@@ -1292,7 +1298,17 @@
             </p>
             <!-- <p class="text-body-1 font-weight-medium text-right">{{(insuranceDTO.insr_amt + insuranceDTO.cons_data.insr_amt)?.toLocaleString()}}원</p> -->
             <p class="text-body-1 font-weight-medium text-right">
-              {{ Number(insuranceDTO?.insr_amt - insuranceDTO?.insr_relief)?.toLocaleString() }}원
+              {{ Number(insuranceDTO?.insr_amt)?.toLocaleString() }}원
+            </p>
+          </v-col>
+          <v-col cols="12" v-if="insuranceDTO.corp_region_cd==='010'">
+            <p class="text-body-1 font-weight-medium">
+              <vue-feather type="minus" class="vertical-align-middle" />
+              지원금 차감액
+            </p>
+            <!-- <p class="text-body-1 font-weight-medium text-right">{{(insuranceDTO.insr_amt + insuranceDTO.cons_data.insr_amt)?.toLocaleString()}}원</p> -->
+            <p class="text-body-1 font-weight-medium text-right">
+              {{ Number(insuranceDTO?.insr_relief)?.toLocaleString() }}원
             </p>
           </v-col>
         </v-row>
@@ -1309,7 +1325,7 @@
           <v-col cols="12" class="flex-wrap">
             <p class="text-body-2 color-gray-shadow">특약명</p>
             <p class="text-body-2 text-right">
-              고용 직원 부정직행위 담보 특별약관<br/>(Dishonesty Extension)
+              사무원 부정직행위 담보 특별약관<br/>(Dishonesty Extension)
             </p>
           </v-col>
           <v-col cols="12">
@@ -1549,6 +1565,7 @@ const insuranceDTO = ref(new InsuranceDTO());
 const messageBoxDTO = ref(new MessageBoxDTO());
 const clm_lt_amt = ref('');
 const psnl_yn = ref(false);
+const relief_yn = ref(false);
 
 // 오늘일자
 let today = dayjs().format('YYYY-MM-DD');
@@ -1644,6 +1661,9 @@ const insuranceNO = ref('');
     clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + insuranceDTO.value.insr_year_clm_lt_amt;
     if(insuranceDTO.value.insr_psnl_brdn_amt.getValueBySplit(0) != '3000000'){
       psnl_yn.value = true;
+    }
+    if(!insuranceDTO.value.insr_relief || insuranceDTO.value.insr_relief == 0){
+      relief_yn.value = true;
     }
 
     onLoading.value = true;

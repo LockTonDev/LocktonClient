@@ -238,7 +238,7 @@
                               {{ insuranceDTO.insr_sale_rt }}% 적용
                             </div>
                           </v-col>
-                          <v-col cols="6" class="point">
+                          <v-col cols="6" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
                             <div class="head-col">산출보험료</div>
                             <div class="data-col">
                               {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
@@ -255,7 +255,7 @@
                         <v-col cols="6">
                           <div class="head-col">특약명</div>
                           <div class="data-col">
-                            고용직원 부정직행위 담보 특별약관<br/>(Dishonesty
+                            사무원 부정직행위 담보 특별약관<br/>(Dishonesty
                             Extension)
                           </div>
                         </v-col>
@@ -294,7 +294,7 @@
                             {{ insuranceDTO?.spct_data?.cbr_cnt }} 명
                           </div>
                         </v-col>
-                        <v-col cols="6" class="point">
+                        <v-col cols="6" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
                           <div class="head-col font-weight-bold">산출보험료</div>
                           <div class="data-col font-weight-bold">
                             {{
@@ -313,8 +313,8 @@
                   <div class="mt-4" v-if="insuranceDTO.spct_join_yn == 'Y'">
                     <p class="font-weight-bold text-14 mb-2">총 납입보험료 정보</p>
                     <div class="table pa-4 text-center">
-                      <span class="text-12 mx-4">기본 보험료</span>
-                      <span class="text-14 mx-4 font-weight-medium"
+                      <span class="text-12 mx-2">기본 보험료</span>
+                      <span class="text-14 mx-2 font-weight-medium"
                       >{{
                           Number(
                               insuranceDTO?.insr_amt
@@ -323,25 +323,25 @@
                       >
                       <span v-if="insuranceDTO.corp_region_cd==='010'">
                         <span>-</span>
-                        <span class="text-12 mx-4">지원금</span>
-                        <span class="text-14 mx-4 font-weight-medium"
+                        <span class="text-12 mx-2">지원금</span>
+                        <span class="text-14 mx-2 font-weight-medium"
                         >{{
                             Number(insuranceDTO?.insr_relief).toLocaleString()
                           }}원</span
                         >
                       </span>
                       <span>+</span>
-                      <span class="text-12 mx-4">특약 보험료</span>
-                      <span class="text-14 mx-4 font-weight-medium"
+                      <span class="text-12 mx-2">특약 보험료</span>
+                      <span class="text-14 mx-2 font-weight-medium"
                       >{{
                           Number(insuranceDTO?.spct_data?.insr_amt).toLocaleString()
                         }}원</span
                       >
                       <span>=</span>
-                      <span class="text-12 mx-4">최종 보험료</span>
-                      <span class="text-14 mx-4 font-weight-medium color-primary"
+                      <span class="text-12 mx-2">최종 보험료</span>
+                      <span class="text-14 mx-2 font-weight-medium color-primary"
                       >{{
-                          Number(insuranceDTO?.insr_tot_amt).toLocaleString()
+                          Number(insuranceDTO?.insr_tot_amt - insuranceDTO?.insr_relief).toLocaleString()
                         }}
                 원</span
                       >
@@ -716,7 +716,7 @@
                         <v-col cols="6">
                           <div class="head-col flex-wrap">보상한도</div>
                           <div class="data-col">
-                            {{ insuranceDTO?.insr_clm_lt_amt?.getValueBySplit(1) }} /
+                            {{ insuranceDTO?.insr_clm_lt_amt }} /
                             {{ insuranceDTO?.insr_year_clm_lt_amt
                             }}<span class="text-10 color-gray ml-2"
                           >(1청구당/연간총)</span
@@ -748,7 +748,7 @@
                             {{ insuranceDTO.insr_sale_rt }}% 적용
                           </div>
                         </v-col>
-                        <v-col cols="6" class="point">
+                        <v-col cols="6" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
                           <div class="head-col">산출보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
@@ -756,6 +756,36 @@
                         </v-col>
                       </v-row>
                     </div>
+                    <template v-if="insuranceDTO.corp_region_cd=='010'">
+                    <p class="font-weight-bold text-14 mb-2">총 납입보험료 정보</p>
+                    <div class="table pa-4 text-center">
+                      <span class="text-12 mx-2">기본 보험료</span>
+                      <span class="text-14 mx-2 font-weight-medium"
+                      >{{
+                          Number(
+                              insuranceDTO?.insr_amt
+                          ).toLocaleString()
+                        }}원</span
+                      >
+                      <span v-if="insuranceDTO.corp_region_cd==='010'">
+                        <span>-</span>
+                        <span class="text-12 mx-2">지원금</span>
+                        <span class="text-14 mx-2 font-weight-medium"
+                        >{{
+                            Number(insuranceDTO?.insr_relief).toLocaleString()
+                          }}원</span
+                        >
+                      </span>
+                      <span>=</span>
+                      <span class="text-12 mx-2">최종 보험료</span>
+                      <span class="text-14 mx-2 font-weight-medium color-primary"
+                      >{{
+                          Number(insuranceDTO?.insr_tot_amt - insuranceDTO?.insr_relief).toLocaleString()
+                        }}
+                원</span
+                      >
+                    </div>
+                    </template>
                     <ul
                         class="list-style-size-small list-style-type-disc text-11 pl-4 mt-2"
                     >
@@ -1118,7 +1148,7 @@
                         <v-col cols="6">
                           <div class="head-col flex-wrap">보상한도</div>
                           <div class="data-col">
-                            {{ insuranceDTO?.insr_clm_lt_amt?.getValueBySplit(1) }} /
+                            {{ insuranceDTO?.insr_clm_lt_amt }} /
                             {{ insuranceDTO?.insr_year_clm_lt_amt }}
                             <span class="text-10 color-gray ml-2">(1청구당/연간총)</span>
                           </div>
@@ -1149,8 +1179,8 @@
                             {{ insuranceDTO.cbr_cnt  }} 명
                           </div>
                         </v-col>
-                        <v-col cols="6" class="point">
-                          <div class="head-col">산출 보험료</div>
+                        <v-col cols="6" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
+                          <div class="head-col">산출보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
                           </div>
@@ -1166,7 +1196,7 @@
                         <v-col cols="6">
                           <div class="head-col">특약명</div>
                           <div class="data-col">
-                            고용직원 부정직행위 담보 특별약관<br/>(Dishonesty
+                            사무원 부정직행위 담보 특별약관<br/>(Dishonesty
                             Extension)
                           </div>
                         </v-col>
@@ -1207,7 +1237,7 @@
                             {{ insuranceDTO?.spct_data?.cbr_cnt }} 명
                           </div>
                         </v-col>
-                        <v-col cols="6" class="point">
+                        <v-col cols="6" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
                           <div class="head-col font-weight-bold">산출보험료</div>
                           <div class="data-col font-weight-bold">
                             {{
@@ -1269,7 +1299,7 @@
                     >
                       <li>
                         보험료 입금 계좌번호 :
-                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                        <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-005-862100</b>
                         <span class="text-10 mx-3">|</span>예금주 :
                         <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                       </li>
@@ -1803,7 +1833,7 @@
                           <v-col cols="6">
                             <div class="head-col flex-wrap">보상한도</div>
                             <div class="data-col">
-                              {{ insuranceDTO?.insr_clm_lt_amt?.getValueBySplit(1) }} /
+                              {{ insuranceDTO?.insr_clm_lt_amt }} /
                               {{ insuranceDTO?.insr_year_clm_lt_amt }}
                               <span class="text-10 color-gray ml-2">(1청구당/연간총)</span>
                             </div>
@@ -1834,14 +1864,48 @@
                               {{ insuranceDTO.cbr_cnt  }} 명
                             </div>
                           </v-col>
-                          <v-col cols="6" class="point">
-                            <div class="head-col">산출 보험료</div>
+                          <v-col cols="6" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
+                            <div class="head-col">산출보험료</div>
                             <div class="data-col">
                               {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
                             </div>
                           </v-col>
                         </v-row>
                       </div>
+
+                      <template v-if="insuranceDTO.corp_region_cd=='010'">
+                        <p class="font-weight-bold text-14 mb-2">총 납입보험료 정보</p>
+                        <div class="table pa-4 text-center">
+                          <span class="text-12 mx-2">기본 보험료</span>
+                          <span class="text-14 mx-2 font-weight-medium"
+                          >{{
+                              Number(
+                                  insuranceDTO?.insr_amt
+                              ).toLocaleString()
+                            }}원</span
+                          >
+                          <span v-if="insuranceDTO.corp_region_cd==='010'">
+                        <span>-</span>
+                        <span class="text-12 mx-2">지원금</span>
+                        <span class="text-14 mx-2 font-weight-medium"
+                        >{{
+                            Number(insuranceDTO?.insr_relief).toLocaleString()
+                          }}원</span
+                        >
+                      </span>
+                          <span>=</span>
+                          <span class="text-12 mx-2">최종 보험료</span>
+                          <span class="text-14 mx-2 font-weight-medium color-primary"
+                          >{{
+                              Number(insuranceDTO?.insr_tot_amt - insuranceDTO?.insr_relief).toLocaleString()
+                            }}
+                원</span
+                          >
+                        </div>
+                      </template>
+
+
+
                       <ul
                           class="list-style-size-small list-style-type-disc text-11 pl-4 mt-1"
                       >

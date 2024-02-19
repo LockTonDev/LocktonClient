@@ -10,9 +10,16 @@
     .footer-link {
         background-color: $color-darkblack;
         color: rgba(255, 255, 255, 0.9);
-        .v-btn{            
-            font-weight: 300;
-            font-size: 16px;
+        .v-btn{
+            @media screen and (min-width:600px) {
+                font-weight: 300;
+                font-size: 16px;
+            }
+            @media screen and (max-width:599px) {
+                font-weight: 100;
+                font-size: 12px;
+            }
+
             background-color:$color-darkblack;
             padding:20px;
             
