@@ -21,15 +21,15 @@ export class CommonCode {
 
   static async getCodeList(groupCode: string): Promise<any[]> {
     // 로컬 스토리지에서 코드를 가져옴
-    //let cachedCodes = localStorage.getItem(CommonCode.CODE_CACHE_KEY);
+    let cachedCodes = localStorage.getItem(CommonCode.CODE_CACHE_KEY);
     //cachedCodes = null;
-    //if (cachedCodes) {
+    if (cachedCodes) {
 
-    //} else {
+    } else {
       // 로컬 스토리지에 코드가 없는 경우 서버에서 조회
       await this.fetchCodeAll();
-      let cachedCodes = localStorage.getItem(CommonCode.CODE_CACHE_KEY);
-    //}
+      cachedCodes = localStorage.getItem(CommonCode.CODE_CACHE_KEY);
+    }
 
     const codes = JSON.parse(cachedCodes);
     return codes.filter((code: any) => code.grp_cd === groupCode);
