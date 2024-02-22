@@ -9,7 +9,7 @@
     <v-app>
   
       <v-main>
-        
+
         <!-- 상단영역 ( 로고 )-->
         <!-- <Header /> -->
 
@@ -30,4 +30,3 @@
       </v-main>
     </v-app>
   </template>
-  

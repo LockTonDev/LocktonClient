@@ -4,12 +4,16 @@ import {MenuDEF, MenuACC, MenuTAX, MenuADV, MenuCAA, MenuPAT, MenuLAW}  from "./
 
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
+import { useStore } from '@/stores/mutation'
 import jwt_decode from 'jwt-decode';
-import { MessageBoxDTO, ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, CBRDataDTO } from '@/model';
+import { MessageBoxDTO,  ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, CBRDataDTO } from '@/model';
 import MessageBox from '@/components/MessageBox.vue';
 
 const authStore = useAuthStore();
 const _AUTH_USER  = ref(JSON.parse(localStorage.getItem('_AUTH_USER')));
+
+const store = useStore();
+const { isLoading } = storeToRefs(store);
 
 const height = ref({ max: "90", min:"64" });
 const admin = false;
@@ -19,6 +23,7 @@ const sidebarMenu = ref(MenuDEF);
 
 const warnTimeoutMin = 29//3
 const messageBoxDTO = ref(new MessageBoxDTO());
+//const LoadingBarDTO = ref(new LoadingBarDTO());
 
 // REFRESH 시 기본 설정값 셋팅
 switch(_AUTH_USER?.value?.businessCd) {
@@ -141,6 +146,7 @@ onUnmounted(() => {
 </script>
 
 <template>
+
   <v-app-bar flat :height="height.max" app >
     <!-- ---------------------------------------------- -->
     <!---Logo part -->

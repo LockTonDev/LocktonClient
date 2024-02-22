@@ -1,6 +1,5 @@
 <template>
   <RouterView></RouterView>
-  <LoadingBar></LoadingBar>
 </template>
 
 <script setup lang="ts">
@@ -9,8 +8,6 @@ import { RouterView } from "vue-router";
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
 import router from '@/router';
-import LoadingBar from './components/LoadingBar.vue';
-
 
 const authStore = useAuthStore();
 const { _AUTH_USER } = storeToRefs(authStore);
@@ -23,7 +20,7 @@ const handler = (event: BeforeUnloadEvent) => {
 
 onMounted(() => {
   window.addEventListener('beforeunload', handler);
-
+  //useStore
 });
 
 onBeforeUnmount(() => {

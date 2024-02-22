@@ -67,7 +67,6 @@
       </v-card-text>
     </v-card>
   </v-dialog>
-
 </template>
 
 <script setup lang="ts">
@@ -77,6 +76,7 @@
   import ImagesLogo from '@/components/ImagesLogo.vue';
   import TermsOfService from '@/components/TermsOfService.vue';
   import TermsOfPersonalInfo from '@/components/TermsOfPersonalInfo.vue';
+
   const termsOfService = ref(false);
   const termsOfPersonalInfo = ref(false);
   const termsOfEmail = ref(false);
@@ -84,6 +84,7 @@
 
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
+
 
   const businessCd = ref(_AUTH_USER?.value?.businessCd);
 

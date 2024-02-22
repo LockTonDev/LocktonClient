@@ -4,8 +4,6 @@ import { ref, watchEffect, onMounted} from "vue";
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
 
-
-
 const authStore = useAuthStore();
 const { _AUTH_USER } = storeToRefs(authStore);
 

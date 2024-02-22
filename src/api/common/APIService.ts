@@ -1,15 +1,24 @@
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
+import { useStore } from '@/stores/mutation';
+import { LoadingBarDTO } from '@/model';
 import axios from 'axios';
 
-const loading = ref(0); 
+const loading = ref(0);
+const showLoading = (id) => {
+    LoadingBarDTO.value.
+    console.log('showLoading',id ,isLoading.value)
 
-const showLoading = () => {
   // localStorage.setItem('loading', true);
 };
 
 const hideLoading = () => {
+    console.log('hideLoading')
+    const store = useStore();
+    const { isLoading } = storeToRefs(store);
+    store.hide();
+
   // localStorage.setItem('loading', false);
 };
 
@@ -22,7 +31,7 @@ const commonService = axios.create({
 
 commonService.interceptors.request.use(
   config => {
-    //showLoading(); // Show loading bar
+    showLoading('0'); // Show loading bar
     const { _AUTH_USER } = useAuthStore();
     const isLoggedIn = !!_AUTH_USER?.accessToken;
 
@@ -81,7 +90,7 @@ const fileService = axios.create({
 
 fileService.interceptors.request.use(
     config => {
-        //showLoading(); // Show loading bar
+        showLoading('1'); // Show loading bar
         const { _AUTH_USER } = useAuthStore();
         const isLoggedIn = !!_AUTH_USER?.accessToken;
 

@@ -192,7 +192,7 @@ const isNoData = ref(false);
 let BoardList = ref([]);
 
 	const page = ref({
-      title: "알림마당",
+      title: "공지사항",
     });
 	const breadcrumbs = ref([
 		{
@@ -201,10 +201,10 @@ let BoardList = ref([]);
 			href: "/",
 		},
 		{
-			text: "알림마당",
+			text: "공지사항",
 			disabled: true,
 			href: "/",
-		},
+		}
   ]);
   
 
