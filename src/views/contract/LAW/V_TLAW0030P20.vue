@@ -64,7 +64,7 @@
                       <span class="color-primary">&#x275A;</span>&nbsp;계약자/피보험자 정보
                     </p>
                     <v-row class="table">
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>보험계약자</p>
                         </div>
@@ -72,7 +72,7 @@
                           대한법무사협회
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>보험기간</p>
                         </div>
@@ -80,7 +80,7 @@
                           {{ insuranceDTO.insr_st_dt }}(00:01) ~ {{ insuranceDTO.insr_cncls_dt }}(00:01)
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>피보험자</p>
                         </div>
@@ -88,7 +88,7 @@
                           {{ insuranceDTO.user_nm }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>생년월일</p>
                         </div>
@@ -96,7 +96,7 @@
                           {{ insuranceDTO.user_birth }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>등록번호</p>
                         </div>
@@ -104,7 +104,7 @@
                           {{ insuranceDTO.user_regno }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>소속 지방회</p>
                         </div>
@@ -112,7 +112,7 @@
                           {{ insuranceDTO.corp_region_nm }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사무소명</p>
                         </div>
@@ -120,7 +120,7 @@
                           {{ insuranceDTO.corp_nm }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사업자번호</p>
                         </div>
@@ -128,7 +128,7 @@
                           {{ insuranceDTO.corp_cnno }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사무소 전화</p>
                         </div>
@@ -136,7 +136,7 @@
                           {{ insuranceDTO.corp_telno }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사무소 팩스</p>
                         </div>
@@ -144,7 +144,7 @@
                           {{ insuranceDTO.corp_faxno }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>담당자 성명</p>
                         </div>
@@ -152,7 +152,7 @@
                           {{ insuranceDTO.corp_cust_nm }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>휴대 전화</p>
                         </div>
@@ -192,18 +192,18 @@
                       </p>
 
                         <v-row class="table">
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col">보험기간</div>
                             <div class="data-col">
                               {{ insuranceDTO.insr_st_dt }}(00:01) ~
                               {{ insuranceDTO.insr_cncls_dt }}(00:01)
                             </div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col">소급담보일</div>
                             <div class="data-col">{{ insuranceDTO.insr_retr_dt }}</div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col flex-wrap">보상한도</div>
                             <div class="data-col">
                               {{ insuranceDTO?.insr_clm_lt_amt }} /
@@ -213,32 +213,32 @@
                               >
                             </div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col flex-wrap">자기부담금</div>
                             <div class="data-col">
                               {{ insuranceDTO?.insr_psnl_brdn_amt?.getValueBySplit(1) }}
                               <span class="text-10 color-gray ml-2">(1청구당)</span>
                             </div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col">매출액구간</div>
                             <div class="data-col">
                               {{ insuranceDTO?.insr_take_sec?.getValueBySplit(1) }}
                             </div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col">기준보험료</div>
                             <div class="data-col">
                               {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
                             </div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col">할인 및 할증률</div>
                             <div class="data-col">
                               {{ insuranceDTO.insr_sale_rt }}% 적용
                             </div>
                           </v-col>
-                          <v-col cols="6" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
                             <div class="head-col">산출보험료</div>
                             <div class="data-col">
                               {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
@@ -252,20 +252,20 @@
                         <span class="color-primary">&#x275A;</span>&nbsp;특별약관
                       </p>
                       <v-row class="table">
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">특약명</div>
                           <div class="data-col">
                             사무원 부정직행위 담보 특별약관<br/>(Dishonesty
                             Extension)
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">소급담보일</div>
                           <div class="data-col">
                             {{ insuranceDTO.spct_data.insr_retr_dt }}
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col flex-wrap">보상한도</div>
                           <div class="data-col">
                             {{
@@ -277,7 +277,7 @@
                           >
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col flex-wrap">자기부담금</div>
                           <div class="data-col">
                             {{
@@ -288,13 +288,13 @@
                             <span class="text-10 color-gray ml-2">(1청구당)</span>
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">사무원 인원수</div>
                           <div class="data-col">
                             {{ insuranceDTO?.spct_data?.cbr_cnt }} 명
                           </div>
                         </v-col>
-                        <v-col cols="6" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
                           <div class="head-col font-weight-bold">산출보험료</div>
                           <div class="data-col font-weight-bold">
                             {{
@@ -352,7 +352,7 @@
                       <li class="text-11">
                         <p>
                           보험료 입금 계좌번호 :
-                          <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                          <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-005-862100</b>
                           <span class="text-10 mx-3">|</span>예금주 :
                           <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                         </p>
@@ -574,7 +574,7 @@
                       <span class="color-primary">&#x275A;</span>&nbsp;계약자/피보험자 정보
                     </p>
                     <v-row class="table">
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>보험계약자</p>
                         </div>
@@ -582,7 +582,7 @@
                           대한법무사협회
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>보험기간</p>
                         </div>
@@ -590,7 +590,7 @@
                           {{ insuranceDTO.base_insr_st_dt }}(00:01) ~ {{ insuranceDTO.base_insr_cncls_dt }}(00:01)
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>피보험자</p>
                         </div>
@@ -598,7 +598,7 @@
                           {{ insuranceDTO.user_nm }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>생년월일</p>
                         </div>
@@ -606,7 +606,7 @@
                           {{ insuranceDTO.user_birth }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>등록번호</p>
                         </div>
@@ -614,7 +614,7 @@
                           {{ insuranceDTO.user_regno }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>소속 지방회</p>
                         </div>
@@ -622,7 +622,7 @@
                           {{ insuranceDTO.corp_region_nm }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사무소명</p>
                         </div>
@@ -630,7 +630,7 @@
                           {{ insuranceDTO.corp_nm }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사업자번호</p>
                         </div>
@@ -638,7 +638,7 @@
                           {{ insuranceDTO.corp_cnno }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사무소 전화</p>
                         </div>
@@ -646,7 +646,7 @@
                           {{ insuranceDTO.corp_telno }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사무소 팩스</p>
                         </div>
@@ -654,7 +654,7 @@
                           {{ insuranceDTO.corp_faxno }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>담당자 성명</p>
                         </div>
@@ -662,7 +662,7 @@
                           {{ insuranceDTO.corp_cust_nm }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>휴대 전화</p>
                         </div>
@@ -702,18 +702,18 @@
                       </p>
 
                       <v-row class="table">
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">보험기간</div>
                           <div class="data-col">
                             {{ insuranceDTO.insr_st_dt }}(00:01) ~
                             {{ insuranceDTO.insr_cncls_dt }}(00:01)
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">소급담보일</div>
                           <div class="data-col">{{ insuranceDTO.insr_retr_dt }}</div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col flex-wrap">보상한도</div>
                           <div class="data-col">
                             {{ insuranceDTO?.insr_clm_lt_amt }} /
@@ -723,32 +723,32 @@
                           >
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col flex-wrap">자기부담금</div>
                           <div class="data-col">
                             {{ insuranceDTO?.insr_psnl_brdn_amt?.getValueBySplit(1) }}
                             <span class="text-10 color-gray ml-2">(1청구당)</span>
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">매출액구간</div>
                           <div class="data-col">
                             {{ insuranceDTO?.insr_take_sec?.getValueBySplit(1) }}
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">기준보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">할인 및 할증률</div>
                           <div class="data-col">
                             {{ insuranceDTO.insr_sale_rt }}% 적용
                           </div>
                         </v-col>
-                        <v-col cols="6" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="[insuranceDTO.corp_region_cd==='010' ? 'border-black-1 font-weight-bold' : 'point']">
                           <div class="head-col">산출보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
@@ -792,7 +792,7 @@
                       <li class="text-11">
                         <p>
                           보험료 입금 계좌번호 :
-                          <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                          <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-005-862100</b>
                           <span class="text-10 mx-3">|</span>예금주 :
                           <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                         </p>
@@ -982,7 +982,7 @@
                       <span class="color-primary">&#x275A;</span>&nbsp;계약자/피보험자 정보
                     </p>
                     <v-row class="table">
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>보험계약자</p>
                         </div>
@@ -990,7 +990,7 @@
                           대한법무사협회
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>보험기간</p>
                         </div>
@@ -998,7 +998,7 @@
                           {{ insuranceDTO.insr_st_dt }}(00:01) ~ {{ insuranceDTO.insr_cncls_dt }}(00:01)
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사무소명</p>
                         </div>
@@ -1006,7 +1006,7 @@
                           {{ insuranceDTO.user_nm }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>대표자 성명</p>
                         </div>
@@ -1014,7 +1014,7 @@
                           {{ insuranceDTO.corp_ceo_nm }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>피보험자</p>
                         </div>
@@ -1022,7 +1022,7 @@
                           <p v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}} 명</p>
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사무소 형태</p>
                         </div>
@@ -1030,7 +1030,7 @@
                           {{ corpTypeItems.find(item => item.value ==  insuranceDTO.corp_type)?.title }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사업자번호</p>
                         </div>
@@ -1039,7 +1039,7 @@
                           <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_cnno"  name="corp_cnno" label="사업자번호" single-line density="comfortable" readonly/> -->
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>법인번호</p>
                         </div>
@@ -1047,7 +1047,7 @@
                           {{ insuranceDTO.corp_bnno }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사무소 전화</p>
                         </div>
@@ -1056,7 +1056,7 @@
                           <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_telno"  name="corp_telno" label="사무소 팩스" single-line density="comfortable"/> -->
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>사무소 팩스</p>
                         </div>
@@ -1065,7 +1065,7 @@
                           <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_faxno" name="corp_taxno" label="사무소 팩스" single-line density="comfortable"/> -->
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>소속 지방회</p>
                         </div>
@@ -1073,7 +1073,7 @@
                           {{ insuranceDTO.corp_region_nm }}
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>담당자 성명</p>
                         </div>
@@ -1082,7 +1082,7 @@
                           <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line density="comfortable"/> -->
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>휴대 전화</p>
                         </div>
@@ -1091,7 +1091,7 @@
                           <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_hpno" name="corp_cust_hpno" label="휴대 전화" single-line density="comfortable"/> -->
                         </div>
                       </v-col>
-                      <v-col cols="6" class="v-col">
+                      <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                         <div class="head-col">
                           <p>이메일</p>
                         </div>
@@ -1126,26 +1126,26 @@
                         <span class="color-primary">&#x275A;</span>&nbsp;기본담보
                       </p>
                       <v-row class="table">
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">보험기간</div>
                           <div class="data-col">
                             {{ insuranceDTO.insr_st_dt }}(00:01) ~
                             {{ insuranceDTO.insr_cncls_dt }}(00:01)
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col flex-wrap">소급담보일</div>
                           <div class="data-col">개인별 적용</div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col flex-wrap">무사고 할인</div>
                           <div class="data-col">개인별 적용</div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col flex-wrap">인원수 할인</div>
                           <div class="data-col">{{ insuranceDTO.insr_pcnt_sale_rt }} %</div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col flex-wrap">보상한도</div>
                           <div class="data-col">
                             {{ insuranceDTO?.insr_clm_lt_amt }} /
@@ -1153,33 +1153,33 @@
                             <span class="text-10 color-gray ml-2">(1청구당/연간총)</span>
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col flex-wrap">자기부담금</div>
                           <div class="data-col">
                             {{ insuranceDTO?.insr_psnl_brdn_amt?.getValueBySplit(1) }}
                             <span class="text-10 color-gray ml-2">(1청구당)</span>
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">매출액구간</div>
                           <div class="data-col">
                             {{ insuranceDTO?.insr_take_sec?.getValueBySplit(1) }}
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">기준보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">법무사 인원수</div>
                           <div class="data-col">
                             <!-- {{ insuranceDTO.cbr_data.length }} 명 -->
                             {{ insuranceDTO.cbr_cnt  }} 명
                           </div>
                         </v-col>
-                        <v-col cols="6" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" :class="[insuranceDTO.corp_region_cd==='010' ? 'border-black-1 font-weight-bold' : 'point']">
                           <div class="head-col">산출보험료</div>
                           <div class="data-col">
                             {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
@@ -1193,20 +1193,20 @@
                         <span class="color-primary">&#x275A;</span>&nbsp;특별약관
                       </p>
                       <v-row class="table">
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">특약명</div>
                           <div class="data-col">
                             사무원 부정직행위 담보 특별약관<br/>(Dishonesty
                             Extension)
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">소급담보일</div>
                           <div class="data-col">
                             {{ insuranceDTO.spct_data.insr_retr_dt }}
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col flex-wrap">보상한도</div>
                           <div class="data-col">
                             {{
@@ -1220,7 +1220,7 @@
                           >
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col flex-wrap">자기부담금</div>
                           <div class="data-col">
                             {{
@@ -1231,13 +1231,13 @@
                             <span class="text-10 color-gray ml-2">(1청구당)</span>
                           </div>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'">
                           <div class="head-col">사무원 인원수</div>
                           <div class="data-col">
                             {{ insuranceDTO?.spct_data?.cbr_cnt }} 명
                           </div>
                         </v-col>
-                        <v-col cols="6" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" :class="[insuranceDTO.corp_region_cd==='010' ? 'border-black-1 font-weight-bold' : 'point']">
                           <div class="head-col font-weight-bold">산출보험료</div>
                           <div class="data-col font-weight-bold">
                             {{
@@ -1667,7 +1667,7 @@
                         <span class="color-primary">&#x275A;</span>&nbsp;계약자/피보험자 정보
                       </p>
                       <v-row class="table">
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>보험계약자</p>
                           </div>
@@ -1675,7 +1675,7 @@
                             대한법무사협회
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>보험기간</p>
                           </div>
@@ -1683,7 +1683,7 @@
                             {{ insuranceDTO.base_insr_st_dt }}(00:01) ~ {{ insuranceDTO.base_insr_cncls_dt }}(00:01)
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>사무소명</p>
                           </div>
@@ -1691,7 +1691,7 @@
                             {{ insuranceDTO.user_nm }}
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>대표자 성명</p>
                           </div>
@@ -1699,7 +1699,7 @@
                             {{ insuranceDTO.corp_ceo_nm }}
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>피보험자</p>
                           </div>
@@ -1707,7 +1707,7 @@
                             <p v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}} 명</p>
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>사무소 형태</p>
                           </div>
@@ -1715,7 +1715,7 @@
                             {{ corpTypeItems.find(item => item.value ==  insuranceDTO.corp_type)?.title }}
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>사업자번호</p>
                           </div>
@@ -1724,7 +1724,7 @@
                             <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_cnno"  name="corp_cnno" label="사업자번호" single-line density="comfortable" readonly/> -->
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>법인번호</p>
                           </div>
@@ -1732,7 +1732,7 @@
                             {{ insuranceDTO.corp_bnno }}
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>사무소 전화</p>
                           </div>
@@ -1741,7 +1741,7 @@
                             <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_telno"  name="corp_telno" label="사무소 팩스" single-line density="comfortable"/> -->
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>사무소 팩스</p>
                           </div>
@@ -1750,7 +1750,7 @@
                             <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_faxno" name="corp_taxno" label="사무소 팩스" single-line density="comfortable"/> -->
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>소속 지방회</p>
                           </div>
@@ -1758,7 +1758,7 @@
                             {{ insuranceDTO.corp_region_nm }}
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>담당자 성명</p>
                           </div>
@@ -1767,7 +1767,7 @@
                             <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line density="comfortable"/> -->
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>휴대 전화</p>
                           </div>
@@ -1776,7 +1776,7 @@
                             <!-- <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_hpno" name="corp_cust_hpno" label="휴대 전화" single-line density="comfortable"/> -->
                           </div>
                         </v-col>
-                        <v-col cols="6" class="v-col">
+                        <v-col :cols="checkMobile.isMobile?'12':'6'" class="v-col">
                           <div class="head-col">
                             <p>이메일</p>
                           </div>
@@ -1811,26 +1811,26 @@
                           <span class="color-primary">&#x275A;</span>&nbsp;기본담보
                         </p>
                         <v-row class="table">
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col">보험기간</div>
                             <div class="data-col">
                               {{ insuranceDTO.insr_st_dt }}(00:01) ~
                               {{ insuranceDTO.insr_cncls_dt }}(00:01)
                             </div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col flex-wrap">소급담보일</div>
                             <div class="data-col">개인별 적용</div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col flex-wrap">무사고 할인</div>
                             <div class="data-col" >개인별 적용</div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col flex-wrap">인원수 할인</div>
                             <div class="data-col">{{ insuranceDTO.insr_pcnt_sale_rt }} %</div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col flex-wrap">보상한도</div>
                             <div class="data-col">
                               {{ insuranceDTO?.insr_clm_lt_amt }} /
@@ -1838,33 +1838,33 @@
                               <span class="text-10 color-gray ml-2">(1청구당/연간총)</span>
                             </div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col flex-wrap">자기부담금</div>
                             <div class="data-col">
                               {{ insuranceDTO?.insr_psnl_brdn_amt?.getValueBySplit(1) }}
                               <span class="text-10 color-gray ml-2">(1청구당)</span>
                             </div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col">매출액구간</div>
                             <div class="data-col">
                               {{ insuranceDTO?.insr_take_sec?.getValueBySplit(1) }}
                             </div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col">기준보험료</div>
                             <div class="data-col">
                               {{ Number(insuranceDTO.insr_base_amt).toLocaleString() }} 원
                             </div>
                           </v-col>
-                          <v-col cols="6">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'">
                             <div class="head-col">법무사 인원수</div>
                             <div class="data-col">
                               <!-- {{ insuranceDTO.cbr_data.length }} 명 -->
                               {{ insuranceDTO.cbr_cnt  }} 명
                             </div>
                           </v-col>
-                          <v-col cols="6" :class="[insuranceDTO.corp_region_cd==='010' ? '' : 'point']">
+                          <v-col :cols="checkMobile.isMobile?'12':'6'" :class="[insuranceDTO.corp_region_cd==='010' ? 'border-black-1 font-weight-bold' : 'point']">
                             <div class="head-col">산출보험료</div>
                             <div class="data-col">
                               {{ Number(insuranceDTO.insr_amt).toLocaleString() }} 원
@@ -1911,7 +1911,7 @@
                       >
                         <li>
                           보험료 입금 계좌번호 :
-                          <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-009-057480</b>
+                          <b class="font-weight-medium color-error text-15 vertical-middle">신한은행 140-005-862100</b>
                           <span class="text-10 mx-3">|</span>예금주 :
                           <b class="font-weight-medium color-error text-15 vertical-middle">록톤컴퍼니즈코리아</b>
                         </li>
@@ -2262,6 +2262,9 @@ import html2pdf from 'html2pdf.js';
 
 import '../../../assets/css/printpdf.css';
 
+import {useMobileStore} from "@/stores";
+const checkMobile = useMobileStore();
+
 const authStore = useAuthStore();
 const { _AUTH_ADMIN } = storeToRefs(authStore);
 const isAdmin = _AUTH_ADMIN.value === null ? false: true;
@@ -2399,7 +2402,7 @@ const onExportPDF = (viewType: string) => {
 
 onMounted(async () => {
   statusCdItems.value = await CommonCode.getCodeList('COM030');
-  corpTypeItems.value = await CommonCode.getCodeList('COM050');
+  corpTypeItems.value = await CommonCode.getCodeList('COM052');
 
   isPdf.value = props.isPdf;
   isNotAuth.value = props.isNotAuth;

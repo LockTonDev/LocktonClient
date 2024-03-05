@@ -1,8 +1,14 @@
 .horizontaTopbar {
   
   .v-toolbar__content {
-    padding: $content-padding;
-    max-width: $content-width;
+    @media screen and (min-width:960px) {
+      padding: $content-padding;
+      max-width: $content-width;
+    }
+    @media screen and (max-width:959px) {
+      max-width: $mobile-content-width;
+      padding: $mobile-content-padding;
+    }
     margin: 0 auto;
   }
 }
@@ -18,8 +24,14 @@
 
   .horizontal-navbar {
     margin: 0px auto;
-    padding: $content-padding;
-    max-width: $content-width;
+    @media screen and (min-width:960px) {
+      padding: $content-padding;
+      max-width: $content-width;
+    }
+    @media screen and (max-width:959px) {
+      max-width: $mobile-content-width;
+      padding: $mobile-content-padding;
+    }
     align-items: center;
     display: flex;
     z-index: 11;

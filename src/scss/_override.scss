@@ -1,11 +1,44 @@
 
 .text-h3 {
-  @media screen and (min-width:600px) {
+  @media screen and (min-width:960px) {
     font-size: 3rem !important;
   }
-  @media screen and (max-width:599px) {
+  @media screen and (max-width:959px) {
     font-size: 1.5rem !important;
   }
+}
+
+.text-body-1 {
+  @media screen and (min-width:960px) {
+    font-size: 1rem !important;
+  }
+  @media screen and (max-width:959px) {
+    font-size: 0.7rem !important;
+  }
+}
+.text-h6 {
+  @media screen and (min-width:960px) {
+    font-size: 1.25rem !important;
+  }
+  @media screen and (max-width:959px) {
+    font-size: 1.0rem !important;
+  }
+}
+
+.v-field__input{
+  @media screen and (max-width:959px) {
+    min-height: 40px;
+    padding: 0 10px;
+  }
+}
+
+.remove-padding > .v-table__wrapper > table > tbody > tr > td,
+.remove-padding > .v-table__wrapper > table > tbody > tr > th,
+.remove-padding > .v-table__wrapper > table > thead > tr > td,
+.remove-padding > .v-table__wrapper > table > thead > tr > th,
+.remove-padding > .v-table__wrapper > table > tfoot > tr > td,
+.remove-padding > .v-table__wrapper > table > tfoot > tr > th {
+  padding: 0; /* padding을 0으로 설정합니다. */
 }
 
 html {
@@ -38,10 +71,11 @@ html {
     font-family: $font-family !important;
     font-weight: 300;
   }
-  $sizes: (
+  $h_sizes: (
           "display-1": 44px,
           "display-2": 40px,
           "display-3": 30px,
+          "text-title-1": 32px,
           "h1": 36px,
           "h2": 30px,
           "h3": 21px,
@@ -62,24 +96,33 @@ html {
           "text-28": 28px,
           "text-30": 30px,
           "body-text-1": 10px,
+          "head-col": 14px,
+          "data-col": 13px,
+          "v-input input": 14px,
+          "v-input": 14px,
+          "v-label": 14px,
+          "text-caption": 12px,
+          "v-field__field": 16px,
+          "v-btn": 14px,
+          "text-body-2": 14px,
   );
 
   /* 모바일 버전 */
   @media only screen and (max-width: 599px) {
-    @each $pixel, $size in $sizes {
+    @each $pixel, $h_sizes in $h_sizes {
       .#{$pixel} {
-        font-size: $size * 0.5; /* 모바일 버전의 크기 조정 */
-        line-height: ($size + 10) * 0.5;
+        font-size: $h_sizes * 0.7 !important; /* 모바일 버전의 크기 조정 */
+        line-height: ($h_sizes + 10) * 0.7 !important;
       }
     }
   }
 
   /* 웹 버전 */
   @media only screen and (min-width: 600px) {
-    @each $pixel, $size in $sizes {
+    @each $pixel, $h_sizes in $h_sizes {
       .#{$pixel} {
-        font-size: $size; /* 웹 버전의 크기 조정 */
-        line-height: $size + 10;
+        font-size: $h_sizes; /* 웹 버전의 크기 조정 */
+        line-height: $h_sizes + 10;
       }
     }
   }
@@ -115,7 +158,7 @@ html {
   .w-100 {
     width: 100%;
   }
-  
+
   .h-100vh {
     height: 100vh;
   }
@@ -135,6 +178,7 @@ html {
     }
     @media screen and (max-width:599px) {
       width: $mobile-content-width;
+      margin: 0 auto;
     }
   }
   .elevation-15 {
@@ -165,8 +209,6 @@ html {
   .v-btn-group .v-btn {
     height: inherit !important;
   }
-  .v-input input,
-  .v-input .v-label  {font-size: 14px;}
   .v-navigation-drawer__scrim.fade-transition-leave-to {
     display: none;
   }
@@ -345,7 +387,7 @@ html {
 .word-break-normal {word-break: normal;}
 
 .mt-minus-1 {margin-top: -1px;}
-.mt-minus-4 {margin-top: -10px;}
+.mt-minus-5 {margin-top: -5px;}
 .mt-auto {margin-top:auto;}
 
 .border-radius-0 {border-radius: 0 !important;}

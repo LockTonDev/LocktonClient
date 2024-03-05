@@ -150,7 +150,17 @@
 .insuranceForm-wrap .print-wrap footer {margin-top:auto;margin-bottom: 28px;}
 .insuranceForm-wrap .table {margin: 0 0 -1px 0;font-size:11px;border:1px solid #858585;border-radius: 4px;overflow: hidden;}
 .insuranceForm-wrap .table>.v-col {display: flex;align-items: center;flex-wrap: nowrap;padding: 0;border-bottom:1px solid #eee;}
-.insuranceForm-wrap .table>.v-col>.head-col {display: flex;align-items: center;flex-wrap: wrap;width: 110px;min-height: 32px;padding: 0 0 0 16px;background-color: #f3f7f9;font-weight: 500;}
+.insuranceForm-wrap .table>.v-col>.head-col {
+  @media screen and (min-width:960px) {
+    width: 110px;
+    padding: 0 0 0 16px;
+  }
+  @media screen and (max-width:959px) {
+    width: 60px;
+    padding: 0 0 0 4px;
+  }
+  display: flex;align-items: center;flex-wrap: wrap;min-height: 32px;background-color: #f3f7f9;font-weight: 500;
+}
 .insuranceForm-wrap .table>.v-col>.data-col {display: flex;align-items: center;flex-wrap: wrap;min-height: 32px;padding: 0 4px 0 8px;flex-grow: 1;}
 .insuranceForm-wrap .table>.v-col.point{border-bottom: none;border-left: 1px solid #858585;border-top: 1px solid #858585;border-top-left-radius: 4px;}
 .insuranceForm-wrap .table>.v-col.point>.head-col {font-size: 15px;font-weight: bold;background: #00AEEF;color: #fff;}

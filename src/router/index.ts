@@ -49,7 +49,7 @@ router.beforeEach(async function (to, from, next) {
   // redirect to login page if not logged in and trying to access a restricted page
   window.scrollTo(0, 0);
 
- /* const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent || navigator.vendor || window.opera);
+  const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent || navigator.vendor || window.opera);
 
   // 모바일 디바이스에서 접속한 경우 리다이렉션
   if (isMobile) {
@@ -57,7 +57,7 @@ router.beforeEach(async function (to, from, next) {
       next('/device/mobile');
       return; // Exit the function after calling next()
     }
-  }*/
+  }
 
   const adminPages = [
     // 여기에 관리자만 접근 가능한 페이지 경로 추가

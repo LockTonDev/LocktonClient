@@ -413,10 +413,10 @@
                     </div>
                     <i class="mdi mdi-alert-circle-outline mr-2"></i
                     >매출액은 연초에 업무보고한 직전년도 매출액을 반드시 기재요망 (전년도 1.1 ~ 12월말까지 매출)<br/>
-                    <p class="ml-4"> * 대한 법무사협회 전산신고한 업무보고서 매출 확인 </p>
+                    <p class="ml-4"> * 대한법무사협회 전산신고한 업무보고서 매출 확인 </p>
                     <span v-if="insuranceDTO.user_cd=='JNT'">
                       <i class="mdi mdi-alert-circle-outline mr-2"></i
-                      >법무법인, 합동사무소의 연간총매출액을 법무사 수로 나눠 1인당 평균 매출액 기재<br/></span>
+                      >법무사법인, 합동사무소의 연간총매출액을 법무사 수로 나눠 1인당 평균 매출액 기재<br/></span>
                     <i class="mdi mdi-alert-circle-outline mr-2"></i
                     >전년 매출이 없는 경우 1년 예상 매출액 기재
                     </p>
@@ -489,7 +489,7 @@
                     </v-btn-toggle>
                   </div>
                 </v-col>
-                <v-col cols="12" sm="12" class="v-col" style="height: 260px">
+                <v-col cols="12" sm="12" class="v-col" style="height: 100%">
                   <div class="head-col">
                     <p>보상한도</p>
                     <sup class="text-error">*</sup>
@@ -563,8 +563,8 @@
                           color="primary"
                           class="flex-grow-0"
                           style="flex-basis: 30%; border: 1px solid #EEEEEE"
-                          value="5억원/5억원"
-                      >5억원/5억원</v-btn
+                          value="3억원/5억원"
+                      >3억원/5억원</v-btn
                       >
                     </v-btn-toggle>
                     <span class="text-caption font-weight-light color-gray" style="margin-top: 110px">
@@ -575,7 +575,7 @@
                       <span v-if="insuranceDTO.corp_region_cd=='010'">
                         <p><i class="mdi mdi-alert-circle-outline mr-2"></i>보상한도 Case6 이상 선택시 서울중앙지방법무사회 지원금 10만원이 적용됩니다.</p>
                         <p>(8월 2일 이후 신규 가입시 지원금 일할계산 적용)</p>
-                      <p class="d-flex align-center mt-minus-4"><i class="mdi mdi-alert-circle-outline mr-2"></i>보상한도 Case1~5 선택시 지원금 미적용: 미적용 선택 <v-checkbox-btn v-model="relief_yn" :disabled="isReadOnlyAll"></v-checkbox-btn></p>
+                      <p class="d-flex align-center mt-minus-10"><i class="mdi mdi-alert-circle-outline mr-2"></i>보상한도 Case1~5 선택시 지원금 미적용: 미적용 선택 <v-checkbox-btn v-model="relief_yn" :disabled="isReadOnlyAll"></v-checkbox-btn></p>
                       </span>
                       </span>
                     <v-divider class="border-0" />
@@ -605,7 +605,7 @@
                     </v-btn-toggle>
                     <span class="text-caption font-weight-light color-gray">
                       <p><i class="mdi mdi-alert-circle-outline mr-2"></i>자기부담금 3백만원을 기본으로 함.</p>
-                      <p class="d-flex align-center mt-minus-4">
+                      <p class="d-flex align-center mt-minus-10">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>5백만원 선택 시 5%, 1천만원 선택 시 10% 할인 : 변경신청
                         <v-checkbox-btn v-model="psnl_yn" :disabled="isReadOnlyAll"></v-checkbox-btn>
                       </p>
@@ -1280,12 +1280,12 @@
           </v-col>
           <!-- 법인만 보여주는 영역 종료 -->
 
-          <v-col cols="12" v-if="insuranceDTO.user_cd != 'IND'">
+          <!--<v-col cols="12" v-if="insuranceDTO.user_cd != 'IND'">
             <p class="text-body-2 color-gray-shadow">합계보험료</p>
             <p class="text-body-2 text-right">
               {{ Number(insuranceDTO.insr_amt - insuranceDTO?.insr_relief).toLocaleString() }}원
             </p>
-          </v-col>
+          </v-col>-->
           <!-- 합동/법인만 보여주는 영역 끝 -->
         </v-row>
 

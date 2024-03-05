@@ -2,7 +2,7 @@
     background-color: $color-black;    
     font-weight: 100;
     font-size: 14px;
-   
+
     .logo {
         width: 140px;
     }
@@ -34,8 +34,17 @@
     }
 
     .footer-info{
-        max-width: $content-width;
-        padding: $section-padding;
+        @media screen and (max-width:959px) {
+            max-width: $mobile-content-width;
+            padding: $mobile-section-padding;
+            flex-direction: column;
+            align-items: center;
+        }
+        @media screen and (min-width:960px) {
+            max-width: $content-width;
+            padding: $section-padding;
+        }
+
         p{
             color: rgba(255, 255, 255, 0.9);
         }
@@ -66,8 +75,14 @@
         border-top: 1px solid $color-darkborder;
 
         .footer-end-inner{
-            max-width: $content-width;
-            padding: $section-padding;
+            @media screen and (min-width:960px) {
+                padding: $content-padding;
+                max-width: $content-width;
+            }
+            @media screen and (max-width:959px) {
+                max-width: $mobile-content-width;
+                padding: $mobile-content-padding;
+            }
             margin:0 auto;
             color: rgba(255, 255, 255, 0.9);
         }

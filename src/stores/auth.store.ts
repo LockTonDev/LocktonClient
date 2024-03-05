@@ -3,6 +3,17 @@ import { defineStore } from 'pinia';
 import apiUser from '@/api/api/user.api';
 import jwt_decode from "jwt-decode";
 
+export const useMobileStore = defineStore('mobile', {
+  state: () => ({
+    isMobile: false // 초기값: 모바일이 아님
+  }),
+  actions: {
+    setIsMobile(isMobile: boolean) {
+      this.isMobile = isMobile;
+    }
+  }
+});
+
 export const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({

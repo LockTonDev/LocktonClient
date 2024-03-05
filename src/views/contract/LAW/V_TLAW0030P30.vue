@@ -67,7 +67,7 @@
                       <th colspan="5" style="border-right: 1px solid #000; border-top: 1px solid #00B050;">계약자</th>
                       <td colspan="10" style="border-right: 1px solid #000; border-top: 1px solid #00B050;">대한법무사협회</td>
                       <th colspan="5" style="border-right: 1px solid #000; border-top: 1px solid #00B050;">사업자등록번호</th>
-                      <td colspan="10" style="border-top: 1px solid #00B050;">214-82-01695</td>
+                      <td colspan="10" style="border-top: 1px solid #00B050;">211-82-04242</td>
                     </tr>
                     <tr>
                       <th colspan="5" style="border-right: 1px solid #000;">피보험자</th>
