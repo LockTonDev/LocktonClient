@@ -7,14 +7,14 @@
       <Header />
 
       <!-- 컨텐츠 영역 -->
-      <v-container class="page-wrapper">  
+      <v-container class="page-wrapper">
         
         <!--로그인-->           
-        <v-img src="../../assets/images/background/bg-login1.jpg" cover class="h-100vh" gradient="24deg, rgba(255,255,255, 0) 30%, rgba(255,255,255, 0.7) 60%, rgba(255,255,255, 1) 90%">
-          <v-row justify="center" align="center" class="h-100" >
-            <v-col lg="11" sm="11">
+        <v-img src="../../assets/images/background/bg-login1.jpg" cover class="h-100vh " gradient="24deg, rgba(255,255,255, 0) 30%, rgba(255,255,255, 0.7) 60%, rgba(255,255,255, 1) 90%">
+          <v-row justify="center" align="center" :class="checkMobile.isMobile?'h-100 w-max-full':'h-100'" >
+            <v-col lg="11" sm="12">
               <v-card elevation="10">
-                <v-row>
+                <v-row class="w-max-full">
                   <v-col lg="6" class="bg-black d-none d-md-flex align-center justify-center">
                     <div class="d-none d-sm-block">
                       <div class="d-flex align-center pa-14 pr-10 w-100">
@@ -34,16 +34,13 @@
                       </div>
                     </div>
                   </v-col>
-                  <v-col lg="6" class="pa-0">
-                    <Form as="v-form" @submit="onSubmit">
-                                      
-                      <div class="pa-14">
+                  <v-col lg="6" class="pa-0 ">
+                    <Form as="v-form" @submit="onSubmit" >
+                      <div :class="checkMobile.isMobile?'w-max-full pa-8':'pa-14'">
                         <h2 class="font-weight-bold mb-8">로그인</h2>
 
-                            
                         <Field name="businessInfo" type="text" v-slot="{ handleChange, errors }">
-        
-                          <v-select  
+                          <v-select
                             v-model="businessInfo"
                             @update:modelValue="handleChange"
                             label="전문인 자격을 선택하세요."
@@ -53,7 +50,7 @@
                             variant="outlined"
                             hide-details="auto"
                             return-object
-                            class="mt-4" />  
+                            class="mt-4" />
                         </Field> 
                           
                           <!-- <VSelectWithValidation name="userType" label="전문인 자격타입" :items=selectype /> -->
@@ -78,15 +75,15 @@
                             <v-divider class="mt-0"/>
                             <v-window v-model="userCd">
                               <v-window-item value="IND">
-                                <div class="mb-4 login-subtext">                    
-                                    
+                                <div class="mb-4 login-subtext">
+
                                 </div>
                                 <VTextFieldWithValidation name="IND_user_id" placeholder="아이디" maxlength="20" />
                                 <VTextFieldWithValidation name="IND_user_pwd" placeholder="비밀번호" type="password" maxlength="16" class="mt-4" />
-                              
+
                               </v-window-item>
-                              <v-window-item value="COR"> 
-                                <div class="my-4 login-subtext">                    
+                              <v-window-item value="COR">
+                                <div class="my-4 login-subtext">
                                     <p v-if="businessInfo.value === 'CAA'">법인/합동사무소 회원은 하나의 아이디만 부여되며 본점, 지점별로 중복가입 되지 않습니다.</p>
                                     <p v-if="businessInfo.value === 'TAX'">법인 회원은 하나의 아이디만 부여되며 본점, 지점별로 중복가입 되지 않습니다.</p>
                                     <p v-if="businessInfo.value === 'PAT'">법인 회원은 하나의 아이디만 부여되며 본점, 지점별로 중복가입 되지 않습니다.                                    <v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
@@ -159,11 +156,11 @@
                             </v-window>
                           </v-card-text>
                           <!-- 에레메시지 영역 -->
-                          <div class="ml-8 text-error text-14 login-subtext">                    
-                            <span> {{ loginErrorMessage }} </span>  
+                          <div class="ml-8 text-error text-14 login-subtext">
+                            <span> {{ loginErrorMessage }} </span>
                           </div>
                           <v-btn color="primary" block class="py-7 mt-6"  type="submit" >로그인</v-btn>
-                            
+
                           <!-- 법인 가입안내 Alert 시작 -->
                           <!-- <div class="mt-4">
                             <v-alert
@@ -173,7 +170,7 @@
                             >
                               <div class="d-flex justify-space-between align-center">
                                 <p class="text-h6">회원가입안내</p>
-                                <v-btn text @click="isAlert = false"> 닫기 </v-btn>                  
+                                <v-btn text @click="isAlert = false"> 닫기 </v-btn>
                               </div>
                               <v-divider class="my-4"></v-divider>
                               법인/합동사무소 회원은 사업자등록증을 록톤에 보내(팩스 송부)
@@ -184,13 +181,13 @@
                             </v-alert>
                           </div> -->
                           <!-- 법인 가입안내 Alert 종료 -->
-                      
+
                           <div class="d-flex align-center mb-4 mb-sm-0">
                             <v-btn @click="toSignup" variant="plain">회원가입</v-btn>
                             <span>|</span>
                             <v-btn @click="toFind" variant="plain">ID/비밀번호 찾기</v-btn>
-                            
-                          </div>                            
+
+                          </div>
                         </v-card>
                       </div>
         
@@ -254,6 +251,7 @@
   import apiUser from '@/api/api/user.api';
   import { UserYup }  from '@/schema';
   import { useForm, useField, useFieldValue , Field, Form } from 'vee-validate';
+  import {useMobileStore} from "@/stores";
   import { useRouter } from 'vue-router' 
   import VTextFieldWithValidation from '../../components/VTextFieldWithValidation.vue';
   import VSelectWithValidation from '../../components/VSelectWithValidation.vue';
@@ -263,9 +261,6 @@
 
   import G_ITEMS from '../json/itemsData.json';
 
-
-
-
   // 초기정보 설정
   const messageBoxDTO = ref(new MessageBoxDTO());
 
@@ -273,6 +268,7 @@
   const userCd = ref("");
 
   const router = useRouter();
+  const checkMobile = useMobileStore();
 
   const businessInfo = ref();
   const isLoginDisable = ref(true);
@@ -296,10 +292,6 @@
       messageBoxDTO.value.setInfo( '록톤코리아', businessInfo.value.rmk);
     }
   })
-
-
-
-
 
 /*
   const userType = ref("");

@@ -8,6 +8,10 @@ import jwt_decode from 'jwt-decode';
 import { MessageBoxDTO, ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, CBRDataDTO } from '@/model';
 import MessageBox from '@/components/MessageBox.vue';
 
+import {useMobileStore} from "@/stores";
+import TermsOfMarketing from "../../components/TermsOfMarketing.vue";
+const checkMobile = useMobileStore();
+
 const authStore = useAuthStore();
 const _AUTH_USER  = ref(JSON.parse(localStorage.getItem('_AUTH_USER')));
 
@@ -145,15 +149,18 @@ onUnmounted(() => {
     <!-- ---------------------------------------------- -->
     <!---Logo part -->
     <!-- ---------------------------------------------- -->
+    <v-app-bar-nav-icon class="mr-16"></v-app-bar-nav-icon>
+
+
     <div class="logo">
       <router-link to="/introduce">
         <img src="/assets/Lockton_Logo_White_simbol.png" alt="" class="w-full">
       </router-link>
     </div>
+    <div class="flex-grow-1"></div>
 
-    <v-spacer />
-
-    <template v-if="true">
+    <template v-if="!checkMobile.isMobile">
+      <v-spacer />
       <div class="horizontalMenu">
         <ul
           class="horizontal-navbar"
@@ -201,10 +208,10 @@ onUnmounted(() => {
           </li>
         </ul>
       </div>
-    </template>
- 
+
+
     <v-spacer />
-    
+
     <!-- ---------------------------------------------- -->
     <!---right part -->
     <!-- ---------------------------------------------- -->
@@ -219,7 +226,7 @@ onUnmounted(() => {
           </v-btn>
         </template>
       </v-menu>
-     
+
       <v-menu anchor="bottom end" origin="auto" v-if="_AUTH_USER">
         <template v-slot:activator="{ props }">
           <v-btn icon v-bind="props" to="/user/mypage" color="secondary">
@@ -230,7 +237,7 @@ onUnmounted(() => {
           </v-btn>
         </template>
       </v-menu>
-  
+
       <v-menu anchor="bottom end" origin="auto" v-if="!_AUTH_USER">
         <template v-slot:activator="{ props }">
           <v-btn icon v-bind="props" to="/user/login" color="secondary">
@@ -255,9 +262,12 @@ onUnmounted(() => {
       </v-menu>
 
     </div>
+    </template>
   </v-app-bar>
   <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
 </template>
+
+
 <style scoped>
   .font-size-8 {
     font-size :0.5rem;

@@ -4,7 +4,7 @@
   <v-row>
     <v-col cols="12" sm="12" class="py-16">
       <div class="d-flex justify-space-between align-end">
-        <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ d_TADV0040AList.length }}</span>건</p>
+        <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ d_TLAW0040AList.length }}</span>건</p>
         <v-btn text @click="onRegDialog()"> 변경신청 </v-btn>
       </div>
       <v-table class=" v-board-table size-large mt-4">
@@ -21,8 +21,8 @@
             <th class="text-center text-subtitle-1">상세보기</th>
           </tr>
         </thead>
-        <tbody v-if="d_TADV0040AList.length">
-          <tr v-for="(row, index) in d_TADV0040AList">
+        <tbody v-if="d_TLAW0040AList.length">
+          <tr v-for="(row, index) in d_TLAW0040AList">
             <td class="text-center text-subtitle-1">{{ row.insurance_no }}</td>
             <td class="text-center text-subtitle-1">{{ row.insurance_user_nm}}</td>
             <td class="text-center text-subtitle-1">{{ row.apply_nm }}</td>
@@ -71,51 +71,51 @@
         <v-row class="v-board-table ma-0">
           <v-col cols="6">
             <div class="head-col">증권번호</div>
-            <div class="data-col w-full"> {{  d_TADV0040A.insurance_no  }}
-              <!-- <VSelectWithValidation v-model="d_TADV0040A.insurance_year" name="insurance_year" :items="items" item-title="text" item-value="value" class="w-100" density="comfortable" :disabled="true"></VSelectWithValidation>             -->
+            <div class="data-col w-full"> {{  d_TLAW0040A.insurance_no  }}
+              <!-- <VSelectWithValidation v-model="d_TLAW0040A.insurance_year" name="insurance_year" :items="items" item-title="text" item-value="value" class="w-100" density="comfortable" :disabled="true"></VSelectWithValidation>             -->
             </div>
           </v-col>
           <v-col cols="6">
             <div class="head-col">변경구분<sup class="text-error ml-1">*</sup></div>
             <div class="data-col w-full">
-              <VSelectWithValidation v-model="d_TADV0040A.apply_cd" name="apply_cd" label="변경구분을 선택하세요." :items="applyItems" class="w-100"  single-line density="comfortable"></VSelectWithValidation>
+              <VSelectWithValidation v-model="d_TLAW0040A.apply_cd" name="apply_cd" label="변경구분을 선택하세요." :items="applyItems" class="w-100"  single-line density="comfortable"></VSelectWithValidation>
             </div>
           </v-col>
           <v-col cols="6">
             <div class="head-col">신청일자</div>
-            <div class="data-col">{{ d_TADV0040A.apply_dt  }}
-              <!-- <VTextFieldWithValidation v-model="d_TADV0040A.apply_dt" name="apply_dt" label="" type="date" single-line :readonly="true" class="w-100" density="comfortable"/>  -->
+            <div class="data-col">{{ d_TLAW0040A.apply_dt  }}
+              <!-- <VTextFieldWithValidation v-model="d_TLAW0040A.apply_dt" name="apply_dt" label="" type="date" single-line :readonly="true" class="w-100" density="comfortable"/>  -->
             </div>
           </v-col>
           <v-col cols="6">
             <div class="head-col">변경개시일<sup class="text-error ml-1">*</sup></div>
             <div class="data-col w-full">
-              <VTextFieldWithValidation v-model="d_TADV0040A.apply_posted_dt" name="apply_posted_dt" label="" type="date" :min="d_TADV0040A.apply_dt" single-line density="comfortable" class="w-full"/>
+              <VTextFieldWithValidation v-model="d_TLAW0040A.apply_posted_dt" name="apply_posted_dt" label="" type="date" :min="d_TLAW0040A.apply_dt" single-line density="comfortable" class="w-full"/>
             </div>
           </v-col>
           <v-col cols="12">
             <div class="head-col">변경상세<sup class="text-error ml-1">*</sup></div>
             <div class="data-col w-full">
               <p class="w-full text-gray">* 변경되는 법무사의 성명/생년월일/등록번호/사유(추가 또는 해지)</p>
-              <v-textarea v-model="d_TADV0040A.apply_content" variant="outlined" counter class="mt-2 w-full" rows="10" no-resize></v-textarea>
+              <v-textarea v-model="d_TLAW0040A.apply_content" variant="outlined" counter class="mt-2 w-full" rows="10" no-resize></v-textarea>
             </div>
           </v-col>
           <v-col cols="4">
             <div class="head-col">담당자명<sup class="text-error ml-1">*</sup></div>
             <div class="data-col w-full">
-              <VTextFieldWithValidation v-model="d_TADV0040A.nm" name="nm" label="" single-line class="w-sm-242" maxlength="20" density="comfortable"/>
+              <VTextFieldWithValidation v-model="d_TLAW0040A.nm" name="nm" label="" single-line class="w-sm-242" maxlength="20" density="comfortable"/>
             </div>
           </v-col>
           <v-col cols="4">
             <div class="head-col">연락처<sup class="text-error ml-1">*</sup></div>
             <div class="data-col col">
-              <VTextFieldWithValidation v-model="d_TADV0040A.tel" name="tel" label="" single-line maxlength="20" />
+              <VTextFieldWithValidation v-model="d_TLAW0040A.tel" name="tel" label="" single-line maxlength="20" />
             </div>
           </v-col>
           <v-col cols="4">
             <div class="head-col">이메일<sup class="text-error ml-1">*</sup></div>
             <div class="data-col w-full">
-              <VTextFieldWithValidation v-model="d_TADV0040A.email" name="email" label="" single-line class="w-100"  maxlength="50" density="comfortable"/>
+              <VTextFieldWithValidation v-model="d_TLAW0040A.email" name="email" label="" single-line class="w-100"  maxlength="50" density="comfortable"/>
             </div>
           </v-col>
         </v-row>
@@ -278,6 +278,8 @@
     d_TLAW0040A.value.business_cd = _AUTH_USER.value.businessCd;
 
     let {data} = await apiA_TLAW0030A.getDBSelStatus();
+
+    console.log('data : ', data)
 
     data = data.filter(item => item.status_cd === '80');
     

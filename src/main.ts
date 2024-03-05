@@ -14,6 +14,7 @@ import { getValueBySplit, getValue } from './util/prototype';
 import VueFeather from 'vue-feather';
 import LoadScript from 'vue-plugin-load-script';
 import VueDaumPostcode from 'vue-daum-postcode';
+import {useMobileStore} from "./stores";
 
 const app = createApp(App);
 // app.config.globalProperties.G_ITEMS = G_ITEMS;
@@ -31,5 +32,12 @@ app.use(VueDaumPostcode);
 
 String.prototype.getValueBySplit = getValueBySplit;
 // String.prototype.getValue = getValue;
+
+const checkMobile = ()=> {
+    const isMobile = window.innerWidth <= 959;
+    useMobileStore().setIsMobile(isMobile)
+}
+checkMobile()
+window.addEventListener('resize', checkMobile)
 
 app.use(vuetify).mount('#app');

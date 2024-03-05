@@ -11,20 +11,21 @@
       <v-btn v-if="businessCd ==='TAX'" color="footerbackground" size="" rounded="0" href="https://www.kacpta.or.kr" target="_blank">한국세무사회</v-btn>
       <v-btn v-if="businessCd ==='ADV'" color="footerbackground" size="" rounded="0" href="https://www.koreanbar.or.kr/" target="_blank">대한변호사협회</v-btn>
       <v-btn v-if="businessCd ==='PAT'" color="footerbackground" size="" rounded="0" href="https://www.kpaa.or.kr" target="_blank">대한변리사회</v-btn>
+      <v-btn v-if="businessCd ==='LAW'" color="footerbackground" size="" rounded="0" href="https://kjaar.kabl.kr" target="_blank">대한법무사협회</v-btn>
     </v-row>
-    <v-row class="footer-info w-100 ma-0 pt-10 pb-10">
-      <v-col cols="2" class="pa-0">
-        <div class="pr-6">
+    <v-row class="footer-info w-full ma-0 pt-10 pb-10">
+      <v-col :cols="checkMobile.isMobile?'4':'2'" class="pa-0">
+        <div :class="checkMobile.isMobile?'':'pr-6'">
           <img src="/assets/Lockton_Logo_White_simbol.png" alt="" class="w-full">
         </div>
       </v-col>
-      <v-col cols="6" class="pa-0">
+      <v-col :cols="checkMobile.isMobile?'':'6'" class="pa-0">
         <p class="text-body-2 mb-2">록톤컴퍼니즈코리아손해보험중개(주)</p>
         <p class="text-body-2">대표자: 손방의</p>
         <p class="text-body-2">사업자등록번호 : 220-81-20652<span class="mx-2 text-10 vertical-align-top">|</span>통신판매신고번호 : 제2023-서울종로-0230호</p>
         <p class="text-body-2">주소 : (04520) 서울시 중구 세종대로 136, 서울파이낸스센터13층<span class="mx-2 text-10 vertical-align-top">|</span>대표전화:02-2011-0300</p>
       </v-col>
-      <v-col cols="4" class="pa-0">
+      <v-col :cols="checkMobile.isMobile?'':'4'" :class="checkMobile.isMobile?'pt-5 pa-0':'pa-0'">
         <v-row>
           <v-col cols="5" class="pa-0 d-flex flex-column pr-4">
             <v-btn color="" variant="text" rounded="0" @click="termsOfService = true">이용약관</v-btn>
@@ -71,22 +72,22 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from "vue";
+import {ref, watch} from "vue";
   import { storeToRefs } from 'pinia';
   import { useAuthStore } from '@/stores';
   import ImagesLogo from '@/components/ImagesLogo.vue';
   import TermsOfService from '@/components/TermsOfService.vue';
   import TermsOfPersonalInfo from '@/components/TermsOfPersonalInfo.vue';
+  import {useMobileStore} from "@/stores";
   const termsOfService = ref(false);
   const termsOfPersonalInfo = ref(false);
   const termsOfEmail = ref(false);
-
+  const checkMobile = useMobileStore();
 
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
 
   const businessCd = ref(_AUTH_USER?.value?.businessCd);
-
 
   watch(() => _AUTH_USER?.value?.businessCd, (newValue, oldValue) => {
     businessCd.value = _AUTH_USER?.value?.businessCd;
