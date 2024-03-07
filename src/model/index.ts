@@ -10,5 +10,3 @@ export * from './VALID_CONFIG';
 export * from './ParamsDTO';
 export * from './CommonCode';
 export * from './UserRegDTO';
-
-export * from './LoadingBarDTO';

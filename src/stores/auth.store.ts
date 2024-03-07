@@ -2,18 +2,26 @@ import router from '@/router';
 import { defineStore } from 'pinia';
 import apiUser from '@/api/api/user.api';
 import jwt_decode from "jwt-decode";
+import {ref} from "vue";
 
 export const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({
     _AUTH_USER: JSON.parse(localStorage.getItem('_AUTH_USER')),
     _AUTH_ADMIN: JSON.parse(localStorage.getItem('_AUTH_ADMIN')),
-    returnUrl: null
+    returnUrl: null,
+    isLoading: false
   }),
   getters: {
     // doubleCount: (state) => state.counter * 2,
   },
   actions: {
+    show() {
+      this.isLoading = true
+    },
+    hide() {
+      this.isLoading = false
+    },
     async login(params: any) {
       //console.log('localStorage', localStorage);
       try {

@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import { onMounted, defineEmits, ref } from "vue";
+
+const loadState = ref(true);
+
+
+const emit = defineEmits([
+  'close'
+]);
+
+const close = () => {
+  loadState.value = false;
+};
+
+onMounted(async () => {
+});
+
+</script>
+
 <template>
   <v-layout row justify-center>
     <v-dialog v-model="loadState" persistent content content-class="centered-dialog">
@@ -10,19 +29,6 @@
     </v-dialog>
   </v-layout>
 </template>
-<script>
-import { useStore } from '@/stores/mutation'
-import {storeToRefs} from "pinia";
-import {onMounted} from "vue";
-const store = useStore();
-const { isLoading } = storeToRefs(store);
-export default {
-  setup() {
-    const loadState = isLoading.value
-    return { loadState }
-  }
-}
-</script>
 
 <style>
 .dialog.centered-dialog,
@@ -35,7 +41,8 @@ export default {
 }
 .test{
   top: 50%;
-  transform: translateY(-50%);
+  left: 98%;
+  transform: translate(-50%,-50%);
   width: 100%;
   text-align: center;
   z-index: 700;

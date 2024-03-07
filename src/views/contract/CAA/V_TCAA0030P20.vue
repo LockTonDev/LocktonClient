@@ -3968,7 +3968,7 @@ const insuranceDTO = ref(new InsuranceDTO(props.insurance_dto));
 const chunkSize = 34;
 
 const chunkedDivCount = computed(() => {
-  const nCnt = Math.ceil(insuranceDTO.value.cbr_cnt / chunkSize);
+  const nCnt = Math.ceil(insuranceDTO.value.cbr_data.length / chunkSize);
   return nCnt;
 });
 

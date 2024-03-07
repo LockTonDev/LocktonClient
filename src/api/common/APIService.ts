@@ -2,24 +2,17 @@ import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
 import { useStore } from '@/stores/mutation';
-import { LoadingBarDTO } from '@/model';
+//import { LoadingBarDTO } from '@/model';
 import axios from 'axios';
 
-const loading = ref(0);
-const showLoading = (id) => {
-    LoadingBarDTO.value.
-    console.log('showLoading',id ,isLoading.value)
-
-  // localStorage.setItem('loading', true);
+const showLoading = () => {
+    const authStore = useAuthStore();
+    authStore.show()
 };
 
 const hideLoading = () => {
-    console.log('hideLoading')
-    const store = useStore();
-    const { isLoading } = storeToRefs(store);
-    store.hide();
-
-  // localStorage.setItem('loading', false);
+    const authStore = useAuthStore();
+    authStore.hide()
 };
 
 
@@ -31,7 +24,7 @@ const commonService = axios.create({
 
 commonService.interceptors.request.use(
   config => {
-    showLoading('0'); // Show loading bar
+    showLoading(); // Show loading bar
     const { _AUTH_USER } = useAuthStore();
     const isLoggedIn = !!_AUTH_USER?.accessToken;
 
@@ -47,7 +40,7 @@ commonService.interceptors.request.use(
     return config;
   },
   error => {
-    //hideLoading(); // Hide loading bar
+    hideLoading(); // Hide loading bar
     console.log('commonService Request: OnRejected');
     return Promise.reject(error);
   }
@@ -56,10 +49,11 @@ commonService.interceptors.request.use(
 commonService.interceptors.response.use(
   response => {
     //console.log('commonService Response: ', response.data);
-
+      hideLoading();
     return response.data;
   },
   error => {
+      hideLoading();
     if (error.response && error.response.status === 401) {
       //  console.log(error);
       const authStore = useAuthStore();
@@ -90,7 +84,7 @@ const fileService = axios.create({
 
 fileService.interceptors.request.use(
     config => {
-        showLoading('1'); // Show loading bar
+        showLoading(); // Show loading bar
         const { _AUTH_USER } = useAuthStore();
         const isLoggedIn = !!_AUTH_USER?.accessToken;
 
@@ -111,7 +105,7 @@ fileService.interceptors.request.use(
         return config;
     },
     error => {
-        //hideLoading(); // Hide loading bar
+        hideLoading(); // Hide loading bar
         console.log('commonService Request: OnRejected');
         return Promise.reject(error);
     }
@@ -120,7 +114,7 @@ fileService.interceptors.request.use(
 fileService.interceptors.response.use(
     response => {
         //console.log('commonService Response: ', response.data);
-
+        hideLoading();
         return response.data;
     },
     error => {
@@ -158,6 +152,8 @@ const authService = axios.create({
 authService.interceptors.request.use(
   config => {
     showLoading(); // Show loading bar
+      console.log("test3")
+
     const { _AUTH_ADMIN } = useAuthStore();
     const isLoggedIn = !!_AUTH_ADMIN?.accessToken;
 
