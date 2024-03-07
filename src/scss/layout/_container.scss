@@ -5,10 +5,18 @@ html{
   max-width: initial;
 }
 .v-main {
-  min-width: $content-width;
+  @media screen and (min-width:960px) {
+    min-width: 100%;
+    min-height: 100vh;
+  }
+  @media screen and (max-width:959px) {
+    min-width: 100%;
+    min-height: 100vh;
+  }
   min-height: 100vh;
   word-break: keep-all;
 }
+
 .v-theme--light {
   .v-main {
     background: $color-white;
@@ -24,8 +32,11 @@ html{
 
 .v-container{
   max-width: 100%;
-  @media screen and (min-width:960px) {    
+  @media screen and (min-width:960px) {
     min-height: $content-height;
+  }
+  @media screen and (max-width:959px) {
+    min-height: $mobile-content-height;
   }
 }
 .main-wrapper{
@@ -34,17 +45,32 @@ html{
 .page-wrapper {
   padding: 0;
   .v-row {
-    max-width: $content-width;
-    margin: 0 auto;
+    @media screen and (min-width:960px) {
+      max-width: $content-width;
+      margin: 0 auto;
+    }
+    @media screen and (max-width:959px) {
+      max-width: $mobile-content-width;
+      margin: 0;
+    }
+
+
   }
 
   .v-toolbar__content{
-    padding: 48px 0;    
-    
+    padding: 48px 0;
 
     .toolbar-stepbar{
       margin-left:auto;
     }
+  }
+}
+
+.custom-toggle-btn{
+  flex-basis: 33.3%;
+  border: 1px solid #EEEEEE !important;
+  @media screen and (max-width:959px) {
+    font-size: x-small;
   }
 }
 

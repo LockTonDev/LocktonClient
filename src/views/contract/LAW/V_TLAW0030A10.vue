@@ -17,7 +17,7 @@
     </v-col>
   </v-row>
 
-  <v-row v-if="!isNoData">
+  <v-row v-if="!isNoData" >
     <v-col cols="12" sm="12" class="mt-16">
       <div class="d-flex justify-space-between align-end">
         <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ InsuranceList.length }}</span> 건</p>
@@ -26,16 +26,16 @@
           <v-btn variant="flat" @click="onPageMove('renewal')" v-if="newInsrYN=='Y' && renewalInsrUUID !== null">계약 갱신</v-btn>
         </div>
       </div>
-      <v-table class="v-board-table size-large mt-4">
+      <v-table class="v-board-table size-large mt-4" >
         <caption class="d-none">가입내역</caption>
-        <thead name="">
-          <tr>
+        <thead name="" >
+          <tr >
             <th class="font-weight-medium text-center text-body-1">증권번호</th>
             <th class="font-weight-medium text-center text-body-1">피보험자</th>
             <th class="font-weight-medium text-center text-body-1">보험기간</th>
             <th class="font-weight-medium text-center text-body-1">보험료</th>
             <th class="font-weight-medium text-center text-body-1">신청서</th>
-            <th class="font-weight-medium text-center text-body-1">
+            <th class="font-weight-medium text-center text-body-1 text-no-wrap">
               가입증명서<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
               <v-tooltip activator="parent" location="top">
                 가입증명서<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
@@ -55,11 +55,11 @@
               <p v-if="row.user_cd == 'IND'">{{ row.user_nm }}</p>
               <p v-if="row.user_cd == 'JNT' && row.cbr_data.length > 0">{{ row.cbr_data[0].cbr_nm }} 외 {{row.cbr_cnt - 1}} 명</p>
             </td>
-            <td class="text-center text-body-1">
-              <div v-if="row.insr_year === '2023' && row.status_cd !== '10'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
+            <td class="text-center text-body-1 text-no-wrap">
+              <div v-if="row.insr_year === '2000' && row.status_cd !== '10'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
               <div v-else class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid, row.insr_year)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
-            <td class="text-center text-body-1">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
+            <td class="text-center text-body-1 text-no-wrap">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">
               <v-icon v-if="row.insr_year !== '2022'"
                 small
@@ -93,7 +93,7 @@
             <tr>
                 <td colspan="7" class="text-center">내용 없음</td>
             </tr>
-            </tbody>
+        </tbody>
       </v-table>
     </v-col>
   </v-row>
@@ -241,7 +241,8 @@
     // router.go(0);
   }
 
-  onMounted(async () => {    
+  onMounted(async () => {
+    console.log(window.innerWidth)
       const params = ref([]);
       user_cd.value = JSON.parse(localStorage.getItem('_AUTH_USER')).userCd;
       const resultData = await apiLAW0030a.getDBSelList(params);

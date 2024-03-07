@@ -3,6 +3,9 @@
 import { onMounted, defineEmits, ref } from "vue";
 import BaseCard from "@/components/BaseCard.vue";
 
+import {useMobileStore} from "@/stores";
+const checkMobile = useMobileStore();
+
 const isOpenDialog = ref(true);
 const agr_yn = ref('N');
 
@@ -29,17 +32,18 @@ onMounted(async () => {
 <template>
     <v-dialog persistent v-model="isOpenDialog" width="1000px" hide-overlay scrollable>
     <v-card>
-      <v-card-title class="d-flex justify-space-between align-center px-6 py-4 position-relative">
+      <v-card-title :class="checkMobile.isMobile?'d-flex justify-space-between align-center px-3 py-2 position-relative':'d-flex justify-space-between align-center px-6 py-4 position-relative'">
         <div>
           <p class="text-h6 font-weight-bold">이용약관</p>
           <p class="text-error text-body-2">이용약관 시행일자 : 2023.03.01</p>
+          <v-select v-if="checkMobile.isMobile" label="이전 약관 보기" :items="['이용약관 시행 2023.03.01']" variant="outlined" hide-details="auto" single-line density="compact" class="flex-grow-0 mr-2 w-sm-270" />
         </div>
         <v-spacer />
-        <v-select label="이전 약관 보기" :items="['이용약관 시행 2023.03.01']" variant="outlined" hide-details="auto" single-line density="compact" class="flex-grow-0 mr-2 w-sm-270" />
+        <v-select v-if="!checkMobile.isMobile" label="이전 약관 보기" :items="['이용약관 시행 2023.03.01']" variant="outlined" hide-details="auto" single-line density="compact" class="flex-grow-0 mr-2 w-sm-270" />
         <v-btn variant="outlined" color="dark" @click="close()">닫기</v-btn>
       </v-card-title>
       <v-divider class="mb-0" />
-      <v-card-text class="px-10 pt-8 pb-14">
+      <v-card-text :class="checkMobile.isMobile?'px-5 pt-8 pb-14':'px-10 pt-8 pb-14'">
         <div class="terms-wrap-v1">
           <ul>
             <li>

@@ -25,7 +25,7 @@ $color-tableborder:#ccc;
 $color-gray:#858585;
 $color-grayshadow:#858E94;
 
-$content-width:1200px;
+$content-width: 1200px;
 $content-padding:30px 0;
 $content-margin: 0 30px;
 $section-padding:30px;
@@ -34,10 +34,20 @@ $header-height:90px;
 $content-height-main: calc(100vh - $header-height-main);
 $content-height: calc(100vh - $header-height);
 
+$mobile-content-width: calc(100%);
+$mobile-content-padding: 30px 0;
+$mobile-content-margin: 0 30px;
+$mobile-section-padding: 30px;
+$mobile-header-height-main: 60px;
+$mobile-header-height: 50px;
+$mobile-content-height-main: calc(100vh - $mobile-header-height-main);
+$mobile-content-height: calc(100vh - $mobile-header-height);
+
 @media only screen and (max-width: 600px) {
     $content-padding:1rem 0;
     $content-margin: 0 1rem;
     $section-padding:1rem;
+
 }
 
 $box-shadow: 1px 0 20px rgb(0 0 0 / 8%);

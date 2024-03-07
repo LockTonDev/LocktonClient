@@ -22,7 +22,7 @@
 
     
         <!-- 컨텐츠 영역 -->
-        <v-container class="main-wrapper">    
+        <v-container class="main-wrapper">
           <v-img src="/assets/images/background/bg-main.jpg"  cover class="content-height-main" gradient="90deg,  rgb(0, 0, 0, 0.8) 0%, rgb(0, 0, 0, 0) 20%, rgb(0, 0, 0, 0) 80%, rgb(0, 0, 0, 0.8) 100%">
             <v-row class="content-width h-100" justify="center" align-content="center">
               <v-col>
@@ -37,27 +37,27 @@
               <p class="text-h4 text-center font-weight-bold my-3">록톤코리아의 <span class="font-weight-bold color-primary">주요 서비스</span></p>
               <p class="text-center color-gray mb-12">전문인 보험 서비스를 통해 더 나은 내일을 준비합니다.</p>
             </v-col>
-            <v-col cols="12" sm="4" class="pa-0">
+            <v-col cols="12" sm="4" class="pa-0 d-flex justify-center">
               <div class="w-sm-380 d-inline-block text-left bg-black">
-                <img src="../assets/images/img-main-2.jpg" alt=""/>
+                <img class="w-full" src="../assets/images/img-main-2.jpg" alt=""/>
                 <div class="pa-6 pb-9">
                   <p class="text-20 font-weight-medium">전문인 보험 서비스</p>
                   <p class="text-body-1 mt-3">각종 전문인 업무와 관련하여 법률상 배상 책임을<br />담보하는 보험 서비스 제공</p>
                 </div>
               </div>
             </v-col>
-            <v-col cols="12" sm="4" class="pa-0 text-center">
+            <v-col cols="12" sm="4" class="pa-0 d-flex justify-center text-center">
               <div class="w-sm-380 d-inline-block text-left bg-black">
-                <img src="../assets/images/img-main-3.jpg" alt=""/>
+                <img class="w-full" src="../assets/images/img-main-3.jpg" alt=""/>
                 <div class="pa-6 pb-9">
                   <p class="text-20 font-weight-medium">분야별 전문 컨설팅</p>
                   <p class="text-body-1 mt-3">전문인배상책임보험에 특화된 전담팀에서<br />분야별로 전문 컨설팅 서비스 제공</p>
                 </div>
               </div>
             </v-col>
-            <v-col cols="12" sm="4" class="pa-0 text-right">
+            <v-col cols="12" sm="4" class="pa-0 d-flex justify-center text-right">
               <div class="w-sm-380 d-inline-block text-left bg-black">
-                <img src="../assets/images/img-main-4.jpg" alt=""/>
+                <img class="w-full" src="../assets/images/img-main-4.jpg" alt=""/>
                 <div class="pa-6 pb-9">
                   <p class="text-20 font-weight-medium">글로벌 비즈니스 보험 서비스</p>
                   <p class="text-body-1 mt-3">국내외 소재 다국적 기업의 다양한 보험 서비스<br />제공</p>
