@@ -409,8 +409,6 @@
                     <VTextFieldWithValidation
                       v-model="userDTO.corp_bnno"
                       name="corp_bnno"
-                      label=""
-                      :maskOption="{ mask: '######-#######' }"
                       single-line
                       density="comfortable"
                       :disabled="userDTO.business_cd === 'ADV' && userDTO.corp_type !== '003'"
@@ -590,7 +588,7 @@ watch(
 watch(
     () => userDTO.value.corp_type,
     () => {
-      userDTO.value.corp_bnno = ''
+      if(userDTO.value.corp_type!='001') userDTO.value.corp_bnno = ''
     },
     { immediate: true }
 );
