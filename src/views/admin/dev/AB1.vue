@@ -1,5 +1,12 @@
 <template>
-	<AdminBaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs" ></AdminBaseBreadcrumb>
+  <div class="d-flex align-center">
+    <span>
+        <v-app-bar-nav-icon  @click.stop="authStore.chgDrawer()"> </v-app-bar-nav-icon>
+      </span>
+    <div class="w-100">
+      <AdminBaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs" ></AdminBaseBreadcrumb>
+    </div>
+  </div>
   <v-row>
     <v-col cols="12">
       <ul class="v-search-box v-box">		

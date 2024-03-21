@@ -1,5 +1,8 @@
 <template>
   <div class="d-flex align-center">
+    <span>
+      <v-app-bar-nav-icon  @click.stop="authStore.chgDrawer()"> </v-app-bar-nav-icon>
+    </span>
     <p class="text-h6 color-primary subtitle mr-2">{{ businessCdItems?.find(items => items.value === searchParams.data['business_cd'])?.title }}</p>
     <div class="w-100">
       <AdminBaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></AdminBaseBreadcrumb>

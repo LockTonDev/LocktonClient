@@ -152,14 +152,14 @@ export default [
         title: `공지사항`,
         to: `/${adminPath}/dev/AB1`
       },
-      {
+     /* {
         title: `자주하는 질문`,
         to: `/${adminPath}/dev/AB2`
       },
       {
         title: `자료실`,
         to: `/${adminPath}/dev/AB3`
-      }
+      }*/
     ]
   },
   {

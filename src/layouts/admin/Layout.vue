@@ -18,6 +18,7 @@
   
         <!-- 컨텐츠 영역 -->
         <v-container class="admin-container-wrapper">
+
           <div class="maxWidth">
             <RouterView />
           </div>

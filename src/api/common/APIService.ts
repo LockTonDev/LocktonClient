@@ -1,9 +1,8 @@
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
-import { useStore } from '@/stores/mutation';
-//import { LoadingBarDTO } from '@/model';
 import axios from 'axios';
+
 
 const showLoading = () => {
     const authStore = useAuthStore();
@@ -51,10 +50,14 @@ commonService.interceptors.response.use(
   response => {
     //console.log('commonService Response: ', response.data);
       hideLoading();
+
+      console.log("test1 hide")
     return response.data;
   },
   error => {
       hideLoading();
+
+      console.log("test1 hide")
     if (error.response && error.response.status === 401) {
       //  console.log(error);
       const authStore = useAuthStore();

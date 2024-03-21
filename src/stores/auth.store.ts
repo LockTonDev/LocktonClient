@@ -25,6 +25,11 @@ export const useAuthStore = defineStore({
     },
     chgDrawer() {
       this.drawer = !this.drawer
+      console.log("this.drawer",this.drawer)
+    },
+    hideDrawer() {
+      this.drawer = false
+      console.log("hide",this.drawer)
     },
     async login(params: any) {
       //console.log('localStorage', localStorage);

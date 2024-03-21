@@ -92,7 +92,6 @@
     }
   };
 
-
   onMounted(() => {
     window.addEventListener('storage', updateAuthAdminFromLocalStorage);
     initPage();
@@ -100,11 +99,18 @@
   onUnmounted(() => {
     window.removeEventListener('storage', updateAuthAdminFromLocalStorage);
   });
+  watch(() =>isDrawer.value, (newValue, oldValue) => {
+    const authStore = useAuthStore();
+    if(oldValue) authStore.hideDrawer()
+  });
+  watch(() => drawer?.value, (newValue, oldValue) => {
+    isDrawer.value = drawer?.value
+  });
 
 </script>
   
   <template>
-    <v-navigation-drawer fixed color="dark" class="admin-navi-wrap" width="205"  v-model="isDrawer">
+    <v-navigation-drawer app color="dark" class="admin-navi-wrap" width="205"  v-model="isDrawer">
       <!-- ---------------------------------------------- -->
       <!---Navigation -->
       <!-- ---------------------------------------------- -->
