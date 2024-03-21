@@ -5,14 +5,11 @@ import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
 import { MessageBoxDTO, ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, CBRDataDTO } from '@/model';
 import MessageBox from '@/components/MessageBox.vue';
-import LoadingBar from "@/components/LoadingBar.vue";
 
 const warnTimeoutMin = 3
 const authStore = useAuthStore();
-const { isLoading } = storeToRefs(authStore);
 let _AUTH_ADMIN = ref(JSON.parse(localStorage.getItem('_AUTH_ADMIN')));
 
-const loadingBar = ref(isLoading?.value)
 const timeLeft = ref('');
 const messageBoxDTO = ref(new MessageBoxDTO());
 // 초를 분과 초로 변환하는 함수
@@ -23,10 +20,6 @@ const convertSecondsToMinutes = seconds => {
 };
 
 let intervalId = null;
-
-watch(() => isLoading?.value, (newValue, oldValue) => {
-  loadingBar.value = isLoading?.value
-});
 
 function extendTime() {
     authStore.refreshAdminAccessToken('_AUTH_ADMIN').then(function(response) {
@@ -91,7 +84,6 @@ onMounted(() => {
   window.addEventListener('storage', updateAuthAdminFromLocalStorage);
   initPage();
 });
-
 onUnmounted(() => {
   window.removeEventListener('storage', updateAuthAdminFromLocalStorage);
 });
@@ -131,6 +123,4 @@ onUnmounted(() => {
       </v-btn>
     </div>
   </v-app-bar>
-  <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
-  <LoadingBar v-if="loadingBar"></LoadingBar>
 </template>

@@ -28,10 +28,10 @@
           </li>
           <li>
             <span>피보험자<sup class="text-error ml-1">*</sup></span>
-            <v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" placeholder="피보험자" @keyup.enter="fnSearch()" />
+            <v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" placeholder="피보험자" @keyup.enter="fnSearch(true)" />
           </li>
           <li class="ml-auto">
-            <v-btn variant="flat" @click="fnSearch()">조회</v-btn>
+            <v-btn variant="flat" @click="fnSearch(true)">조회</v-btn>
           </li>
         </ul>
         <v-card>
@@ -42,6 +42,9 @@
             <p class="text-body-2 ml-3 pt-1">
               전체 <span class="color-primary font-weight-bold">{{ Number(InsuranceList.length).toLocaleString() }}</span> 건
             </p>
+            <v-btn icon color="white" size="small" @click="resultShowHide">
+              <vue-feather id="eyeIcon" :type="iconState" size="20"></vue-feather>
+            </v-btn>
             <div class="ml-auto">
               <v-btn variant="outlined" size="small" @click="fnAdd('IND')" class="mx-1">개인 신규</v-btn>
               <v-btn variant="outlined" size="small" @click="fnAdd('COR')" class="mx-1">법인 신규</v-btn>
@@ -49,7 +52,7 @@
             </div>
           </v-card-title>
           <v-card-text class="pa-0 v-result-box">
-            <v-table density="compact" fixed-header height="220px">
+            <v-table density="compact" fixed-header height="220px" v-if="resultAreaState">
               <caption class="d-none">
                 계약 조회 결과
               </caption>
@@ -1388,6 +1391,9 @@ let validUserCount = ref(0);
 const statusCdItemsData = ref(['']);
 
 let stockStartDt = ref('');
+
+const iconState =  ref('arrow-down-circle');
+const resultAreaState = ref(true);
 function getTrxCdTitle(trxCd) {
   try {
     // trxCd에 해당하는 title을 찾아 반환합니다.
@@ -1397,22 +1403,42 @@ function getTrxCdTitle(trxCd) {
   }
 }
 
-async function fnSearch() {
-  InsuranceList.value = [];
-  let resultData;
-  if (route.params.business_cd == 'ADV'){
-    resultData = await apiADMIN.getADVS(searchParams.value.data);
-  }
-  else {
-    resultData = await apiADMIN.getTAXS(searchParams.value.data);
-  }
-  insuranceDTO.value.insurance_uuid = null;
-  InsuranceList.value = resultData.data;
-  if (InsuranceList.value.length == 0) {
-    isNoData.value = true;
+async function fnSearch(isAllSearch:boolean) {
+//2024-02-28 수정
+  if(!resultAreaState.value) resultShowHide()
+  if(isAllSearch) {
+    InsuranceList.value = [];
+    insuranceDTO.value.insurance_uuid = null;
+    let resultData;
+    if (route.params.business_cd == 'ADV'){
+      resultData = await apiADMIN.getADVS(searchParams.value.data);
+    }
+    else {
+      resultData = await apiADMIN.getTAXS(searchParams.value.data);
+    }
+    InsuranceList.value = resultData.data;
+    if (InsuranceList.value.length == 0) {
+      isNoData.value = true;
+    } else {
+      // fSearchDtl(InsuranceList.value[0].insurance_uuid);
+    }
   } else {
-    // fSearchDtl(InsuranceList.value[0].insurance_uuid);
+    // console.log('insuranceDTO.value.insurance_uuid :'+insuranceDTO.value.insurance_uuid)
+    // //let result = InsuranceList.value.filter((value) => value.insurance_uuid == insuranceDTO.value.insurance_uuid)
+    //
+    // let result = InsuranceList.value.findIndex((value) => value.insurance_uuid == insuranceDTO.value.insurance_uuid)
+    // console.log('insr_tot_amt :',insuranceDTO.value.insr_tot_amt)
+    // console.log('insr_tot_unpaid_amt :',insuranceDTO.value.insr_tot_unpaid_amt)
+    // console.log('status_cd :',insuranceDTO.value.status_cd)
+    // console.log('status_nm :',insuranceDTO.value.status_nm)
+    // console.log('InsuranceList.value[result].status_nm :',InsuranceList.value[result].status_nm)
+    // console.log('result :',result)
+    // InsuranceList.value[result].insr_tot_amt = insuranceDTO.value.insr_tot_amt
+    // InsuranceList.value[result].insr_tot_unpaid_amt = insuranceDTO.value.insr_tot_unpaid_amt
+    // InsuranceList.value[result].status_cd = insuranceDTO.value.status_cd
+    // InsuranceList.value[result].status_nm = insuranceDTO.value.status_nm
   }
+
 }
 
 async function fnSetInsuranceRateCombo() {
@@ -1485,6 +1511,22 @@ async function fnSearchDtl(insurance_uuid: string) {
         return b.status_cd-a.status_cd
       }
     })
+    //상세 데이타 수정일 경우 LIST는 조회 하지 않고 데이타만 변경
+    let result = InsuranceList.value.findIndex((value) => value.insurance_uuid == insuranceDTO.value.insurance_uuid)
+
+    // console.log('insr_tot_amt :',insuranceDTO.value.insr_tot_amt)
+    // console.log('InsuranceList.value[result].insr_tot_amt  :',InsuranceList.value[result].insr_tot_amt)
+    // console.log('insr_tot_unpaid_amt :',insuranceDTO.value.insr_tot_unpaid_amt)
+    // console.log('InsuranceList.value[result].insr_tot_unpaid_amt :',InsuranceList.value[result].insr_tot_unpaid_amt)
+    // console.log('status_cd :',insuranceDTO.value.status_cd)
+    // console.log('status_nm :',insuranceDTO.value.status_nm)
+    // console.log('InsuranceList.value[result].status_nm :',InsuranceList.value[result].status_nm)
+    // console.log('result :',result)
+
+    InsuranceList.value[result].insr_tot_amt = insuranceDTO.value.insr_tot_amt
+    InsuranceList.value[result].insr_tot_unpaid_amt = insuranceDTO.value.insr_tot_unpaid_amt
+    InsuranceList.value[result].status_cd = insuranceDTO.value.status_cd
+    InsuranceList.value[result].status_nm = insuranceDTO.value.status_nm
 
     //메모 데이타 있을 경우 panel 확장, 2023-11-08 By Moon
     if(insuranceDTO.value.rmk != null && insuranceDTO.value.rmk != '' && panel.value.length < 9 ) panel.value.push("panel-10")
@@ -1571,14 +1613,14 @@ function fnCalTrx() {
   insuranceDTO.value.insr_tot_paid_amt = insuranceDTO.value.trx_data.reduce((total, item) => total + Number(item.trx_amt), 0);
   insuranceDTO.value.insr_tot_unpaid_amt = Number(insuranceDTO.value.insr_tot_amt) - Number(insuranceDTO.value.insr_tot_paid_amt);
 
-  if (insuranceDTO.value.insr_tot_unpaid_amt == 0 && insuranceDTO.value.status_cd == '10') {
+  if (insuranceDTO.value.insr_tot_unpaid_amt == 0 && (insuranceDTO.value.status_cd == '10' || insuranceDTO.value.status_cd == '20')) {
     insuranceDTO.value.status_cd = '80'; // 정상
 
     if (insuranceDTO.value.cbr_data != undefined && insuranceDTO.value.user_cd !== 'IND') {
       for (var idx in insuranceDTO.value.cbr_data) {
         // 기본담보 보험료(할인할증적용)
         //console.log()
-        if(insuranceDTO.value.cbr_data[idx].status_cd=='10')
+        if(insuranceDTO.value.cbr_data[idx].status_cd=='10' || insuranceDTO.value.status_cd == '20')
           insuranceDTO.value.cbr_data[idx].status_cd='80'
       }
     }
@@ -1621,12 +1663,14 @@ async function fnSave() {
 
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', '저장 되었습니다.');
-
+      fnSearch(false);
       if (insuranceDTO.value.mode == 'U') {
         fnSearchDtl(insuranceDTO.value.insurance_uuid);
       } else {
-        fnSearch();
+
       }
+      console.log('fnSave :',insuranceDTO.value.insurance_uuid)
+
     } else {
       messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
     }
@@ -1649,11 +1693,11 @@ async function fnDepositSave() {
     }
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', '저장 되었습니다. (자동 재조회)');
-
+      fnSearch(false);
       if (insuranceDTO.value.mode == 'U') {
         fnSearchDtl(insuranceDTO.value.insurance_uuid);
       } else {
-        fnSearch();
+
       }
     } else {
       messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
@@ -1878,7 +1922,7 @@ async function initPage() {
   businessCdItems.value = await CommonCode.getCodeList('COM001');
   statusCdItems.value = await CommonCode.getCodeList('COM030');
   userCdItems.value = await CommonCode.getCodeList('TAX002');
-  console.log("businessCd==>",businessCd)
+  // console.log("businessCd==>",businessCd)
   regionCdItems.value = await CommonCode.getCodeList(businessCd+'001');
   trxCdItems.value = await CommonCode.getCodeList('COM031');
   statusCdItems.value.unshift({ title: '전체', value: '%' });
@@ -2021,6 +2065,17 @@ async function fnAutoTRX() {
 
     fnSave();
   }
+}
+
+function resultShowHide(){
+  if(resultAreaState.value){
+    iconState.value = 'arrow-up-circle'
+    resultAreaState.value = false
+  }else{
+    iconState.value = 'arrow-down-circle'
+    resultAreaState.value = true
+  }
+
 }
 /**
  * 페이지 로딩이 완료되면 실행하는 로직

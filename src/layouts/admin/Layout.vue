@@ -11,7 +11,7 @@
       <v-main class="admin-wrapper">
         
         <!-- 상단영역 ( 로고 )-->
-        <Header />
+<!--        <Header />-->
 
         <!-- 메뉴영역  -->
         <Sidebar />
