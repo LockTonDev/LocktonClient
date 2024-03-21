@@ -14,7 +14,10 @@
   let _AUTH_ADMIN = ref(JSON.parse(localStorage.getItem('_AUTH_ADMIN')));
 
   const { isLoading } = storeToRefs(authStore);
+  const { drawer } = storeToRefs(authStore);
   const loadingBar = ref(isLoading?.value);
+  const isDrawer = ref(drawer?.value);
+
 
   const timeLeft = ref('');
   const messageBoxDTO = ref(new MessageBoxDTO());
@@ -101,7 +104,7 @@
 </script>
   
   <template>
-    <v-navigation-drawer fixed color="dark" class="admin-navi-wrap" width="205" >
+    <v-navigation-drawer fixed color="dark" class="admin-navi-wrap" width="205"  v-model="isDrawer">
       <!-- ---------------------------------------------- -->
       <!---Navigation -->
       <!-- ---------------------------------------------- -->

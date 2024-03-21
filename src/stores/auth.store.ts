@@ -10,7 +10,8 @@ export const useAuthStore = defineStore({
     _AUTH_USER: JSON.parse(localStorage.getItem('_AUTH_USER')),
     _AUTH_ADMIN: JSON.parse(localStorage.getItem('_AUTH_ADMIN')),
     returnUrl: null,
-    isLoading: false
+    isLoading: false,
+    drawer: true
   }),
   getters: {
     // doubleCount: (state) => state.counter * 2,
@@ -21,6 +22,9 @@ export const useAuthStore = defineStore({
     },
     hide() {
       this.isLoading = false
+    },
+    chgDrawer() {
+      this.drawer = !this.drawer
     },
     async login(params: any) {
       //console.log('localStorage', localStorage);

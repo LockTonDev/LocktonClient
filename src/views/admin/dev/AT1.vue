@@ -1,6 +1,9 @@
 <template>
 	<div class="pa-4">
 		<div class="d-flex align-center mb-3">
+      <span>
+      <v-app-bar-nav-icon v-if="$vuetify.display.mobile" @click.stop="authStore.chgDrawer()"> </v-app-bar-nav-icon>
+    </span>
 			<svg class="mr-2" width="4" height="14" fill="#00AEEF"><rect width="100%" height="100%"></rect></svg>
 			<h1>Daily Status</h1>
 			<span class="color-gray text-subtitile-2 ml-auto">전일 기준</span>
@@ -121,6 +124,8 @@
   
   <script setup lang="ts">
   import { ref } from "vue";
+  import { useAuthStore } from '@/stores';
+  const authStore = useAuthStore();
 	const statsData = ref([
 		{
 			color: "primary",
