@@ -216,6 +216,7 @@ cd <template>
 
 
   import router from "@/router";
+  import {InsuranceYup} from "@/schema";
 
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
@@ -288,12 +289,29 @@ cd <template>
 
 
   };
+
+   async function checkValidation() {
+    const validationSchema = InsuranceYup.MODIFY_FORM;
+    const isValidate = await validationSchema
+        .validate(d_TCAA0040A.value, { abortEarly: false })
+        .then(() => {
+          return true;
+        })
+        .catch(error => {
+          // 유효성 검사 실패
+          console.log(error.inner);
+          messageBoxDTO.value.setWarning('입력확인', error.inner[0].message);
+          return false;
+        });
+
+    return isValidate;
+  }
  /**
    * 변경신청내역 상세조회
    * @param apply_no 
    */
   async function onSubmit() {
-    
+   if (!(await checkValidation())) return false;
     const retData = await apiA_TCAA0040A.setDBIns(d_TCAA0040A.value);
     if(retData.success) {
       getItems();

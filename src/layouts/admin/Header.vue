@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
 import { MessageBoxDTO, ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, CBRDataDTO } from '@/model';
 import MessageBox from '@/components/MessageBox.vue';
+import sidebarItems from "./SidebarItem";
 
 const warnTimeoutMin = 3
 const authStore = useAuthStore();
@@ -18,6 +19,11 @@ const convertSecondsToMinutes = seconds => {
   const remainingSeconds = seconds % 60;
   return `${minutes}:${remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds}`;
 };
+
+const sidebarMenu = ref(sidebarItems);
+
+let drawer = ref(true);
+
 
 let intervalId = null;
 
@@ -91,8 +97,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <v-app-bar color="footerbackground" flat class="admin-header-wrapper">
-    <v-app-bar-nav-icon class="d-none"> </v-app-bar-nav-icon>
+<!--  <v-app-bar color="footerbackground" flat class="admin-header-wrapper" @click.stop="drawer = !drawer">-->
+  <v-app-bar color="footerbackground" class="admin-header-wrapper">
     <!-- ---------------------------------------------- -->
     <!---Logo part -->
     <!-- ---------------------------------------------- -->
@@ -103,6 +109,7 @@ onUnmounted(() => {
         </div>
       </div>
     </RouterLink>
+    <v-app-bar-nav-icon v-if="$vuetify.display.mobile" @click.stop="drawer = !drawer"> </v-app-bar-nav-icon>
     <v-spacer />
     <!-- ---------------------------------------------- -->
     <!---right part -->
@@ -123,5 +130,60 @@ onUnmounted(() => {
       </v-btn>
     </div>
   </v-app-bar>
+  <v-navigation-drawer app color="dark" class="admin-navi-wrap" width="205" v-model="drawer">
+    <!-- ---------------------------------------------- -->
+    <!---Navigation -->
+    <!-- ---------------------------------------------- -->
+    <perfect-scrollbar>
+
+      <v-list class="py-0">
+        <!-- ---------------------------------------------- -->
+        <!---Menu Loop -->
+        <!-- ---------------------------------------------- -->
+        <template v-for="(item, i) in sidebarMenu">
+          <!-- ---------------------------------------------- -->
+          <!---Item Sub Header -->
+          <!-- ---------------------------------------------- -->
+          <v-list-subheader v-if="item.header" class="d-none">{{item.header}}</v-list-subheader>
+          <!-- ---------------------------------------------- -->
+          <!---If Has Child -->
+          <!-- ---------------------------------------------- -->
+          <v-list-group v-else-if="item.children">
+            <!-- ---------------------------------------------- -->
+            <!---Dropdown  -->
+            <!-- ---------------------------------------------- -->
+            <template v-slot:activator="{ props }">
+              <v-list-item v-bind="props"  :value="item.title" variant="flat" class="py-4 bg-dark">
+                <!---Icon  -->
+                <span class="d-inline-block mr-4">
+                    <vue-feather :type="item.icon" class="feather-sm"></vue-feather>
+                  </span>
+                <!---Title  -->
+                <v-list-item-title v-text="item.title" class="mr-auto d-inline-block text-14" ></v-list-item-title>
+              </v-list-item>
+            </template>
+            <!-- ---------------------------------------------- -->
+            <!---Sub Item-->
+            <!-- ---------------------------------------------- -->
+            <v-list-item v-for="(subitem, i) in item.children" :key="i" :value="subitem.to" :to="subitem.to" variant="flat" class="py-2 bg-dark">
+              <v-list-item-title v-text="subitem.title" class="text-14"></v-list-item-title>
+            </v-list-item>
+          </v-list-group>
+          <!-- ---------------------------------------------- -->
+          <!---Single Item-->
+          <!-- ---------------------------------------------- -->
+          <v-list-item v-else :key="i" :to="item.to" variant="flat" class="-item py-4 bg-dark">
+              <span class="d-inline-block mr-4">
+                <vue-feather :type="item.icon" class="feather-sm" ></vue-feather>
+              </span>
+            <v-list-item-title v-text="item.title" class="d-inline-block text-14"></v-list-item-title>
+          </v-list-item>
+          <!-- ---------------------------------------------- -->
+          <!---End Single Item-->
+          <!-- ---------------------------------------------- -->
+        </template>
+      </v-list>
+    </perfect-scrollbar>
+  </v-navigation-drawer>
   <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
 </template>
