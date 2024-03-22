@@ -8,8 +8,8 @@
   <template>
     <v-app>
   
-      <v-main>
-
+      <v-main style="max-width: 360px">
+        
         <!-- 상단영역 ( 로고 )-->
         <!-- <Header /> -->
 

@@ -408,7 +408,7 @@
                             <!-- <VTextFieldWithValidation v-model="userDTO.user_nm" name="user_nm" label="" single-line density="comfortable" maxlength="25"/> -->
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd ==='TAX' || userDTO.business_cd ==='ADV' || userDTO.business_cd ==='CAA' || userDTO.business_cd ==='PAT' ">
+                        <v-col cols="12" sm="6" class="v-col" v-if="userDTO.business_cd ==='TAX' || userDTO.business_cd ==='ADV' || userDTO.business_cd ==='CAA' || userDTO.business_cd ==='PAT' || userDTO.business_cd ==='LAW' ">
                           <div class="head-col">
                             <p>대표자 성명</p>
                             <sup class="text-error">*</sup>
@@ -423,7 +423,7 @@
                             />
                           </div>
                         </v-col>
-                        <v-col cols="12" sm="12" class="v-col" v-if="userDTO.business_cd === 'ADV'">
+                        <v-col cols="12" sm="12" class="v-col" v-if="userDTO.business_cd === 'ADV' || userDTO.business_cd === 'LAW'">
                           <div class="head-col">
                             <p>사무소 형태</p>
                             <sup class="text-error">*</sup>
@@ -971,7 +971,7 @@ async function onNext() {
 }
 
 function isDisabledCorpBnno() {
-  if (userDTO.value.business_cd==='ADV' && userDTO.value.corp_type !== '003')
+  if ((userDTO.value.business_cd==='ADV' || userDTO.value.business_cd==='LAW' ) && userDTO.value.corp_type !== '003')
     return true;
 
   if (userDTO.value.business_cd==='CAA' && userDTO.value.corp_type === '002')
@@ -1081,7 +1081,11 @@ function onTermsOfMarketingClose(agrs: any) {
 }
 async function InitCode(){
   regionCdItems.value = await CommonCode.getCodeList(businessCd+'001');
-  corpTypeItems.value = await CommonCode.getCodeList('COM050');
+  console.log(userDTO.value.business_cd)
+  if(businessCd==='ADV')
+    corpTypeItems.value = await CommonCode.getCodeList('COM050');
+  else if(businessCd==='LAW')
+    corpTypeItems.value = await CommonCode.getCodeList('COM052');
 }
 // 초기 로딩
 onMounted(async () => {

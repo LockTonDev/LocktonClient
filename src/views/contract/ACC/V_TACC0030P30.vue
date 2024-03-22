@@ -25,7 +25,7 @@
       <div class="print-wrap page1">
         <header class="position-relative">
           <img src="../../../assets/images/d-join-logo.png" alt="" />
-          <h1 class="position-absolute bottom-0 left-130 pb-4 color-white">가입증명서</h1>
+          <h1 class="position-absolute color-white bottom-0 pb-4" style="padding-left:130px;">가입증명서</h1>
         </header>
         <main>
           <dl class="d-flex flex-wrap w-70 ma-auto my-16 text-18">
@@ -59,7 +59,7 @@
         <main>
           <h2 class="title-wrap">
             <p class="h5 circle">1</p>
-            <p class="h6 title">계약자 / 피보험자 관련사항</p>
+            <p class="h6 title db-insr">계약자 / 피보험자 관련사항</p>
           </h2>
           <table class="table">
             <colgroup>
@@ -89,7 +89,7 @@
           </table>
           <h2 class="title-wrap">
             <p class="h5 circle">2</p>
-            <p class="h6 title">보험가입 관련사항</p>
+            <p class="h6 title db-insr">보험가입 관련사항</p>
           </h2>
           <table class="table">
             <colgroup>
@@ -130,7 +130,7 @@
           </table>
           <h2 class="title-wrap">
             <p class="h5 circle">3</p>
-            <p class="h6 title">보험조건</p>
+            <p class="h6 title db-insr">보험조건</p>
           </h2>
           <table class="table">
             <tr>
