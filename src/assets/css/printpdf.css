@@ -102,6 +102,7 @@
 .certificatePrintFrame-wrap .headline2 {color: red;}
 .certificatePrintFrame-wrap .title-wrap{position: relative;padding-left: 16px;margin: 24px 0 10px;}
 .certificatePrintFrame-wrap .title {background: rgb(252, 214, 179);padding-left: 40px;line-height: 32px}
+.certificatePrintFrame-wrap .title.db-insr{background: #cce3e2;padding-left: 40px;line-height: 32px}
 .certificatePrintFrame-wrap .circle{position: absolute;top: 0;left: 0;display: block;width: 32px;height: 32px;line-height: 32px;margin-right:16px;text-align: center;background: rgba(95, 95, 95);border-radius: 50%;color:white;}
 .certificatePrintFrame-wrap .table{table-layout: fixed;width: 100%;border-collapse: collapse;}
 .certificatePrintFrame-wrap .table th {font-size:12px;text-align: center;padding:2px 8px;border: 2px solid #bbb;background: rgb(217, 225, 242);}
@@ -150,7 +151,17 @@
 .insuranceForm-wrap .print-wrap footer {margin-top:auto;margin-bottom: 28px;}
 .insuranceForm-wrap .table {margin: 0 0 -1px 0;font-size:11px;border:1px solid #858585;border-radius: 4px;overflow: hidden;}
 .insuranceForm-wrap .table>.v-col {display: flex;align-items: center;flex-wrap: nowrap;padding: 0;border-bottom:1px solid #eee;}
-.insuranceForm-wrap .table>.v-col>.head-col {display: flex;align-items: center;flex-wrap: wrap;width: 110px;min-height: 32px;padding: 0 0 0 16px;background-color: #f3f7f9;font-weight: 500;}
+.insuranceForm-wrap .table>.v-col>.head-col {
+  @media screen and (min-width:960px) {
+    width: 110px;
+    padding: 0 0 0 16px;
+  }
+  @media screen and (max-width:959px) {
+    width: 60px;
+    padding: 0 0 0 4px;
+  }
+  display: flex;align-items: center;flex-wrap: wrap;min-height: 32px;background-color: #f3f7f9;font-weight: 500;
+}
 .insuranceForm-wrap .table>.v-col>.data-col {display: flex;align-items: center;flex-wrap: wrap;min-height: 32px;padding: 0 4px 0 8px;flex-grow: 1;}
 .insuranceForm-wrap .table>.v-col.point{border-bottom: none;border-left: 1px solid #858585;border-top: 1px solid #858585;border-top-left-radius: 4px;}
 .insuranceForm-wrap .table>.v-col.point>.head-col {font-size: 15px;font-weight: bold;background: #00AEEF;color: #fff;}

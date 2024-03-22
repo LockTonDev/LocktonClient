@@ -4,6 +4,10 @@ import { ref, watchEffect, onMounted} from "vue";
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
 
+
+import {useMobileStore} from "@/stores";
+const checkMobile = useMobileStore();
+
 const authStore = useAuthStore();
 const { _AUTH_USER } = storeToRefs(authStore);
 
@@ -30,7 +34,7 @@ const height = ref({ max: "110", min:"64" });
     <!-- ---------------------------------------------- -->
     <!---right part -->
     <!-- ---------------------------------------------- -->
-    <div class="lnb d-flex align-center">
+    <div v-if="!checkMobile.isMobile" class="lnb d-flex align-center">
 
       <v-menu anchor="bottom end" origin="auto">
         <template v-slot:activator="{ props }">
@@ -42,7 +46,7 @@ const height = ref({ max: "110", min:"64" });
           </v-btn>
         </template>
       </v-menu>
-    
+
       <v-menu anchor="bottom end" origin="auto" v-if="!_AUTH_USER">
         <template v-slot:activator="{ props }">
           <v-btn icon v-bind="props" to="/user/login" color="secondary">
@@ -65,11 +69,17 @@ const height = ref({ max: "110", min:"64" });
         </template>
       </v-menu>
 
-      
+
 
     </div>
   </v-app-bar>
 </template>
+
+<script lang="ts">
+import {useMobileStore} from "@/stores";
+const checkMobile = useMobileStore();
+</script>
+
 <style scoped>
   .font-size-8 {
     font-size :0.5rem;

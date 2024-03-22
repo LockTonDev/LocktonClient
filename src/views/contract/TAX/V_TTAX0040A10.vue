@@ -18,7 +18,7 @@
             <th class="text-center text-subtitle-1">개시일자</th>
             <th class="text-center text-subtitle-1">처리일자</th>
             <th class="text-center text-subtitle-1">처리상태</th>
-            <th class="text-center text-subtitle-1">상세보기</th>
+            <th class="text-center text-subtitle-1">상세v보기</th>
           </tr>
         </thead>
         <tbody v-if="d_TTAX0040AList.length">
