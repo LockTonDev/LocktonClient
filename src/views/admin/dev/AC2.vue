@@ -1409,6 +1409,7 @@ function getTrxCdTitle(trxCd) {
 async function fnSearch(isAllSearch:boolean) {
 //2024-02-28 수정
   if(!resultAreaState.value) resultShowHide()
+
   if(isAllSearch) {
     InsuranceList.value = [];
     insuranceDTO.value.insurance_uuid = null;

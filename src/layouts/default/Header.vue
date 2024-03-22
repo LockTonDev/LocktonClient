@@ -4,7 +4,6 @@ import { ref, watchEffect, onMounted} from "vue";
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
 
-
 import {useMobileStore} from "@/stores";
 const checkMobile = useMobileStore();
 
