@@ -32,7 +32,7 @@
           </template>
         </tbody>
       </v-table>
-      <v-pagination v-model="page" :length="pages" rounded="circle" />
+      <v-pagination :size="checkMobile.isMobile?'x-small':'default'" v-model="page" :length="pages" rounded="circle" />
     </v-col>
   </v-row>
 
@@ -72,6 +72,9 @@
   
   import { storeToRefs } from 'pinia';
   import { useAuthStore } from '@/stores';
+
+  import {useMobileStore} from "@/stores";
+  const checkMobile = useMobileStore();
 
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);

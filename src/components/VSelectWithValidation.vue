@@ -32,7 +32,7 @@
   
   
 </script>
-  
+
 <template>
 
   <v-select  
@@ -45,5 +45,19 @@
     :error-messages="errors"
     variant="outlined"
     hide-details="auto"
+    class="custom-text-field"
  />
 </template>
+
+<style>
+@media screen and (min-width:960px) {
+  .custom-text-field .v-input__control .v-field__input {
+  }
+}
+@media screen and (max-width:959px) {
+  .custom-text-field .v-input__control .v-field__input{
+    height: 30px; /* 원하는 높이 값으로 변경 */
+    min-height: 30px;
+  }
+}
+</style>

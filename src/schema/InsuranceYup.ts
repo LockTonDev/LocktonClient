@@ -106,6 +106,17 @@ const 보험가입_변리사보험계약 = yup.object({
   })
 });
 
+const 법무사_복수_보험계약 = yup.object({
+  cbr_data: yup.array().min(2, '복수가입은 최소 2명이상인 경우에만 가입이 가능합니다. 1명만 가입을 원하시면 개인가입으로 진행해 주시기 바랍니다. 관련문의는 록톤(02.2011.0300)으로 연락바랍니다.').of(
+      yup.object({
+        cbr_nm: yup.string().required('법무사 명단 성명을 입력해주세요.'),
+        cbr_brdt: yup.string().matches(/^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/, '법무사 명단 생년월일 입력해주세요.'),
+        cbr_regno: yup.string().matches(/^\d{3,7}$/, '법무사 명단 등록번호 입력해주세요.'),
+        isCheck: yup.boolean().oneOf([true], '법무사 명단 인증해주세요.').required()
+      })
+  )
+});
+
 const 보험가입_변호사법인매출액 = yup.object({
   insr_take_sec: yup.string().required('매출액을 입력해주세요.'),
 });
@@ -426,7 +437,7 @@ export const InsuranceYup = {
   }),
   LAW_JNT_TAB2: yup.object().shape({
     ...보험가입_변호사기본보험계약.fields,
-    ...변호사_복수_보험계약.fields
+    ...법무사_복수_보험계약.fields
   }),
   LAW_JNT_TAB3: yup.object().shape({
     ...보험가입_변호사특약보험계약.fields

@@ -45,10 +45,9 @@
                   <sup class="text-error">*</sup>는 필수 입력입니다.
                 </p>
               </v-col>
-              <v-col cols="12 mt-10">
+              <v-col cols="12" :class="checkMobile.isMobile?'pt-2':'pt-6'" v-if="insuranceDTO.user_cd == 'IND'">
                 <v-row
                   class="v-board-table"
-                  v-if="insuranceDTO.user_cd == 'IND'"
                 >
                   <v-col cols="12" sm="6" class="v-col">
                     <div class="head-col">
@@ -256,6 +255,7 @@
                         style="width: 80px;"
                       />
                       <v-btn
+                        :size="checkMobile.isMobile?'small':'default'"
                         variant="outlined"
                         color="primary"
                         @click="isDaumPostDialog = true"
@@ -291,7 +291,7 @@
               <!-- 개인 끝-->
 
               <!-- 법인/합동 시작-->
-              <v-col cols="12 mt-10" v-if="insuranceDTO.user_cd == 'JNT'">
+              <v-col cols="12" :class="checkMobile.isMobile?'pt-2':'pt-6'" v-if="insuranceDTO.user_cd == 'JNT'">
                 <v-row class="v-board-table">
                   <v-col cols="12" sm="6" class="v-col">
                     <div class="head-col">
@@ -493,8 +493,10 @@
                         single-line
                         density="comfortable"
                         readonly
+                        style="width: 80px;"
                       />
                       <v-btn
+                        :size="checkMobile.isMobile?'small':'default'"
                         variant="outlined"
                         color="primary"
                         @click="isDaumPostDialog = true"
@@ -872,8 +874,9 @@
                       >
                         <v-btn
                             color="primary"
-                            class="flex-grow-0 custom-toggle-btn"
+                            :class="checkMobile.isMobile?'flex-grow-0 custom-toggle-btn':'flex-grow-0'"
                             value="3000000|3백만원"
+                            :style="checkMobile.isMobile?'':'flex-basis: 30%'"
                         >3백만원</v-btn
                         >
                       </v-btn-toggle>
@@ -925,7 +928,7 @@
                 </v-row>
               </v-col>
               <!-- 변호사 명단 시작 -->
-              <v-col cols="12" sm="12" class="py-0 px-14 mb-10" v-if="insuranceDTO.user_cd != 'IND'">
+              <v-col cols="12" sm="12" :class="checkMobile.isMobile?'py-0 px-4 mb-4':'py-0 px-14 mb-10'" v-if="insuranceDTO.user_cd != 'IND'">
                 <div class="d-flex align-center mb-4 mt-6">
                   <svg width="8" height="12" fill="none" stroke-width="3" class="mr-2">
                     <line x1="7" y1="5" x2="0" y2="12" stroke="#222222"></line>
@@ -1087,7 +1090,7 @@
                           single-line
                           class="w-100 readonly"
                           density="comfortable"
-                      >사무원의 부정직행위 담보 특별약관(Dishonesty
+                      >사무원의 부정직행위 담보 특별약관 <br v-if="checkMobile.isMobile"/> (Dishonesty
                         Extension)</v-text-field
                       >
                     </div>
@@ -1194,8 +1197,9 @@
                       >
                         <v-btn
                             color="primary"
-                            class="flex-grow-0 custom-toggle-btn"
+                            :class="checkMobile.isMobile?'flex-grow-0 custom-toggle-btn':'flex-grow-1'"
                             value="5000000|5백만원"
+                            :style="checkMobile.isMobile?'':'flex-basis: 33.3%'"
                         >5백만원</v-btn
                         >
                       </v-btn-toggle>
@@ -1266,7 +1270,7 @@
             <v-row class="v-box-table">
               <v-col cols="12" :class="checkMobile.isMobile?'px-2 py-10':'px-16 py-10'">
                 <h3 class="text-h6 font-weight-bold">약관 동의</h3>
-                <v-table class="v-board-table mt-10 remove-padding">
+                <v-table :class="checkMobile.isMobile?'v-board-table mt-10 remove-padding':'v-board-table mt-10'">
                   <tbody >
                     <tr>
                       <td>
@@ -1885,7 +1889,6 @@ const relief_yn = ref(false);
 // 오늘일자
 let TODAY = dayjs().format('YYYY-MM-DD');
 let INSR_RETR_DT_TODAY = dayjs().format('YYYY-MM-DD');
-
 const tab = ref('1');
 
 const page = ref({
@@ -2749,8 +2752,14 @@ watch(
     (newValue, oldValue) => {
       // 읽기전용일 경우 해당로직 제외
       if (isReadOnlyAll.value) return false;
-
-      changeTakeAmount();
+      if(insr_take_amt.value==''){
+        insuranceDTO.value.insr_take_amt = 0;
+        insuranceDTO.value.insr_take_sec = '';
+        insr_take_sec.value = '';
+        insr_take_amt.value = 0;
+      }else {
+        changeTakeAmount();
+      }
     }
 );
 
@@ -3181,7 +3190,6 @@ onMounted(async () => {
         insr_take_amt.value = insuranceDTO.value.insr_take_amt.toString()
       else
         insr_take_amt.value = '0';
-
       let year_clm_lt_amt = (insuranceDTO.value.insr_year_clm_lt_amt);
       if(Number(insuranceDTO.value.cbr_cnt) >= 3) {
         year_clm_lt_amt = (parseInt(year_clm_lt_amt) / 2) + '억원'

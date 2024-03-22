@@ -15,7 +15,6 @@
             color="primary"
             next-icon="mdi-arrow-left"
             prev-icon="mdi-arrow-left"
-            show-arrows
           >
             <v-tab value="1" class="flex-grow-1">가입정보</v-tab>
             <v-tab value="2" class="flex-grow-1">보험계약 [기본담보]</v-tab>
@@ -27,11 +26,11 @@
     </v-row>
 
     <v-row class="mb-16" justify="center" v-if="onLoading">
-      <v-col cols="8">
-        <v-window v-model="tab">
+      <v-col :cols="checkMobile.isMobile?'12':'8'" :class="checkMobile.isMobile?'pa-2':''">
+        <v-window v-model="tab" disabled="true">
           <!-- 가입정보 Tab 시작 -->
           <v-window-item value="1">
-            <v-row class="v-box-table px-14 py-10">
+            <v-row :class="checkMobile.isMobile?'v-box-table px-1 py-5':'v-box-table px-14 py-10'">
               <v-col cols="12" sm="12" class="v-col">
                 <div class="d-flex flex-wrap">
                   <h3 class="text-h6 font-weight-bold">가입정보 입력</h3>
@@ -40,10 +39,9 @@
                   <sup class="text-error">*</sup>는 필수 입력입니다.
                 </p>
               </v-col>
-              <v-col cols="12 mt-10">
+              <v-col cols="12" :class="checkMobile.isMobile?'pt-2':'pt-6'" v-if="insuranceDTO.user_cd == 'IND'">
                 <v-row
                   class="v-board-table"
-                  v-if="insuranceDTO.user_cd == 'IND'"
                 >
                   <v-col cols="12" sm="6" class="v-col">
                     <div class="head-col">
@@ -167,7 +165,7 @@
               <!-- 개인 끝-->
 
               <!-- 법인/합동 시작-->
-              <v-col cols="12 mt-10" v-if="insuranceDTO.user_cd != 'IND'">
+              <v-col cols="12" :class="checkMobile.isMobile?'pt-2':'pt-6'" v-if="insuranceDTO.user_cd != 'IND'">
                 <v-row class="v-board-table">
                   <v-col cols="12" sm="6" class="v-col">
                     <div class="head-col">
@@ -280,7 +278,7 @@
             <v-row class="mt-10">
               <v-col class="d-flex justify-center pa-0">
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="flat"
                   color="dark"
                   @click="onNextPage()"
@@ -299,8 +297,8 @@
               <v-btn variant="tonal" @click="onTest('COR')">법인</v-btn>
             </div> -->
 
-            <v-row class="v-box-table py-10">
-              <v-col cols="12" sm="12" class="px-14 v-col">
+            <v-row :class="checkMobile.isMobile?'v-box-table py-5':'v-box-table py-10'">
+              <v-col cols="12" sm="12" :class="checkMobile.isMobile?'px-2':'px-14 v-col'">
                 <div class="d-flex flex-wrap">
                   <div class="d-flex align-center">
                     <h3 class="text-h6 font-weight-bold">보험 계약</h3>
@@ -319,35 +317,17 @@
                 </p>
                 <p class="text-body-2 color-gray-shadow" v-if="renewalYN == 'Y'">직전년도 가입조건이 자동 표시되며, 변경 가능합니다.</p> <!--갱신자의 경우 문구 노출-->
               </v-col>
-              <v-col cols="12" sm="12" class="py-0 px-14 mt-10">
+              <v-col cols="12" sm="12" :class="checkMobile.isMobile?'py-0 px-2 mt-5':'py-0 px-14 mt-10'">
                 <v-row class="v-board-table">
                   <v-col cols="12" sm="12" class="v-col">
                     <div class="head-col">
                       <p>보험기간</p>
                       <sup class="text-error">*</sup>
                     </div>
-                    <div class="data-col justify-space-between date">
-                      <VTextFieldWithValidation
-                          v-model="insuranceDTO.insr_st_dt"
-                          name="insr_st_dt"
-                          placeholder="보험시작일자"
-                          type="date"
-                          single-line
-                          density="comfortable"
-                          :min="insuranceDTO.insr_st_dt"
-                          :max="insuranceDTO.insr_cncls_dt"
-                          :readonly="isReadOnlyAll"
-                      />
+                    <div :class="checkMobile.isMobile?'data-col date':'data-col justify-space-between date'">
+                      {{insuranceDTO.insr_st_dt}}
                       <p class="mx-2">00:01 부터</p>
-                      <VTextFieldWithValidation
-                          v-model="insuranceDTO.insr_cncls_dt"
-                          name="insr_cncls_dt"
-                          placeholder="보험종료일자"
-                          type="date"
-                          single-line
-                          density="comfortable"
-                          readonly
-                      />
+                      {{insuranceDTO.insr_cncls_dt}}
                       <p class="ml-2">00:01 까지</p>
                     </div>
                   </v-col>
@@ -410,19 +390,20 @@
                       <p v-if="insuranceDTO.user_cd === 'JNT'">변호사 1인당<br/>평균 매출액</p>
                       <sup class="text-error">*</sup>
                     </div>
-                    <div class="data-col w-100">
+                    <div class="data-col">
 
                       <p
                           class="text-caption font-weight-light  color-gray flex-grow-1"
                       >
-                      <div class="data-col">   <v-text-field
+                      <div class="data-col w-max-full">
+                      <!--<v-text-field
                           name="insr_take_amt"
                           v-model="insuranceDTO.insr_take_amt"
                           variant="outlined"
                           hide-details="auto"
                           @keydown.enter.prevent
                           :disabled="isReadOnlyAll"
-                      /><p style="font-size: 18px; margin-left: 10px">원</p>
+                      />--><p style="font-size: 18px;">{{Number(insuranceDTO.insr_take_amt).toLocaleString()}} 원</p>
                       </div>
                       <i class="mdi mdi-alert-circle-outline mr-2"></i
                       >전년도 부가세과세표준증명 또는 손익계산서상의 매출액 기재 (전년도 1.1 ~ 12월말까지 매출)<br/>
@@ -434,77 +415,78 @@
                       </p>
                     </div>
                   </v-col>
-                  <v-col cols="12" sm="12" class="v-col">
+                  <v-col cols="12" sm="12" class="v-col h-100">
                     <div class="head-col">
                       <p>매출액구간</p>
                       <sup class="text-error">*</sup>
                     </div>
-                    <div class="data-col w-100">
+                    <div class="data-col w-100 align-stretch">
                       <v-btn-toggle
                           v-model="insuranceDTO.insr_take_sec"
                           divided
                           variant="outlined"
                           density="comfortable"
-                          class="align-stretch w-100"
+                          class="align-stretch d-flex flex-wrap overflow-visible w-100"
                           disabled="true"
                       >
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            style="font-size: x-small"
+                            :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: x-small':'font-size: x-small'"
                             value="0|1억이하"
                         >1억이하</v-btn
                         >
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            style="font-size: x-small"
+                            :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: x-small':'font-size: x-small'"
                             value="1|1억5천이하"
                         >1억5천이하</v-btn
                         >
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            style="font-size: x-small"
+                            :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: x-small':'font-size: x-small'"
                             value="2|2억이하"
                         >2억이하</v-btn
                         >
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            style="font-size: x-small"
+                            :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: x-small':'font-size: x-small'"
                             value="3|3억이하"
                         >3억이하</v-btn
                         >
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            style="font-size: x-small"
+                            :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: x-small':'font-size: x-small'"
                             value="4|4억이하"
                         >4억이하</v-btn
                         >
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            style="font-size: x-small"
+                            :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: x-small':'font-size: x-small'"
                             value="5|5억이하"
                         >5억이하</v-btn
                         >
 
                         <v-btn
                             color="primary"
-                            class="flex-grow-1"
-                            style="font-size: x-small"
+                            class="flex-grow-0"
+                            :style="checkMobile.isMobile?'flex-basis: 33%; border: 1px solid #EEEEEE; text-align: center;font-size: x-small':'font-size: x-small'"
                             value="6|5억초과"
                         >5억초과</v-btn
                         >
                       </v-btn-toggle>
-                      <p
+                      <span v-if="checkMobile.isMobile" class="" style="margin-top: 145px"></span>
+                      <!--<p
                           class="text-caption font-weight-light  color-gray mt-2 flex-grow-1"
                       >
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
                         >전년도 부가세과세표준증명 또는 손익계산서상의 매출액 확인요망
-                      </p>
+                      </p>-->
                     </div>
                   </v-col>
                   <v-col cols="12" sm="12" class="v-col">
@@ -524,18 +506,21 @@
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
+                            style="flex-basis: 33%;"
                             value="50000000|5천만원"
                         >5천만원</v-btn
                         >
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
+                            style="flex-basis: 33%;"
                             value="100000000|1억원"
                         >1억원</v-btn
                         >
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
+                            style="flex-basis: 33%;"
                             value="200000000|2억원"
                         >2억원</v-btn
                         >
@@ -564,18 +549,21 @@
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
+                            style="flex-basis: 33%;"
                             value="3000000|3백만원"
                         >3백만원</v-btn
                         >
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
+                            style="flex-basis: 33%;"
                             value="5000000|5백만원"
                         >5백만원</v-btn
                         >
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
+                            style="flex-basis: 33%;"
                             value="10000000|1천만원"
                         >1천만원</v-btn
                         >
@@ -591,7 +579,7 @@
               <v-col
                 cols="12"
                 sm="12"
-                class="py-0 px-14 mb-10"
+                :class="checkMobile.isMobile?'py-0 px-4 mb-4':'py-0 px-14 mb-10'"
                 v-if="insuranceDTO.user_cd != 'IND'"
               >
                 <div class="d-flex align-center mb-4 mt-6">
@@ -694,7 +682,7 @@
             <v-row class="mt-10">
               <v-col class="pa-0 d-flex justify-center">
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="outlined"
                   color="dark"
                   v-if="tab > 1 && tab < 4"
@@ -703,7 +691,7 @@
                   >이전</v-btn
                 >
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="flat"
                   color="dark"
                   @click="onNextPage()"
@@ -716,7 +704,7 @@
 
           <!-- 보험가입 [특약]  시작 -->
           <v-window-item value="3" :disabled="isReadOnlyAll">
-            <v-row class="v-box-table px-14 py-10">
+            <v-row :class="checkMobile.isMobile?'v-box-table px-2 py-10':'v-box-table px-14 py-10'">
               <v-col cols="12" class="v-col">
                 <div class="d-flex align-center">
                   <h3 class="text-h6 font-weight-bold">보험 계약</h3>
@@ -752,13 +740,12 @@
                       <p>특약 선택</p>
                       <sup class="text-error">*</sup>
                     </div>
-                    <div class="data-col">
+                    <div class="data-col w-100">
                       <v-btn-toggle
                           v-model="insuranceDTO.spct_join_yn"
                           divided
                           variant="outlined"
                           class="w-100"
-                          style="min-width: 450px"
                           density="comfortable"
                           :disabled="isReadOnlyAll"
                       >
@@ -793,21 +780,21 @@
                       >
                         <v-btn
                             color="primary"
-                            class="flex-grow-1"
+                            class="flex-grow-1 custom-toggle-btn"
                             value="25000000|2천5백만원"
                             :disabled="insuranceDTO?.insr_clm_lt_amt?.getValueBySplit(0)<50000000"
                         >2천5백만원</v-btn
                         >
                         <v-btn
                             color="primary"
-                            class="flex-grow-1"
+                            class="flex-grow-1 custom-toggle-btn"
                             value="50000000|5천만원"
                             :disabled="insuranceDTO?.insr_clm_lt_amt?.getValueBySplit(0)<100000000"
                         >5천만원</v-btn
                         >
                         <v-btn
                             color="primary"
-                            class="flex-grow-1"
+                            class="flex-grow-1 custom-toggle-btn"
                             value="100000000|1억원"
                             :disabled="insuranceDTO?.insr_clm_lt_amt?.getValueBySplit(0)<200000000"
                         >1억원</v-btn
@@ -831,7 +818,7 @@
                       <p>자기부담금</p>
                       <sup class="text-error">*</sup>
                     </div>
-                    <div class="data-col">
+                    <div class="data-col w-100">
                       <v-btn-toggle
                           v-model="insuranceDTO.spct_data.insr_psnl_brdn_amt"
                           divided
@@ -842,7 +829,7 @@
                       >
                         <v-btn
                             color="primary"
-                            class="flex-grow-1"
+                            class="flex-grow-0 custom-toggle-btn"
                             value="5000000|5백만원"
                         >5백만원</v-btn
                         >
@@ -889,7 +876,7 @@
             <v-row class="mt-10">
               <v-col class="pa-0 d-flex justify-center">
                 <v-btn
-                    size="x-large"
+                    :size="checkMobile.isMobile?'default':'x-large'"
                     variant="outlined"
                     color="dark"
                     v-if="tab > 1 && tab < 4"
@@ -898,7 +885,7 @@
                 >이전</v-btn
                 >
                 <v-btn
-                    size="x-large"
+                    :size="checkMobile.isMobile?'default':'x-large'"
                     variant="flat"
                     color="dark"
                     @click="onNextPage()"
@@ -912,10 +899,9 @@
           <!-- 약관동의 시작 -->
           <v-window-item value="4" :disabled="isReadOnlyAll">
             <v-row class="v-box-table">
-              <v-col cols="12" class="px-16 py-10">
+              <v-col cols="12" :class="checkMobile.isMobile?'px-2 py-10':'px-16 py-10'">
                 <h3 class="text-h6 font-weight-bold">약관 동의</h3>
-
-                <v-table class="v-board-table mt-10">
+                <v-table :class="checkMobile.isMobile?'v-board-table mt-10 remove-padding':'v-board-table mt-10'">
                   <tbody>
                     <tr>
                       <td>
@@ -932,6 +918,7 @@
                       </td>
                       <td>
                         <v-btn
+                          :size="checkMobile.isMobile?'small':'default'"
                           color="gray"
                           variant="outlined"
                           class="ml-4"
@@ -954,7 +941,7 @@
                         />
                       </td>
                       <td>
-                        <v-btn color="gray" variant="outlined" class="ml-4"
+                        <v-btn color="gray" variant="outlined" class="ml-4" :size="checkMobile.isMobile?'small':'default'"
                           >보기
                           <v-dialog
                             persistent
@@ -995,6 +982,7 @@
                       </td>
                       <td>
                         <v-btn
+                          :size="checkMobile.isMobile?'small':'default'"
                           color="gray"
                           variant="outlined"
                           class="ml-4"
@@ -1028,6 +1016,7 @@
                       </td>
                       <td>
                         <v-btn
+                          :size="checkMobile.isMobile?'small':'default'"
                           color="gray"
                           variant="outlined"
                           class="ml-4"
@@ -1064,20 +1053,20 @@
                     피보험자로 하는 단체계약 프로그램입니다.
                   </li>
                   <li>
-                    보험회사 : DB손해보험㈜ <span class="text-caption mx-3">|</span>보험중개사 : 록톤컴퍼니즈코리아손해보험중개(주)
+                    보험회사 : DB손해보험㈜ <template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>보험중개사 : 록톤컴퍼니즈코리아손해보험중개(주)
                   </li>
                   <li>
                     보험료 입금 계좌번호 :
                     <b class="font-weight-medium text-error text-18"
                       >신한은행 140-009-057480</b
-                    ><span class="text-caption mx-3">|</span>예금주 :
+                    ><template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>예금주 :
                     <b class="font-weight-medium text-error text-18"
                       >록톤컴퍼니즈코리아</b
                     >
                   </li>
                 </ul>
               </v-col>
-              <v-col cols="12" class="px-14 py-10 border-top-lightgray-1">
+              <v-col cols="12" :class="checkMobile.isMobile?'px-4 py-10 border-top-lightgray-1':'px-14 py-10 border-top-lightgray-1'">
                 <p class="word-break-keep-all line-height-1-4">
                   상기와 같이 보험계약사항을 확인하고 전문직업배상책임보험
                   가입을 신청합니다.
@@ -1109,7 +1098,7 @@
                       {{ insuranceDTO.user_nm }}
                     </span>
                     <span class="d-inline-block w-sm-min-110 px-4 py-1" v-if="insuranceDTO.cbr_data.length>0 && insuranceDTO.user_cd=='JNT'">
-                      v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}}명
+                      <p v-if="insuranceDTO.cbr_data.length>0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 외 {{insuranceDTO.cbr_cnt - 1}}명</p>
                     </span>
                   </p>
                 </div>
@@ -1122,7 +1111,7 @@
             <v-row class="mt-10">
               <v-col class="pa-0 d-flex justify-center">
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="outlined"
                   color="dark"
                   v-if="tab > 1"
@@ -1131,7 +1120,7 @@
                   >이전</v-btn
                 >
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="flat"
                   color="primary"
                   type="submit"
@@ -1140,7 +1129,7 @@
                   >최종 제출</v-btn
                 >
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="flat"
                   color="primary"
                   type="submit"
@@ -1157,7 +1146,7 @@
       </v-col>
 
       <!-- 보험 요약 시작 -->
-      <v-col cols="4" v-if="tab > 1">
+      <v-col :cols="checkMobile.isMobile?'12':'4'" v-if="tab > 1">
         <div class="position-sticky sticky-top v-box-table">
           <v-row class="mx-10 py-6">
             <v-col cols="12" class="mb-1">
@@ -1369,7 +1358,7 @@
             <v-col class="pa-0 d-flex justify-center">
              
               <v-btn
-                size="x-large"
+                :size="checkMobile.isMobile?'default':'x-large'"
                 variant="flat"
                 color="primary"
                 class="mr-4"
@@ -1377,7 +1366,7 @@
                 >출력</v-btn
               >
               <v-btn
-                size="x-large"
+                :size="checkMobile.isMobile?'default':'x-large'"
                 variant="outlined"
                 color="dark"
                 to="/contract/ADV/V_TADV0030A10"
@@ -1482,6 +1471,9 @@ import TermsOfPolicy from './V_TADV0030P01.vue';       // PDF 다운로드로 �
 import TermsOfInsurance from './V_TADV0030P02.vue';   // 상품설명확인서 확인
 import TermsOfContract from './V_TADV0030P03.vue';    // 계약 체결·이행 등을 위한 개인(신용)정보 처리동의
 
+import {useMobileStore} from "@/stores";
+const checkMobile = useMobileStore();
+
 const statusCdItems = ref([""]);
 
 const route = useRoute();
@@ -1566,9 +1558,11 @@ function onInsuranceFormClose() {
 
 function onNextPage(values: any) {
   tab.value = (parseInt(tab.value) + 1).toString();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function onPrevPage(values: any) {
   tab.value = (parseInt(tab.value) - 1).toString();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 

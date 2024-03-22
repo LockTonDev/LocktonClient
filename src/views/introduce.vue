@@ -64,34 +64,46 @@
     <v-window-item value="two"> 
       <div class="bg-background">
         <v-row class="pt-10">
-          <v-col cols="4" class="pa-0 pl-10 text-center mt-4">
-            <v-card color="background">
-              <v-avatar size="100" color="white" class="border-ligntgray-1">
-                <i class="mdi mdi-city text-h2 color-primary"></i>
-              </v-avatar> 
-            </v-card>
-          </v-col>
-          <v-col cols="4" class="pa-0 text-center mt-4">
-            <v-card color="background">
-              <v-avatar size="100"  color="white" class="border-ligntgray-1">
-                <i class="mdi mdi-clipboard-check text-h2 color-primary "></i>
-              </v-avatar>  
-            </v-card>
-          </v-col>
-          <v-col cols="4" class="pa-0 pr-10 text-center mt-4">
-            <v-card color="background">
-              <v-avatar size="100"  color="white" class="border-ligntgray-1">
-                <i class="mdi mdi-earth text-h2 color-primary"></i>
-              </v-avatar>
-            </v-card>
-          </v-col>        
+          <template v-if="!checkMobile.isMobile">
+            <v-col cols="4" class="pa-0 pl-10 text-center mt-4">
+              <v-card color="background">
+                <v-avatar size="100" color="white" class="border-ligntgray-1">
+                  <i class="mdi mdi-city text-h2 color-primary"></i>
+                </v-avatar>
+              </v-card>
+            </v-col>
+            <v-col cols="4" class="pa-0 text-center mt-4">
+              <v-card color="background">
+                <v-avatar size="100"  color="white" class="border-ligntgray-1">
+                  <i class="mdi mdi-clipboard-check text-h2 color-primary "></i>
+                </v-avatar>
+              </v-card>
+            </v-col>
+            <v-col cols="4" class="pa-0 pr-10 text-center mt-4">
+              <v-card color="background">
+                <v-avatar size="100"  color="white" class="border-ligntgray-1">
+                  <i class="mdi mdi-earth text-h2 color-primary"></i>
+                </v-avatar>
+              </v-card>
+            </v-col>
+          </template>
           <v-col cols="12" sm="12" class="pl-0 pr-0 pt-0 pb-4">
-            <v-timeline direction="horizontal" class="mb-10" side="end">
+            <v-timeline :direction="checkMobile.isMobile?'vertical':'horizontal'" class="mb-10" side="end">
               <v-timeline-item>
                 <template v-slot:icon>
                   <v-avatar size="80" color="background" class="text-h5 font-weight-bold">1995</v-avatar>
                 </template>
-                <v-card color="background">
+                <div class="d-flex justify-center" v-if="checkMobile.isMobile">
+                  <v-avatar size="80" color="white" class="border-ligntgray-1">
+                    <i class="mdi mdi-city text-h2 color-primary"></i>
+                  </v-avatar>
+                  <v-card color="background">
+                    <v-card-text>
+                      <p class="text-h6 text-center line-height-1-4">IMI 코리아<br />손해보험중개㈜ 설립</p>
+                    </v-card-text>
+                  </v-card>
+                </div>
+                <v-card color="background" v-else>
                   <v-card-text>
                     <p class="text-h6 text-center line-height-1-4">IMI 코리아<br />손해보험중개㈜ 설립</p>
                   </v-card-text>
@@ -102,7 +114,17 @@
                 <template v-slot:icon>
                   <v-avatar size="80" color="background" class="text-h5 font-weight-bold">1997</v-avatar>
                 </template>
-                <v-card color="background">
+                <div class="d-flex justify-center" v-if="checkMobile.isMobile">
+                  <v-avatar size="80" color="white" class="border-ligntgray-1">
+                    <i class="mdi mdi-clipboard-check text-h2 color-primary"></i>
+                  </v-avatar>
+                  <v-card color="background">
+                    <v-card-text>
+                      <p class="text-h6 text-center line-height-1-4">IMI 코리아<br />손해보험중개㈜ 설립</p>
+                    </v-card-text>
+                  </v-card>
+                </div>
+                <v-card color="background" v-else>
                   <v-card-text>
                     <p class="text-h6 text-center line-height-1-4">대한민국 최초<br />보험중개허가 취득</p>
                   </v-card-text>
@@ -113,7 +135,17 @@
                 <template v-slot:icon>
                   <v-avatar size="80" color="background" class="text-h5 font-weight-bold">2010</v-avatar>
                 </template>
-                <v-card color="background">
+                <div class="d-flex justify-center" v-if="checkMobile.isMobile">
+                  <v-avatar size="80" color="white" class="border-ligntgray-1">
+                    <i class="mdi mdi-earth text-h2 color-primary"></i>
+                  </v-avatar>
+                  <v-card color="background">
+                    <v-card-text>
+                      <p class="text-h6 text-center line-height-1-4">IMI 코리아<br />손해보험중개㈜ 설립</p>
+                    </v-card-text>
+                  </v-card>
+                </div>
+                <v-card color="background" v-else>
                   <v-card-text>
                     <p class="text-h6 text-center line-height-1-4">글로벌 회사인<br />록톤컴퍼니즈가 인수</p>
                   </v-card-text>
@@ -130,21 +162,21 @@
         </v-col>
         <v-col cols="12" class="d-sm-flex align-center justify-center mb-16">
           <div class="card-circle border-blue-1">
-            <i class="mdi mdi-chart-bar text-h4"></i>
+            <i :class="checkMobile.isMobile?'mdi mdi-chart-bar text-h4 mt-8':'mdi mdi-chart-bar text-h4'"></i>
             <p class="text-h5 font-weight-bold mt-2">STEP 1</p>
             <v-divider color="background" class="my-4 w-50"/>
             <p class="text-body-1">고객 위험 분석</p>
             <p class="text-body-1">보험 요율 협상</p>
             <p class="text-body-1">합리적 프로그램 수립</p>
           </div>
-          <div class="card-circle border-blue-2 ml-">
-            <i class="mdi mdi-comment-multiple-outline text-h4"></i>
+          <div :class="checkMobile.isMobile?'card-circle border-blue-2 mt-':'card-circle border-blue-2 ml-'">
+            <i :class="checkMobile.isMobile?'mdi mdi-comment-multiple-outline text-h4 mt-8':'mdi mdi-comment-multiple-outline text-h4'"></i>
             <p  class="text-h5 font-weight-bold mt-2">STEP 2</p>
             <v-divider color="background" class="my-4 w-50"/>
             <p  class="text-body-1">보험사고(Claim) 협상,<br>정보제공, 중재역할 수행</p>
           </div>
-          <div class="card-circle border-blue-3 ml-">
-            <i class="mdi mdi-monitor text-h4"></i>
+          <div :class="checkMobile.isMobile?'card-circle border-blue-3 mt-':'card-circle border-blue-3 ml-'">
+            <i :class="checkMobile.isMobile?'mdi mdi-monitor text-h4 mt-8':'mdi mdi-monitor text-h4'"></i>
             <p class="text-h5 font-weight-bold mt-2">STEP 3</p>
             <v-divider color="background" class="my-4 w-50"/>
             <p class="text-body-1">보험 계약 전 과정에<br>유지관리 서비스 제공</p>
@@ -159,7 +191,7 @@
           <h3 class="text-h5 font-weight-bold">록톤 코리아 전문가</h3>
           <h4 class="font-weight-regular mt-2 color-gray">분야별로 특화된 전문가를 만나보세요</h4>
         </v-col>
-        <v-col cols="4">
+        <v-col :cols="checkMobile.isMobile?12:4">
           <v-card class="position-relative overflow-hidden">
             <v-card-title class="pa-0">
               <v-img src="../assets/images/img-introduce-3.jpg" height="160" cover gradient=""></v-img>
@@ -179,7 +211,7 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="4">
+        <v-col :cols="checkMobile.isMobile?12:4">
           <v-card class="position-relative overflow-hidden">
             <v-card-title class="pa-0">
               <v-img src="../assets/images/img-introduce-4.jpg" height="160" cover gradient=""></v-img>
@@ -200,7 +232,7 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="4">
+        <v-col :cols="checkMobile.isMobile?12:4">
           <v-card class="position-relative overflow-hidden">
             <v-card-title class="pa-0">
               <v-img src="../assets/images/img-introduce-5.jpg" height="160" cover gradient=""></v-img>
@@ -220,7 +252,7 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="4">
+        <v-col :cols="checkMobile.isMobile?12:4">
           <v-card class="position-relative overflow-hidden">
             <v-card-title class="pa-0">
               <v-img src="../assets/images/img-introduce-6.jpg" height="160" cover gradient=""></v-img>
@@ -240,7 +272,7 @@
             </v-card-text>
           </v-card>
         </v-col>        
-        <v-col cols="4">
+        <v-col :cols="checkMobile.isMobile?12:4">
           <v-card class="position-relative overflow-hidden">
             <v-card-title class="pa-0">
               <v-img src="../assets/images/img-introduce-7.jpg" height="160" cover gradient=""></v-img>
@@ -258,7 +290,7 @@
             </v-card-text>
           </v-card>
         </v-col>        
-        <v-col cols="4">
+        <v-col :cols="checkMobile.isMobile?12:4">
           <v-card class="position-relative overflow-hidden">
             <v-card-title class="pa-0">
               <v-img src="../assets/images/img-introduce-8.jpg" height="160" cover gradient=""></v-img>
@@ -315,6 +347,9 @@
   .card-circle.ml-{
     margin-left: -58px !important;
   }
+  .card-circle.mt-{
+    margin-top: -58px !important;
+  }
   .border-ligntgray-1 {
     border: 1px  solid #eee;
   }
@@ -323,6 +358,9 @@
 <script setup lang="ts">
   import { ref } from "vue";
   import BaseBreadcrumb from "@/components/BaseBreadcrumb.vue";
+
+  import {useMobileStore} from "@/stores";
+  const checkMobile = useMobileStore();
 
   const tab = ref(null);
 

@@ -64,6 +64,7 @@
       hide-details="auto"
       v-if="maskOption"
       v-maska:[props.maskOption]
+      class="custom-text-field"
     />
     <!--
     <v-date-picker v-else-if="type == 'date'" v-model="value" no-title @blur="handleBlur">
@@ -80,6 +81,7 @@
       :maxlength="maxlength"
       variant="outlined"
       hide-details="auto"
+      class="custom-text-field"
   />
     <v-text-field
       v-else
@@ -93,7 +95,7 @@
       :maxlength="maxlength"
       variant="outlined"
       hide-details="auto"
-      class="suffixed-input"
+      class="suffixed-input custom-text-field"
     />
   </template>
 
@@ -103,4 +105,14 @@
   --v-input-padding-top: 0;
 }
 
+@media screen and (min-width:960px) {
+  .custom-text-field .v-input__control .v-field__input {
+  }
+}
+@media screen and (max-width:959px) {
+  .custom-text-field .v-input__control .v-field__input{
+    height: 30px; /* 원하는 높이 값으로 변경 */
+    min-height: 30px;
+  }
+}
 </style>

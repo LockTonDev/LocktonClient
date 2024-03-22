@@ -2,7 +2,7 @@
   <v-dialog persistent v-model="isOpenDialog" width="1000px" hide-overlay scrollable>
     <v-card>
       <v-card-title class="d-flex align-center justify-space-between">
-        <div class="text-h6 font-weight-medium">
+        <div class="text-h6 font-weight-medium text-wrap">
           계약의 체결∙이행 등을 위한 개인(신용)정보 처리 동의서 (세무사)
         </div>
         <div class="d-flex justify-space-between align-end">
@@ -10,16 +10,16 @@
         </div>
       </v-card-title>
       <v-divider class="mb-0" />
-      <v-card-text class="px-10 pt-8 pb-14">
+      <v-card-text :class="checkMobile.isMobile?'px-2 pt-4 pb-4':'px-10 pt-8 pb-14'">
         <div class="d-flex justify-space-between align-center">
-          <h3 class="text-display-2 font-weight-bold">현대해상화재보험주식회사 귀중</h3>
-          <p class="text-14 color-gray-shadow">각 동의란에 체크 하십시오</p>
+          <h3 :class="checkMobile.isMobile?'text-20 text-display-2 font-weight-bold':'text-display-2 font-weight-bold'">현대해상화재보험주식회사 귀중</h3>
+          <p :class="checkMobile.isMobile?'text-7 color-gray-shadow':'text-14 color-gray-shadow'">각 동의란에 체크 하십시오</p>
         </div>
         <div class="v-board-table mt-4">
           <table>
-            <col style="width:200px" />
+            <col style="width:25%" />
             <col style="width:auto" />
-            <col style="width:100px" />
+            <col style="width:25%" />
             <tbody>
               <tr>
                 <th>
@@ -185,6 +185,9 @@
   import { onMounted, defineEmits, ref } from "vue";
   import BaseCard from "@/components/BaseCard.vue";
 
+  import {useMobileStore} from "@/stores";
+  const checkMobile = useMobileStore();
+
   const agr_yn = ref({agr30_yn:'N'
                       , agr31_yn:'N'
                       , agr32_yn:'N'
@@ -233,8 +236,14 @@
 
 <style scoped>
 .v-board-table{border-bottom: none;}
-.v-board-table tr th {font-size: 16px !important;padding: 14px 20px;text-align: left;border-bottom:1px solid #e9e9e9;}
-.v-board-table tr td {font-size:14px;padding: 14px 20px;text-align: left;border-bottom:1px solid #e9e9e9;}
+@media screen and (min-width:960px) {
+  .v-board-table tr th {font-size: 16px !important;padding: 14px 20px;text-align: left;border-bottom:1px solid #e9e9e9;}
+  .v-board-table tr td {font-size:14px;padding: 14px 20px;text-align: left;border-bottom:1px solid #e9e9e9;}
+}
+@media screen and (max-width:959px) {
+  .v-board-table tr th {font-size: 12px !important;padding: 4px 8px;text-align: left;border-bottom:1px solid #e9e9e9;}
+  .v-board-table tr td {font-size:10px;padding: 4px 8px;text-align: left;border-bottom:1px solid #e9e9e9;}
+}
 .v-board-table tr {border:none;}
 
 </style>

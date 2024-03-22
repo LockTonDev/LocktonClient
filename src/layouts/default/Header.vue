@@ -11,13 +11,25 @@ const authStore = useAuthStore();
 const { _AUTH_USER } = storeToRefs(authStore);
 
 const height = ref({ max: "110", min:"64" });
+const drawer = ref(false);
+
+const toggleDrawer = () => {
+  drawer.value = !drawer.value;
+}
 
 </script>
 
 <template>
   <v-app-bar flat :height="height.max" app>
-    <v-spacer />
+    <template v-if="checkMobile.isMobile">
 
+    <v-app-bar-nav-icon class="mr-16" @click="toggleDrawer" v-if="checkMobile.isMobile">
+      <v-icon color="white" size="24">mdi-menu</v-icon>
+    </v-app-bar-nav-icon>
+    </template>
+    <template v-else>
+      <v-spacer />
+    </template>
     <!-- ---------------------------------------------- -->
     <!---Logo part -->
     <!-- ---------------------------------------------- -->
@@ -72,6 +84,24 @@ const height = ref({ max: "110", min:"64" });
 
     </div>
   </v-app-bar>
+
+  <v-navigation-drawer v-model="drawer" app v-if="checkMobile.isMobile" class="bg-header">
+    <v-list class="py-0">
+      <router-link to="/introduce" class="text-decoration-none">
+        <v-list-item :key="'menu-item-introduce'" class="ml-1 my-2 text-white" style="min-height: 35px !important;">
+          <v-list-item-title class="text-18">회사소개</v-list-item-title>
+        </v-list-item>
+      </router-link>
+      <router-link to="/user/login" class="text-decoration-none">
+        <v-list-item :key="'menu-item-login'" class="ml-1 my-2 text-white" style="min-height: 35px !important;" v-if="!_AUTH_USER">
+          <v-list-item-title class="text-18">로그인</v-list-item-title>
+        </v-list-item>
+      </router-link>
+      <v-list-item @click="authStore.logout()" :key="'menu-item-logout'" class="ml-1 my-2 text-white" style="min-height: 35px !important;" v-if="_AUTH_USER">
+        <v-list-item-title class="text-18">로그아웃</v-list-item-title>
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script lang="ts">
