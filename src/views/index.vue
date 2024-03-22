@@ -8,15 +8,13 @@
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
 
-
   const popFirstUser = ref(false);
 </script>
 
 <template>
     <v-app>
-      
       <v-main>
-        
+
         <!-- 상단영역 ( 로고 )-->
         <Header />
 
@@ -111,4 +109,19 @@
     </v-app>
   </template>
 
-  
+<!--
+  <script>
+  export default {
+    mounted() {
+      console.log("Test")
+    }
+  };
+  </script>-->
+<!--
+  <script>
+  export default {
+    mounted() {
+      console.log("Test")
+    }
+  };
+  </script>-->

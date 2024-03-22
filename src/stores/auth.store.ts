@@ -2,6 +2,7 @@ import router from '@/router';
 import { defineStore } from 'pinia';
 import apiUser from '@/api/api/user.api';
 import jwt_decode from "jwt-decode";
+import {ref} from "vue";
 
 export const useMobileStore = defineStore('mobile', {
   state: () => ({
@@ -19,12 +20,28 @@ export const useAuthStore = defineStore({
   state: () => ({
     _AUTH_USER: JSON.parse(localStorage.getItem('_AUTH_USER')),
     _AUTH_ADMIN: JSON.parse(localStorage.getItem('_AUTH_ADMIN')),
-    returnUrl: null
+    returnUrl: null,
+    isLoading: false,
+    drawer: true
   }),
   getters: {
     // doubleCount: (state) => state.counter * 2,
   },
   actions: {
+    show() {
+      this.isLoading = true
+    },
+    hide() {
+      this.isLoading = false
+    },
+    chgDrawer() {
+      this.drawer = !this.drawer
+      console.log("this.drawer",this.drawer)
+    },
+    hideDrawer() {
+      this.drawer = false
+      console.log("hide",this.drawer)
+    },
     async login(params: any) {
       //console.log('localStorage', localStorage);
       try {

@@ -1,5 +1,12 @@
 <template>
-	<AdminBaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs" ></AdminBaseBreadcrumb>
+  <div class="d-flex align-center">
+    <span>
+        <v-app-bar-nav-icon  @click.stop="authStore.chgDrawer()"> </v-app-bar-nav-icon>
+      </span>
+    <div class="w-100">
+      <AdminBaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs" ></AdminBaseBreadcrumb>
+    </div>
+  </div>
 	<v-row>
 		<v-col cols="12">
 			<UserList @onPageViewParent="onPageViewParent"></UserList>
@@ -17,6 +24,8 @@ import { ref } from "vue";
 import AdminBaseBreadcrumb from "@/components/AdminBaseBreadcrumb.vue";
 import UserList from "@/views/admin/common/UserList.vue";
 import UserView from "@/views/admin/common/UserView.vue";
+import { useAuthStore } from '@/stores';
+const authStore = useAuthStore();
 const isDaumPostDialog= ref(false);
 const page = ref({
 	title: "통합회원조회",

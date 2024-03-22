@@ -30,6 +30,9 @@
           <p class="text-body-2 ml-3 pt-1">
             전체 <span class="color-primary font-weight-bold">{{ Number(InsuranceList.length).toLocaleString() }}</span> 건
           </p>
+          <v-btn icon color="white" size="small" @click="resultShowHide">
+            <vue-feather id="eyeIcon" :type="iconState" size="20"></vue-feather>
+          </v-btn>
           <div class="ml-auto">
             <v-btn variant="outlined" size="small" @click="fnAdd('IND')" class="mx-1">개인 신규</v-btn>
             <v-btn variant="outlined" size="small" @click="fnAdd('COR')" class="mx-1">법인 신규</v-btn>
@@ -38,7 +41,7 @@
           </div>
         </v-card-title>
         <v-card-text class="pa-0 v-result-box">
-          <v-table density="compact" fixed-header height="220px">
+          <v-table density="compact" fixed-header height="220px" v-if="resultAreaState">
             <caption class="d-none">
               계약 조회 결과
             </caption>
@@ -1364,6 +1367,7 @@ function getTrxCdTitle(trxCd) {
 }
 
 async function fnSearch() {
+  if(!resultAreaState.value) resultShowHide()
   InsuranceList.value = [];
   const resultData = await apiADMIN.getCAAS(searchParams.value.data);
   insuranceDTO.value.insurance_uuid = null;
@@ -1714,6 +1718,17 @@ const calInsrSpctAmt = (data: any) => {
   return insrAmt
 };
 
+const iconState =  ref('arrow-down-circle');
+const resultAreaState = ref(true);
+function resultShowHide(){
+  if(resultAreaState.value){
+    iconState.value = 'arrow-up-circle'
+    resultAreaState.value = false
+  }else{
+    iconState.value = 'arrow-down-circle'
+    resultAreaState.value = true
+  }
+}
 
 watch(
     () => route.params.business_cd,
