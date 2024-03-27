@@ -1393,6 +1393,16 @@ async function fnSetInsuranceRateCombo() {
     value: `${code}|${value}`
   }));
 
+  insrSpctClmLtAmtItems.value = insuranceRateDTO.value.contents['특약담보']['보상한도'].map(({ code, value }) => ({
+    title: value,
+    value: `${code}|${value}`
+  }));
+
+  insrSpctPsnlBrdnAmtItems.value = insuranceRateDTO.value.contents['특약담보']['자기부담금'].map(({ code, value }) => ({
+    title: value,
+    value: `${code}|${value}`
+  }));
+
   insrClmLtAmtItems.value = insuranceRateDTO.value.contents['기본담보']['구분'].map(({ code, value }) => ({
     title: value,
     value: `${code}`
@@ -1616,6 +1626,13 @@ const onCalculateInsurance = async (confirmYn) => {
       insuranceDTO.value.insr_tot_amt = totAmt;
     }
     // 특약 재계산
+    if (insuranceDTO.value.spct_join_yn == 'Y') {
+      // console.log('insuranceDTO.value.spct_join_yn')
+      // let insrAmt = 0;
+      // insrAmt += calInsrSpctAmt(insuranceDTO.value.spct_data);
+      //insuranceDTO.value.spct_data.insr_amt=calInsrSpctAmt(insuranceDTO.value.spct_data);
+      insuranceDTO.value.insr_tot_amt = Number(insuranceDTO.value.insr_amt,0) + Number(insuranceDTO.value.spct_data.insr_amt,0)
+    }
 
     // 입금금액 계산
     insuranceDTO.value.insr_tot_paid_amt = insuranceDTO.value.trx_data.reduce((total, item) => total + Number(item.trx_amt), 0);
