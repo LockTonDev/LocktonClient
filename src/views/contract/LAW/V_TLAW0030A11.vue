@@ -2772,6 +2772,7 @@ watch(
     insuranceDTO.value.insr_cncls_dt,
     insuranceDTO.value.insr_take_sec,
     insuranceDTO.value.insr_clm_lt_amt,
+    insuranceDTO.value.insr_year_clm_lt_amt,
     insuranceDTO.value.insr_psnl_brdn_amt,
     insuranceDTO.value.user_cd,
     insuranceDTO.value.insr_sale_rt,
@@ -2799,6 +2800,7 @@ watch(
       0,
       1
     );
+    console.log(insuranceDTO.value.insr_base_amt)
 
     // 특약 재계산
     if (insuranceDTO.value.spct_join_yn == 'Y') {
