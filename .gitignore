@@ -3,3 +3,6 @@
 /.git/*
 /.idea/*
 /LocktonClient.iml
+/dist/
+/.idea/
+/node_modules/
