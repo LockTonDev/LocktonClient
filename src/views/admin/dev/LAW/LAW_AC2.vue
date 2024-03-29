@@ -66,11 +66,12 @@
               <th>보험년도</th>
               <th>피보험자</th>
               <th>등록번호</th>
-              <th>사업자번호</th>
               <th>회원ID</th>
-              <th>보험기간</th>
+              <th>보험개시일</th>
+              <th>최종보험료</th>
               <!-- <th>소속<br />지방회</th> -->
-              <th>총보험료</th>
+              <th>지원금</th>
+              <th>실납입보험료</th>
               <th>미납금액</th>
               <th>상태</th>
             </tr>
@@ -82,11 +83,12 @@
               <td>{{ row.insr_year }}</td>
               <td>{{ row.user_nm }}</td>
               <td>{{ row.user_regno }}</td>
-              <td>{{ row.corp_cnno }}</td>
               <td>{{ row.user_id }}</td>
-              <td>{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</td>
+              <td>{{ row.insr_st_dt }}</td>
               <!-- <td>{{ row.corp_region_nm }}</td> -->
               <td>{{ Number(row?.insr_tot_amt).toLocaleString() }}</td>
+              <td>{{ Number(row?.insr_relief).toLocaleString() }}</td>
+              <td>{{ Number(row?.insr_tot_amt - row?.insr_relief).toLocaleString() }}</td>
               <td style="color: {{ row?.insr_tot_unpaid_amt < 0 ? 'text-error' : 'text-black' }}">
                 {{ Number(row?.insr_tot_unpaid_amt) === 0 ? '-' : Number(row?.insr_tot_unpaid_amt).toLocaleString() }}
               </td>
@@ -1010,7 +1012,8 @@
                       <v-btn variant="outlined" size="small" class="mr-1" type="file" @click="fnExcelUpload('COR')">법인엑셀 입금</v-btn>
                       <v-btn variant="outlined" size="small" class="mr-1" type="file" @click="fnExcelUpload('JNT')">합동엑셀 입금</v-btn>
                       <v-btn variant="outlined" size="small" class="mr-1" @click="fnAutoTRX()">간편 입금</v-btn>
-                      <v-btn variant="outlined" size="small" @click="fnAddTrx()">신규 입금</v-btn>
+                      <v-btn variant="outlined" size="small" class="mr-1" @click="fnAddTrx()">신규 입금</v-btn>
+                      <v-btn variant="outlined" size="small" @click="fnAutoRelief()">지원금 입금</v-btn>
                       <input type="file" ref="fileInputIND" @change="handleFileUploadIND" style="display: none" />
                       <input type="file" ref="fileInputJNT" @change="handleFileUploadJNT" style="display: none" />
                     </div>
@@ -1041,7 +1044,7 @@
                       <tr v-for="(row, index) in insuranceDTO.trx_data" :key="index" @click="selectedRowTRX = row" :class="{ selected: selectedRowTRX === row, 'cursor-pointer': true }">
                         <td class="text-center">{{ index + 1 }}</td>
                         <td>
-                          <VSelectWithValidation v-model="row.trx_cd" name="trx_cd" label="" :items="trxCdItems" density="compact" variant="outlined" single-line></VSelectWithValidation>
+                          <VSelectWithValidation v-model="row.trx_cd" name="trx_cd" label="" :items="trxCdItems" density="compact" variant="outlined" single-line :disabled="row.trx_cd === 'RE'"></VSelectWithValidation>
                         </td>
                         <td>
                           <VTextFieldWithValidation v-model="row.trx_dt" name="trx_dt" label="" type="date" density="compact" color="primary" variant="outlined" single-line />
@@ -1072,8 +1075,12 @@
                       <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_tot_amt).toLocaleString() }}원</p>
                     </v-card>
                     <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
-                      <p class="text-12">납입 보험료</p>
-                      <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_tot_paid_amt).toLocaleString() }}원</p>
+                      <p class="text-12">지원금</p>
+                      <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_relief).toLocaleString() }}원</p>
+                    </v-card>
+                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
+                      <p class="text-12">실납입보험료</p>
+                      <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_tot_amt - insuranceDTO.insr_relief).toLocaleString() }}원</p>
                     </v-card>
                     <v-card class="py-2 px-6 bg-lighterror w-full mr-1">
                       <p class="text-12">미납 보험료</p>
@@ -1083,7 +1090,7 @@
                       <p class="text-12">납입 상태</p>
                       <p class="text-h6 text-right text-error">{{ insuranceDTO.insr_tot_amt == 0 ? '-' : '미납' }}</p>
                     </v-card>
-                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
+                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1" style="min-width: 190px">
                       <p class="text-12">보험 상태</p>
                       <p class="d-flex">
                         <VSelectWithValidation v-model="insuranceDTO.status_cd" name="status_cd" label="" :items="statusCdItemsData" density="compact" variant="outlined" single-line :disabled="true" bg-color="white" class="size-x-small"></VSelectWithValidation>
@@ -1098,8 +1105,12 @@
                       <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_tot_amt).toLocaleString() }}원</p>
                     </v-card>
                     <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
-                      <p class="text-12">납입 보험료</p>
-                      <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_tot_paid_amt).toLocaleString() }}원</p>
+                      <p class="text-12">지원금</p>
+                      <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_relief).toLocaleString() }}원</p>
+                    </v-card>
+                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
+                      <p class="text-12">실납입보험료</p>
+                      <p class="text-h6 text-right">{{ Number(insuranceDTO.insr_tot_amt - insuranceDTO.insr_relief).toLocaleString() }}원</p>
                     </v-card>
                     <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
                       <p class="text-12">미납 보험료</p>
@@ -1109,7 +1120,7 @@
                       <p class="text-12">납입 상태</p>
                       <p class="text-h6 text-right">{{ insuranceDTO.insr_tot_unpaid_amt < 0 ? '과입금' : '완납' }}</p>
                     </v-card>
-                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1">
+                    <v-card class="py-2 px-6 bg-light-blue-lighten-5 w-full mr-1" style="min-width: 190px">
                       <p class="text-12">보험 상태</p>
                       <p class="d-flex">
                         <VSelectWithValidation v-model="insuranceDTO.status_cd" name="status_cd" label="" :items="statusCdItemsData" density="compact" variant="outlined" single-line :disabled="true" bg-color="white" class="size-x-small"></VSelectWithValidation>
@@ -1491,8 +1502,8 @@ function fnDelTrx(rowIdx: number) {
 }
 
 function fnCalTrx() {
-  insuranceDTO.value.insr_tot_paid_amt = insuranceDTO.value.trx_data.reduce((total, item) => total + Number(item.trx_amt), 0);
-  insuranceDTO.value.insr_tot_unpaid_amt = Number(insuranceDTO.value.insr_tot_amt) - Number(insuranceDTO.value.insr_tot_paid_amt);
+  insuranceDTO.value.insr_tot_paid_amt = insuranceDTO.value.trx_data.reduce((total, item) => total + (item.trx_cd != 'RE' ? Number(item.trx_amt) : 0), 0) ;
+  insuranceDTO.value.insr_tot_unpaid_amt = Number(insuranceDTO.value.insr_tot_amt) - Number(insuranceDTO.value.insr_tot_paid_amt) - Number(insuranceDTO.value.insr_relief);
 
   if (insuranceDTO.value.insr_tot_unpaid_amt == 0 && insuranceDTO.value.status_cd == '10') {
     insuranceDTO.value.status_cd = '80'; // 정상
@@ -1844,13 +1855,35 @@ async function handleFileUploadJNT(event) {
   }
 }
 
+async function fnAutoRelief() {
+  const result = insuranceDTO.value.trx_data.filter(item => item.trx_cd=="RE");
+
+  if(result.length > 0){
+    messageBoxDTO.value.setInfo('확인', '지원금 내역이 존재합니다.');
+    return false;
+  }
+
+  const trxDataDTO = new TRXDataDTO();
+  trxDataDTO.trx_cd = 'RE'; // 계좌이체
+  trxDataDTO.acct_nm = insuranceDTO.value.user_nm + (insuranceDTO.value.user_cd === 'IND' ? insuranceDTO.value.user_regno : '');
+  trxDataDTO.trx_dt = dayjs().format('YYYY-MM-DD');
+  trxDataDTO.trx_amt = insuranceDTO.value.insr_relief;
+  trxDataDTO.rmk = '';
+  insuranceDTO.value.trx_data.push(trxDataDTO);
+  //insuranceDTO.value.status_cd = '80'; // 정상
+  //fnCalTrx();
+  fnSave();
+}
+
 async function fnAutoTRX() {
   let isRun = false;
 
-  if (insuranceDTO.value.trx_data.length > 0) {
-    messageBoxDTO.value.setInfo('확인', '입금내역이 존재합니다.');
-    return false;
-  }
+    const result = insuranceDTO.value.trx_data.filter(item => item.trx_cd !="RE");
+
+    if (result.length > 0) {
+      messageBoxDTO.value.setInfo('확인', '입금내역이 존재합니다.');
+      return false;
+    }
 
   await messageBoxDTO.value.setConfirm('확인', '간편 입금 처리하시겠습니까?', null, (result, params) => {
     isRun = result;
@@ -1861,7 +1894,7 @@ async function fnAutoTRX() {
     trxDataDTO.trx_cd = 'WT'; // 계좌이체
     trxDataDTO.acct_nm = insuranceDTO.value.user_nm + (insuranceDTO.value.user_cd === 'IND' ? insuranceDTO.value.user_regno : '');
     trxDataDTO.trx_dt = dayjs().format('YYYY-MM-DD');
-    trxDataDTO.trx_amt = insuranceDTO.value.insr_tot_amt;
+    trxDataDTO.trx_amt = insuranceDTO.value.insr_tot_amt - insuranceDTO.value.insr_relief;
     trxDataDTO.rmk = '';
     insuranceDTO.value.trx_data.push(trxDataDTO);
     insuranceDTO.value.status_cd = '80'; // 정상
