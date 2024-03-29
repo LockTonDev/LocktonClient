@@ -94,12 +94,11 @@
                   <td style="color: {{ row?.insr_tot_unpaid_amt < 0 ? 'text-error' : 'text-black' }}">
                     {{ Number(row?.insr_tot_unpaid_amt) === 0 ? '-' : Number(row?.insr_tot_unpaid_amt).toLocaleString() }}
                   </td>
+                  <td >{{ Number(row?.insr_relief).toLocaleString() }}</td>
                   <template v-if="row?.trx_data.filter(item => item.trx_cd == 'RE').length == 1">
-                    <td >{{ Number(row?.trx_data.filter(item => item.trx_cd == 'RE')[0].trx_amt).toLocaleString() }}</td>
                     <td >{{ row?.trx_data.filter(item => item.trx_cd == 'RE')[0].trx_dt }}</td>
                   </template>
                   <template v-else>
-                    <td > - </td>
                     <td > - </td>
                   </template>
                   <td>{{ row.status_nm }}</td>
@@ -466,7 +465,7 @@ async function fnAutoRelief() {
 
   const trxDataDTO = new TRXDataDTO();
   trxDataDTO.trx_cd = 'RE'; // 계좌이체
-  trxDataDTO.acct_nm = insuranceDTO.value.user_nm + (insuranceDTO.value.user_cd === 'IND' ? insuranceDTO.value.user_regno : '');
+  trxDataDTO.acct_nm = '서울중앙지방법무사회 '//insuranceDTO.value.user_nm + (insuranceDTO.value.user_cd === 'IND' ? insuranceDTO.value.user_regno : '');
   trxDataDTO.trx_dt = dayjs().format('YYYY-MM-DD');
   trxDataDTO.trx_amt = insuranceDTO.value.insr_relief;
   trxDataDTO.rmk = '';

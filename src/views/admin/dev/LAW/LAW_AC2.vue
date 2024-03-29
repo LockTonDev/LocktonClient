@@ -1865,7 +1865,7 @@ async function fnAutoRelief() {
 
   const trxDataDTO = new TRXDataDTO();
   trxDataDTO.trx_cd = 'RE'; // 계좌이체
-  trxDataDTO.acct_nm = insuranceDTO.value.user_nm + (insuranceDTO.value.user_cd === 'IND' ? insuranceDTO.value.user_regno : '');
+  trxDataDTO.acct_nm = '서울중앙지방법무사회'//insuranceDTO.value.user_nm + (insuranceDTO.value.user_cd === 'IND' ? insuranceDTO.value.user_regno : '');
   trxDataDTO.trx_dt = dayjs().format('YYYY-MM-DD');
   trxDataDTO.trx_amt = insuranceDTO.value.insr_relief;
   trxDataDTO.rmk = '';
