@@ -25,7 +25,7 @@ export class CommonCode {
     // 로컬 스토리지에서 코드를 가져옴
     let cachedCodes = localStorage.getItem(CommonCode.CODE_CACHE_KEY);
     const obj = JSON.parse(cachedCodes)
-    if(!obj.hasOwnProperty("data") || !obj.hasOwnProperty("expire")){
+    if(!obj || !obj.hasOwnProperty("data") || !obj.hasOwnProperty("expire")){
       await this.fetchCodeAll();
       cachedCodes = localStorage.getItem(CommonCode.CODE_CACHE_KEY);
     }else {
