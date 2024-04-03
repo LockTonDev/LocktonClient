@@ -115,7 +115,7 @@
                     </tr>
                     <tr>
                       <td colspan="10" style="border-right: 1px solid #000;">{{ insuranceDTO.insr_clm_lt_amt }} / {{ insuranceDTO.insr_year_clm_lt_amt }}</td>
-                      <td colspan="10" style="border-right: 1px solid #000;">{{ insuranceDTO.insr_psnl_brdn_amt }}</td>
+                      <td colspan="10" style="border-right: 1px solid #000;">{{ insuranceDTO.insr_psnl_brdn_amt.getValueBySplit(1) }}</td>
                       <td colspan="10">{{ Number(insuranceDTO.insr_amt).toLocaleString() }}원</td>
                     </tr>
                     <tr>
@@ -172,7 +172,7 @@
                     </tr>
                     <tr>
                       <td colspan="10" style="border-right: 1px solid #000;">{{ insuranceDTO.insr_clm_lt_amt }} / {{ insuranceDTO.insr_year_clm_lt_amt }}</td>
-                      <td colspan="10" style="border-right: 1px solid #000;">{{ insuranceDTO.insr_psnl_brdn_amt }}</td>
+                      <td colspan="10" style="border-right: 1px solid #000;">{{ insuranceDTO.insr_psnl_brdn_amt.getValueBySplit(1) }}</td>
                       <td colspan="10" >{{ Number(insuranceDTO.insr_tot_amt).toLocaleString() }}원</td>
                     </tr>
                     </tbody>
