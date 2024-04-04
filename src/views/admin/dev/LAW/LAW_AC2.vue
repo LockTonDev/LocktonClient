@@ -1419,7 +1419,12 @@ async function fnSearchDtl(insurance_uuid: string) {
 
     Object.assign(insuranceDTO.value, resultData.data[0]);
 
-    insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + insuranceDTO.value.insr_year_clm_lt_amt;
+    let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt;
+    if(insuranceDTO.value.cbr_cnt > 2){
+      year_clm_lt_amt = (parseInt(year_clm_lt_amt) / 2) + '억원'
+    }
+
+    insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
 
     insuranceDTO.value.cbr_data.sort(function(a, b) {
       if(a.status_cd=='90' || a.status_cd=='91') {
@@ -1659,7 +1664,8 @@ watch(
 watch(
     () => insuranceDTO.value.spct_data.insr_clm_lt_amt,
     data => {
-      insuranceDTO.value.spct_data.insr_year_clm_lt_amt = data.getValueBySplit(1);
+      if(data)
+        insuranceDTO.value.spct_data.insr_year_clm_lt_amt = data.getValueBySplit(1);
     }
 );
 
