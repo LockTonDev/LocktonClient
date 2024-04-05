@@ -632,14 +632,14 @@ const EXCEL_LAW_IND = {
   처리일자2: 'AT',
   비고2: 'AU',
   예금주명2: 'AV',
-  ERP시작일: 'AW',
-  ERP종료일: 'AX',
-  ERP보험료: 'AY',
-  ERP납입일: 'AZ',
-  변경일자: 'BA',
-  변경내용: 'BB',
-  담보한정: 'BC'
-
+  지원금입금액: 'AW',
+  지원금입금일자: 'AX',
+  ERP시작일: 'AY',
+  ERP종료일: 'AZ',
+  ERP보험료: 'BA',
+  ERP납입일: 'BB',
+  변경일자: 'BC',
+  변경내용: 'BD',
 };
 
 const EXCEL_LAW_JNT = {
@@ -690,13 +690,14 @@ const EXCEL_LAW_JNT = {
   처리일자: 'AS',
   비고: 'AT',
   예금주명: 'AU',
-  ERP시작일: 'AV',
-  ERP종료일: 'AW',
-  ERP보험료: 'AX',
-  ERP납입일: 'AY',
-  변경일자: 'AZ',
-  변경내용: 'BA',
-  담보한정: 'BB'
+  지원금입금액: 'AV',
+  지원금입금일자: 'AW',
+  ERP시작일: 'AX',
+  ERP종료일: 'AY',
+  ERP보험료: 'AZ',
+  ERP납입일: 'BA',
+  변경일자: 'BB',
+  변경내용: 'BC',
   //----------------------
 };
 

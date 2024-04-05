@@ -20,6 +20,7 @@ const admin = false;
 
 // 메뉴 구성
 const sidebarMenu = ref(MenuDEF);
+const drawer = ref(false);
 
 const warnTimeoutMin = 29//3
 const messageBoxDTO = ref(new MessageBoxDTO());
@@ -131,6 +132,10 @@ const updateAuthUserFromLocalStorage = (event: StorageEvent) => {
   }
 };
 
+const toggleDrawer = () => {
+  drawer.value = !drawer.value;
+}
+
 onMounted(() => {
   window.addEventListener('storage1', updateAuthUserFromLocalStorage);
   initPage();
@@ -149,8 +154,9 @@ onUnmounted(() => {
     <!-- ---------------------------------------------- -->
     <!---Logo part -->
     <!-- ---------------------------------------------- -->
-    <v-app-bar-nav-icon class="mr-16"></v-app-bar-nav-icon>
-
+    <v-app-bar-nav-icon class="mr-16" @click="toggleDrawer" v-if="checkMobile.isMobile">
+      <v-icon color="white" size="24">mdi-menu</v-icon>
+    </v-app-bar-nav-icon>
 
     <div class="logo">
       <router-link to="/introduce">
@@ -212,6 +218,7 @@ onUnmounted(() => {
 
     <v-spacer />
 
+
     <!-- ---------------------------------------------- -->
     <!---right part -->
     <!-- ---------------------------------------------- -->
@@ -263,7 +270,43 @@ onUnmounted(() => {
 
     </div>
     </template>
+
   </v-app-bar>
+  <v-navigation-drawer v-model="drawer" app v-if="checkMobile.isMobile" class="bg-header">
+    <v-list class="py-0">
+      <!-- 메뉴 항목들을 반복하여 표시 -->
+      <template v-for="(item, i) in sidebarMenu" :key="'menu-item-' + i">
+        <!-- 메인 메뉴 항목 -->
+        <router-link :to="item.to" class="text-decoration-none">
+          <v-list-item :key="'menu-item-' + i" class="ml-1 my-2 text-white" style="min-height: 35px !important;">
+            <v-list-item-title class="text-18">{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </router-link>
+
+        <!-- 메인 메뉴 항목의 자식 항목들 -->
+        <template v-for="(child, j) in item.children" :key="'dropdown-item-' + i + '-child-' + j">
+          <router-link :to="child.to" class="text-decoration-none">
+            <v-list-item :key="'dropdown-item-' + i + '-child-' + j" class="ml-4 my-1 text-white text-decoration-none" style="min-height: 35px !important;">
+              <v-list-item-title class="text-14">{{ child.title }}</v-list-item-title>
+            </v-list-item>
+          </router-link>
+        </template>
+      </template>
+      <router-link to="/user/mypage" class="text-decoration-none">
+        <v-list-item :key="'menu-item-mypage'" class="ml-1 my-2 text-white" style="min-height: 35px !important;" v-if="_AUTH_USER">
+          <v-list-item-title class="text-18">마이페이지</v-list-item-title>
+        </v-list-item>
+      </router-link>
+      <router-link to="/user/login" class="text-decoration-none">
+        <v-list-item :key="'menu-item-login'" class="ml-1 my-2 text-white" style="min-height: 35px !important;" v-if="!_AUTH_USER">
+          <v-list-item-title class="text-18">로그인</v-list-item-title>
+        </v-list-item>
+      </router-link>
+      <v-list-item @click="authStore.logout()" :key="'menu-item-logout'" class="ml-1 my-2 text-white" style="min-height: 35px !important;" v-if="_AUTH_USER">
+        <v-list-item-title class="text-18">로그아웃</v-list-item-title>
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
   <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
 </template>
 

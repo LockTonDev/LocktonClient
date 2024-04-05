@@ -11,7 +11,7 @@
     </v-col>
   </v-row>
 
-  <v-window v-model="mainTab" class="pb-16" disabled="">
+  <v-window v-model="mainTab" class="pb-16" disabled="true">
     <v-window-item value="1">
       <v-row class="mt-10" justify="center">
         <v-col cols="12" sm="10">
@@ -91,7 +91,7 @@
         </v-col>
         <v-col cols="12" sm="9" class="px-0 mt-12">
           <h4 class="text-h5 font-weight-bold text-center">록톤의 역할</h4>
-          <ul class="list-style-type-none v-box py-2 px-2 mt-10 border-color-gray">
+          <ul :class="checkMobile.isMobile?'list-style-type-none v-box py-2 px-2 mt-10 border-color-gray':'list-style-type-none v-box py-2 px-16 mt-10 border-color-gray'">
             <li class="d-flex justify-space-between align-center py-8">
               <img src="../../assets/images/icon/icon-insurance-1-1.png" alt="" class="ml-4">
               <p :class="checkMobile.isMobile?'text-h6 w-30 ml-4 mr-2':'text-h6 w-30 ml-10'">계약자<span class="text-18">(대한법무사협회)</span> 대변</p>
@@ -288,11 +288,11 @@
                     <v-btn variant="outlined" color="dark" @click="dialogERP = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
                     <v-card>
                       <v-card-title class="d-flex justify-space-between align-center px-6 py-4 position-relative">
-                        <p class="text-h6 font-weight-bold">법무사배상책임보험 보고기간연장담보(ERP) 안내</p>
+                        <p :class="checkMobile.isMobile?'text-h6 font-weight-bold text-12':'text-h6 font-weight-bold'">법무사배상책임보험 보고기간연장담보(ERP) 안내</p>
                         <v-spacer />
                       </v-card-title>
                       <v-divider class="mb-0"/>
-                      <v-card-text class="px-10 py-6">
+                      <v-card-text class="px-10 py-6 text-16">
                         <p>법인의 해산, 개인사무소의 폐업 등 보험계약을 유지할 수 없는 사유가 발생한 경우 추가보험료를 납부하고 과거 보험기간에 수행한 법무사의 업무에 대한 담보를 연장할 수 있습니다.</p>
                         <table class="normal-table mt-6">
                           <colgroup>
@@ -322,7 +322,7 @@
                             </tr>
                           </tbody>
                         </table>                        
-                        <p class="mt-4">가입 및 기타 문의는 록톤(T. 02-2011-0300)으로 연락주시기 바랍니다.</p>
+                        <p class="mt-4 text-16">가입 및 기타 문의는 록톤(T. 02-2011-0300)으로 연락주시기 바랍니다.</p>
                       </v-card-text>
                     </v-card>
                   </v-dialog>

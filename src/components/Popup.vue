@@ -8,7 +8,7 @@
         </div>
       </v-card-title>
       <v-divider color="primary" class="ma-0 border-t-xl"/>
-      <v-card-text class="px-12 pt-6 word-break-keep-all" v-html="boardDTO.content">
+      <v-card-text class="px-12 pt-6 word-break-keep-all" :style="checkMobile.isMobile?'font-size: 10px':'font-size: 16px'" v-html="boardDTO.content">
       </v-card-text>
       <v-card-actions class="d-flex align-center justify-end">
         <div class="d-flex align-center justify-end">
@@ -24,6 +24,9 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch, defineProps } from 'vue'
 import { BoardDTO } from '@/model';
+
+import {useMobileStore} from "@/stores";
+const checkMobile = useMobileStore();
 
 const props = defineProps({
   boardDTO: {

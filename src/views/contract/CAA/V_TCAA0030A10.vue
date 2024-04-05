@@ -36,7 +36,7 @@
             <th class="font-weight-medium text-center text-body-1">보험기간</th>
             <th class="font-weight-medium text-center text-body-1">보험료</th>
             <th class="font-weight-medium text-center text-body-1">신청서</th>
-            <th class="font-weight-medium text-center text-body-1">
+            <th class="font-weight-medium text-center text-body-1 text-no-wrap">
               가입증명서<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
               <v-tooltip activator="parent" location="top">
                 가입증명서<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
@@ -50,16 +50,16 @@
         </thead>
         <tbody v-if="InsuranceList.length">
         <tr v-for="(row, index) in InsuranceList">
-          <td class="text-center text-body-1">{{ !['10', '91'].includes(row.status_cd) ? row.insurance_no : '' }}</td>
+          <td class="text-center text-body-1 text-no-wrap">{{ !['10', '91'].includes(row.status_cd) ? row.insurance_no : '' }}</td>
           <template v-if="row.user_cd === user_cd">
-            <td class="text-center text-body-1">
+            <td class="text-center text-body-1 text-no-wrap">
               <p>{{ row.user_nm }}</p>
             </td>
-            <td class="text-center text-body-1">
+            <td class="text-center text-body-1 text-no-wrap">
               <div v-if="row.insr_year === '2023' && row.status_cd !== '10'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
               <div v-else class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid, row.insr_year)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
-            <td class="text-center text-body-1">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
+            <td class="text-center text-body-1 text-no-wrap">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">
               <v-icon v-if="row.insr_year !== '2023'"
                       small
