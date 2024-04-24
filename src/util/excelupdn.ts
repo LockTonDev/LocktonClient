@@ -2656,10 +2656,10 @@ function mapperRow_LAW_IND(excelMapper: object, excelDataRow: any) {
     // console.log(e);
   }
 
-  row[excelMapper.입금금액2] = result?.trx_amt;
-  row[excelMapper.처리일자2] = result?.trx_dt;
-  row[excelMapper.비고2] = result?.rmk;
-  row[excelMapper.예금주명2] = result?.acct_nm;
+  row[excelMapper.입금금액2] = result[1]?.trx_amt;
+  row[excelMapper.처리일자2] = result[1]?.trx_dt;
+  row[excelMapper.비고2] = result[1]?.rmk;
+  row[excelMapper.예금주명2] = result[1]?.acct_nm;
   row[excelMapper.ERP시작일] = insuranceDTO.erp_st_dt;
   row[excelMapper.ERP종료일] = insuranceDTO.erp_cncls_dt;
   row[excelMapper.ERP보험료] = insuranceDTO.erp_amt;
