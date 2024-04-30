@@ -475,7 +475,7 @@
                         :disabled="isReadOnlyAll"
                       >
                         <v-btn
-                          v-if="insuranceDTO.user_cd !== 'IND'"
+                          v-if="insuranceDTO.user_cd === 'IND'"
                           color="primary"
                           :class="checkMobile.isMobile?'flex-grow-0':'flex-grow-1'"
                           :style="checkMobile.isMobile?'flex-basis: 33.3%; border: 1px solid #EEEEEE; text-align: center;':''"

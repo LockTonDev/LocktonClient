@@ -15,7 +15,7 @@
       </v-card-title>
 
       <v-divider class="mb-0" />
-      <v-card-text class="pa-0">
+      <v-card-text v-if="!(checkMobile.isMobile&&isPdf)"  class="pa-0">
         <!-- PDF 출력 영역 시작-->
         <div :class="isPdf ? 'd-none' : ''">
           <div id="printDiv" class="certificatePrintFrame-wrap">
