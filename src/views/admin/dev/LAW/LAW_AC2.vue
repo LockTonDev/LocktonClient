@@ -1420,10 +1420,10 @@ async function fnSearchDtl(insurance_uuid: string) {
     Object.assign(insuranceDTO.value, resultData.data[0]);
 
     let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt;
-    if(insuranceDTO.value.cbr_cnt > 2){
-      year_clm_lt_amt = (parseInt(year_clm_lt_amt) / 2) + '억원'
-    }
-
+    // if(insuranceDTO.value.cbr_cnt > 2){
+    //   year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
+    // }
+    console.log('year_clm_lt_amt'+year_clm_lt_amt)
     insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
 
     insuranceDTO.value.cbr_data.sort(function(a, b) {
@@ -1515,6 +1515,7 @@ async function fnAddCBR(user_cd: string) {
   cbrDataDTO.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
   cbrDataDTO.status_cd = '80'; // 정상
   insuranceDTO.value.cbr_data.push(cbrDataDTO);
+
 }
 
 
@@ -1534,9 +1535,8 @@ async function fnSave() {
   });
 
   if (isRun) {
-    let resultData = await apiADMIN.setLAW([insuranceDTO.value]);
     insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length
-
+    let resultData = await apiADMIN.setLAW([insuranceDTO.value]);
 
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', '저장 되었습니다.');
@@ -1635,6 +1635,17 @@ const onCalculateInsurance = async (confirmYn) => {
       insuranceDTO.value.insr_tot_amt = Number(insuranceDTO.value.insr_amt,0) + Number(insuranceDTO.value.spct_data.insr_amt,0)
     }
 
+    //insuranceDTO.value.insr_clm_lt_amt = data.split('/')[0]
+    let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt
+
+    if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && insuranceDTO.value.cbr_data.length >= 3 ){
+      year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
+    }
+    insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
+    console.log('year_clm_lt_amt'+year_clm_lt_amt)
+    insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
+
+
     // 입금금액 계산
     insuranceDTO.value.insr_tot_paid_amt = insuranceDTO.value.trx_data.reduce((total, item) => total + Number(item.trx_amt), 0);
     insuranceDTO.value.insr_tot_unpaid_amt = Number(insuranceDTO.value.insr_tot_amt) - Number(insuranceDTO.value.insr_tot_paid_amt);
@@ -1654,9 +1665,10 @@ watch(
     data => {
       insuranceDTO.value.insr_clm_lt_amt = data.split('/')[0]
       let year_clm_lt_amt = data.split('/')[1];
-      if(year_clm_lt_amt && insuranceDTO.value.cbr_cnt >= 3 ){
-        year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
-      }
+
+      // if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && insuranceDTO.value.cbr_cnt >= 3 ){
+      //   year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
+      // }
       insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
     }
 );

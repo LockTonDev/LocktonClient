@@ -2599,7 +2599,7 @@ function mapperRow_LAW_IND(excelMapper: object, excelDataRow: any) {
   row[excelMapper.등록번호] = insuranceDTO.user_regno;
   row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt;
   row[excelMapper.보상한도_총한도] = insuranceDTO.insr_year_clm_lt_amt;
-  row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt;
+  row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt?.getValueBySplit(1);
   row[excelMapper.소급담보일] = insuranceDTO.insr_retr_dt;
   row[excelMapper.기준보험료] = insuranceDTO.insr_base_amt;
   row[excelMapper.할인할증기준] = insuranceDTO.insr_sale_year;
