@@ -705,7 +705,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VSelectWithValidation v-model="insuranceDTO.spct_data.insr_clm_lt_amt" name="spct_data_insr_clm_lt_amt" label="보상한도" :items="insrSpctClmLtAmtItems" single-line density="compact"></VSelectWithValidation>
+                                  <VSelectWithValidation v-model="insuranceDTO.spct_data.insr_clm_lt_amt" name="spct_data_insr_clm_lt_amt" placeholder="보상한도" :items="insrSpctClmLtAmtItems" single-line density="compact"></VSelectWithValidation>
                                   <v-divider class="border-0" />
                                 </div>
                               </v-col>
@@ -715,7 +715,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.spct_data.cbr_cnt" name="spct_data_cbr_cnt" label="사무원 인원수" type="number" suffix="명" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.spct_data.cbr_cnt" name="spct_data_cbr_cnt" placeholder="사무원 인원수" type="number" suffix="명" single-line />
                                 </div>
                               </v-col>
                             </v-row>
@@ -782,7 +782,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VSelectWithValidation v-model="insuranceDTO.spct_data.insr_psnl_brdn_amt" name="spct_data_insr_psnl_brdn_amt" label="자기부담금" :items="insrSpctPsnlBrdnAmtItems" single-line density="compact"></VSelectWithValidation>
+                                  <VSelectWithValidation v-model="insuranceDTO.spct_data.insr_psnl_brdn_amt" name="spct_data_insr_psnl_brdn_amt" placeholder="자기부담금" :items="insrSpctPsnlBrdnAmtItems" single-line density="compact"></VSelectWithValidation>
                                   <v-divider class="border-0" />
                                 </div>
                               </v-col>
@@ -792,7 +792,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.spct_data.insr_amt" name="spct_data_insr_amt" label="자기부담금" type="number" suffix="원" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.spct_data.insr_amt" name="spct_data_insr_amt" placeholder="특약보험료" type="number" suffix="원" single-line />
                                 </div>
                               </v-col>
 
@@ -804,7 +804,8 @@
                   </v-expansion-panel>
                 </v-card>
               </v-col>
-              <!--세무사 명단-->
+
+              <!--법무사 명단-->
               <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-4">

@@ -169,7 +169,7 @@ authService.interceptors.request.use(
 authService.interceptors.response.use(
   response => {
     hideLoading();
-
+    console.log("response.data",response.data)
     return response.data;
   },
   error => {
