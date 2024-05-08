@@ -736,9 +736,9 @@
               </v-col>
 
               <!--관세사 명단-->
-              <v-col cols="12" class="pb-0" ref="refPage3" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
+              <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-3">
+                  <v-expansion-panel elevation="0" value="panel-4">
                     <v-card-title>
                       <h3 class="font-weight-bold">관세사 명단</h3>
                       <p class="text-body-2 color-gray-shadow ml-4">
@@ -836,9 +836,9 @@
 
               <!--보험계약(컨설팅)-->
 <!--              <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.cons_join_yn === 'Y'">-->
-              <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
+              <v-col cols="12" class="pb-0" ref="refPage5" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-4">
+                  <v-expansion-panel elevation="0" value="panel-5">
                     <v-card-title>
                       <h3 class="font-weight-bold">보험 계약(컨설팅)</h3>
                       <div class="data-col">
@@ -970,9 +970,9 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="12" class="pb-0" ref="refPage5" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
+              <v-col cols="12" class="pb-0" ref="refPage6" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-5">
+                  <v-expansion-panel elevation="0" value="panel-6">
                     <v-card-title>
                       <h3 class="font-weight-bold">관세사 명단(컨설팅)</h3>
                       <p class="text-body-2 color-gray-shadow ml-4">
@@ -1069,9 +1069,9 @@
               </v-col>
 
               <!-- 변경정보 시작 -->
-              <v-col cols="12" class="pb-0" ref="refPage6">
+              <v-col cols="12" class="pb-0" ref="refPage7">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-6">
+                  <v-expansion-panel elevation="0" value="panel-7">
                     <v-card-title class="d-flex justify-space-between pa-0">
                       <h3 class="font-weight-bold">변경정보</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -1104,9 +1104,9 @@
               <!-- 변경정보 종료 -->
 
               <!-- 변경신청상세 추가예정 -->
-              <v-col cols="12" class="pb-0" ref="refPage7">
+              <v-col cols="12" class="pb-0" ref="refPage8">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-7">
+                  <v-expansion-panel elevation="0" value="panel-8">
                     <v-card-title>
                       <h3 class="font-weight-bold">변경신청상세</h3>
                       <v-spacer />
@@ -1118,7 +1118,7 @@
               </v-col>
 
               <!--입금 처리-->
-              <v-col cols="12" class="pb-0" ref="refPage8">
+              <v-col cols="12" class="pb-0" ref="refPage9">
                 <v-card>
                   <v-card-title class="d-flex flex-wrap px-0 pt align-center">
                     <h2 class="font-weight-bold">
@@ -1243,7 +1243,7 @@
               </v-col>
 
               <!-- ERP정보 시작 -->
-              <v-col cols="12" class="py-0" ref="refPage9">
+              <v-col cols="12" class="py-0" ref="refPage10">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-9">
                     <v-card-title class="d-flex justify-space-between pa-0">
@@ -1291,9 +1291,9 @@
               <!-- ERP정보 종료 -->
 
               <!--약관동의-->
-              <v-col cols="12" class="pb-0" ref="refPage10">
+              <v-col cols="12" class="pb-0" ref="refPage11">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-10">
+                  <v-expansion-panel elevation="0" value="panel-11">
                     <v-card-title>
                       <h3 class="font-weight-bold">약관 동의</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -1334,9 +1334,9 @@
                 </v-card>
               </v-col>
               <!-- 메모 추가예정 -->
-              <v-col cols="12" class="pb-0" ref="refPage11">
+              <v-col cols="12" class="pb-0" ref="refPage12">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-11">
+                  <v-expansion-panel elevation="0" value="panel-12">
                     <v-card-title>
                       <h3 class="font-weight-bold">메모</h3>
                       <v-spacer />
