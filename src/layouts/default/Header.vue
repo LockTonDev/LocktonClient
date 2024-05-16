@@ -22,67 +22,71 @@ const toggleDrawer = () => {
 <template>
   <v-app-bar flat :height="height.max" app>
     <template v-if="checkMobile.isMobile">
-
-    <v-app-bar-nav-icon class="mr-16" @click="toggleDrawer" v-if="checkMobile.isMobile">
-      <v-icon color="white" size="24">mdi-menu</v-icon>
-    </v-app-bar-nav-icon>
+      <div class="d-flex">
+        <v-app-bar-nav-icon class="d-flex justify-start pl-10" style="width: 33.3%" @click="toggleDrawer">
+          <v-icon color="white" size="24">mdi-menu</v-icon>
+        </v-app-bar-nav-icon>
+        <div class="logo" style="width: 33.3%; height: 48px">
+          <router-link to="/main" class="w-max-full d-flex justify-center">
+            <img src="/assets/Lockton_Logo_White_simbol.png" alt="" width="75%">
+          </router-link>
+        </div>
+        <div  style="width: 33.3%"></div>
+      </div>
     </template>
     <template v-else>
       <v-spacer />
-    </template>
     <!-- ---------------------------------------------- -->
     <!---Logo part -->
     <!-- ---------------------------------------------- -->
-    <div class="logo">
-      <router-link to="/main">
-        <img src="/assets/Lockton_Logo_White_simbol.png" alt="" class="w-full">
-      </router-link>
-    </div>
+      <div class="logo">
+        <router-link to="/main">
+          <img src="/assets/Lockton_Logo_White_simbol.png" alt="" class="w-full">
+        </router-link>
+      </div>
 
-    <v-spacer />
+      <v-spacer />
 
 
     <!-- ---------------------------------------------- -->
     <!---right part -->
     <!-- ---------------------------------------------- -->
-    <div v-if="!checkMobile.isMobile" class="lnb d-flex align-center">
+      <div v-if="!checkMobile.isMobile" class="lnb d-flex align-center">
 
-      <v-menu anchor="bottom end" origin="auto">
-        <template v-slot:activator="{ props }">
-          <v-btn icon v-bind="props" to="/introduce" color="secondary">
-            <vue-feather type="clipboard"></vue-feather>
-            <p class="font-size-8 mt-1 d-none d-md-block">
-              회사소개
-            </p>
+        <v-menu anchor="bottom end" origin="auto">
+          <template v-slot:activator="{ props }">
+            <v-btn icon v-bind="props" to="/introduce" color="secondary">
+              <vue-feather type="clipboard"></vue-feather>
+              <p class="font-size-8 mt-1 d-none d-md-block">
+                회사소개
+              </p>
+            </v-btn>
+          </template>
+        </v-menu>
+
+        <v-menu anchor="bottom end" origin="auto" v-if="!_AUTH_USER">
+          <template v-slot:activator="{ props }">
+            <v-btn icon v-bind="props" to="/user/login" color="secondary">
+                <vue-feather type="user"></vue-feather>
+                <p class="font-size-8 mt-1 d-none d-md-block">
+                  로그인
+                </p>
           </v-btn>
-        </template>
-      </v-menu>
+          </template>
+        </v-menu>
 
-      <v-menu anchor="bottom end" origin="auto" v-if="!_AUTH_USER">
-        <template v-slot:activator="{ props }">
-          <v-btn icon v-bind="props" to="/user/login" color="secondary">
-              <vue-feather type="user"></vue-feather>
-              <p class="font-size-8 mt-1 d-none d-md-block">
-                로그인
-              </p>
-        </v-btn>
-        </template>
-      </v-menu>
-
-      <v-menu anchor="bottom end" origin="auto" v-if="_AUTH_USER">
-        <template v-slot:activator="{ props }">
-          <v-btn icon v-bind="props"  @click="authStore.logout()" color="secondary">
-              <vue-feather type="log-out"></vue-feather>
-              <p class="font-size-8 mt-1 d-none d-md-block">
-                로그아웃
-              </p>
-        </v-btn>
-        </template>
-      </v-menu>
-
-
-
-    </div>
+        <v-menu anchor="bottom end" origin="auto" v-if="_AUTH_USER">
+          <template v-slot:activator="{ props }">
+            <v-btn icon v-bind="props"  @click="authStore.logout()" color="secondary">
+                <vue-feather type="log-out"></vue-feather>
+                <p class="font-size-8 mt-1 d-none d-md-block">
+                  로그아웃
+                </p>
+          </v-btn>
+          </template>
+        </v-menu>
+      </div>
+    </template>
   </v-app-bar>
 
   <v-navigation-drawer v-model="drawer" app v-if="checkMobile.isMobile" class="bg-header">

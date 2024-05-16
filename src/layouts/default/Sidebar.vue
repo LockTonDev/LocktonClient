@@ -154,18 +154,26 @@ onUnmounted(() => {
     <!-- ---------------------------------------------- -->
     <!---Logo part -->
     <!-- ---------------------------------------------- -->
-    <v-app-bar-nav-icon class="mr-16" @click="toggleDrawer" v-if="checkMobile.isMobile">
-      <v-icon color="white" size="24">mdi-menu</v-icon>
-    </v-app-bar-nav-icon>
-
-    <div class="logo">
-      <router-link to="/introduce">
-        <img src="/assets/Lockton_Logo_White_simbol.png" alt="" class="w-full">
-      </router-link>
-    </div>
-    <div class="flex-grow-1"></div>
-
-    <template v-if="!checkMobile.isMobile">
+    <template v-if="checkMobile.isMobile">
+      <div class="d-flex">
+        <v-app-bar-nav-icon class="d-flex justify-start pl-10" style="width: 33.3%" @click="toggleDrawer">
+          <v-icon color="white" size="24">mdi-menu</v-icon>
+        </v-app-bar-nav-icon>
+        <div class="logo" style="width: 33.3%;">
+          <router-link to="/main" class="w-max-full d-flex justify-center">
+            <img src="/assets/Lockton_Logo_White_simbol.png" alt="" width="75%">
+          </router-link>
+        </div>
+        <div  style="width: 33.3%"></div>
+      </div>
+    </template>
+    <template v-else>
+      <div class="logo">
+        <router-link to="/introduce">
+          <img src="/assets/Lockton_Logo_White_simbol.png" alt="" class="w-full">
+        </router-link>
+      </div>
+      <div class="flex-grow-1"></div>
       <v-spacer />
       <div class="horizontalMenu">
         <ul
