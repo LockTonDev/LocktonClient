@@ -19,7 +19,7 @@ const props = defineProps({
     <v-img :src="image" cover v-if="image" gradient="90deg,  rgb(0, 0, 0, 0.9) 0%, rgb(0, 0, 0, 0.3) 45%, rgb(0, 0, 0, 0.3) 55%, rgb(0, 0, 0, 0.9) 100%"></v-img>
     <v-toolbar flat class="pa-0" :height="checkMobile.isMobile?'100':'200'">
       <div class="w-100">
-        <v-breadcrumbs :items="breadcrumbs" class="pa-0 position-absolute right-0">
+        <v-breadcrumbs v-if="!checkMobile.isMobile" :items="breadcrumbs" class="pa-0 position-absolute right-0">
           <template v-slot:divider v-if="breadcrumbs">
             <v-icon>mdi-chevron-right</v-icon>
           </template>
