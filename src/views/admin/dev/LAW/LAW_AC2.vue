@@ -1424,7 +1424,6 @@ async function fnSearchDtl(insurance_uuid: string) {
     // if(insuranceDTO.value.cbr_cnt > 2){
     //   year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
     // }
-    console.log('year_clm_lt_amt'+year_clm_lt_amt)
     insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
 
     insuranceDTO.value.cbr_data.sort(function(a, b) {
@@ -1442,8 +1441,8 @@ async function fnSearchDtl(insurance_uuid: string) {
 
     const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
     //const filter1 = []
-
     validUserCount.value = filter1.length;
+    insuranceDTO.value.cbr_cnt = filter1.length;
     fnSetInsuranceRateCombo();
     dynamicComponentName1.value = `V_T${insuranceDTO.value.business_cd}0030P20`;
     dynamicComponentName2.value = `V_T${insuranceDTO.value.business_cd}0030P30`;
@@ -1461,6 +1460,7 @@ function getDynamicComponentName1() {
   return V_TLAW0030P20;
 }
 function getDynamicComponentName2() {
+  console.log('insuranceDTO.value.cbr_cnt ',insuranceDTO.value.cbr_cnt )
   return V_TLAW0030P30;
 }
 
@@ -1703,7 +1703,8 @@ function changeTotUnpaidAmt(){
 function fnChangeStatus(memStatus) {
   const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
   let businessCd = insuranceDTO.value.business_cd
-  insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate(businessCd, validMemberCount.length)
+  //console.log("businessCd, validMemberCount.length",businessCd, validMemberCount.length)
+  //insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate(businessCd, validMemberCount.length)
   validUserCount.value = validMemberCount.length
   /*
   let businessCd = insuranceDTO.value.business_cd
