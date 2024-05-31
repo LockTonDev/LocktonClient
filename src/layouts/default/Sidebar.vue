@@ -161,7 +161,7 @@ onUnmounted(() => {
         </v-app-bar-nav-icon>
         <div class="logo" style="width: 33.3%;">
           <router-link to="/main" class="w-max-full d-flex justify-center">
-            <img src="/assets/Lockton_Logo_White_simbol.png" alt="" width="75%">
+            <img src="/assets/Lockton_Logo_White_simbol.png" alt="" style="width:75% !important;">
           </router-link>
         </div>
         <div  style="width: 33.3%"></div>
