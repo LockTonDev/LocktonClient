@@ -214,7 +214,7 @@
                             </div>
                             <div class="data-col" v-if="insuranceDTO.corp_type != 'JNT'">
                               <!-- {{ insuranceDTO.corp_bnno }} -->
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_bnno" name="corp_bnno" label="법인번호" single-line :maskOption="{ mask: '######-#######' }"/>
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_bnno" name="corp_bnno" placeholder="법인번호" single-line :maskOption="{ mask: '######-#######' }"/>
                             </div>
                             <div class="data-col" v-if="insuranceDTO.corp_type == 'JNT'">
                               해당없음
@@ -255,7 +255,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line maxlength="20" />
+                              <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
                             </div>
                           </v-col>
                           <!--
@@ -299,7 +299,7 @@
                                   <sup class="text-error">*</sup>
                                 </div>
                                 <div class="data-col">
-                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_year" name="insr_year" label="가입년도" suffix="년" single-line />
+                                  <VTextFieldWithValidation v-model="insuranceDTO.insr_year" name="insr_year" placeholder="가입년도" suffix="년" single-line />
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col" >

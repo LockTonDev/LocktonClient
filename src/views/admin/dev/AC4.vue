@@ -14,7 +14,7 @@
           <v-select v-model="searchParams.data['business_cd']" :items="businessCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
           </li> -->
           <li class="date">
-          <span>보험년도<sup class="text-error ml-1">*</sup></span>
+          <span>보험년도</span>
           <v-select v-model="searchParams.data['insr_year']" :items="insrYearCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
           </li>
           <li>
@@ -22,12 +22,16 @@
           <v-select v-model="searchParams.data['user_cd']"  :items="userCdItems" variant="outlined" hide-details density="compact"></v-select>
           </li>
           <li>
-          <span>상태<sup class="text-error ml-1">*</sup></span>
+          <span>상태</span>
             <v-select v-model="searchParams.data['status_cd']" :items="statusCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
           </li>
           <li>
-          <span>피보험자<sup class="text-error ml-1">*</sup></span>
+          <span>피보험자</span>
           <v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" placeholder="피보험자" @keyup.enter="fnSearch()"/>
+          </li>
+          <li>
+          <span>갱신여부</span>
+          <v-select v-model="searchParams.data['renewal_cd']" :items="searchRenewalCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
           </li>
           <li class="ml-auto">
           <v-btn variant="flat" @click="fnSearch()">조회</v-btn>
@@ -57,7 +61,7 @@
               <col style="width:auto"/>
               <col style="width:auto"/>
               <col style="width:auto"/>
-              <!-- <col style="width:auto"/> -->
+              <col style="width:auto"/>
               <col style="width:auto"/>
               </colgroup>
               <thead>
@@ -68,8 +72,8 @@
                 <th>피보험자</th>
                 <th>등록번호</th>
                 <th>사업자번호</th>
-                <!-- <th>소속지방회</th> -->
                 <th>총보험료</th>
+                <th>갱신여부</th>
               </tr>
               </thead>
               <tbody v-if="InsuranceList.length" class="">
@@ -86,8 +90,8 @@
                 <td>{{ row.user_nm }}</td>
                 <td>{{ row.user_regno }}</td>
                 <td>{{ row.corp_cnno }}</td>
-                <!-- <td>{{ row.corp_region_nm}}</td> -->
                 <td>{{ Number(row?.insr_tot_amt).toLocaleString() }}</td>
+                <td>{{ row.renewal_cd_nm}}</td>
               </tr>
               </tbody>
               <tbody v-else>
@@ -134,7 +138,7 @@
                     </div>
                     <div class="data-col">
                       <!-- {{ insuranceDTO.user_nm }} -->
-                      <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" label="이름" single-line maxlength="25"/>
+                      <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" placeholder="이름" single-line maxlength="25"/>
                     </div>
                     </v-col>
                     <v-col cols="12" sm="4" class="v-col">
@@ -174,7 +178,7 @@
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col">
-                      <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" label="담당자 성명" single-line maxlength="20" />
+                      <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
                     </div>
                     </v-col>
 
@@ -184,8 +188,18 @@
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col">
-                      <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" single-line density="compact"></VSelectWithValidation>
+                      <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" placeholder="소속 지방회 선택"  :items="regionCdItems" single-line density="compact"></VSelectWithValidation>
                     </div>
+                    </v-col>
+
+                    <v-col cols="4" class="v-col" >
+                      <div class="head-col">
+                        <p>갱신여부</p>
+                        <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                        <VSelectWithValidation v-model="insuranceDTO.renewal_cd_nm" name="corp_region_cd" label="갱신여부" :items="renewalCdItems" single-line density="compact"></VSelectWithValidation>
+                      </div>
                     </v-col>
                   </v-row>
                   <!-- 개인 끝-->
@@ -199,7 +213,7 @@
                     </div>
                     <div class="data-col">
                       <!-- {{ insuranceDTO.user_nm }} -->
-                      <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" label="법인명" single-line max-length="20" />
+                      <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" placeholder="법인명" single-line max-length="20" />
                     </div>
                     </v-col>
                     <v-col cols="12" sm="4" class="v-col">
@@ -264,14 +278,22 @@
                       <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
                     </div>
                     </v-col>
-
+                    <v-col cols="4" class="v-col" >
+                      <div class="head-col">
+                        <p>갱신여부</p>
+                        <sup class="text-error">*</sup>
+                      </div>
+                      <div class="data-col">
+                        <VSelectWithValidation v-model="insuranceDTO.renewal_cd_nm" name="corp_region_cd" label="갱신여부" :items="renewalCdItems" single-line density="compact"></VSelectWithValidation>
+                      </div>
+                    </v-col>
                     <v-col cols="12" sm="12" class="v-col">
                     <div class="head-col">
                       <p>소속 지방회</p>
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col">
-                      <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" density="compact" single-line></VSelectWithValidation>
+                      <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" placeholder="소속 지방회 선택" :items="regionCdItems" density="compact" single-line></VSelectWithValidation>
                     </div>
                     </v-col>
                   </v-row>
@@ -317,15 +339,6 @@
                         <div class="data-col">
                           <!-- {{ insuranceDTO.insr_retr_dt }} -->
                           <VTextFieldWithValidation v-model="insuranceDTO.insr_retr_dt" name="insr_retr_dt" placeholder="소급담보일" type="date" single-line/>
-                        </div>
-                      </v-col>
-                      <v-col cols="12" class="v-col" >
-                        <div class="head-col">
-                        <p>소급 적용</p>
-                        <sup class="text-error">*</sup>
-                        </div>
-                        <div class="data-col">
-                          <VCheckBoxWithValidation v-model="insuranceDTO.insr_retr_yn" name="insr_retr_yn" label="소급여부"  class="v-checkbox" density="compact" />
                         </div>
                       </v-col>
                       </v-row>
@@ -733,6 +746,7 @@ import VSelectWithValidation from '@/components/VSelectWithValidation.vue';
 import VCheckBoxWithValidation from '@/components/VCheckBoxWithValidation.vue';
 import apiADMIN from '@/api/api/A_ADMIN';
 import apiCOMMON from '@/api/api/A_COMMON';
+import {DOWNLOAD_EXCEL, DOWNLOAD_RENEWAL_EXCEL} from "@/util/excelupdn";
 
 const route = useRoute();
 
@@ -760,6 +774,8 @@ const { _AUTH_ADMIN } = storeToRefs(authStore);
 
 const businessCdItems = ref([""]);
 const statusCdItems = ref([""]);
+const renewalCdItems = ref([""]);
+const searchRenewalCdItems = ref([""]);
 const insrYearCdItems = ref([]);
 const userCdItems = ref([""]);
 const regionCdItems = ref([]);
@@ -935,8 +951,11 @@ async function initPage() {
 	businessCdItems.value = await CommonCode.getCodeList('COM001');
 	userCdItems.value = await CommonCode.getCodeList('TAX002');
 	statusCdItems.value = await CommonCode.getCodeList('COM030');
+  renewalCdItems.value = await CommonCode.getCodeList('COM032');
+  searchRenewalCdItems.value = await CommonCode.getCodeList('COM032');
 	userCdItems.value.unshift({ title: '전체', value: '%'});
 	statusCdItems.value.unshift({ title: '전체', value: '%'});
+  searchRenewalCdItems.value.unshift({ title: '전체', value: '%'});
 
 	regionCdItems.value = await CommonCode.getCodeList(businessCd+'001');
 	trxCdItems.value = await CommonCode.getCodeList('COM031');
@@ -952,12 +971,43 @@ async function initPage() {
 	searchParams.value.data['insr_year'] = '%';
 	searchParams.value.data['user_cd'] = '%';
 	searchParams.value.data['status_cd'] = '%';
+  searchParams.value.data['renewal_cd'] = '%';
 	searchParams.value.data['user_nm'] = '';
 
 }
 
-function downloadAsExcel() {
-  alert("작업예정");
+async function downloadAsExcel() {
+  let businessCdNm = businessCdItems.value.find(items => items.value == searchParams.value.data.business_cd).title;
+  let insrYearCdNm = insrYearCdItems.value.find(items => items.value == searchParams.value.data.insr_year).title;
+  let userCdNm = userCdItems.value.find(items => items.value == searchParams.value.data.user_cd).title;
+  let fileNm = `${insrYearCdNm}_${businessCdNm}_계약갱신_${userCdNm}`;
+  let isRun = false;
+
+  await messageBoxDTO.value.setConfirm('다운로드', `${fileNm} 자료를 다운 받으시겠습니까?`, null, (result, params) => {
+    isRun = result;
+  });
+
+  try {
+    if (isRun) {
+      let resultData;
+      if(route.params.business_cd == 'ADV') {
+        resultData = await apiADMIN.getADVExcel(searchParams.value.data);
+      } else {
+        resultData = await apiADMIN.getRenewalTAXExcel(searchParams.value.data);
+      }
+
+      searchParams.value.data['excel_filenm'] = fileNm;
+
+      if (resultData.data.length == 0) {
+        messageBoxDTO.value.setInfo('Excel', '데이타가 없습니다. 검색조건을 확인하세요.');
+      } else {
+        console.log("fileNm",fileNm)
+        DOWNLOAD_RENEWAL_EXCEL(searchParams.value, resultData.data);
+      }
+    }
+  } catch (e) {
+    messageBoxDTO.value.setWarning('오류', `엑셀다운로드에 실패하였습니다<br/>${e}`);
+  }
 }
 
 /**
