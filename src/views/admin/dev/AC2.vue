@@ -1634,6 +1634,13 @@ function fnDelCBR(rowIdx: number) {
   console.log(rowIdx);
   insuranceDTO.value.cbr_data.splice(rowIdx, 1);
   insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
+
+  /*const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
+  let businessCd = insuranceDTO.value.business_cd
+  if(businessCd== "ADV" || businessCd == "TAX") {
+    insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate(businessCd, validMemberCount.length)
+    validUserCount.value = validMemberCount.length
+  }*/
 }
 
 async function fnSave() {
@@ -1821,7 +1828,6 @@ function fnChangeStatus(memStatus) {
   const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
   let businessCd = insuranceDTO.value.business_cd
   if(businessCd== "ADV" || businessCd == "TAX") {
-
     insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate(businessCd, validMemberCount.length)
     validUserCount.value = validMemberCount.length
   }

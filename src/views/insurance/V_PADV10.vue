@@ -282,7 +282,7 @@
               </ul>
               <img src="../../assets/images/img-insurance-2-2.png" alt="" class="mt-4 w-85"/>
               <div class="mt-4">
-                <p class="color-gray-shadow">※ 갱신이 되지 않을 경우에는 보험가입기간 중의 업무로 발생한 사고라도 보험만기일로부터 자동보고연장담보기간 70일이 경과하면 보험혜택을 받으실 수 없습니다.</p>
+                <p class="color-gray-shadow text-16">※ 갱신이 되지 않을 경우에는 보험가입기간 중의 업무로 발생한 사고라도 보험만기일로부터 자동보고연장담보기간 70일이 경과하면 보험혜택을 받으실 수 없습니다.</p>
                 <v-btn type="button" color="primary" variant="outlined" class="mt-2 d-block">
                   <span class="mr-1">보고기간연장담보(Extended Reporting Period) 알아보기</span>
                   <v-dialog persistent v-model="dialogERP" activator="parent" scrollable max-width="1000">

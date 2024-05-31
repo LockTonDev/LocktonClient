@@ -31,6 +31,22 @@ let discountRangesTAX = [
     {range: [3, 6], rate: -5},
     {range: [0, 2], rate: -0},
 ];
+
+let discountRangesLAW = [
+    {range: [13, Infinity], rate: -40},
+    {range: [12, 12], rate: -39},
+    {range: [11, 11], rate: -37},
+    {range: [10, 10], rate: -35},
+    {range: [9, 9], rate: -33},
+    {range: [8, 8], rate: -30},
+    {range: [7, 7], rate: -27},
+    {range: [6, 6], rate: -24},
+    {range: [5, 5], rate: -21},
+    {range: [4, 4], rate: -18},
+    {range: [3, 3], rate: -15},
+    {range: [2, 2], rate: -10},
+    {range: [0, 1], rate: -0},
+];
 /*
 0	0%
 1	0%
@@ -66,6 +82,8 @@ export let getDiscountRate = (businnessCd: string,  nPCnt:number) => {
         discountRanges = discountRangesADV
     } else if(businnessCd == 'TAX') {
         discountRanges = discountRangesTAX
+    } else if(businnessCd == 'LAW') {
+        discountRanges = discountRangesLAW
     }
     for (let i = 0; i < discountRanges.length; i++) {
         let range = discountRanges[i].range;
