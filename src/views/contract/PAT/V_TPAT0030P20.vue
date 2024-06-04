@@ -36,7 +36,7 @@
       </v-card-title>
 
       <v-divider class="mb-0" />
-      <v-card-text v-if="!(checkMobile.isMobile&&isPdf)"  :class="isPdf?'pa-0':'py-6'">
+      <v-card-text :hidden="checkMobile.isMobile&&isPdf" :class="isPdf?'pa-0':'py-6'">
         <!-- PDF 출력 영역 시작-->
         <div :class="isPdf?'d-none':''">
           <div id="printDiv">

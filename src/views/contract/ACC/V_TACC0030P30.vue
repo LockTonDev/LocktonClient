@@ -14,7 +14,7 @@
       </v-card-title>
 
       <v-divider class="mb-0" />
-      <v-card-text v-if="!(checkMobile.isMobile&&isPdf)"  class="pa-0">
+      <v-card-text :hidden="checkMobile.isMobile&&isPdf"  class="pa-0">
         <iframe :src="pdfUrl" width="100%" height="800px"></iframe>
       </v-card-text>
     </v-card>
