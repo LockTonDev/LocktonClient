@@ -239,7 +239,7 @@
                 </tbody>
               </table>
               <div class="mt-4">
-                <span class="color-gray-shadow">※ 자세한 사항은 약관을 참조해주세요</span>
+                <span class="color-gray-shadow text-16">※ 자세한 사항은 약관을 참조해주세요</span>
                 <v-btn color="primary" variant="outlined" class="ml-2">약관 보기
                   <v-dialog persistent v-model="isDialogTermsOfPolicy1" activator="parent" scrollable max-width="1000">
                     <v-btn variant="outlined" color="dark" @click="isDialogTermsOfPolicy1 = false" class="position-absolute right-0 mt-3 mr-4 z-index-1">닫기</v-btn>
