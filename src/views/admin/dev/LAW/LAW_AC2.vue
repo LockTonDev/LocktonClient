@@ -1662,14 +1662,14 @@ const onCalculateInsurance = async (confirmYn) => {
     }
 
     //insuranceDTO.value.insr_clm_lt_amt = data.split('/')[0]
-    let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt
-
-    if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && insuranceDTO.value.cbr_data.length >= 3 ){
-      year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
-    }
-    insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
-    console.log('year_clm_lt_amt'+year_clm_lt_amt)
-    insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
+    // let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt
+    //
+    // if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && insuranceDTO.value.cbr_data.length >= 3 ){
+    //   year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
+    // }
+    // insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
+    // console.log('year_clm_lt_amt'+year_clm_lt_amt)
+    // insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
 
 
     // 입금금액 계산
@@ -1726,6 +1726,7 @@ function changeTotUnpaidAmt(){
 
 
 function fnChangeStatus(memStatus) {
+  console.log("memStatus>>>",memStatus)
   const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
   let businessCd = insuranceDTO.value.business_cd
   //console.log("businessCd, validMemberCount.length",businessCd, validMemberCount.length)
@@ -1737,7 +1738,7 @@ function fnChangeStatus(memStatus) {
   console.log('validMemberCount',validMemberCount)
   if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && validMemberCount.length == 3 ){
     year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
-  }else if (parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) / 2) && validMemberCount.length == 2 ){
+  }else if (parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) / 2) && validMemberCount.length == 2 && memStatus!='80' ){
     year_clm_lt_amt = (parseInt(year_clm_lt_amt) / 2) + '억원'
   }
   insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
