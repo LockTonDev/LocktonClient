@@ -15,7 +15,7 @@
       </v-card-title>
 
       <v-divider class="mb-0" />
-      <v-card-text v-if="!(checkMobile.isMobile&&isPdf)"  class="pa-0">
+      <v-card-text :hidden="checkMobile.isMobile&&isPdf" class="pa-0">
         <!-- PDF 출력 영역 시작-->
         <div :class="isPdf ? 'd-none' : ''">
           <div id="printDiv" class="certificatePrintFrame-wrap">
@@ -137,7 +137,7 @@
                   </table>
                 </main>
                 <footer>
-                  <p class="text-13 line-height-1-4 mt-2">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
+                  <p class="text-13 line-height-1-4 mt-2 text-16">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
                   <div class="mt-5">
                     <img src="../../../assets/images/h-join-bottom.png" alt="" />
                   </div>
@@ -260,7 +260,7 @@
                   </table>
                 </main>
                 <footer>
-                  <p class="text-13 line-height-1-4 mt-2">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
+                  <p class="text-13 line-height-1-4 mt-2 text-16">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
                   <div class="mt-5">
                     <img src="../../../assets/images/h-join-bottom.png" alt="" />
                   </div>
@@ -313,7 +313,7 @@
                     </table>
                   </main>
                   <footer>
-                    <p class="text-13 line-height-1-4 mt-2">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
+                    <p class="text-13 line-height-1-4 mt-2 text-16">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
                     <div class="mt-5">
                       <img src="../../../assets/images/h-join-bottom.png" alt="" />
                     </div>
