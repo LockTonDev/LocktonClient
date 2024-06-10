@@ -2337,6 +2337,9 @@ onMounted(async () => {
     resultData.value = await apiADV0030a.getDBSelHistory(params, isAdmin);
     Object.assign(insuranceDTO.value, resultData.value.data[0]);
 
+    const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
+    insuranceDTO.value.cbr_cnt = filter1.length;
+
     resultData.value.data.forEach((item, index) => {
       const title = index === 0 ? `최종보험 : ${item?.insr_reg_dt}` : `변경이력 : ${item?.change_dt}`;
       const value = index;
