@@ -36,7 +36,7 @@
           </p>
           <div class="ml-auto">
             <v-btn variant="outlined" size="small" @click="fnAdd('IND')" class="mx-1">개인 신규</v-btn>
-            <v-btn variant="outlined" size="small" @click="fnAdd('COR')" class="mx-1">법인 신규</v-btn>
+<!--            <v-btn variant="outlined" size="small" @click="fnAdd('COR')" class="mx-1">법인 신규</v-btn>-->
             <v-btn variant="outlined" size="small" @click="fnAdd('JNT')" class="mx-1">합동 신규</v-btn>
           </div>
         </v-card-title>

@@ -42,8 +42,8 @@
             <p class="text-body-2 ml-3 pt-1">전체 <span class="color-primary font-weight-bold">{{ Number(InsuranceList.length).toLocaleString() }}</span> 건</p>
             <div class="ml-auto">
               <v-btn variant="outlined" size="small" @click="fnAdd('IND');" class="mx-1">개인 신규</v-btn>
-              <v-btn variant="outlined" size="small" @click="fnAdd('COR');" class="mx-1">법인 신규</v-btn>
-              <v-btn variant="outlined" size="small" @click="fnAdd('JNT');" class="mx-1">합동 신규</v-btn>
+              <v-btn variant="outlined" v-if="route.params.business_cd == 'TAX'" size="small" @click="fnAdd('COR');" class="mx-1">법인 신규</v-btn>
+              <v-btn variant="outlined" v-if="route.params.business_cd == 'ADV'" size="small" @click="fnAdd('JNT');" class="mx-1">합동 신규</v-btn>
               <v-btn variant="outlined" size="small" class="ml-3" @click="downloadAsExcel()">엑셀 다운</v-btn>
             </div>
           </v-card-title>
@@ -959,8 +959,52 @@ async function initPage() {
 
 }
 
+<<<<<<< Updated upstream
 function downloadAsExcel() {
   alert("작업예정");
+=======
+async function downloadAsExcel() {
+
+  // alert("작업예정");
+  // return false;
+
+  let businessCdNm = businessCdItems.value.find(items => items.value == searchParams.value.data.business_cd).title;
+  let insrYearCdNm = insrYearCdItems.value.find(items => items.value == searchParams.value.data.insr_year).title;
+  let userCdNm = userCdItems.value.find(items => items.value == searchParams.value.data.user_cd).title;
+  let fileNm = `${insrYearCdNm}_${businessCdNm}_계약갱신_${userCdNm}`;
+  let isRun = false;
+
+  await messageBoxDTO.value.setConfirm('다운로드', `${fileNm} 자료를 다운 받으시겠습니까?`, null, (result, params) => {
+    isRun = result;
+  });
+
+  try {
+    if (isRun) {
+      let resultData;
+      if(route.params.business_cd == 'ADV') {
+        resultData = await apiADMIN.getADVExcel(searchParams.value.data);
+      } else {
+        resultData = await apiADMIN.getRenewalTAXExcel(searchParams.value.data);
+      }
+
+      searchParams.value.data['excel_filenm'] = fileNm;
+
+      if(userCdNm=='전체'){
+        messageBoxDTO.value.setInfo('Excel', '가입 유형을 선택해 주세요.');
+        return false;
+      }
+
+      if (resultData.data.length == 0) {
+        messageBoxDTO.value.setInfo('Excel', '데이타가 없습니다. 검색조건을 확인하세요.');
+      } else {
+        console.log("fileNm",fileNm)
+        DOWNLOAD_RENEWAL_EXCEL(searchParams.value, resultData.data);
+      }
+    }
+  } catch (e) {
+    messageBoxDTO.value.setWarning('오류', `엑셀다운로드에 실패하였습니다<br/>${e}`);
+  }
+>>>>>>> Stashed changes
 }
 
 /**

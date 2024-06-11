@@ -130,6 +130,7 @@ export default {
     return await api.authService.post('/ADM/TAX/EXCEL/get', { params });
   },
 
+
   /**  ADV  */
   async setADV(params: any) {
     return await api.authService.post('/ADM/ADV/set', { params });
@@ -291,6 +292,9 @@ export default {
 
   async getLAWRenewals(params: any) {
     return await api.authService.post('/ADM/LAW/RENEWAL/gets', { params });
+  },
+  async getRenewalLAWExcel(params: any) {
+    return await api.authService.post('/ADM/LAW/EXCEL/renewal/gets', { params });
   },
 
   /** ============================================================================
