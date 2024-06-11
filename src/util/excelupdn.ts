@@ -2689,36 +2689,6 @@ function mapperRow_LAW_JNT(excelMapper: object, excelDataRow: any) {
   row[excelMapper.주소상세] = insuranceDTO.corp_addr_dtl;
   row[excelMapper.사무소명] = insuranceDTO.corp_nm;
   row[excelMapper.이메일] = insuranceDTO.corp_cust_email;
-<<<<<<< Updated upstream
-  row[excelMapper.총입금액] = insuranceDTO.insr_tot_paid_amt;
-  row[excelMapper.차액] = insuranceDTO.insr_tot_unpaid_amt;
-  row[excelMapper.ERP시작일] = insuranceDTO.erp_st_dt;
-  row[excelMapper.ERP종료일] = insuranceDTO.erp_cncls_dt;
-  row[excelMapper.ERP보험료] = insuranceDTO.erp_amt;
-  row[excelMapper.ERP납입일] = insuranceDTO.erp_dt;
-  row[excelMapper.변경일자] = insuranceDTO.change_dt;
-  row[excelMapper.변경내용] = insuranceDTO.change_rmk;
-
-  try {
-
-    row[excelMapper.입금구분] = trxCdItems.find(item => item.value == insuranceDTO?.trx_data[0]?.trx_cd).title;
-  } catch (e) {
-    row[excelMapper.입금구분] = '';
-    // console.log(e);
-  }
-
-  row[excelMapper.입금금액] = insuranceDTO?.trx_data[0]?.trx_amt;
-  row[excelMapper.처리일자] = insuranceDTO?.trx_data[0]?.trx_dt;
-  row[excelMapper.비고] = insuranceDTO?.trx_data[0]?.rmk;
-  row[excelMapper.예금주명] = insuranceDTO?.trx_data[0]?.acct_nm;
-
-  row[excelMapper.담보한정] = insuranceDTO?.limited_collateral;
-
-  rows.push(row);
-
-  let maxLength = Math.max(insuranceDTO.cbr_data.length, insuranceDTO.trx_data.length);
-  let cbrCnt = 0;
-=======
 
   return [row];
 }
@@ -2775,20 +2745,13 @@ function mapperRow_LAW_JNT_RENEWAL(excelMapper: object, excelDataRow: any) {
   row[excelMapper.주소상세] = insuranceDTO.corp_addr_dtl;
   row[excelMapper.사무소명] = insuranceDTO.corp_nm;
   row[excelMapper.이메일] = insuranceDTO.corp_cust_email;
->>>>>>> Stashed changes
+
 
   let maxLength = insuranceDTO.cbr_data.length;
   for (let i = 0; i < maxLength; i++) {
     let subRow = {};
     if (insuranceDTO.cbr_data[i].status_cd=='80') cbrCnt++
     if (insuranceDTO.cbr_data[i]) {
-<<<<<<< Updated upstream
-      subRow[excelMapper.보험개시일] = insuranceDTO.cbr_data[i].insr_st_dt;
-      subRow[excelMapper.보험종료일] = insuranceDTO.cbr_data[i].insr_cncls_dt;
-
-=======
-     // if (insuranceDTO.cbr_data[i].status_cd=='80') cbrCnt++
->>>>>>> Stashed changes
       try {
         subRow[excelMapper.상태] = statusCdItems.find(items => items.value === insuranceDTO.cbr_data[i].status_cd).title;
       } catch (e) {
@@ -2805,24 +2768,6 @@ function mapperRow_LAW_JNT_RENEWAL(excelMapper: object, excelDataRow: any) {
       subRow[excelMapper.보험료] = insuranceDTO?.cbr_data[i]?.insr_amt;
     }
 
-<<<<<<< Updated upstream
-    if (insuranceDTO.trx_data[i + 1]) {
-      try {
-        subRow[excelMapper.입금구분] = trxCdItems.find(item => item.value == insuranceDTO?.trx_data[i + 1]?.trx_cd).title;
-      } catch (e) {
-        subRow[excelMapper.입금구분] = '';
-        // console.log(e);
-      }
-      subRow[excelMapper.입금금액] = insuranceDTO?.trx_data[i + 1]?.trx_amt;
-      subRow[excelMapper.처리일자] = insuranceDTO?.trx_data[i + 1]?.trx_dt;
-      subRow[excelMapper.비고] = insuranceDTO?.trx_data[i + 1]?.rmk;
-      subRow[excelMapper.예금주명] = insuranceDTO?.trx_data[i + 1]?.acct_nm;
-    }
-
-    row[excelMapper.인원수] = cbrCnt;
-
-=======
->>>>>>> Stashed changes
     rows.push(subRow);
   }
   return rows;

@@ -959,10 +959,6 @@ async function initPage() {
 
 }
 
-<<<<<<< Updated upstream
-function downloadAsExcel() {
-  alert("작업예정");
-=======
 async function downloadAsExcel() {
 
   // alert("작업예정");
@@ -1004,7 +1000,6 @@ async function downloadAsExcel() {
   } catch (e) {
     messageBoxDTO.value.setWarning('오류', `엑셀다운로드에 실패하였습니다<br/>${e}`);
   }
->>>>>>> Stashed changes
 }
 
 /**
