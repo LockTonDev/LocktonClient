@@ -280,7 +280,7 @@
     let {data} = await apiA_TADV0030A.getDBSelStatus();
 
     data = data.filter(item => item.status_cd === '80');
-    
+
     if(data.length > 0) {
       d_TADV0040A.value.insurance_no = data[0].insurance_no;
       d_TADV0040A.value.insurance_uuid = data[0].insurance_uuid;

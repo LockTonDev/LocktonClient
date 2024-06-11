@@ -1400,6 +1400,7 @@
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
+                            <col style="width: auto" />
                           </colgroup>
                           <thead>
                           <tr>
@@ -1410,6 +1411,7 @@
                             <th class="text-center">소급담보일</th>
                             <th class="text-center">할인할증</th>
                             <th class="text-center">1인당 보험료</th>
+                            <th class="text-center">상태</th>
                           </tr>
                           </thead>
 
@@ -1424,6 +1426,8 @@
                             <td>
                               {{ Number(row?.insr_amt)?.toLocaleString() }}원
                             </td>
+                            <td v-if="insuranceDTO.status_cd !== '10'"> {{  statusCdItems.find(code => code.value ==  row.status_cd)?.title}}</td>
+                            <td v-else></td>
                           </tr>
                           </tbody>
                         </table>
@@ -2028,6 +2032,7 @@
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
+                            <col style="width: auto" />
                           </colgroup>
                           <thead>
                           <tr>
@@ -2038,6 +2043,7 @@
                             <th class="text-center">소급담보일</th>
                             <th class="text-center">할인할증</th>
                             <th class="text-center">1인당 보험료</th>
+                            <th class="text-center">상태</th>
                           </tr>
                           </thead>
 
@@ -2052,6 +2058,8 @@
                             <td>
                               {{ Number(row?.insr_amt)?.toLocaleString() }}원
                             </td>
+                            <td v-if="insuranceDTO.status_cd !== '10'"> {{  statusCdItems.find(code => code.value ==  row.status_cd)?.title}}</td>
+                            <td v-else></td>
                           </tr>
                           </tbody>
                         </table>
@@ -2140,6 +2148,7 @@
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
+                            <col style="width: auto" />
                           </colgroup>
                           <thead>
                           <tr>
@@ -2150,6 +2159,7 @@
                             <th class="text-center">소급담보일</th>
                             <th class="text-center">할인할증</th>
                             <th class="text-center">1인당 보험료</th>
+                            <th class="text-center">상태</th>
                           </tr>
                           </thead>
                           <tbody v-if="insuranceDTO.cbr_data.length">
@@ -2163,6 +2173,8 @@
                               <td>
                                 {{ row?.insr_amt?.toLocaleString() }}원
                               </td>
+                              <td v-if="insuranceDTO.status_cd !== '10'"> {{  statusCdItems.find(code => code.value ==  row.status_cd)?.title}}</td>
+                              <td v-else></td>
                             </tr>
                           </tbody>
                           <tbody v-else>
@@ -2738,6 +2750,7 @@
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
+                            <col style="width: auto" />
                           </colgroup>
                           <thead>
                           <tr>
@@ -2748,6 +2761,7 @@
                             <th class="text-center">소급담보일</th>
                             <th class="text-center">할인할증</th>
                             <th class="text-center">1인당 보험료</th>
+                            <th class="text-center">상태</th>
                           </tr>
                           </thead>
 
@@ -2762,6 +2776,8 @@
                             <td>
                               {{ Number(row?.insr_amt)?.toLocaleString() }}원
                             </td>
+                            <td v-if="insuranceDTO.status_cd !== '10'"> {{  statusCdItems.find(code => code.value ==  row.status_cd)?.title}}</td>
+                            <td v-else></td>
                           </tr>
                           </tbody>
                         </table>
@@ -2846,6 +2862,7 @@
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
+                            <col style="width: auto" />
                           </colgroup>
                           <thead>
                           <tr>
@@ -2856,6 +2873,7 @@
                             <th class="text-center">소급담보일</th>
                             <th class="text-center">할인할증</th>
                             <th class="text-center">1인당 보험료</th>
+                            <th class="text-center">상태</th>
                           </tr>
                           </thead>
                           <tbody v-if="insuranceDTO.cbr_data.length">
@@ -2869,6 +2887,8 @@
                             <td>
                               {{ row?.insr_amt?.toLocaleString() }}원
                             </td>
+                            <td v-if="insuranceDTO.status_cd !== '10'"> {{  statusCdItems.find(code => code.value ==  row.status_cd)?.title}}</td>
+                            <td v-else></td>
                           </tr>
                           </tbody>
                           <tbody v-else>
@@ -3512,6 +3532,7 @@
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
+                            <col style="width: auto" />
                           </colgroup>
                           <thead>
                           <tr>
@@ -3522,6 +3543,7 @@
                             <th class="text-center">소급담보일</th>
                             <th class="text-center">할인할증</th>
                             <th class="text-center">1인당 보험료</th>
+                            <th class="text-center">상태</th>
                           </tr>
                           </thead>
 
@@ -3536,6 +3558,8 @@
                             <td>
                               {{ Number(row?.insr_amt)?.toLocaleString() }}원
                             </td>
+                            <td v-if="insuranceDTO.status_cd !== '10'"> {{  statusCdItems.find(code => code.value ==  row.status_cd)?.title}}</td>
+                            <td v-else></td>
                           </tr>
                           </tbody>
                         </table>
@@ -3749,6 +3773,7 @@
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
+                            <col style="width: auto" />
                           </colgroup>
                           <thead>
                           <tr>
@@ -3759,6 +3784,7 @@
                             <th class="text-center">소급담보일</th>
                             <th class="text-center">할인할증</th>
                             <th class="text-center">1인당 보험료</th>
+                            <th class="text-center">상태</th>
                           </tr>
                           </thead>
                           <tbody v-if="insuranceDTO.cbr_data.length">
@@ -3772,6 +3798,8 @@
                             <td>
                               {{ row?.insr_amt?.toLocaleString() }}원
                             </td>
+                            <td v-if="insuranceDTO.status_cd !== '10'"> {{  statusCdItems.find(code => code.value ==  row.status_cd)?.title}}</td>
+                            <td v-else></td>
                           </tr>
                           </tbody>
                           <tbody v-else>

@@ -391,7 +391,7 @@ async function handleFileUploadCOR(event) {
   try {
 
     const excelList = await UPLOAD_EXCEL_INSURANCE_PAT_TRE_COR(event);
-    console.log(excelList);
+    // console.log(excelList);
     const resultData = await apiADMIN.setPAT_TRX(excelList);
     if (resultData.success) {
       messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
@@ -448,7 +448,7 @@ async function fnExcelDownload() {
       if (resultData.data.length == 0) {
         messageBoxDTO.value.setInfo('Excel', '데이타가 없습니다. 검색조건을 확인하세요.');
       } else {
-        console.log("resultData.data",resultData.data)
+        // console.log("resultData.data",resultData.data)
         DOWNLOAD_EXCEL(searchParams.value, resultData.data);
       }
     }

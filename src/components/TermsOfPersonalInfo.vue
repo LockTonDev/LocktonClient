@@ -2,22 +2,26 @@
   import { ref } from "vue";
   import BaseCard from "@/components/BaseCard.vue";
 
+  import {useMobileStore} from "@/stores";
+  const checkMobile = useMobileStore();
+
 </script>
   
   <template>
 
     <v-card>
-      <v-card-title class="d-flex justify-space-between align-center px-6 py-4 position-relative">
+      <v-card-title :class="checkMobile.isMobile?'d-flex justify-space-between align-center px-3 py-2 position-relative':'d-flex justify-space-between align-center px-6 py-4 position-relative'">
         <div>
             <p class="text-h6 font-weight-bold">개인정보처리방침</p>
             <p class="text-error text-body-2 mt-2">개인정보처리방침 시행일자 : 2023.03.01</p>
         </div>
         <v-spacer />
-        <v-select label="이전 약관 보기" :items="['개인정보처리방침 시행 2023.03.01']" variant="outlined" hide-details="auto" single-line density="compact" class="flex-grow-0 mr-16 w-sm-270" />
-        
+        <v-select v-if="!checkMobile.isMobile" label="이전 약관 보기" :items="['개인정보처리방침 시행 2023.03.01']" variant="outlined" hide-details="auto" single-line density="compact" class="flex-grow-0 mr-16 w-sm-270" />
+
       </v-card-title>
+      <v-select v-if="checkMobile.isMobile" label="이전 약관 보기" :items="['개인정보처리방침 시행 2023.03.01']" variant="outlined" hide-details="auto" single-line density="compact" class="flex-grow-0 px-4 py-2 w-sm-270" />
       <v-divider class="mb-0"/>
-      <v-card-text class="px-10 pt-8 pb-14">
+      <v-card-text :class="checkMobile.isMobile?'px-5 pt-8 pb-14':'px-10 pt-8 pb-14'">
         <div class="terms-wrap-v1">
             <p>록톤컴퍼니즈코리아손해보험중개㈜(이하 “회사”라 합니다)는 개인정보 보호법에 따라 이용자의 개인정보 및 권익을 보호하고 개인정보와 관련한 이용자의 고충을 원활하게 처리할 수 있도록 다음과 같은 방침을 두고 있습니다.</p>
             <ul>        
