@@ -198,7 +198,7 @@
                         <sup class="text-error">*</sup>
                       </div>
                       <div class="data-col">
-                        <VSelectWithValidation v-model="insuranceDTO.renewal_cd_nm" name="corp_region_cd" label="갱신여부" :items="renewalCdItems" single-line density="compact"></VSelectWithValidation>
+                        <VSelectWithValidation v-model="insuranceDTO.renewal_cd" name="corp_region_cd" label="갱신여부" :items="renewalCdItems" single-line density="compact"></VSelectWithValidation>
                       </div>
                     </v-col>
                   </v-row>
@@ -284,7 +284,7 @@
                         <sup class="text-error">*</sup>
                       </div>
                       <div class="data-col">
-                        <VSelectWithValidation v-model="insuranceDTO.renewal_cd_nm" name="corp_region_cd" label="갱신여부" :items="renewalCdItems" single-line density="compact"></VSelectWithValidation>
+                        <VSelectWithValidation v-model="insuranceDTO.renewal_cd" name="corp_region_cd" label="갱신여부" :items="renewalCdItems" single-line density="compact"></VSelectWithValidation>
                       </div>
                     </v-col>
                     <v-col cols="12" sm="12" class="v-col">
@@ -987,6 +987,10 @@ async function downloadAsExcel() {
   let fileNm = `${insrYearCdNm}_${businessCdNm}_계약갱신_${userCdNm}`;
   let isRun = false;
 
+  if(userCdNm=='전체'){
+    messageBoxDTO.value.setInfo('Excel', '가입 유형을 선택해 주세요.');
+    return false;
+  }
   await messageBoxDTO.value.setConfirm('다운로드', `${fileNm} 자료를 다운 받으시겠습니까?`, null, (result, params) => {
     isRun = result;
   });
@@ -1002,10 +1006,6 @@ async function downloadAsExcel() {
 
       searchParams.value.data['excel_filenm'] = fileNm;
 
-      if(userCdNm=='전체'){
-        messageBoxDTO.value.setInfo('Excel', '가입 유형을 선택해 주세요.');
-        return false;
-      }
 
       if (resultData.data.length == 0) {
         messageBoxDTO.value.setInfo('Excel', '데이타가 없습니다. 검색조건을 확인하세요.');

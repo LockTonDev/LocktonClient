@@ -177,6 +177,16 @@
                               <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
                             </div>
                           </v-col>
+
+                          <v-col  cols="12" sm="4" class="v-col" >
+                            <div class="head-col">
+                              <p>갱신여부</p>
+                              <sup class="text-error">*</sup>
+                            </div>
+                            <div class="data-col">
+                              <VSelectWithValidation v-model="insuranceDTO.renewal_cd" name="corp_region_cd" label="갱신여부" :items="renewalCdItems" single-line density="compact"></VSelectWithValidation>
+                            </div>
+                          </v-col>
                           <!--
                           <v-col cols="12" sm="4" class="v-col" v-if="insuranceDTO.business_cd === 'TAX'">
                             <div class="head-col">
@@ -263,6 +273,16 @@
                             </div>
                             <div class="data-col">
                               <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
+                            </div>
+                          </v-col>
+
+                          <v-col  cols="12" sm="4" class="v-col" >
+                            <div class="head-col">
+                              <p>갱신여부</p>
+                              <sup class="text-error">*</sup>
+                            </div>
+                            <div class="data-col">
+                              <VSelectWithValidation v-model="insuranceDTO.renewal_cd" name="corp_region_cd" label="갱신여부" :items="renewalCdItems" single-line density="compact"></VSelectWithValidation>
                             </div>
                           </v-col>
                           <!--
@@ -916,6 +936,7 @@ async function initPage() {
   searchParams.value.data['insr_year'] = '%';
   searchParams.value.data['user_cd'] = '%';
   searchParams.value.data['status_cd'] = '%';
+  searchParams.value.data['renewal_cd'] = '%';
   searchParams.value.data['user_nm'] = '';
 
 }
