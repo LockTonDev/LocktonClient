@@ -1,12 +1,5 @@
 <template>
-  <div class="d-flex align-center">
-    <span>
-        <v-app-bar-nav-icon  @click.stop="authStore.chgDrawer()"> </v-app-bar-nav-icon>
-      </span>
-    <div class="w-100">
-      <AdminBaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs" ></AdminBaseBreadcrumb>
-    </div>
-  </div>
+	<AdminBaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs" ></AdminBaseBreadcrumb>
   <v-row>
     <v-col cols="12">
       <ul class="v-search-box v-box">								
@@ -78,8 +71,6 @@ import BaseCard from "@/components/BaseCard.vue";
 import AdminBaseBreadcrumb from "@/components/AdminBaseBreadcrumb.vue";
 import { MessageBoxDTO, ParamsDTO, CommonCode,InsuranceDTO,InsuranceRateDTO,CBRDataDTO} from '@/model';
 import MessageBox from "@/components/MessageBox.vue";
-import { useAuthStore } from '@/stores';
-const authStore = useAuthStore();
 
 const searchParams = ref(new ParamsDTO());
 const searchtems = ref(["제목", "게시일", "번호"]);

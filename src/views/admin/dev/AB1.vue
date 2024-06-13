@@ -1,12 +1,5 @@
 <template>
-  <div class="d-flex align-center">
-    <span>
-        <v-app-bar-nav-icon  @click.stop="authStore.chgDrawer()"> </v-app-bar-nav-icon>
-      </span>
-    <div class="w-100">
-      <AdminBaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs" ></AdminBaseBreadcrumb>
-    </div>
-  </div>
+	<AdminBaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs" ></AdminBaseBreadcrumb>
   <v-row>
     <v-col cols="12">
       <ul class="v-search-box v-box">		
@@ -199,7 +192,7 @@ const isNoData = ref(false);
 let BoardList = ref([]);
 
 	const page = ref({
-      title: "공지사항",
+      title: "알림마당",
     });
 	const breadcrumbs = ref([
 		{
@@ -208,10 +201,10 @@ let BoardList = ref([]);
 			href: "/",
 		},
 		{
-			text: "공지사항",
+			text: "알림마당",
 			disabled: true,
 			href: "/",
-		}
+		},
   ]);
   
 

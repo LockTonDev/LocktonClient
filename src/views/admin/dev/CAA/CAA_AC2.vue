@@ -30,9 +30,6 @@
           <p class="text-body-2 ml-3 pt-1">
             전체 <span class="color-primary font-weight-bold">{{ Number(InsuranceList.length).toLocaleString() }}</span> 건
           </p>
-          <v-btn icon color="white" size="small" @click="resultShowHide">
-            <vue-feather id="eyeIcon" :type="iconState" size="20"></vue-feather>
-          </v-btn>
           <div class="ml-auto">
             <v-btn variant="outlined" size="small" @click="fnAdd('IND')" class="mx-1">개인 신규</v-btn>
             <v-btn variant="outlined" size="small" @click="fnAdd('COR')" class="mx-1">법인 신규</v-btn>
@@ -41,7 +38,7 @@
           </div>
         </v-card-title>
         <v-card-text class="pa-0 v-result-box">
-          <v-table density="compact" fixed-header height="220px" v-if="resultAreaState">
+          <v-table density="compact" fixed-header height="220px">
             <caption class="d-none">
               계약 조회 결과
             </caption>
@@ -605,9 +602,143 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="12" class="pb-0" ref="refPage3" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
+              <!-- 특별약관 -->
+              <v-col cols="12" class="pb-0" ref="refPage3"  v-if="route.params.business_cd == 'CAA'">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-3">
+                    <v-card-title>
+                      <h3 class="font-weight-bold">특별 약관</h3>
+                      <div class="data-col">
+                        <VCheckBoxWithValidation v-model="insuranceDTO.spct_join_yn" name="spct_join_yn" label="특약가입 여부" class="v-checkbox" density="compact" />
+                      </div>
+                      <v-spacer />
+                      <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
+                    </v-card-title>
+                    <v-expansion-panel-text>
+                      <v-card-text>
+                        <v-row>
+                          <!-- 보험 기본정보1 -->
+                          <v-col cols="6">
+                            <v-row class="v-board-table size-x-small">
+                              <v-col cols="12" class="v-col">
+                                <div class="head-col">
+                                  <p>특약명</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col">
+                                  <input type="text" value="고용직원 부정직행위 담보 특별약관 (Dishonesty Extension)" disabled style="font-size: 13px; width :400px"/>
+                                </div>
+                              </v-col>
+                              <v-col cols="12" class="v-col">
+                                <div class="head-col">
+                                  <p>보상한도(1청구당/연간총)</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col">
+                                  <VSelectWithValidation v-model="insuranceDTO.spct_data.insr_clm_lt_amt" name="spct_data_insr_clm_lt_amt" placeholder="보상한도" :items="insrSpctClmLtAmtItems" single-line density="compact"></VSelectWithValidation>
+                                  <v-divider class="border-0" />
+                                </div>
+                              </v-col>
+                              <v-col cols="12" class="v-col">
+                                <div class="head-col">
+                                  <p>사무원 인원수</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col">
+                                  <VTextFieldWithValidation v-model="insuranceDTO.spct_data.cbr_cnt" name="spct_data_cbr_cnt" placeholder="사무원 인원수" type="number" suffix="명" single-line />
+                                </div>
+                              </v-col>
+                            </v-row>
+                          </v-col>
+
+                          <!-- 보험 ADV 기본정보2 -->
+                          <v-col cols="6" v-if="route.params.business_cd == 'CAA'">
+                            <v-row class="v-board-table size-x-small">
+                              <v-col cols="12" class="v-col">
+                                <!--                                <div class="head-col">
+                                                                  <p>특약가입여부</p>
+                                                                  <sup class="text-error">*</sup>
+                                                                </div>
+                                                                <div class="data-col">
+                                                                  <v-btn-toggle
+                                                                      v-model="insuranceDTO.spct_join_yn"
+                                                                      divided
+                                                                      variant="outlined"
+                                                                      class="w-100"
+                                                                      style="height: 33px !important;"
+                                                                      density="comfortable"
+                                                                      :disabled="isReadOnlyAll"
+                                                                  >
+                                                                    <v-btn color="primary" class="flex-grow-1" value="N"
+                                                                    >가입 안함</v-btn
+                                                                    >
+                                                                    <v-btn color="primary" class="flex-grow-1" value="Y"
+                                                                    >특약 가입</v-btn
+                                                                    >
+                                                                  </v-btn-toggle>
+                                                                </div>--><!--                                <div class="head-col">
+                                  <p>특약가입여부</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col">
+                                  <v-btn-toggle
+                                      v-model="insuranceDTO.spct_join_yn"
+                                      divided
+                                      variant="outlined"
+                                      class="w-100"
+                                      style="height: 33px !important;"
+                                      density="comfortable"
+                                      :disabled="isReadOnlyAll"
+                                  >
+                                    <v-btn color="primary" class="flex-grow-1" value="N"
+                                    >가입 안함</v-btn
+                                    >
+                                    <v-btn color="primary" class="flex-grow-1" value="Y"
+                                    >특약 가입</v-btn
+                                    >
+                                  </v-btn-toggle>
+                                </div>-->
+                                <div class="head-col">
+                                  <p>소급담보일</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col">
+                                  <VTextFieldWithValidation v-model="insuranceDTO.spct_data.insr_retr_dt" name="spct_data_insr_retr_dt" label="소급담보일" type="date" single-line />
+                                </div>
+                              </v-col>
+                              <v-col cols="12" class="v-col">
+                                <div class="head-col">
+                                  <p>자기부담금</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col">
+                                  <VSelectWithValidation v-model="insuranceDTO.spct_data.insr_psnl_brdn_amt" name="spct_data_insr_psnl_brdn_amt" placeholder="자기부담금" :items="insrSpctPsnlBrdnAmtItems" single-line density="compact"></VSelectWithValidation>
+                                  <v-divider class="border-0" />
+                                </div>
+                              </v-col>
+                              <v-col cols="12" class="v-col">
+                                <div class="head-col">
+                                  <p>특약보험료</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col">
+                                  <VTextFieldWithValidation v-model="insuranceDTO.spct_data.insr_amt" name="spct_data_insr_amt" label="자기부담금" type="number" suffix="원" single-line />
+                                </div>
+                              </v-col>
+
+                            </v-row>
+                          </v-col>
+                        </v-row>
+                      </v-card-text>
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                </v-card>
+              </v-col>
+
+              <!--관세사 명단-->
+              <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
+                <v-card>
+                  <v-expansion-panel elevation="0" value="panel-4">
                     <v-card-title>
                       <h3 class="font-weight-bold">관세사 명단</h3>
                       <p class="text-body-2 color-gray-shadow ml-4">
@@ -705,9 +836,9 @@
 
               <!--보험계약(컨설팅)-->
 <!--              <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.cons_join_yn === 'Y'">-->
-              <v-col cols="12" class="pb-0" ref="refPage4" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
+              <v-col cols="12" class="pb-0" ref="refPage5" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-4">
+                  <v-expansion-panel elevation="0" value="panel-5">
                     <v-card-title>
                       <h3 class="font-weight-bold">보험 계약(컨설팅)</h3>
                       <div class="data-col">
@@ -839,9 +970,9 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="12" class="pb-0" ref="refPage5" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
+              <v-col cols="12" class="pb-0" ref="refPage6" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-5">
+                  <v-expansion-panel elevation="0" value="panel-6">
                     <v-card-title>
                       <h3 class="font-weight-bold">관세사 명단(컨설팅)</h3>
                       <p class="text-body-2 color-gray-shadow ml-4">
@@ -938,9 +1069,9 @@
               </v-col>
 
               <!-- 변경정보 시작 -->
-              <v-col cols="12" class="pb-0" ref="refPage6">
+              <v-col cols="12" class="pb-0" ref="refPage7">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-6">
+                  <v-expansion-panel elevation="0" value="panel-7">
                     <v-card-title class="d-flex justify-space-between pa-0">
                       <h3 class="font-weight-bold">변경정보</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -973,9 +1104,9 @@
               <!-- 변경정보 종료 -->
 
               <!-- 변경신청상세 추가예정 -->
-              <v-col cols="12" class="pb-0" ref="refPage7">
+              <v-col cols="12" class="pb-0" ref="refPage8">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-7">
+                  <v-expansion-panel elevation="0" value="panel-8">
                     <v-card-title>
                       <h3 class="font-weight-bold">변경신청상세</h3>
                       <v-spacer />
@@ -987,7 +1118,7 @@
               </v-col>
 
               <!--입금 처리-->
-              <v-col cols="12" class="pb-0" ref="refPage8">
+              <v-col cols="12" class="pb-0" ref="refPage9">
                 <v-card>
                   <v-card-title class="d-flex flex-wrap px-0 pt align-center">
                     <h2 class="font-weight-bold">
@@ -1112,7 +1243,7 @@
               </v-col>
 
               <!-- ERP정보 시작 -->
-              <v-col cols="12" class="py-0" ref="refPage9">
+              <v-col cols="12" class="py-0" ref="refPage10">
                 <v-card>
                   <v-expansion-panel elevation="0" value="panel-9">
                     <v-card-title class="d-flex justify-space-between pa-0">
@@ -1160,9 +1291,9 @@
               <!-- ERP정보 종료 -->
 
               <!--약관동의-->
-              <v-col cols="12" class="pb-0" ref="refPage10">
+              <v-col cols="12" class="pb-0" ref="refPage11">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-10">
+                  <v-expansion-panel elevation="0" value="panel-11">
                     <v-card-title>
                       <h3 class="font-weight-bold">약관 동의</h3>
                       <v-expansion-panel-title expand-icon="mdi-arrow-up-drop-circle-outline" collapse-icon="mdi-arrow-down-drop-circle-outline" class="w-auto"></v-expansion-panel-title>
@@ -1203,9 +1334,9 @@
                 </v-card>
               </v-col>
               <!-- 메모 추가예정 -->
-              <v-col cols="12" class="pb-0" ref="refPage11">
+              <v-col cols="12" class="pb-0" ref="refPage12">
                 <v-card>
-                  <v-expansion-panel elevation="0" value="panel-11">
+                  <v-expansion-panel elevation="0" value="panel-12">
                     <v-card-title>
                       <h3 class="font-weight-bold">메모</h3>
                       <v-spacer />
@@ -1367,7 +1498,6 @@ function getTrxCdTitle(trxCd) {
 }
 
 async function fnSearch() {
-  if(!resultAreaState.value) resultShowHide()
   InsuranceList.value = [];
   const resultData = await apiADMIN.getCAAS(searchParams.value.data);
   insuranceDTO.value.insurance_uuid = null;
@@ -1406,6 +1536,15 @@ async function fnSetInsuranceRateCombo() {
     }));
   }
   else {
+    insrSpctClmLtAmtItems.value = insuranceRateDTO.value.contents['특약담보']['보상한도'].map(({ code, value }) => ({
+      title: value,
+      value: `${code}|${value}`
+    }));
+
+    insrSpctPsnlBrdnAmtItems.value = insuranceRateDTO.value.contents['특약담보']['자기부담금'].map(({ code, value }) => ({
+      title: value,
+      value: `${code}|${value}`
+    }));
     insrPblcBrdnRtItems.value = insuranceRateDTO.value.contents['기본담보']['공동부담'].map(({code, value}) => ({
       title: value,
       value: `${code}|${value}`
@@ -1434,6 +1573,8 @@ async function fnSearchDtl(insurance_uuid: string) {
 
     Object.assign(insuranceDTO.value, resultData.data[0]);
 
+    console.log('insr_sale_year',insuranceDTO.value.insr_sale_year);
+
     if(!insuranceDTO.value.trx_data){
       insuranceDTO.value.trx_data = []
     }
@@ -1450,7 +1591,7 @@ async function fnSearchDtl(insurance_uuid: string) {
 
     //메모 데이타 있을 경우 panel 확장, 2023-11-08 By Moon
     if(insuranceDTO.value.cons_join_yn !== 'Y') {
-      panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-6', 'panel-8', 'panel-9','panel-10', 'panel-12']);
+      panel = ref(['panel-1', 'panel-2', 'panel-3','panel-4', 'panel-6', 'panel-8', 'panel-9','panel-10', 'panel-12']);
     }else{
       panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-6', 'panel-8', 'panel-9','panel-10', 'panel-12']);
     }
@@ -1718,17 +1859,6 @@ const calInsrSpctAmt = (data: any) => {
   return insrAmt
 };
 
-const iconState =  ref('arrow-down-circle');
-const resultAreaState = ref(true);
-function resultShowHide(){
-  if(resultAreaState.value){
-    iconState.value = 'arrow-up-circle'
-    resultAreaState.value = false
-  }else{
-    iconState.value = 'arrow-down-circle'
-    resultAreaState.value = true
-  }
-}
 
 watch(
     () => route.params.business_cd,

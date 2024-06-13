@@ -1,8 +1,5 @@
 <template>
   <div class="d-flex align-center">
-    <span>
-      <v-app-bar-nav-icon  @click.stop="authStore.chgDrawer()"> </v-app-bar-nav-icon>
-    </span>
     <p class="text-h6 color-primary subtitle mr-2">{{ businessCdItems?.find(items => items.value === searchParams.data['business_cd'])?.title }}</p>
     <div class="w-100">
       <AdminBaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></AdminBaseBreadcrumb>
@@ -45,9 +42,6 @@
             <p class="text-body-2 ml-3 pt-1">
               전체 <span class="color-primary font-weight-bold">{{ Number(InsuranceList.length).toLocaleString() }}</span> 건
             </p>
-            <v-btn icon color="white" size="small" @click="resultShowHide">
-              <vue-feather id="eyeIcon" :type="iconState" size="20"></vue-feather>
-            </v-btn>
             <div class="ml-auto">
               <v-btn variant="outlined"  size="small" @click="fnAdd('IND')" class="mx-1">개인 신규</v-btn>
               <v-btn variant="outlined"  v-if="route.params.business_cd == 'TAX'" size="small" @click="fnAdd('COR')" class="mx-1">법인 신규</v-btn>
@@ -55,7 +49,7 @@
             </div>
           </v-card-title>
           <v-card-text class="pa-0 v-result-box">
-            <v-table density="compact" fixed-header height="220px" v-if="resultAreaState">
+            <v-table density="compact" fixed-header height="220px">
               <caption class="d-none">
                 계약 조회 결과
               </caption>
@@ -1394,9 +1388,6 @@ let validUserCount = ref(0);
 const statusCdItemsData = ref(['']);
 
 let stockStartDt = ref('');
-
-const iconState =  ref('arrow-down-circle');
-const resultAreaState = ref(true);
 function getTrxCdTitle(trxCd) {
   try {
     // trxCd에 해당하는 title을 찾아 반환합니다.
@@ -1408,7 +1399,6 @@ function getTrxCdTitle(trxCd) {
 
 async function fnSearch(isAllSearch:boolean) {
 //2024-02-28 수정
-  if(!resultAreaState.value) resultShowHide()
 
   if(isAllSearch) {
     InsuranceList.value = [];
@@ -1644,6 +1634,13 @@ function fnDelCBR(rowIdx: number) {
   console.log(rowIdx);
   insuranceDTO.value.cbr_data.splice(rowIdx, 1);
   insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
+
+  /*const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
+  let businessCd = insuranceDTO.value.business_cd
+  if(businessCd== "ADV" || businessCd == "TAX") {
+    insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate(businessCd, validMemberCount.length)
+    validUserCount.value = validMemberCount.length
+  }*/
 }
 
 async function fnSave() {
@@ -1831,7 +1828,6 @@ function fnChangeStatus(memStatus) {
   const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
   let businessCd = insuranceDTO.value.business_cd
   if(businessCd== "ADV" || businessCd == "TAX") {
-
     insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate(businessCd, validMemberCount.length)
     validUserCount.value = validMemberCount.length
   }
@@ -2069,17 +2065,6 @@ async function fnAutoTRX() {
 
     fnSave();
   }
-}
-
-function resultShowHide(){
-  if(resultAreaState.value){
-    iconState.value = 'arrow-up-circle'
-    resultAreaState.value = false
-  }else{
-    iconState.value = 'arrow-down-circle'
-    resultAreaState.value = true
-  }
-
 }
 /**
  * 페이지 로딩이 완료되면 실행하는 로직
