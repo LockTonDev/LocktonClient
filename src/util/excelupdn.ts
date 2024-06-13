@@ -1294,35 +1294,57 @@ export const DOWNLOAD_EXCEL = async (searchParams: ParamsDTO, excelList: any[]) 
          dataRow.index = index;
          let rows = rowMapper(excelMapper, dataRow);
          rows.forEach(row => {
-        //   numMapper.forEach(target => {
-        //
-        //     if(row[target]!=undefined &&row[target]!='') row[target]=row[target]*1
-        //   })
           worksheet.addRow(row);
         });
       });
-      // Add rows to the sheet
-      /*excelList.forEach((dataRow, index) => {
+
+      // Write to the buffer
+      const buffer = await workbook.xlsx.writeBuffer();
+
+      // Convert buffer to blob
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+      // Use FileSaver.js to save the file
+      saveAs(blob, `${searchParams.data.excel_filenm}_${dayjs().format('_YYYYMMDDHHmmss')}.xlsx`);
+      resolve(excelList);
+    } catch (e) {
+      console.log(e);
+      reject(e);
+    }
+  });
+};
+
+
+/**
+ * 공통 계약갱신 엑셀다운로드
+ * @param searchParams
+ * @param excelList
+ * @returns
+ */
+export const DOWNLOAD_RENEWAL_EXCEL = async (searchParams: ParamsDTO, excelList: any[]) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let workbook = new Workbook();
+      let sheetName = businessCdItems.find(item => item.value === searchParams.data.business_cd).title + '_' + userCdItems.find(item => item.value === searchParams.data.user_cd).title;
+      let worksheet = workbook.addWorksheet(sheetName);
+      let mapperKey = `${searchParams.data.business_cd}_${searchParams.data.user_cd}_RENEWAL`;
+
+      // console.log("mapperKey",mapperKey)
+      let excelMapper = EXCEL_MAPPERS[mapperKey];
+      let rowMapper = ROW_MAPPERS[mapperKey];
+      // let numMapper = EXCEL_NUM_MAPPERS[mapperKey];
+      let headers = Object.keys(excelMapper).map(key => ({ header: key, key: excelMapper[key] }));
+      // console.log("headers :",headers)
+
+      // Assign columns
+      worksheet.columns = headers;
+      excelList.forEach((dataRow, index) => {
         dataRow.index = index;
         let rows = rowMapper(excelMapper, dataRow);
         rows.forEach(row => {
-          numMapper.forEach(target => {
-
-            if(row[target]!=undefined &&row[target]!='') row[target]=row[target]*1
-          })
           worksheet.addRow(row);
         });
       });
-
-      worksheet.columns.forEach(col => {
-        numMapper.forEach(target => {
-          if(col.key == target){
-            col.eachCell(cell => {
-              cell.numFmt = '@'
-            })
-          }
-        })
-      });*/
 
       // Write to the buffer
       const buffer = await workbook.xlsx.writeBuffer();
@@ -2745,7 +2767,6 @@ function mapperRow_LAW_JNT_RENEWAL(excelMapper: object, excelDataRow: any) {
   row[excelMapper.주소상세] = insuranceDTO.corp_addr_dtl;
   row[excelMapper.사무소명] = insuranceDTO.corp_nm;
   row[excelMapper.이메일] = insuranceDTO.corp_cust_email;
-
 
   let maxLength = insuranceDTO.cbr_data.length;
   for (let i = 0; i < maxLength; i++) {
