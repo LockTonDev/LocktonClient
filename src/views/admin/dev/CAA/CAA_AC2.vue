@@ -1591,7 +1591,7 @@ async function fnSearchDtl(insurance_uuid: string) {
 
     //메모 데이타 있을 경우 panel 확장, 2023-11-08 By Moon
     if(insuranceDTO.value.cons_join_yn !== 'Y') {
-      panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-6', 'panel-8', 'panel-9','panel-10', 'panel-12']);
+      panel = ref(['panel-1', 'panel-2', 'panel-3','panel-4', 'panel-6', 'panel-8', 'panel-9','panel-10', 'panel-12']);
     }else{
       panel = ref(['panel-1', 'panel-2', 'panel-3', 'panel-4', 'panel-5', 'panel-6', 'panel-8', 'panel-9','panel-10', 'panel-12']);
     }

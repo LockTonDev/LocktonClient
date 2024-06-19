@@ -15,7 +15,7 @@
       </v-card-title>
 
       <v-divider class="mb-0" />
-      <v-card-text v-if="!(checkMobile.isMobile&&isPdf)" class="pa-0">
+      <v-card-text :hidden="checkMobile.isMobile&&isPdf" class="pa-0">
         <!-- PDF 출력 영역 시작-->
         <div :class="isPdf ? 'd-none' : ''">
           <div id="printDiv" class="certificatePrintFrame-wrap">
@@ -403,6 +403,8 @@ onMounted(async () => {
     const resultData = await apiADV0030a.getDBSel(params, isAdmin);
     //insuranceDTO.value = resultData.data[0];
     Object.assign(insuranceDTO.value, resultData.data[0]);
+    const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
+    insuranceDTO.value.cbr_cnt = filter1.length;
     // console.log(insuranceDTO.value);
   } else {
   }

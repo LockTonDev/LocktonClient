@@ -1517,6 +1517,17 @@ async function fnAddCBR(user_cd: string) {
   cbrDataDTO.status_cd = '80'; // 정상
   insuranceDTO.value.cbr_data.push(cbrDataDTO);
 
+  //0531 인원추가시 변경
+  const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
+  let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt
+  console.log('validMemberCount',validMemberCount)
+  if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && validMemberCount.length == 3 ){
+    year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
+    console.log('명단 추가 !!! year_clm_lt_amt'+year_clm_lt_amt)
+  }
+  insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
+  insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
+
 }
 
 
@@ -1524,6 +1535,17 @@ function fnDelCBR(rowIdx: number) {
   console.log(rowIdx);
   insuranceDTO.value.cbr_data.splice(rowIdx, 1);
   insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
+
+  const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
+  let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt
+
+  if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) / 2) && validMemberCount.length == 2 ){
+    year_clm_lt_amt = (parseInt(year_clm_lt_amt) / 2) + '억원'
+  }
+  insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
+  console.log('삭제 !! year_clm_lt_amt'+year_clm_lt_amt)
+  insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
+
   /*const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
   insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate('LAW', validMemberCount.length)
   validUserCount.value = validMemberCount.length;*/
@@ -1640,14 +1662,14 @@ const onCalculateInsurance = async (confirmYn) => {
     }
 
     //insuranceDTO.value.insr_clm_lt_amt = data.split('/')[0]
-    let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt
-
-    if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && insuranceDTO.value.cbr_data.length >= 3 ){
-      year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
-    }
-    insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
-    console.log('year_clm_lt_amt'+year_clm_lt_amt)
-    insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
+    // let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt
+    //
+    // if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && insuranceDTO.value.cbr_data.length >= 3 ){
+    //   year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
+    // }
+    // insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
+    // console.log('year_clm_lt_amt'+year_clm_lt_amt)
+    // insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
 
 
     // 입금금액 계산
@@ -1704,11 +1726,23 @@ function changeTotUnpaidAmt(){
 
 
 function fnChangeStatus(memStatus) {
+  console.log("memStatus>>>",memStatus)
   const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
   let businessCd = insuranceDTO.value.business_cd
   //console.log("businessCd, validMemberCount.length",businessCd, validMemberCount.length)
   insuranceDTO.value.insr_pcnt_sale_rt = getDiscountRate(businessCd, validMemberCount.length)
   validUserCount.value = validMemberCount.length
+  //0531 인원추가시 변경
+ // const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
+  let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt
+  console.log('validMemberCount',validMemberCount)
+  if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && validMemberCount.length == 3 ){
+    year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
+  }else if (parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) / 2) && validMemberCount.length == 2 && memStatus!='80' ){
+    year_clm_lt_amt = (parseInt(year_clm_lt_amt) / 2) + '억원'
+  }
+  insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
+  insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
   /*
   let businessCd = insuranceDTO.value.business_cd
   if(insuranceDTO.value.business_cd == "ADV") {

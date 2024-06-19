@@ -22,7 +22,7 @@
       </v-card-title>
 
       <v-divider class="mb-0" />
-      <v-card-text v-if="!(checkMobile.isMobile&&isPdf)"  :class="isPdf ? 'pa-0' : 'py-6'">
+      <v-card-text :hidden="checkMobile.isMobile&&isPdf"  :class="isPdf ? 'pa-0' : 'py-6'">
         <!-- PDF 출력 영역 시작-->
         <div :class="isPdf ? 'd-none' : ''">
           <div id="printDiv">
@@ -232,25 +232,25 @@
                     <p class="font-weight-bold text-14 mb-2 line-height-1-0"><span class="color-primary">&#x275A;</span>&nbsp;약관 동의</p>
                     <v-row class="table vertical">
                       <v-col cols="6" class="bg-background">
-                        <div class="w-70 pl-4 pr-2">신청내용 확인</div>
+                        <div class="w-70 pl-4 py-2">신청내용 확인</div>
                         <div class="w-30 px-1 bg-white">
                           <VCheckBoxWithValidation v-model="insuranceDTO.agr10_yn" name="agr10_yn" label="확인함 (필수)" density="compact" class="v-checkbox flex-grow-0 ml-auto" readolny />
                         </div>
                       </v-col>
                       <v-col cols="6" class="bg-background">
-                        <div class="w-70 pl-4 pr-2">보험약관 확인</div>
+                        <div class="w-70 pl-4 py-2">보험약관 확인</div>
                         <div class="w-30 px-1 bg-white">
                           <VCheckBoxWithValidation v-model="insuranceDTO.agr20_yn" name="agr20_yn" label="확인함 (필수)" density="compact" class="v-checkbox flex-grow-0 ml-auto" readolny />
                         </div>
                       </v-col>
                       <v-col cols="6" class="bg-background">
-                        <div class="w-70 pl-4 letter-spacing-030">계약 체결·이행 등을 위한 개인(신용)정보 처리 동의</div>
+                        <div class="w-70 pl-4 letter-spacing-030 py-2">계약 체결·이행 등을 위한 개인(신용)정보 처리 동의</div>
                         <div class="w-30 px-1 bg-white">
                           <VCheckBoxWithValidation v-model="insuranceDTO.agr30_yn" name="agr30_yn" label="확인함 (필수)" density="compact" class="v-checkbox flex-grow-0 ml-auto" readolny />
                         </div>
                       </v-col>
                       <v-col cols="6" class="bg-background">
-                        <div class="w-70 pl-4 pr-2">상품설명확인서 확인</div>
+                        <div class="w-70 pl-4 py-2">상품설명확인서 확인</div>
                         <div class="w-30 px-1 bg-white">
                           <VCheckBoxWithValidation v-model="insuranceDTO.agr40_yn" name="agr40_yn" label="확인함 (필수)" density="compact" class="v-checkbox flex-grow-0 ml-auto" readolny />
                         </div>

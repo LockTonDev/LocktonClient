@@ -76,6 +76,8 @@ let discountRangesLAW = [
 export let getDiscountRate = (businnessCd: string,  nPCnt:number) => {
     let discountRate = 0
     let discountRanges = []
+    console.log("discountRanges",discountRanges)
+    console.log("businessCd, validMemberCount.length",businnessCd, nPCnt)
 
     //console.log("businnessCd :",businnessCd)
     if(businnessCd == 'ADV') {
@@ -85,8 +87,12 @@ export let getDiscountRate = (businnessCd: string,  nPCnt:number) => {
     } else if(businnessCd == 'LAW') {
         discountRanges = discountRangesLAW
     }
+    console.log("discountRanges",discountRanges)
     for (let i = 0; i < discountRanges.length; i++) {
         let range = discountRanges[i].range;
+
+        console.log(" range[0]", range[0])
+        console.log(" range[1]", range[1])
         if (nPCnt >= range[0] && nPCnt <= range[1]) {
             discountRate = discountRanges[i].rate;
             break;

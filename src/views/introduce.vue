@@ -155,12 +155,14 @@
           </v-col>
         </v-row>
       </div>
-      <v-row class="pb-16">
+      <v-row>
         <v-col cols="12" class="my-10 pt-10 text-center">
           <h3 class="text-h5 font-weight-bold">보험업계 유일의 전문인 보험팀 운영</h3>
           <h4 class="mt-4 text-h6 line-height-1-6 font-weight-medium">전문인배상책임보험에 특화된 <span class="color-primary">전담팀</span>을 구성, <span class="color-primary">국내 최대 전문인보험 실적</span>을 보유하고 있습니다.</h4>
         </v-col>
-        <v-col cols="12" class="d-sm-flex align-center justify-center mb-16">
+      </v-row>
+      <v-row>
+        <v-col cols="12" class="v-row align-center justify-center mb-8">
           <div class="card-circle border-blue-1">
             <i :class="checkMobile.isMobile?'mdi mdi-chart-bar text-h4 mt-8':'mdi mdi-chart-bar text-h4'"></i>
             <p class="text-h5 font-weight-bold mt-2">STEP 1</p>
