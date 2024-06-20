@@ -21,10 +21,10 @@
           <span>가입 유형</span>
           <v-select v-model="searchParams.data['user_cd']"  :items="userCdItems" variant="outlined" hide-details density="compact"></v-select>
           </li>
-          <li>
-          <span>상태</span>
-            <v-select v-model="searchParams.data['status_cd']" :items="statusCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
-          </li>
+<!--          <li>-->
+<!--          <span>상태</span>-->
+<!--            <v-select v-model="searchParams.data['status_cd']" :items="statusCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>-->
+<!--          </li>-->
           <li>
           <span>피보험자</span>
           <v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" placeholder="피보험자" @keyup.enter="fnSearch()"/>
@@ -44,7 +44,7 @@
             <div class="ml-auto">
               <v-btn variant="outlined" size="small" @click="fnAdd('IND');" class="mx-1">개인 신규</v-btn>
               <v-btn variant="outlined" v-if="route.params.business_cd == 'TAX'" size="small" @click="fnAdd('COR');" class="mx-1">법인 신규</v-btn>
-              <v-btn variant="outlined" v-if="route.params.business_cd == 'ADV'" size="small" @click="fnAdd('JNT');" class="mx-1">합동 신규</v-btn>
+              <v-btn variant="outlined" v-if="route.params.business_cd == 'ADV'" size="small" @click="fnAdd('JNT');" class="mx-1">복수 신규</v-btn>
               <v-btn variant="outlined" size="small" class="ml-3" @click="downloadAsExcel()">엑셀 다운</v-btn>
             </div>
           </v-card-title>
@@ -52,7 +52,7 @@
             <v-table density="compact" fixed-header height="220px">
               <caption class="d-none">계약 조회 결과</caption>
               <colgroup>
-              <col style="width:auto"/>
+              <col style="width:20px"/>
               <col style="width:auto"/>
               <col style="width:auto"/>
               <col style="width:120px"/>
@@ -61,7 +61,7 @@
               <col style="width:auto"/>
               <col style="width:auto"/>
               <col style="width:auto"/>
-              <col style="width:auto"/>
+<!--              <col style="width:auto"/>-->
               <col style="width:auto"/>
               </colgroup>
               <thead>
@@ -72,7 +72,7 @@
                 <th>피보험자</th>
                 <th>등록번호</th>
                 <th>사업자번호</th>
-                <th>총보험료</th>
+<!--                <th>총보험료</th>-->
                 <th>갱신여부</th>
               </tr>
               </thead>
@@ -90,7 +90,7 @@
                 <td>{{ row.user_nm }}</td>
                 <td>{{ row.user_regno }}</td>
                 <td>{{ row.corp_cnno }}</td>
-                <td>{{ Number(row?.insr_tot_amt).toLocaleString() }}</td>
+<!--                <td>{{ Number(row?.insr_tot_amt).toLocaleString() }}</td>-->
                 <td>{{ row.renewal_cd_nm}}</td>
               </tr>
               </tbody>
@@ -108,8 +108,18 @@
       </v-col>
       <v-col cols="12" >
         <!-- 계약 상세 조회 시작 -->
-        <div class="d-flex align-center mb-3">
-          <h2 class="font-weight-bold"><svg class="mr-2" width="4" height="14" fill="#00AEEF"><rect width="100%" height="100%"></rect></svg>조회 상세</h2>
+        <div class="d-flex flex-wrap px-0 pt align-center">
+          <div class="d-flex align-center mb-3">
+            <h2 class="font-weight-bold"><svg class="mr-2" width="4" height="14" fill="#00AEEF"><rect width="100%" height="100%"></rect></svg>조회 상세</h2>
+          </div>
+          <div class="ml-auto">
+            <v-btn variant="outlined" size="small" class="mr-1" type="file" @click="fnExcelUpload('IND')">개인엑셀 업로드</v-btn>
+            <v-btn variant="outlined" size="small" class="mr-1" type="file" v-if="route.params.business_cd == 'TAX'" @click="fnExcelUpload('COR')">법인엑셀 업로드</v-btn>
+            <v-btn variant="outlined" size="small" class="mr-1" type="file" v-if="route.params.business_cd == 'ADV'" @click="fnExcelUpload('JNT')">복수엑셀 업로드</v-btn>
+            <input type="file" ref="fileInputIND" @change="handleFileUploadIND" style="display: none" />
+            <input type="file" ref="fileInputCOR" @change="handleFileUploadCOR" style="display: none" />
+            <input type="file" ref="fileInputJNT" @change="handleFileUploadJNT" style="display: none" />
+          </div>
         </div>
         <v-row v-if="insuranceDTO.insurance_uuid">
           <!--좌측 영역-->
@@ -128,177 +138,245 @@
                 </v-card-title>
                 <v-expansion-panel-text>
                   <v-card-text>
+                    <!--개인 시작-->
+                    <v-row class="v-board-table size-x-small" v-if="insuranceDTO.user_cd == 'IND'">
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>이름</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <!-- {{ insuranceDTO.user_nm }} -->
+                          <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" placeholder="이름" single-line maxlength="25" />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>생년월일</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <!-- {{ insuranceDTO.user_birth }} -->
+                          <VTextFieldWithValidation v-model="insuranceDTO.user_birth" name="user_birth" placeholder="생년월일" single-line :maskOption="{ mask: '######' }" type="date" />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>등록번호</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <!-- {{ insuranceDTO.user_regno }} -->
+                          <VTextFieldWithValidation v-model="insuranceDTO.user_regno" name="user_regno" placeholder="등록번호" single-line :maskOption="{ mask: '#######' }" type="date" />
+                        </div>
+                      </v-col>
 
-                  <!--개인 시작-->
-                  <v-row class="v-board-table size-x-small"  v-if="insuranceDTO.user_cd == 'IND'">
-                    <v-col cols="12" sm="4" class="v-col">
-                    <div class="head-col">
-                      <p>이름</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <!-- {{ insuranceDTO.user_nm }} -->
-                      <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" placeholder="이름" single-line maxlength="25"/>
-                    </div>
-                    </v-col>
-                    <v-col cols="12" sm="4" class="v-col">
-                    <div class="head-col">
-                      <p>생년월일</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <!-- {{ insuranceDTO.user_birth }} -->
-                      <VTextFieldWithValidation v-model="insuranceDTO.user_birth" name="user_birth" label="생년월일" single-line :maskOption="{ mask: '######' }" type="date"/>
-                    </div>
-                    </v-col>
-                    <v-col cols="12" sm="4" class="v-col">
-                    <div class="head-col">
-                      <p>등록번호</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <!-- {{ insuranceDTO.user_regno }} -->
-                      <VTextFieldWithValidation v-model="insuranceDTO.user_regno" name="user_regno" label="등록번호" single-line :maskOption="{ mask: '#######' }" type="date"/>
-                    </div>
-                    </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>휴대전화</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_hpno" name="corp_cust_hpno" single-line :maskOption="{ mask: '###-####-####' }" />
+                        </div>
+                      </v-col>
 
-                    <v-col cols="12" sm="4" class="v-col">
-                    <div class="head-col">
-                      <p>휴대전화</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_hpno" name="corp_cust_hpno" single-line  :maskOption="{ mask: '###-####-####' }"/>
-                    </div>
-                    </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>사무소명</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_nm" name="corp_nm" placeholder="사무소명" single-line maxlength="20" />
+                        </div>
+                      </v-col>
 
-                    <v-col cols="12" sm="4" class="v-col">
-                    <div class="head-col">
-                      <p>담당자 성명</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
-                    </div>
-                    </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>사업자번호</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_cnno" name="corp_cnno" placeholder="사업자번호" :maskOption="{ mask: '###-##-#####' }" single-line />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>사무소 전화</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_telno" name="corp_telno" single-line />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>사무소 팩스</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_faxno" name="corp_faxno" single-line />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>담당자 성명</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
+                        </div>
+                      </v-col>
 
-                    <v-col cols="12" sm="4" class="v-col" v-if="insuranceDTO.business_cd === 'TAX'">
-                    <div class="head-col">
-                      <p>소속 지방회</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" placeholder="소속 지방회 선택"  :items="regionCdItems" single-line density="compact"></VSelectWithValidation>
-                    </div>
-                    </v-col>
+                      <v-col cols="12" sm="4" class="v-col" v-if="insuranceDTO.business_cd === 'TAX'">
+                        <div class="head-col">
+                          <p>소속 지방회</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" single-line density="compact"></VSelectWithValidation>
+                        </div>
+                      </v-col>
 
-                    <v-col cols="4" class="v-col" >
-                      <div class="head-col">
-                        <p>갱신여부</p>
-                        <sup class="text-error">*</sup>
-                      </div>
-                      <div class="data-col">
-                        <VSelectWithValidation v-model="insuranceDTO.renewal_cd" name="corp_region_cd" label="갱신여부" :items="renewalCdItems" single-line density="compact"></VSelectWithValidation>
-                      </div>
-                    </v-col>
-                  </v-row>
-                  <!-- 개인 끝-->
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>이메일</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" placeholder="이메일" single-line />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="12" class="v-col">
+                        <div class="head-col">
+                          <p>사무소 주소<sup class="text-error">*</sup></p>
+                        </div>
+                        <div class="data-col w-full">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_post" name="corp_post" placeholder="우편번호" single-line class="w-229" />
+                          <v-btn variant="outlined" color="primary" @click="isDaumPostDialog = true" class="ml-1">사무소 주소검색</v-btn>
+                          <div class="d-flex flex-grow-1 w-full">
+                            <VTextFieldWithValidation v-model="insuranceDTO.corp_addr" name="corp_addr" placeholder="주소" single-line class="w-60" maxlength="40" />
+                            <VTextFieldWithValidation v-model="insuranceDTO.corp_addr_dtl" name="corp_addr_dtl" placeholder="상세주소" single-line class="w-40" maxlength="25" />
+                          </div>
+                        </div>
+                      </v-col>
+                    </v-row>
+                    <!-- 개인 끝-->
 
-                  <!-- 법인/합동 시작-->
-                  <v-row class="v-board-table size-x-small" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
-                    <v-col cols="12" sm="4" class="v-col">
-                    <div class="head-col">
-                      <p>법인명</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <!-- {{ insuranceDTO.user_nm }} -->
-                      <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" placeholder="법인명" single-line max-length="20" />
-                    </div>
-                    </v-col>
-                    <v-col cols="12" sm="4" class="v-col">
-                    <div class="head-col">
-                      <p>대표자 성명</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <!-- {{ insuranceDTO.corp_ceo_nm }} -->
-                      <VTextFieldWithValidation v-model="insuranceDTO.corp_ceo_nm" name="corp_ceo_nm" placeholder="대표자 성명" single-line max-length="20"/>
-                    </div>
-                    </v-col>
+                    <!-- 법인/합동 시작-->
+                    <v-row class="v-board-table size-x-small" v-if="insuranceDTO.user_cd === 'COR' || insuranceDTO.user_cd === 'JNT'">
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>법인명</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <!-- {{ insuranceDTO.user_nm }} -->
+                          <VTextFieldWithValidation v-model="insuranceDTO.user_nm" name="user_nm" placeholder="법인명" single-line max-length="20" />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>대표자 성명</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <!-- {{ insuranceDTO.corp_ceo_nm }} -->
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_ceo_nm" name="corp_ceo_nm" placeholder="대표자 성명" single-line max-length="20" />
+                        </div>
+                      </v-col>
 
-                    <v-col cols="12" sm="4" class="v-col">
-                    <div class="head-col">
-                      <p>법인번호</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col" v-if="insuranceDTO.corp_type != 'JNT'">
-                      <!-- {{ insuranceDTO.corp_bnno }} -->
-                      <VTextFieldWithValidation v-model="insuranceDTO.corp_bnno" name="corp_bnno" placeholder="법인번호" single-line :maskOption="{ mask: '######-#######' }"/>
-                    </div>
-                    <div class="data-col" v-if="insuranceDTO.corp_type == 'JNT'">
-                      해당없음
-                    </div>
-                    </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>법인번호</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col" v-if="insuranceDTO.corp_type != 'JNT'">
+                          <!-- {{ insuranceDTO.corp_bnno }} -->
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_bnno" name="corp_bnno" placeholder="법인번호" single-line :maskOption="{ mask: '######-#######' }" />
+                        </div>
+                        <div class="data-col" v-if="insuranceDTO.corp_type == 'JNT'">해당없음</div>
+                      </v-col>
 
-                    <v-col cols="12" sm="4" class="v-col">
-                    <div class="head-col">
-                      <p>사업자번호</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <!-- {{ insuranceDTO.corp_cnno }} -->
-                      <VTextFieldWithValidation v-model="insuranceDTO.corp_cnno" name="corp_cnno" placeholder="사업자번호" single-line :maskOption="{ mask: '###-##-#####' }"/>
-                    </div>
-                    </v-col>
-                    <v-col cols="12" sm="4" class="v-col">
-                    <div class="head-col">
-                      <p>사무소 전화</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <VTextFieldWithValidation v-model="insuranceDTO.corp_telno" name="corp_telno" single-line/>
-                    </div>
-                    </v-col>
-                    <v-col cols="12" sm="4" class="v-col">
-                    <div class="head-col">
-                      <p>사무소 팩스</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <VTextFieldWithValidation v-model="insuranceDTO.corp_faxno" name="corp_faxno" single-line />
-                    </div>
-                    </v-col>
-                    <v-col cols="12" sm="4" class="v-col">
-                    <div class="head-col">
-                      <p>담당자 성명</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
-                    </div>
-                    </v-col>
-                    <v-col cols="4" class="v-col" >
-                      <div class="head-col">
-                        <p>갱신여부</p>
-                        <sup class="text-error">*</sup>
-                      </div>
-                      <div class="data-col">
-                        <VSelectWithValidation v-model="insuranceDTO.renewal_cd" name="corp_region_cd" label="갱신여부" :items="renewalCdItems" single-line density="compact"></VSelectWithValidation>
-                      </div>
-                    </v-col>
-                    <v-col cols="12" sm="12" class="v-col">
-                    <div class="head-col">
-                      <p>소속 지방회</p>
-                      <sup class="text-error">*</sup>
-                    </div>
-                    <div class="data-col">
-                      <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" placeholder="소속 지방회 선택" :items="regionCdItems" density="compact" single-line></VSelectWithValidation>
-                    </div>
-                    </v-col>
-                  </v-row>
-                  <!-- 법인/합동 끝-->
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>사업자번호</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <!-- {{ insuranceDTO.corp_cnno }} -->
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_cnno" name="corp_cnno" placeholder="사업자번호" single-line :maskOption="{ mask: '###-##-#####' }" />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>사무소 전화</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_telno" name="corp_telno" single-line />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>사무소 팩스</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_faxno" name="corp_faxno" single-line />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>담당자 성명</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>휴대전화</p>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_hpno" name="corp_cust_hpno" :maskOption="{ mask: '###-####-####' }" single-line />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="4" class="v-col">
+                        <div class="head-col">
+                          <p>이메일</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" placeholder="이메일" single-line />
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="12" class="v-col">
+                        <div class="head-col">
+                          <p>소속 지방회</p>
+                          <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                          <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" density="compact" single-line></VSelectWithValidation>
+                        </div>
+                      </v-col>
 
+                      <v-col cols="12" sm="12" class="v-col">
+                        <div class="head-col">
+                          <p>사무소 주소<sup class="text-error">*</sup></p>
+                        </div>
+                        <div class="data-col w-full">
+                          <VTextFieldWithValidation v-model="insuranceDTO.corp_post" name="corp_post" placeholder="우편번호" single-line class="w-229" />
+                          <v-btn variant="outlined" color="primary" @click="isDaumPostDialog = true" class="ml-1">사무소 주소검색</v-btn>
+                          <div class="d-flex flex-grow-1 w-full">
+                            <VTextFieldWithValidation v-model="insuranceDTO.corp_addr" name="corp_addr" placeholder="주소" single-line class="w-60" maxlength="40" />
+                            <VTextFieldWithValidation v-model="insuranceDTO.corp_addr_dtl" name="corp_addr_dtl" placeholder="상세주소" single-line class="w-40" maxlength="25" />
+                          </div>
+                        </div>
+                      </v-col>
+                    </v-row>
+                    <!-- 법인/합동 끝-->
                   </v-card-text>
                 </v-expansion-panel-text>
                 </v-expansion-panel>
@@ -438,15 +516,6 @@
 
                       <v-col cols="12" class="v-col">
                         <div class="head-col">
-                        <p>공동보험</p>
-                        <sup class="text-error">*</sup>
-                        </div>
-                        <div class="data-col">
-                        <VSelectWithValidation v-model="insuranceDTO.insr_pblc_brdn_rt" name="insr_pblc_brdn_rt" label="공동보험" :items="insrPblcBrdnRtItems" single-line density="compact"></VSelectWithValidation>
-                        </div>
-                      </v-col>
-                      <v-col cols="12" class="v-col">
-                        <div class="head-col">
                         <p>보상한도</p>
                         <sup class="text-error">*</sup>
                         </div>
@@ -494,63 +563,64 @@
                         <VTextFieldWithValidation v-model="insuranceDTO.insr_pcnt_sale_rt" name="insr_pcnt_sale_rt" label="" type="number" suffix="%" single-line/>
                         </div>
                       </v-col>
-                      <v-col cols="12" class="v-col">
-                        <div class="head-col">
-                        <p>할인할증기준</p>
-                        <sup class="text-error">*</sup>
-                        </div>
-                        <div class="data-col">
-                        <!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
-                        <VTextFieldWithValidation v-model="insuranceDTO.insr_sale_year" name="insr_sale_year" label="" type="number" suffix="년" single-line/>
-                        </div>
-                      </v-col>
-                      <v-col cols="12" class="v-col">
-                        <div class="head-col">
-                        <p v-if="insuranceDTO.user_cd == 'IND'">
-                          무사고 할인 /<br />사고 할증
-                        </p>
-                        <p v-if="insuranceDTO.user_cd != 'IND'">무사고 할인</p>
-                        <sup class="text-error">*</sup>
-                        </div>
-                        <div class="data-col text-center" >
-                        <!-- {{ insuranceDTO.insr_sale_rt }} % -->
-                        <VTextFieldWithValidation v-model="insuranceDTO.insr_sale_rt" name="insr_sale_rt" label="" type="number" suffix="%" single-line/>
-                        </div>
-                      </v-col>
 
                       </v-row>
                     </v-col>
                     <!-- 보험 요금정보 -->
                     <v-col cols="4">
                       <v-row class="v-board-table size-x-small">
-                      <v-col cols="12" class="v-col">
-                        <div class="head-col">
-                        <p>기준보험료</p>
-                        <sup class="text-error">*</sup>
-                        </div>
-                        <div class="data-col">
-                        <VTextFieldWithValidation v-model="insuranceDTO.insr_base_amt" name="insr_sale_rt" label="" type="number" suffix="원" single-line/>
-                        </div>
-                      </v-col>
 
-                      <v-col cols="12" class="v-col">
-                        <div class="head-col">
-                        <p>합계보험료</p>
-                        <sup class="text-error">*</sup>
-                        </div>
-                        <div class="data-col">
-                        <VTextFieldWithValidation v-model="insuranceDTO.insr_amt" name="insr_amt" label="" type="number" suffix="원" single-line/>
-                        </div>
-                      </v-col>
-                      <v-col cols="12" class="v-col">
-                        <div class="head-col">
-                        <p>최종보험료</p>
-                        <sup class="text-error">*</sup>
-                        </div>
-                        <div class="data-col">
-                        <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_amt" name="insr_tot_amt" label="" type="number" suffix="원" single-line/>
-                        </div>
-                      </v-col>
+                        <v-col cols="12" class="v-col">
+                          <div class="head-col">
+                            <p>할인할증기준</p>
+                            <sup class="text-error">*</sup>
+                          </div>
+                          <div class="data-col">
+                            <!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
+                            <VTextFieldWithValidation v-model="insuranceDTO.insr_sale_year" name="insr_sale_year" label="" type="number" suffix="년" single-line/>
+                          </div>
+                        </v-col>
+                        <v-col cols="12" class="v-col">
+                          <div class="head-col">
+                            <p v-if="insuranceDTO.user_cd == 'IND'">
+                              무사고 할인 /<br />사고 할증
+                            </p>
+                            <p v-if="insuranceDTO.user_cd != 'IND'">무사고 할인</p>
+                            <sup class="text-error">*</sup>
+                          </div>
+                          <div class="data-col text-center" >
+                            <!-- {{ insuranceDTO.insr_sale_rt }} % -->
+                            <VTextFieldWithValidation v-model="insuranceDTO.insr_sale_rt" name="insr_sale_rt" label="" type="number" suffix="%" single-line/>
+                          </div>
+                        </v-col>
+<!--                      <v-col cols="12" class="v-col">-->
+<!--                        <div class="head-col">-->
+<!--                        <p>기준보험료</p>-->
+<!--                        <sup class="text-error">*</sup>-->
+<!--                        </div>-->
+<!--                        <div class="data-col">-->
+<!--                        <VTextFieldWithValidation v-model="insuranceDTO.insr_base_amt" name="insr_sale_rt" label="" type="number" suffix="원" single-line/>-->
+<!--                        </div>-->
+<!--                      </v-col>-->
+
+<!--                      <v-col cols="12" class="v-col">-->
+<!--                        <div class="head-col">-->
+<!--                        <p>합계보험료</p>-->
+<!--                        <sup class="text-error">*</sup>-->
+<!--                        </div>-->
+<!--                        <div class="data-col">-->
+<!--                        <VTextFieldWithValidation v-model="insuranceDTO.insr_amt" name="insr_amt" label="" type="number" suffix="원" single-line/>-->
+<!--                        </div>-->
+<!--                      </v-col>-->
+<!--                      <v-col cols="12" class="v-col">-->
+<!--                        <div class="head-col">-->
+<!--                        <p>최종보험료</p>-->
+<!--                        <sup class="text-error">*</sup>-->
+<!--                        </div>-->
+<!--                        <div class="data-col">-->
+<!--                        <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_amt" name="insr_tot_amt" label="" type="number" suffix="원" single-line/>-->
+<!--                        </div>-->
+<!--                      </v-col>-->
                       </v-row>
                     </v-col>
                   </v-row>
@@ -746,7 +816,12 @@ import VSelectWithValidation from '@/components/VSelectWithValidation.vue';
 import VCheckBoxWithValidation from '@/components/VCheckBoxWithValidation.vue';
 import apiADMIN from '@/api/api/A_ADMIN';
 import apiCOMMON from '@/api/api/A_COMMON';
-import {DOWNLOAD_EXCEL, DOWNLOAD_RENEWAL_EXCEL} from "@/util/excelupdn";
+import {
+  DOWNLOAD_EXCEL,
+  DOWNLOAD_RENEWAL_EXCEL,
+  UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND, UPLOAD_EXCEL_INSURANCE_ADV_TRE_JNT, UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR,
+  UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND
+} from "@/util/excelupdn";
 
 const route = useRoute();
 
@@ -1018,6 +1093,80 @@ async function downloadAsExcel() {
     messageBoxDTO.value.setWarning('오류', `엑셀다운로드에 실패하였습니다<br/>${e}`);
   }
 }
+
+const fileInputIND = ref(null);
+const fileInputCOR = ref(null);
+const fileInputJNT = ref(null);
+
+async function handleFileUploadIND(event) {
+  try {
+    let resultData;
+    if(route.params.business_cd=='ADV') {
+      const excelList = await UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND(event);
+      resultData = await apiADMIN.setADV_TRX(excelList);
+    } else {
+      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND(event);
+      resultData = await apiADMIN.setTAX_TRX(excelList);
+    }
+
+    if (resultData.success) {
+      messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
+    } else {
+      messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+    }
+  } catch (e) {
+    messageBoxDTO.value.setWarning('오류', `오류가 발생하였습니다.<br/>${e}`);
+  } finally {
+    event.target.value = '';
+  }
+}
+
+async function handleFileUploadCOR(event) {
+  try {
+    let resultData;
+    if(route.params.business_cd!='ADV') {
+      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR(event);
+      console.log(excelList);
+      resultData = await apiADMIN.setTAX_TRX(excelList);
+      if (resultData.success) {
+        messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
+      } else {
+        messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+      }
+    }
+  } catch (e) {
+    messageBoxDTO.value.setWarning('오류', `오류가 발생하였습니다.<br/>${e}`);
+  } finally {
+    event.target.value = '';
+  }
+}
+
+async function handleFileUploadJNT(event) {
+  try {
+    let resultData;
+    if(route.params.business_cd=='ADV') {
+      const excelList = await UPLOAD_EXCEL_INSURANCE_ADV_TRE_JNT(event);
+      resultData = await apiADMIN.setADV_TRX(excelList);
+
+      if (resultData.success) {
+        messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
+      } else {
+        messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+      }
+    }
+  } catch (e) {
+    messageBoxDTO.value.setWarning('오류', `오류가 발생하였습니다.<br/>${e}`);
+  } finally {
+    event.target.value = '';
+  }
+}
+
+async function fnExcelUpload(user_cd: string) {
+  if (user_cd === 'IND') fileInputIND.value.click();
+  if (user_cd === 'COR') fileInputCOR.value.click();
+  if (user_cd === 'JNT') fileInputJNT.value.click();
+}
+
 
 /**
  * 페이지 로딩이 완료되면 실행하는 로직

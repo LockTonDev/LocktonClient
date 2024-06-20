@@ -24,7 +24,7 @@ const commonService = axios.create({
 commonService.interceptors.request.use(
   config => {
       console.log("test1")
-    showLoading(); // Show loading bar
+    // showLoading(); // Show loading bar
     const { _AUTH_USER } = useAuthStore();
     const isLoggedIn = !!_AUTH_USER?.accessToken;
 
@@ -40,7 +40,7 @@ commonService.interceptors.request.use(
     return config;
   },
   error => {
-    hideLoading(); // Hide loading bar
+    // hideLoading(); // Hide loading bar
     console.log('commonService Request: OnRejected');
     return Promise.reject(error);
   }
@@ -49,7 +49,7 @@ commonService.interceptors.request.use(
 commonService.interceptors.response.use(
   response => {
     //console.log('commonService Response: ', response.data);
-      hideLoading();
+    //   hideLoading();
 
       console.log("test1 hide")
     return response.data;

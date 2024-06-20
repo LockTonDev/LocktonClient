@@ -389,7 +389,7 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
 
 
 onMounted(async () => {
-
+  console.log('businessInfo',businessInfo)
 });
  
 </script>

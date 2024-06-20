@@ -12,10 +12,12 @@ let statusCdItems = [];
 let userCdItems = [];
 let regionCdItems = [];
 let trxCdItems = [];
+let renewalCdItems = [];
 
 async function initCode() {
   businessCdItems = await CommonCode.getCodeList('COM001');
   statusCdItems = await CommonCode.getCodeList('COM030');
+  renewalCdItems = await CommonCode.getCodeList('COM032');
   userCdItems = await CommonCode.getCodeList('TAX002');
   regionCdItems = await CommonCode.getCodeList('TAX001');
   trxCdItems = await CommonCode.getCodeList('COM031');
@@ -81,6 +83,167 @@ const ROW_MAPPERS = {
   PAT_IND_RENEWAL: mapperRow_PAT_IND_RENEWAL,
   PAT_JNT_RENEWAL: mapperRow_PAT_JNT_RENEWAL,
   PAT_COR_RENEWAL: mapperRow_PAT_COR_RENEWAL,*/
+};
+
+/**
+ * 세무사_개인 갱신 엑셀업로드
+ *
+ * @param event
+ * @returns
+ */
+export const UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND_RENEWAL = async (event: any) => {
+  return new Promise(async (resolve, reject) => {
+    let excelList = [];
+
+    try {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = new Workbook();
+        workbook.xlsx.load(data).then(() => {
+          const worksheet = workbook.getWorksheet(1);
+
+          worksheet.eachRow((row, index) => {
+            if (index === 1) return;
+            let insuranceDTO = new InsuranceDTO();
+
+            insuranceDTO.insurance_uuid = row.getCell(EXCEL_TAX_IND.보험식별번호).value;
+            insuranceDTO.user_nm = row.getCell(EXCEL_TAX_IND.이름).value;
+            insuranceDTO.user_birth = row.getCell(EXCEL_TAX_IND.생년월일).value;
+            insuranceDTO.user_regno = row.getCell(EXCEL_TAX_IND.등록번호).value;
+            insuranceDTO.corp_cust_hpno = row.getCell(EXCEL_TAX_IND.휴대전화).value;
+            insuranceDTO.corp_cust_nm = row.getCell(EXCEL_TAX_IND.담당자성명).value;
+            insuranceDTO.corp_region_nm = row.getCell(EXCEL_TAX_IND.소속지방회).value;
+            try {
+              insuranceDTO.corp_region_cd = regionCdItems.find(item => item.title == insuranceDTO.corp_region_nm).value;
+            } catch (e) {
+              insuranceDTO.corp_region_cd = '';
+              // console.log(e);
+            }
+            insuranceDTO.renewal_cd_nm = row.getCell(EXCEL_TAX_IND.갱신여부).value;
+            try {
+              insuranceDTO.renewal_cd = renewalCdItems.find(item => item.title == insuranceDTO.renewal_cd_nm).value;
+            } catch (e) {
+              insuranceDTO.renewal_cd = '';
+              // console.log(e);
+            }
+            insuranceDTO.insr_year = row.getCell(EXCEL_TAX_IND.보험년도).value;
+            insuranceDTO.insr_retr_dt = row.getCell(EXCEL_TAX_IND.소급담보일).value;
+            insuranceDTO.insr_clm_lt_amt = row.getCell(EXCEL_TAX_IND.보상한도).value;
+            insuranceDTO.insr_psnl_brdn_amt = row.getCell(EXCEL_TAX_IND.자기부담금).value;
+            insuranceDTO.insr_year_clm_lt_amt = row.getCell(EXCEL_TAX_IND.보상한도_총한도).value;
+            insuranceDTO.insr_sale_year = row.getCell(EXCEL_TAX_IND.할인할증기준).value;
+            insuranceDTO.insr_sale_rt = row.getCell(EXCEL_TAX_IND.할인할증).value;
+
+            excelList.push(insuranceDTO);
+          });
+
+          resolve(excelList);
+        });
+      };
+      reader.readAsArrayBuffer(file);
+    } catch (e) {
+      console.log(e);
+      reject(e);
+    }
+  });
+};
+
+/**
+ * 세무사_법인 갱신 엑셀업로드
+ *
+ * @param event
+ * @returns
+ */
+export const UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR_RENEWAL = async (event: any) => {
+  return new Promise(async (resolve, reject) => {
+    let excelList = [];
+
+    try {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = new Workbook();
+        workbook.xlsx.load(data).then(() => {
+          const worksheet = workbook.getWorksheet(1);
+          let insuranceDTO = null;
+          let corp_bnno = null;
+
+          worksheet.eachRow((row, index) => {
+            if (index === 1) return;
+
+            if (getEmpty(row.getCell(EXCEL_TAX_COR.보험식별번호).value) !== '') {
+              insuranceDTO = new InsuranceDTO();
+
+              insuranceDTO.insurance_uuid = row.getCell(EXCEL_TAX_COR.보험식별번호).value;
+              insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_TAX_COR.총입금액).value;
+              insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_TAX_COR.차액).value;
+
+              insuranceDTO.status_nm = row.getCell(EXCEL_TAX_COR.상태).value;
+              try {
+                insuranceDTO.status_cd = statusCdItems.find(item => item.title == insuranceDTO.status_nm).value;
+              } catch (e) {
+                insuranceDTO.status_cd = '';
+                // console.log(e);
+              }
+
+              if (getEmpty(row.getCell(EXCEL_TAX_COR.입금구분).value) !== '') {
+                let trxDataDTO = new TRXDataDTO();
+
+                trxDataDTO.trx_nm = row.getCell(EXCEL_TAX_COR.입금구분).value;
+                trxDataDTO.trx_amt = row.getCell(EXCEL_TAX_COR.입금금액).value;
+                trxDataDTO.trx_dt = dayjs(row.getCell(EXCEL_TAX_COR.처리일자).value).format('YYYY-MM-DD');
+                trxDataDTO.rmk = row.getCell(EXCEL_TAX_COR.비고).value;
+                trxDataDTO.acct_nm = row.getCell(EXCEL_TAX_COR.예금주명).value;
+
+                try {
+                  trxDataDTO.trx_cd = trxCdItems.find(item => item.title == trxDataDTO.trx_nm).value;
+                } catch (e) {
+                  trxDataDTO.trx_cd = '';
+                  // console.log(e);
+                }
+                if (trxDataDTO.trx_cd) {
+                  insuranceDTO.trx_data.push(trxDataDTO);
+                }
+              }
+
+              excelList.push(insuranceDTO);
+            } else {
+              if (getEmpty(row.getCell(EXCEL_TAX_COR.입금구분).value) !== '') {
+                let trxDataDTO = new TRXDataDTO();
+                trxDataDTO.trx_nm = row.getCell(EXCEL_TAX_COR.입금구분).value;
+                trxDataDTO.trx_amt = row.getCell(EXCEL_TAX_COR.입금금액).value;
+                trxDataDTO.trx_dt = dayjs(row.getCell(EXCEL_TAX_COR.처리일자).value).format('YYYY-MM-DD');
+                trxDataDTO.rmk = row.getCell(EXCEL_TAX_COR.비고).value;
+                trxDataDTO.acct_nm = row.getCell(EXCEL_TAX_COR.예금주명).value;
+
+                try {
+                  trxDataDTO.trx_cd = trxCdItems.find(item => item.title == trxDataDTO.trx_nm).value;
+                } catch (e) {
+                  trxDataDTO.trx_cd = '';
+                  // console.log(e);
+                }
+
+                if (trxDataDTO.trx_cd) {
+                  excelList[excelList.length - 1].trx_data.push(trxDataDTO);
+                }
+              }
+            }
+          });
+
+          resolve(excelList);
+        });
+      };
+      reader.readAsArrayBuffer(file);
+    } catch (e) {
+      console.log(e);
+      reject(e);
+    }
+  });
 };
 
 
@@ -1418,7 +1581,7 @@ function mapperRow_TAX_IND(excelMapper: object, excelDataRow: any) {
   row[excelMapper.휴대폰] = insuranceDTO.corp_cust_hpno;
   row[excelMapper.담당자] = insuranceDTO.corp_cust_nm;
   row[excelMapper.우편번호] = insuranceDTO.corp_post;
-  row[excelMapper.지역] = insuranceDTO.corp_region_nm;
+  row[excelMapper.소속지방회] = insuranceDTO.corp_region_nm;
   row[excelMapper.주소] = insuranceDTO.corp_addr;
   row[excelMapper.주소상세] = insuranceDTO.corp_addr_dtl;
   row[excelMapper.사무소명] = insuranceDTO.corp_nm;
@@ -1477,6 +1640,7 @@ function mapperRow_TAX_COR(excelMapper: object, excelDataRow: any) {
   row[excelMapper.보험종료일] = insuranceDTO.insr_cncls_dt;
   row[excelMapper.상태] = insuranceDTO.status_nm;
   row[excelMapper.대표자성명] = insuranceDTO.corp_ceo_nm;
+  row[excelMapper.법인명] = insuranceDTO.user_nm;
   row[excelMapper.피보험자] = insuranceDTO.user_nm;
   row[excelMapper.생년월일] = insuranceDTO.user_birth;
   row[excelMapper.등록번호] = insuranceDTO.user_regno;
@@ -1498,7 +1662,7 @@ function mapperRow_TAX_COR(excelMapper: object, excelDataRow: any) {
   row[excelMapper.휴대폰] = insuranceDTO.corp_cust_hpno;
   row[excelMapper.담당자] = insuranceDTO.corp_cust_nm;
   row[excelMapper.우편번호] = insuranceDTO.corp_post;
-  row[excelMapper.지역] = insuranceDTO.corp_region_nm;
+  row[excelMapper.소속지방회] = insuranceDTO.corp_region_nm;
   row[excelMapper.주소] = insuranceDTO.corp_addr;
   row[excelMapper.주소상세] = insuranceDTO.corp_addr_dtl;
   row[excelMapper.사무소명] = insuranceDTO.corp_nm;
@@ -1545,6 +1709,7 @@ function mapperRow_TAX_COR(excelMapper: object, excelDataRow: any) {
         // console.log(e);
       }
 
+      subRow[excelMapper.법인명] = insuranceDTO.user_nm;
       subRow[excelMapper.피보험자] = insuranceDTO?.cbr_data[i]?.cbr_nm;
       subRow[excelMapper.생년월일] = insuranceDTO?.cbr_data[i]?.cbr_brdt;
       subRow[excelMapper.등록번호] = insuranceDTO?.cbr_data[i]?.cbr_regno;
@@ -1589,25 +1754,30 @@ function mapperRow_TAX_IND_RENEWAL(excelMapper: object, excelDataRow: any) {
   let row = {};
   row[excelMapper.순번] = insuranceDTO.index + 1;
   row[excelMapper.보험식별번호] = insuranceDTO.insurance_uuid;
+  row[excelMapper.증권년도] = insuranceDTO.insr_year;
+  row[excelMapper.갱신여부] = insuranceDTO.renewal_cd_nm;
   row[excelMapper.이름] = insuranceDTO.user_nm;
   row[excelMapper.생년월일] = insuranceDTO.user_birth;
   row[excelMapper.등록번호] = insuranceDTO.user_regno;
-  row[excelMapper.휴대전화] = insuranceDTO.corp_cust_hpno;
-  row[excelMapper.담당자성명] = insuranceDTO.corp_cust_nm;
-  row[excelMapper.소속지방회] = insuranceDTO.corp_region_cd;
-  row[excelMapper.갱신여부] = insuranceDTO.renewal_cd_nm;
-  row[excelMapper.보험년도] = insuranceDTO.insr_year;
   row[excelMapper.소급담보일] = insuranceDTO.insr_retr_dt;
-  row[excelMapper.공동보험] = insuranceDTO.insr_pblc_brdn_rt?.getValueBySplit(1);
   row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt?.getValueBySplit(1);
-  row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt?.getValueBySplit(1);
   row[excelMapper.보상한도_총한도] = insuranceDTO.insr_year_clm_lt_amt;
+  row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt?.getValueBySplit(1);
+  row[excelMapper.기준보험료] = insuranceDTO.insr_base_amt;
   row[excelMapper.할인할증기준] = insuranceDTO.insr_sale_year;
   row[excelMapper.할인할증] = insuranceDTO.insr_sale_rt;
-  row[excelMapper.기준보험료] = insuranceDTO.insr_base_amt;
-  row[excelMapper.합계보험료] = insuranceDTO.insr_amt;
   row[excelMapper.최종보험료] = insuranceDTO.insr_tot_amt;
-  
+  row[excelMapper.전화] = insuranceDTO.corp_telno;
+  row[excelMapper.팩스] = insuranceDTO.corp_faxno;
+  row[excelMapper.휴대폰] = insuranceDTO.corp_cust_hpno;
+  row[excelMapper.담당자] = insuranceDTO.corp_cust_nm;
+  row[excelMapper.우편번호] = insuranceDTO.corp_post;
+  row[excelMapper.소속지방회] = insuranceDTO.corp_region_nm;
+  row[excelMapper.주소] = insuranceDTO.corp_addr;
+  row[excelMapper.주소상세] = insuranceDTO.corp_addr_dtl;
+  row[excelMapper.사무소명] = insuranceDTO.corp_nm;
+  row[excelMapper.이메일] = insuranceDTO.corp_cust_email;
+
   return [row];
 }
 
@@ -1625,6 +1795,8 @@ function mapperRow_TAX_COR_RENEWAL(excelMapper: object, excelDataRow: any) {
   let row = {};
   row[excelMapper.순번] = insuranceDTO.index + 1;
   row[excelMapper.보험식별번호] = insuranceDTO.insurance_uuid;
+  row[excelMapper.증권년도] = insuranceDTO.insr_year;
+  row[excelMapper.갱신여부] = insuranceDTO.renewal_cd_nm;
   row[excelMapper.법인명] = insuranceDTO.user_nm;
   row[excelMapper.대표자성명] = insuranceDTO.corp_ceo_nm;
   row[excelMapper.피보험자] = insuranceDTO.user_nm;
@@ -1637,11 +1809,8 @@ function mapperRow_TAX_COR_RENEWAL(excelMapper: object, excelDataRow: any) {
   row[excelMapper.사무소팩스] = insuranceDTO.corp_faxno;
   row[excelMapper.담당자성명] = insuranceDTO.corp_cust_nm;
   row[excelMapper.소속지방회] = insuranceDTO.corp_region_cd;
-  row[excelMapper.갱신여부] = insuranceDTO.renewal_cd_nm;
-  row[excelMapper.보험년도] = insuranceDTO.insr_year;
   row[excelMapper.법인소급담보일] = insuranceDTO.insr_retr_dt;
   row[excelMapper.공동보험] = insuranceDTO.insr_pblc_brdn_rt?.getValueBySplit(1);
-
   row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt?.getValueBySplit(1);
   row[excelMapper.보상한도_총한도] = insuranceDTO.insr_year_clm_lt_amt;
   row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt?.getValueBySplit(1);
