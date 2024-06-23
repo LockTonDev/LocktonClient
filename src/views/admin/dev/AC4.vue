@@ -14,7 +14,7 @@
           <v-select v-model="searchParams.data['business_cd']" :items="businessCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
           </li> -->
           <li class="date">
-          <span>보험년도</span>
+          <span>증권년도</span>
           <v-select v-model="searchParams.data['insr_year']" :items="insrYearCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
           </li>
           <li>
@@ -68,7 +68,7 @@
               <tr>
                 <th>번호</th>
                 <th>구분</th>
-                <th>보험년도</th>
+                <th>증권년도</th>
                 <th>피보험자</th>
                 <th>등록번호</th>
                 <th>사업자번호</th>
@@ -400,11 +400,11 @@
                       <v-row class="v-board-table size-x-small">
                       <v-col cols="12" class="v-col">
                         <div class="head-col">
-                        <p>보험년도</p>
+                        <p>증권년도</p>
                         <sup class="text-error">*</sup>
                         </div>
                         <div class="data-col">
-                        <VTextFieldWithValidation v-model="insuranceDTO.insr_year" name="insr_year" placeholder="가입년도" suffix="년" single-line />
+                        <VTextFieldWithValidation v-model="insuranceDTO.insr_year" name="insr_year" placeholder="증권년도" suffix="년" single-line />
                         </div>
                       </v-col>
                       <v-col cols="12" class="v-col" >
@@ -563,13 +563,6 @@
                         <VTextFieldWithValidation v-model="insuranceDTO.insr_pcnt_sale_rt" name="insr_pcnt_sale_rt" label="" type="number" suffix="%" single-line/>
                         </div>
                       </v-col>
-
-                      </v-row>
-                    </v-col>
-                    <!-- 보험 요금정보 -->
-                    <v-col cols="4">
-                      <v-row class="v-board-table size-x-small">
-
                         <v-col cols="12" class="v-col">
                           <div class="head-col">
                             <p>할인할증기준</p>
@@ -593,15 +586,22 @@
                             <VTextFieldWithValidation v-model="insuranceDTO.insr_sale_rt" name="insr_sale_rt" label="" type="number" suffix="%" single-line/>
                           </div>
                         </v-col>
-<!--                      <v-col cols="12" class="v-col">-->
-<!--                        <div class="head-col">-->
-<!--                        <p>기준보험료</p>-->
-<!--                        <sup class="text-error">*</sup>-->
-<!--                        </div>-->
-<!--                        <div class="data-col">-->
-<!--                        <VTextFieldWithValidation v-model="insuranceDTO.insr_base_amt" name="insr_sale_rt" label="" type="number" suffix="원" single-line/>-->
-<!--                        </div>-->
-<!--                      </v-col>-->
+
+                      </v-row>
+                    </v-col>
+                    <!-- 보험 요금정보 -->
+                    <v-col cols="4">
+                      <v-row class="v-board-table size-x-small">
+
+                      <v-col cols="12" class="v-col">
+                        <div class="head-col">
+                        <p>기준보험료</p>
+                        <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                        <VTextFieldWithValidation v-model="insuranceDTO.insr_base_amt" name="insr_sale_rt" label="" type="number" suffix="원" single-line/>
+                        </div>
+                      </v-col>
 
 <!--                      <v-col cols="12" class="v-col">-->
 <!--                        <div class="head-col">-->
@@ -612,15 +612,15 @@
 <!--                        <VTextFieldWithValidation v-model="insuranceDTO.insr_amt" name="insr_amt" label="" type="number" suffix="원" single-line/>-->
 <!--                        </div>-->
 <!--                      </v-col>-->
-<!--                      <v-col cols="12" class="v-col">-->
-<!--                        <div class="head-col">-->
-<!--                        <p>최종보험료</p>-->
-<!--                        <sup class="text-error">*</sup>-->
-<!--                        </div>-->
-<!--                        <div class="data-col">-->
-<!--                        <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_amt" name="insr_tot_amt" label="" type="number" suffix="원" single-line/>-->
-<!--                        </div>-->
-<!--                      </v-col>-->
+                      <v-col cols="12" class="v-col">
+                        <div class="head-col">
+                        <p>최종보험료</p>
+                        <sup class="text-error">*</sup>
+                        </div>
+                        <div class="data-col">
+                        <VTextFieldWithValidation v-model="insuranceDTO.insr_tot_amt" name="insr_tot_amt" label="" type="number" suffix="원" single-line/>
+                        </div>
+                      </v-col>
                       </v-row>
                     </v-col>
                   </v-row>
@@ -819,8 +819,8 @@ import apiCOMMON from '@/api/api/A_COMMON';
 import {
   DOWNLOAD_EXCEL,
   DOWNLOAD_RENEWAL_EXCEL,
-  UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND, UPLOAD_EXCEL_INSURANCE_ADV_TRE_JNT, UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR,
-  UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND
+  UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND, UPLOAD_EXCEL_INSURANCE_ADV_TRE_JNT, UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR_RENEWAL,
+  UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND_RENEWAL
 } from "@/util/excelupdn";
 
 const route = useRoute();
@@ -925,6 +925,36 @@ async function fnSetInsuranceRateCombo() {
       value: `${code}|${value}`
 	}));
 
+}
+
+async function fnSetInsuranceRate(params) {
+  const paramsRate = { user_cd: params.user_cd , business_cd: params.business_cd };
+  let resultDataRate;
+  if(route.params.business_cd=='ADV') {
+    resultDataRate = await apiADMIN.getADVRate(paramsRate);
+  } else {
+    resultDataRate = await apiADMIN.getTAXRate(paramsRate);
+  }
+  Object.assign(insuranceRateDTO.value, resultDataRate.data[0]);
+  if(route.params.business_cd=='ADV') {
+    insrTakeSectionItems.value = insuranceRateDTO.value.contents["기본담보"]["연매출액구간"].map(({code, value}) => ({
+      title: value,
+      value: `${code}|${value}`
+    }));
+  }
+
+  insrClmLtAmtItems.value = insuranceRateDTO.value.contents["기본담보"]["보상한도"].map(({ code, value }) => ({
+    title: value,
+    value: `${code}|${value}`
+  }));
+
+  insrPsnlBrdnAmtItems.value = insuranceRateDTO.value.contents["기본담보"]["자기부담금"].map(({ code, value }) => ({
+    title: value,
+    value: `${code}|${value}`
+  }));
+
+  console.log("insrClmLtAmtItems",insrClmLtAmtItems.value)
+  console.log("insrPsnlBrdnAmtItems",insrPsnlBrdnAmtItems.value)
 }
 
 async function fnSearchDtl(insurance_uuid: string) {
@@ -1035,7 +1065,6 @@ async function initPage() {
 	regionCdItems.value = await CommonCode.getCodeList(businessCd+'001');
 	trxCdItems.value = await CommonCode.getCodeList('COM031');
 
-
 	insrYearCdItems.value = [];
 	insrYearCdItems.value.unshift({ title: '전체', value: '%' });
 	for (let year = new Date().getFullYear(); year >= 2022; year--) {
@@ -1105,8 +1134,14 @@ async function handleFileUploadIND(event) {
       const excelList = await UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND(event);
       resultData = await apiADMIN.setADV_TRX(excelList);
     } else {
-      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND(event);
-      resultData = await apiADMIN.setTAX_TRX(excelList);
+      let params = {}
+      //searchParams.value.data;
+
+      Object.assign(params, searchParams.value.data);
+      params.user_cd = 'IND'
+      await fnSetInsuranceRate(params);
+      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND_RENEWAL(event,insuranceRateDTO.value,insrClmLtAmtItems.value,insrPsnlBrdnAmtItems.value);
+      resultData = await apiADMIN.setTAXRenewal(excelList);
     }
 
     if (resultData.success) {
@@ -1125,9 +1160,14 @@ async function handleFileUploadCOR(event) {
   try {
     let resultData;
     if(route.params.business_cd!='ADV') {
-      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR(event);
-      console.log(excelList);
-      resultData = await apiADMIN.setTAX_TRX(excelList);
+      let params = {};
+      Object.assign(params, searchParams.value.data);
+      params.user_cd = 'COR'
+      await fnSetInsuranceRate(params);
+      console.log('insrClmLtAmtItems.value, insrPsnlBrdnAmtItems.value',insrClmLtAmtItems.value, insrPsnlBrdnAmtItems.value)
+      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR_RENEWAL(event, insuranceRateDTO.value, insrClmLtAmtItems.value, insrPsnlBrdnAmtItems.value);
+
+      resultData = await apiADMIN.setTAXRenewal(excelList);
       if (resultData.success) {
         messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);
       } else {

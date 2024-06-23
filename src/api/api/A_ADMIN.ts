@@ -313,5 +313,12 @@ export default {
    */
   async setUserPassword(params: any) {
     return await api.authService.post('/ADM/USER/setUserPassword', {params});
-  }
+  },
+  /** ============================================================================
+   *  [보험DB]
+   *  ============================================================================
+   */
+  async getRenewalInsurance(params: any) {
+    return await api.authService.post('/ADM/MASTER/getRenwalInsurance', {params});
+  },
 };

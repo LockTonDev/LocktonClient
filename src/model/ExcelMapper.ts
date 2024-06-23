@@ -45,7 +45,8 @@ const EXCEL_TAX_IND = {
   ERP납입일: 'AR',
   변경일자: 'AS',
   변경내용: 'AT',
-  증권년도: 'AU'
+  증권년도: 'AU',
+  유저식별번호: 'AV'
 };
 
 const EXCEL_TAX_COR = {
@@ -95,7 +96,8 @@ const EXCEL_TAX_COR = {
   ERP납입일: 'AR',
   변경일자: 'AS',
   변경내용: 'AT',
-  증권년도: 'AU'
+  증권년도: 'AU',
+  유저식별번호: 'AV'
   //----------------------
 };
 
