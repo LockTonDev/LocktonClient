@@ -12,15 +12,16 @@
       <v-card-title class="d-flex align-center justify-space-between">
           <div class="text-h6 font-weight-medium">
               <v-icon size="30">mdi-information</v-icon>&nbsp;보험가입증명서
-            <span class="text-20 text-red ml-2" v-if="insuranceDTO.user_cd === 'IND' && !isAdmin"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 생년월일(6자리) 입니다.</span>
-            <span class="text-20 text-red ml-2" v-if="insuranceDTO.user_cd !== 'IND' && !isAdmin"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 사업자번호 뒤 5자리 입니다.</span>
+            <br v-if="checkMobile.isMobile"/>
+            <span  :class="checkMobile.isMobile?'text-10 text-red ml-1':'text-20 text-red ml-2'" v-if="insuranceDTO.user_cd === 'IND' && !isAdmin"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 생년월일(6자리) 입니다.</span>
+            <span  :class="checkMobile.isMobile?'text-10 text-red ml-1':'text-20 text-red ml-2'"  v-if="insuranceDTO.user_cd !== 'IND' && !isAdmin"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 사업자번호 뒤 5자리 입니다.</span>
           </div>
           <div class="d-flex justify-space-between align-end">
-              <v-btn variant="flat" color="dark" @click="onExportPDF('down')">저장</v-btn>&nbsp;
-              <v-btn variant="outlined" color="dark" @click="close()">닫기</v-btn>
+              <v-btn :size="checkMobile.isMobile?'x-small':'default'" variant="flat" color="dark" @click="onExportPDF('down')">저장</v-btn>&nbsp;
+              <v-btn :size="checkMobile.isMobile?'x-small':'default'" variant="outlined" color="dark" @click="close()">닫기</v-btn>
            </div>
       </v-card-title>
-      <v-card-text class="pa-0">
+      <v-card-text :hidden="checkMobile.isMobile&&isPdf" class="pa-0">
           <iframe :src="pdfUrl" width="100%" height="800px"></iframe>
       </v-card-text>
 
@@ -597,6 +598,9 @@ import { InsuranceDTO } from '@/model';
 import apiA_TCAA0030A from '@/api/api/A_TCAA0030A'
 import html2pdf from "html2pdf.js";
 import '../../../assets/css/printpdf.css'
+import {useMobileStore} from "@/stores";
+const checkMobile = useMobileStore();
+
 const props = defineProps({
   insurance_uuid: {
       type: String,
@@ -605,15 +609,22 @@ const props = defineProps({
   isCertificatePrintFramDialog: {
       type: Boolean,
       required: true
+  },
+
+  isPdf: {
+    type: Boolean,
+    required: false
   }
 })
 const isOpenDialog = ref(false);
 const authStore = useAuthStore();
 const { _AUTH_ADMIN } = storeToRefs(authStore);
 const isAdmin = _AUTH_ADMIN.value === null ? false: true;
+const isPdf = ref(false);
 const insuranceDTO = ref(new InsuranceDTO());
 
-onMounted(async () => {    
+onMounted(async () => {
+  isPdf.value = props.isPdf;
   const params = {insurance_uuid:props.insurance_uuid};
   const resultData = await apiA_TCAA0030A.getDBSel(params, isAdmin);
   insuranceDTO.value =  resultData.data[0];

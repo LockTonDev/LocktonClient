@@ -175,6 +175,7 @@
                             </div>
                             <div class="data-col">
                               <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_nm" name="corp_cust_nm" placeholder="담당자 성명" single-line maxlength="20" />
+
                             </div>
                           </v-col>
 
@@ -185,6 +186,7 @@
                             </div>
                             <div class="data-col">
                               <VSelectWithValidation v-model="insuranceDTO.renewal_cd" name="corp_region_cd" label="갱신여부" :items="renewalCdItems" single-line density="compact"></VSelectWithValidation>
+
                             </div>
                           </v-col>
                           <!--
@@ -283,6 +285,7 @@
                             </div>
                             <div class="data-col">
                               <VSelectWithValidation v-model="insuranceDTO.renewal_cd" name="corp_region_cd" label="갱신여부" :items="renewalCdItems" single-line density="compact"></VSelectWithValidation>
+
                             </div>
                           </v-col>
                           <!--

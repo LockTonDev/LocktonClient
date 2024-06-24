@@ -733,6 +733,7 @@ const RENEWAL_EXCEL_TAX_IND = {
   주소상세: 'W',
   사무소명: 'X',
   이메일: 'Y',
+
 };
 
 const RENEWAL_EXCEL_TAX_COR = {
@@ -827,6 +828,7 @@ const RENEWAL_EXCEL_LAW_JNT = {
   사무원인원수: 'AE',
   특약소급담보일: 'AF',
   특약산출보험료: 'AG'
+
   //----------------------
 };
 

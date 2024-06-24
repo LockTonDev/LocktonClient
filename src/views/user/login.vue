@@ -63,7 +63,7 @@
                         </v-card>
                         <v-card :disabled="isLoginDisable" v-if="!isLoginDisable">
                           <v-divider class="mt-8"/>
-                          <v-card-text class="pb-2">
+                          <v-card-text :class="checkMobile?'pa-0':'pb-2'">
                             <v-tabs v-model="userCd" fixed-tabs color="primary">
                               <v-tab value="IND">개인 회원</v-tab>
                               <v-tab value="two" v-if="businessInfo.value === 'CAA'">법인/합동가입 회원</v-tab>

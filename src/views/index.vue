@@ -22,7 +22,7 @@
         <!-- 컨텐츠 영역 -->
         <v-container class="main-wrapper">
           <v-img src="/assets/images/background/bg-main.jpg"  cover class="content-height-main" gradient="90deg,  rgb(0, 0, 0, 0.8) 0%, rgb(0, 0, 0, 0) 20%, rgb(0, 0, 0, 0) 80%, rgb(0, 0, 0, 0.8) 100%">
-            <v-row class="content-width h-100" justify="center" align-content="center">
+            <v-row class="content-width h-100" justify="center" align-content="center" style="text-align:center;">
               <v-col>
                 <h1 class="text-h3 color-white font-weight-medium line-height-1-3">전문인 보험 가입 서비스<br/><span class="color-primary font-weight-bold">록톤코리아</span>가 함께 합니다</h1>
                 <v-btn v-if="!_AUTH_USER" color="white" size="x-large" class="pl-10 pr-10 mt-16 mr-6 border-radius-0" @click="popFirstUser = true">처음 이용하는 고객</v-btn>

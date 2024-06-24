@@ -1055,7 +1055,7 @@
                               <VTextFieldWithValidation v-model="row.insr_amt" name="insr_amt" label="" density="compact" color="primary" variant="outlined" type="number" suffix="원" single-line />
                             </td>
                             <td>
-                              <v-btn variant="elevated" color="white" size="small" class="min-width-auto pa-0" @click="fnDelCBR(index)">
+                              <v-btn variant="elevated" color="white" size="small" class="min-width-auto pa-0" @click="fnDelConsCBR(index)">
                                 <vue-feather type="minus-square" class="text-gray cursor-pointer vertical-align-middle"></vue-feather>
                               </v-btn>
                             </td>
@@ -1698,6 +1698,14 @@ function fnDelCBR(rowIdx: number) {
   console.log(rowIdx);
   insuranceDTO.value.cbr_data.splice(rowIdx, 1);
   insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
+}
+
+function fnDelConsCBR(rowIdx: number) {
+  console.log(rowIdx);
+  insuranceDTO.value.cons_data.cbr_data.splice(rowIdx, 1);
+  //insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
+  const filter2 = insuranceDTO.value.cons_data.cbr_data.filter(data => data.status_cd === '80');
+  validConsUserCount.value = filter2.length;
 }
 
 async function fnSave() {

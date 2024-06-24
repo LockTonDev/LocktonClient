@@ -12,7 +12,7 @@
         </v-card-text>
       </v-card>
       <div class="d-flex justify-center">
-        <v-btn size="x-large" variant="flat" color="primary" to="/contract/ACC/V_TACC0030A11" depressed class="px-10">가입신청</v-btn>
+        <v-btn :size="checkMobile.isMobile?'default':'x-large'" variant="flat" color="primary" to="/contract/ACC/V_TACC0030A11" depressed class="px-10">가입신청</v-btn>
       </div>
     </v-col>
   </v-row>
@@ -36,7 +36,7 @@
             <th class="font-weight-medium text-center text-body-1">보험기간</th>
             <th class="font-weight-medium text-center text-body-1">보험료</th>
             <th class="font-weight-medium text-center text-body-1">신청서</th>
-            <th class="font-weight-medium text-center text-body-1">
+            <th class="font-weight-medium text-center text-body-1 text-no-wrap">
               가입증명서<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
               <v-tooltip activator="parent" location="top">
                 가입증명서<v-icon class="ml-1" size="small">mdi-alert-circle-outline</v-icon>
@@ -50,14 +50,14 @@
         </thead>
         <tbody v-if="InsuranceList.length">
           <tr v-for="(row, index) in InsuranceList">
-            <td class="text-center text-body-1">{{ row.status_cd !== '91' ? row.insurance_no : '' }}</td>
-            <td class="text-center text-body-1">{{ row.user_nm }}</td>
-            <td class="text-center text-body-1">
+            <td class="text-center text-body-1 text-no-wrap">{{ row.status_cd !== '91' ? row.insurance_no : '' }}</td>
+            <td class="text-center text-body-1 text-no-wrap">{{ row.user_nm }}</td>
+            <td class="text-center text-body-1 text-no-wrap">
               <div v-if="!chkValidPeriod(row)">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
               <div v-if="chkValidPeriod(row)" class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
-            <td class="text-center text-body-1">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
-            <td class="text-center text-body-1">
+            <td class="text-center text-body-1 text-no-wrap">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
+            <td class="text-center text-body-1 text-no-wrap">
               <v-icon v-if="chkValidPeriod(row)"
                 small
                 class="text-primary cursor-pointer"
@@ -66,7 +66,7 @@
                 >mdi-printer</v-icon
               >
             </td>
-            <td class="text-center text-body-1">
+            <td class="text-center text-body-1 text-no-wrap">
               <v-icon
                 small
                 class="text-primary cursor-pointer"
@@ -130,6 +130,9 @@
   import { storeToRefs } from 'pinia';
   import { useAuthStore } from '@/stores';
   import {dateCompareWithNow} from '../../../util/util';
+
+  import {useMobileStore} from "@/stores";
+  const checkMobile = useMobileStore();
 
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);

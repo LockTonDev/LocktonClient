@@ -12,7 +12,7 @@
           <v-tab value="3" class="font-weight-bold text-18">회원 탈퇴</v-tab>
         </v-tabs>
       </div>
-      <v-card class="pa-6 pt-4 v-box mt-10">
+      <v-card :class="checkMobile.isMobile?'pa-1 pt-4 v-box mt-10':'pa-6 pt-4 v-box mt-10'">
         <v-window v-model="tab">
           <!--회원정보 수정-->
           <v-window-item value="1">
@@ -698,8 +698,8 @@
               <p class="mt-6 text-body-1">
                 회원님의 정보를 안전하게 보호하기 위해<br /><span class="text-primary">현재 비밀번호</span>를 입력해 주세요.
               </p>              
-              <div class="mt-4 pa-6 bg-background">
-                <ul class="pl-3 list-style-type-bull">
+              <div :class="checkMobile.isMobile?'mt-4 pa-1 bg-background':'mt-4 pa-6 bg-background'">
+                <ul class="pl-3 list-style-type-bull text-14">
                   <li>비밀번호는 주기적(최소 6개월)으로 변경해 주시기 바랍니다.</li>
                   <li>비밀번호는 8 ~ 20자 이하 영어, 숫자, 특수문자 조합으로 사용할 수 있습니다.</li>
                 </ul>
@@ -734,7 +734,7 @@
                           class="ml-2"
                           type="submit"
                           :disabled="verifyPassword.success"
-                          size="large"
+                          :size="checkMobile.isMobile?'small':'large'"
                           >확인</v-btn
                         >
                       </div>
@@ -854,7 +854,7 @@
                   <span class="text-primary">유의사항</span>을 확인해주세요.
                 </p>
                 <div class="mt-4 pa-6 bg-background">
-                  <ul class="pl-3 list-style-type-bull">
+                  <ul class="pl-3 list-style-type-bull text-14">
                     <li>탈퇴하신 아이디는 복구가 불가능하며, 추후 동일한 아이디로 재가입이 되지 않습니다.</li>
                     <li>보험계약 관련 정보(개인(신용)정보 포함)는 거래 종료일로부터 최대 5년까지 보유&middot;이용됩니다.<br/>(단, 보험금 지급, 금융사고 조사, 법령상 의무이행을 위한 경우 별도 보관)</li>
                     <li>회원탈퇴 시 등록한 게시물은 삭제되지 않으므로, 삭제를 원하시면 탈퇴 전에 삭제해 주시기 바랍니다.</li>
@@ -898,7 +898,7 @@
                   />
                   <v-spacer />
                   <v-btn
-                    size="x-large"
+                    :size="checkMobile.isMobile?'default':'x-large'"
                     variant="flat"
                     color="primary"
                     type="submit"
@@ -967,6 +967,8 @@ import apiA_COMMON from '@/api/api/A_COMMON';
 import { MessageBoxDTO } from '@/model';
 import MessageBox from '@/components/MessageBox.vue';
 
+import {useMobileStore} from "@/stores";
+const checkMobile = useMobileStore();
 
 const authStore = useAuthStore();
 const { _AUTH_USER } = storeToRefs(authStore);

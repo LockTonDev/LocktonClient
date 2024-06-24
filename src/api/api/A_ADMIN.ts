@@ -132,8 +132,6 @@ export default {
   async getRenewalTAXExcel(params: any) {
     return await api.authService.post('/ADM/TAX/EXCEL/renewal/gets', { params });
   },
-
-
   /**  ADV  */
   async setADV(params: any) {
     return await api.authService.post('/ADM/ADV/set', { params });

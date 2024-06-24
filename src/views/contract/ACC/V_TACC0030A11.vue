@@ -21,22 +21,21 @@
             color="primary"
             next-icon="mdi-arrow-left"
             prev-icon="mdi-arrow-left"
-            show-arrows
           >
-            <v-tab value="1" class="flex-grow-1">가입정보</v-tab>
-            <v-tab value="2" class="flex-grow-1">보험계약 {{ renewalYN == 'Y'?'(갱신)':'' }}</v-tab>
-            <v-tab value="3" class="flex-grow-1">약관동의</v-tab>
+            <v-tab value="1" class="flex-grow-1" :disabled="true">가입정보</v-tab>
+            <v-tab value="2" class="flex-grow-1" :disabled="true">보험계약 {{ renewalYN == 'Y'?'(갱신)':'' }}</v-tab>
+            <v-tab value="3" class="flex-grow-1" :disabled="true">약관동의</v-tab>
           </v-tabs>
         </div>
       </v-col>
     </v-row>
 
     <v-row class="mb-16" justify="center" v-if="onLoading">
-      <v-col cols="8">
-        <v-window v-model="tab">
+      <v-col :cols="checkMobile.isMobile?'12':'8'" :class="checkMobile.isMobile?'pa-2':''">
+        <v-window v-model="tab" disabled="true">
           <!-- 가입정보 Tab 시작 -->
           <v-window-item value="1">
-            <v-row class="v-box-table px-14 py-10">
+            <v-row :class="checkMobile.isMobile?'v-box-table px-1 py-5':'v-box-table px-14 py-10'">
               <v-col cols="12" sm="12" class="v-col">
                 <div class="d-flex flex-wrap">
                   <h3 class="text-h6 font-weight-bold">가입정보 입력</h3>
@@ -45,7 +44,7 @@
                   <sup class="text-error">*</sup>는 필수 입력입니다.
                 </p>
               </v-col>
-              <v-col cols="12 mt-10">
+              <v-col cols="12" :class="checkMobile.isMobile?'pt-2':'pt-6'">
                 <v-row
                   class="v-board-table"
                 >
@@ -237,8 +236,10 @@
                         single-line
                         density="comfortable"
                         readonly
+                        style="width: 80px;"
                       />
                       <v-btn
+                        :size="checkMobile.isMobile?'small':'default'"
                         variant="outlined"
                         color="primary"
                         @click="isDaumPostDialog = true"
@@ -292,7 +293,7 @@
             <v-row class="mt-10">
               <v-col class="d-flex justify-center pa-0">
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="outlined"
                   color="dark"
                   @click="onCancel"
@@ -300,7 +301,7 @@
                   >취소</v-btn
                 >
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="flat"
                   color="dark"
                   v-if="!isDuplication"
@@ -320,8 +321,8 @@
               <v-btn variant="tonal" @click="onTest('COR')">법인</v-btn>
             </div> -->
 
-            <v-row class="v-box-table py-10">
-              <v-col cols="12" sm="12" class="px-14 v-col">
+            <v-row :class="checkMobile.isMobile?'v-box-table py-5':'v-box-table py-10'">
+              <v-col cols="12" sm="12" :class="checkMobile.isMobile?'px-2':'px-14 v-col'">
                 <div class="d-flex flex-wrap">
                   <div class="d-flex align-center">
                     <h3 class="text-h6 font-weight-bold">보험 계약</h3>
@@ -340,14 +341,14 @@
                 </p>
                 <p class="text-body-2 color-gray-shadow" v-if="renewalYN == 'Y'">직전년도 가입조건이 자동 표시되며, 변경 가능합니다.</p> <!--갱신자의 경우 문구 노출-->
               </v-col>
-              <v-col cols="12" sm="12" class="py-0 px-14 mt-10">
+              <v-col cols="12" sm="12" :class="checkMobile.isMobile?'py-0 px-2 mt-5':'py-0 px-14 mt-10'">
                 <v-row class="v-board-table">
                   <v-col cols="12" sm="12" class="v-col">
                     <div class="head-col">
                       <p>보험기간</p>
                       <sup class="text-error">*</sup>
                     </div>
-                    <div class="data-col justify-space-between date">
+                    <div :class="checkMobile.isMobile?'data-col date':'data-col justify-space-between date'">
                       <VTextFieldWithValidation
                         v-model="insuranceDTO.insr_st_dt"
                         name="insr_st_dt"
@@ -406,18 +407,21 @@
                           color="primary"
                           class="flex-grow-1"
                           value="0|공동부담비율 없음"
+                          :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: 7px !important':''"
                           >공동부담비율 없음</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
                           value="10|공동부담비율 10%"
+                          :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: 7px !important':''"
                           >공동부담비율 10%</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
                           value="20|공동부담비율 20%"
+                          :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: 7px !important':''"
                           >공동부담비율 20%</v-btn
                         >
                       </v-btn-toggle>
@@ -440,18 +444,21 @@
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
+                          :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;':''"
                           value="50000000|5천만원"
                           >5천만원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
+                          :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;':''"
                           value="100000000|1억원"
                           >1억원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
+                          :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;':''"
                           value="150000000|1억5천만원"
                           >1억5천만원</v-btn
                         >
@@ -479,24 +486,28 @@
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
+                          :style="checkMobile.isMobile?'flex-basis: 25%; border: 1px solid #EEEEEE; text-align: center;min-width: 20px !important':''"
                           value="3000000|3백만원"
                           >3백만원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
+                          :style="checkMobile.isMobile?'flex-basis: 25%; border: 1px solid #EEEEEE; text-align: center;min-width: 20px !important':''"
                           value="5000000|5백만원"
                           >5백만원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
+                          :style="checkMobile.isMobile?'flex-basis: 25%; border: 1px solid #EEEEEE; text-align: center;min-width: 20px !important':''"
                           value="7000000|7백만원"
                           >7백만원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
+                          :style="checkMobile.isMobile?'flex-basis: 25%; border: 1px solid #EEEEEE; text-align: center;min-width: 20px !important':''"
                           value="10000000|1천만원"
                           >1천만원</v-btn
                         >
@@ -518,7 +529,7 @@
             <v-row class="mt-10">
               <v-col class="pa-0 d-flex justify-center">
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="outlined"
                   color="dark"
                   v-if="tab > 1 && tab < 4"
@@ -527,7 +538,7 @@
                   >이전</v-btn
                 >
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="flat"
                   color="dark"
                   @click="onNextPage()"
@@ -541,10 +552,9 @@
           <!-- 약관동의 시작 -->
           <v-window-item value="3" :disabled="isReadOnlyAll">
             <v-row class="v-box-table">
-              <v-col cols="12" class="px-16 py-10">
+              <v-col cols="12" :class="checkMobile.isMobile?'px-2 py-10':'px-16 py-10'">
                 <h3 class="text-h6 font-weight-bold">약관 동의</h3>
-
-                <v-table class="v-board-table mt-10">
+                <v-table :class="checkMobile.isMobile?'v-board-table mt-10 remove-padding':'v-board-table mt-10'">
                   <tbody>
                     <tr>
                       <td>
@@ -561,6 +571,7 @@
                       </td>
                       <td>
                         <v-btn
+                          :size="checkMobile.isMobile?'small':'default'"
                           color="gray"
                           variant="outlined"
                           class="ml-4"
@@ -583,7 +594,7 @@
                         />
                       </td>
                       <td>
-                        <v-btn color="gray" variant="outlined" class="ml-4"
+                        <v-btn color="gray" variant="outlined" class="ml-4" :size="checkMobile.isMobile?'small':'default'"
                           >보기
                           <v-dialog
                             persistent
@@ -624,6 +635,7 @@
                       </td>
                       <td>
                         <v-btn
+                          :size="checkMobile.isMobile?'small':'default'"
                           color="gray"
                           variant="outlined"
                           class="ml-4"
@@ -657,6 +669,7 @@
                       </td>
                       <td>
                         <v-btn
+                          :size="checkMobile.isMobile?'small':'default'"
                           color="gray"
                           variant="outlined"
                           class="ml-4"
@@ -692,20 +705,20 @@
                     이 보험상품은 한국공인회계사 감사반연합회를 계약자로 하는 단체계약 프로그램입니다.
                   </li>
                   <li>
-                    보험회사 : DB손해보험㈜ <span class="text-caption mx-3">|</span>보험중개사 : 록톤컴퍼니즈코리아손해보험중개(주)
+                    보험회사 : DB손해보험㈜ <template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>  보험중개사 : 록톤컴퍼니즈코리아손해보험중개(주)
                   </li>
                   <li>
                     보험료 입금 계좌번호 :
                     <b class="font-weight-medium text-error text-18"
                       >신한은행 140-005-862099</b
-                    ><span class="text-caption mx-3">|</span>예금주 :
+                    ><template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>예금주 :
                     <b class="font-weight-medium text-error text-18"
                       >록톤컴퍼니즈코리아</b
                     >
                   </li>
                 </ul>
               </v-col>
-              <v-col cols="12" class="px-14 py-10 border-top-lightgray-1">
+              <v-col cols="12" :class="checkMobile.isMobile?'px-4 py-10 border-top-lightgray-1':'px-14 py-10 border-top-lightgray-1'">
                 <p class="word-break-keep-all line-height-1-4">
                   상기와 같이 보험계약사항을 확인하고 전문직업배상책임보험
                   가입을 신청합니다.
@@ -745,7 +758,7 @@
             <v-row class="mt-10">
               <v-col class="pa-0 d-flex justify-center">
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="outlined"
                   color="dark"
                   v-if="tab > 1"
@@ -754,7 +767,7 @@
                   >이전</v-btn
                 >
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="flat"
                   color="primary"
                   type="submit"
@@ -763,7 +776,7 @@
                   >최종 제출</v-btn
                 >
                 <v-btn
-                  size="x-large"
+                  :size="checkMobile.isMobile?'default':'x-large'"
                   variant="flat"
                   color="primary"
                   type="submit"
@@ -780,7 +793,7 @@
       </v-col>
 
       <!-- 보험 요약 시작 -->
-      <v-col cols="4" v-if="tab > 1">
+      <v-col :cols="checkMobile.isMobile?'12':'4'" v-if="tab > 1">
         <div class="position-sticky sticky-top v-box-table">
           <v-row class="mx-10 py-6">
             <v-col cols="12" class="mb-1">
@@ -877,7 +890,7 @@
             <v-col class="pa-0 d-flex justify-center">
              
               <v-btn
-                size="x-large"
+                :size="checkMobile.isMobile?'default':'x-large'"
                 variant="flat"
                 color="primary"
                 class="mr-4"
@@ -885,7 +898,7 @@
                 >출력</v-btn
               >
               <v-btn
-                size="x-large"
+                :size="checkMobile.isMobile?'default':'x-large'"
                 variant="outlined"
                 color="dark"
                 to="/contract/ACC/V_TACC0030A10"
@@ -996,6 +1009,9 @@ import TermsOfPolicy from './V_TACC0030P01.vue';      // PDF 다운로드
 import TermsOfInsurance from './V_TACC0030P02.vue';   // 상품설명확인서 확인
 import TermsOfContract from './V_TACC0030P03.vue';    // 계약 체결·이행 등을 위한 개인(신용)정보 처리동의
 
+import {useMobileStore} from "@/stores";
+const checkMobile = useMobileStore();
+
 const route = useRoute();
 
 const authStore = useAuthStore();
@@ -1026,7 +1042,7 @@ let preventDupClick = false
 let TODAY = dayjs().format('YYYY-MM-DD');
 let INSR_RETR_DT_TODAY = dayjs().format('YYYY-MM-DD');
 
-const tab = ref(1);
+const tab = ref('1');
 
 const page = ref({
   title: '전문인배상책임보험 가입',
@@ -1177,6 +1193,7 @@ async function onNextPage(values: any) {
   if (!await checkValidation()) return false;
   if (isDuplication.value) return false;
   tab.value = (parseInt(tab.value) + 1).toString();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showMessageBoxByInsrDt() {

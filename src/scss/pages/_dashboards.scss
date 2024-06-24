@@ -138,7 +138,14 @@
   
   tr {border-bottom: 1px solid #ebebeb;}
   tr:last-child{border:none}
-  th {background-color: $color-background;font-size: 0.875rem !important;font-weight: 500;}
+  th {
+    @media screen and (min-width:960px) {
+      font-size: 0.875rem !important;
+    }
+    @media screen and (max-width:959px) {
+      font-size: 0.65rem !important;
+    }
+    background-color: $color-background;font-weight: 500;}
 
   >.v-col {
     padding:0;display: flex;align-items: stretch;flex-wrap: nowrap;border-top:1px solid $color-border;font-size: 14px;
@@ -157,11 +164,11 @@
       padding: 8px;display: flex;align-items: center;flex-wrap: wrap;
       @media screen and (min-width:960px) {
         max-width:calc(100% - 120px);
-        min-height: 64px;
+        min-height: 20px;
       }
       @media screen and (max-width:959px) {
         max-width:calc(100% - 100px);
-        min-height: 40px;
+        min-height: 30px;
       }
       .v-input {
         width: 195px;flex: initial;
@@ -180,8 +187,17 @@
         }
       }
       &.extend{
-        max-width: auto;
-        .v-input {width: 324px;flex: initial;}        
+        width: 100%;
+        .v-input {
+          width: 100%;
+          @media screen and (min-width:960px) {
+            width: 324px;
+          }
+          @media screen and (max-width:959px) {
+            width: 65%;
+          }
+          flex: initial;
+        }
       }
       // &.col-tel{
       //   display: flex;justify-content: space-between;width:100%;
@@ -524,7 +540,14 @@
     > .v-table__wrapper > table > thead > tr > td, 
     > .v-table__wrapper > table > thead > tr > th, 
     > .v-table__wrapper > table > tfoot > tr > td, 
-    > .v-table__wrapper > table > tfoot > tr > th {padding: 0 4px;text-align: center;}
+    > .v-table__wrapper > table > tfoot > tr > th {padding: 0 4px;text-align: center;
+      @media screen and (min-width:960px) {
+        font-size: 14px;
+      }
+      @media screen and (max-width:959px) {
+        font-size: 8px;
+      }
+    }
   }
 }
 
@@ -549,7 +572,7 @@
 //v-box
 .v-box {
   border: 1px solid $color-border;
-  border-radius: 4px;  
+  border-radius: 4px;
 
   &.diabled{
     background:$color-lightbackground;
@@ -723,7 +746,7 @@
       margin: 1.2rem 0;
       font-weight: 500;
       &:first-child {margin-top:0;}
-      >p,>ul,>ol{margin-top:0.4rem;font-weight: normal;font-size: 14px;}      
+      >p,>ul,>ol{margin-top:0.4rem;font-weight: normal;font-size: 14px;}
     }   
   }
   >p{font-weight: normal;font-size: 14px;}

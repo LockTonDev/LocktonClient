@@ -182,8 +182,6 @@ authService.interceptors.request.use(
 authService.interceptors.response.use(
   response => {
     hideLoading();
-
-      console.log("test3 hide")
     return response.data;
   },
   error => {

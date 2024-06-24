@@ -12,7 +12,7 @@
         </v-card-text>
       </v-card>
       <div class="d-flex justify-center">
-        <v-btn size="x-large" variant="flat" color="primary" to="/contract/LAW/V_TLAW0030A11" depressed class="px-10">가입신청</v-btn>
+        <v-btn :size="checkMobile.isMobile?'default':'x-large'" variant="flat" color="primary" to="/contract/LAW/V_TLAW0030A11" depressed class="px-10">가입신청</v-btn>
       </div>
     </v-col>
   </v-row>
@@ -49,15 +49,15 @@
         </thead>
         <tbody v-if="InsuranceList.length">
           <tr v-for="(row, index) in InsuranceList">
-             <td class="text-center text-body-1">{{ !['10', '91'].includes(row.status_cd) ? row.insurance_no : '' }}</td>
+             <td class="text-center text-body-1 text-no-wrap">{{ !['10', '91'].includes(row.status_cd) ? row.insurance_no : '' }}</td>
             <template v-if="row.user_cd === user_cd">
-            <td class="text-center text-body-1">
+            <td class="text-center text-body-1 text-no-wrap">
               <p v-if="row.user_cd == 'IND'">{{ row.user_nm }}</p>
               <p v-if="row.user_cd == 'JNT' && row.cbr_data.length > 0">{{ row.cbr_data[0].cbr_nm }} 외 {{row.cbr_cnt - 1}} 명</p>
             </td>
             <td class="text-center text-body-1 text-no-wrap">
               <div v-if="row.insr_year === '2000' && row.status_cd !== '10'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
-              <div v-else class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid, row.insr_year)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
+              <div v-else class="title cursor-pointer text-no-wrap" @click.prevent="onPageView(row.status_cd, row.insurance_uuid, row.insr_year)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
             <td class="text-center text-body-1 text-no-wrap">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">
@@ -85,8 +85,6 @@
             </template>
             <td class="text-center text-body-1">{{row.status_nm}}
             </td>
-
-
           </tr>
         </tbody>
         <tbody v-else>
@@ -139,6 +137,9 @@
   import router from "@/router";
   import { storeToRefs } from 'pinia';
   import { useAuthStore } from '@/stores';
+
+  import {useMobileStore} from "@/stores";
+  const checkMobile = useMobileStore();
 
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);

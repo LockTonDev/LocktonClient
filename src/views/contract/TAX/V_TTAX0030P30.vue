@@ -2,19 +2,20 @@
   <v-dialog persistent v-model="isOpenDialog" :width="isPdf ? '1000px' : '800px'" hide-overlay scrollable>
     <v-card>
       <v-card-title class="d-flex align-center justify-space-between">
-        <div class="text-h6 font-weight-medium">
+        <div class="text-h6 font-weight-medium line-height-1-0">
           보험가입증명서
-          <span class="text-20 text-red ml-2" v-if="insuranceDTO.user_cd === 'IND' && !isAdmin"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 생년월일(6자리) 입니다.</span>
-          <span class="text-20 text-red ml-2" v-if="insuranceDTO.user_cd === 'COR' && !isAdmin"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 사업자번호 뒤 5자리 입니다.</span>
+          <br v-if="checkMobile.isMobile"/>
+          <span :class="checkMobile.isMobile?'text-10 text-red ml-1':'text-20 text-red ml-2'"  v-if="insuranceDTO.user_cd === 'IND' && !isAdmin"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 생년월일(6자리) 입니다.</span>
+          <span :class="checkMobile.isMobile?'text-10 text-red ml-1':'text-20 text-red ml-2'"  v-if="insuranceDTO.user_cd === 'COR' && !isAdmin"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 사업자번호 뒤 5자리 입니다.</span>
         </div>
         <div class="d-flex justify-space-between align-end">
-          <v-btn v-if="isPdf" variant="flat" color="dark" @click="onExportPDF('down')">저장</v-btn>&nbsp;
-          <v-btn variant="outlined" color="dark" @click="close()">닫기</v-btn>
+          <v-btn :size="checkMobile.isMobile?'x-small':'default'" v-if="isPdf" variant="flat" color="dark" @click="onExportPDF('down')">저장</v-btn>&nbsp;
+          <v-btn :size="checkMobile.isMobile?'x-small':'default'" variant="outlined" color="dark" @click="close()">닫기</v-btn>
         </div>
       </v-card-title>
 
       <v-divider class="mb-0" />
-      <v-card-text class="pa-0">
+      <v-card-text :hidden="checkMobile.isMobile&&isPdf" class="pa-0">
         <!-- PDF 출력 영역 시작-->
         <div :class="isPdf ? 'd-none' : ''">
           <div id="printDiv" class="certificatePrintFrame-wrap">
@@ -136,7 +137,7 @@
                   </table>
                 </main>
                 <footer>
-                  <p class="text-13 line-height-1-4 mt-2">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
+                  <p class="text-13 line-height-1-4 mt-2 text-16">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
                   <div class="mt-5">
                     <img src="../../../assets/images/h-join-bottom.png" alt="" />
                   </div>
@@ -259,7 +260,7 @@
                   </table>
                 </main>
                 <footer>
-                  <p class="text-13 line-height-1-4 mt-2">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
+                  <p class="text-13 line-height-1-4 mt-2 text-16">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
                   <div class="mt-5">
                     <img src="../../../assets/images/h-join-bottom.png" alt="" />
                   </div>
@@ -312,7 +313,7 @@
                     </table>
                   </main>
                   <footer>
-                    <p class="text-13 line-height-1-4 mt-2">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
+                    <p class="text-13 line-height-1-4 mt-2 text-16">※ 본 가입증명서는 상기 피보험자가 세무사전문직업인배상책임보험에 가입하였음을 증명하며,<br />기타 자세한 사항에 대해서는 한국세무사회와 현대해상이 약정한 보험계약에 준함을 확인합니다.</p>
                     <div class="mt-5">
                       <img src="../../../assets/images/h-join-bottom.png" alt="" />
                     </div>
@@ -347,6 +348,9 @@ import html2pdf from 'html2pdf.js';
 import dayjs from 'dayjs';
 
 import '../../../assets/css/printpdf.css';
+
+import {useMobileStore} from "@/stores";
+const checkMobile = useMobileStore();
 
 const authStore = useAuthStore();
 const { _AUTH_ADMIN } = storeToRefs(authStore);

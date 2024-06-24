@@ -42,9 +42,9 @@
               </v-toolbar>
             
 
-              <v-window v-model="step">
+              <v-window v-model="step" disabled="true">
                 <v-window-item :value="1">
-                  <div class="v-box pa-10 pb-16">
+                  <div :class="checkMobile.isMobile?'v-box pa-4 pb-2':'v-box pa-10 pb-16'">
                     <div class="pb-2">
                   
                       <VCheckBoxWithValidation
@@ -119,8 +119,8 @@
 
                 <v-window-item :value="2">
                     <!-- 개인 시작 -->
-                    <v-row class="v-box pa-10" v-if="userDTO.user_cd === 'IND'">
-                      <v-col cols="12">
+                    <v-row :class="checkMobile.isMobile?'v-box pa-0':'v-box pa-10'" v-if="userDTO.user_cd === 'IND'">
+                      <v-col cols="12" class="px-1">
                         <v-row class="v-board-table">
                           <v-col cols="12" sm="12" class="v-col">
                             <div class="head-col">
@@ -129,7 +129,7 @@
                             </div>
                             <div class="data-col extend">
                               <VTextFieldWithValidation v-model="userDTO.user_hpno" name="user_hpno" placeholder="본인인증 확인" single-line density="comfortable" :disabled="true" />
-                              <v-btn variant="outlined" color="primary" class="ml-2" @click="isVerifyUserAuth()" :disabled="userDTO.user_hpno != ''" >본인인증</v-btn >
+                              <v-btn :size="checkMobile.isMobile?'small':'default'" variant="outlined" color="primary" class="ml-2" @click="isVerifyUserAuth()" :disabled="userDTO.user_hpno != ''" >본인인증</v-btn >
                               <div class="ml-2">
                                 <p :class="verifyHp.success ? 'text-info' : 'text-error'">
                                   {{ verifyHp.message }}
@@ -163,9 +163,8 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-
-                              <VTextFieldWithValidation v-model="userDTO.user_regno" name="user_regno" :label="'예) '+((businessCd != 'CAA') ? 1234567:1234)" single-line density="comfortable" :maskOption="{ mask: '#######' }" :disabled="verifyUserCostoms.success" />
-                              <v-btn variant="outlined" color="primary" class="ml-2" @click="isVerifyUserRegNo()" :disabled="verifyUserCostoms.success" >인증</v-btn >
+                              <VTextFieldWithValidation :style="checkMobile.isMobile?'width:100px':''" v-model="userDTO.user_regno" name="user_regno" :label="'예) '+((businessCd != 'CAA') ? 1234567:1234)" single-line density="comfortable" :maskOption="{ mask: '#######' }" :disabled="verifyUserCostoms.success" />
+                              <v-btn :size="checkMobile.isMobile?'small':'default'"  variant="outlined" color="primary" class="ml-2" @click="isVerifyUserRegNo()" :disabled="verifyUserCostoms.success" >인증</v-btn >
                               <div class="ml-2">
                                 <p :class=" verifyUserCostoms.success ? 'text-info' : 'text-error'">
                                   {{ verifyUserCostoms.message }}
@@ -182,7 +181,7 @@
                             </div>
                             <div class="data-col extend">
                               <VTextFieldWithValidation v-model="userDTO.user_email" name="user_email" placeholder="ex) user@locktonpi.com" single-line density="comfortable" maxlength="40"/>
-                              <v-btn variant="outlined" color="primary" class="ml-2" @click="isVerifyUserEMail()" :disabled="userDTO.is_user_email">중복확인</v-btn >
+                              <v-btn :size="checkMobile.isMobile?'small':'default'" variant="outlined" color="primary" class="ml-2" @click="isVerifyUserEMail()" :disabled="userDTO.is_user_email">중복확인</v-btn >
                               <div class="ml-2">
                                 <p :class="verifyEMail.success ? 'text-info' : 'text-error'">
                                   {{ verifyEMail.message }}
@@ -206,8 +205,8 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="userDTO.user_id" name="user_id" placeholder="아이디" single-line density="comfortable" maxlength="20"/>
-                              <v-btn variant="outlined" color="primary" class="ml-2" @click="isVerifyUserId()" :disabled="userDTO.is_user_id">중복확인</v-btn >
+                              <VTextFieldWithValidation :style="checkMobile.isMobile?'width:130px':''" v-model="userDTO.user_id" name="user_id" placeholder="아이디" single-line density="comfortable" maxlength="20"/>
+                              <v-btn :size="checkMobile.isMobile?'small':'default'" variant="outlined" color="primary" class="ml-1" @click="isVerifyUserId()" :disabled="userDTO.is_user_id">중복확인</v-btn >
                               <div class="mt-1 flex-grow-1">
                                 <p :class=" verifyUser.success ? 'text-info' : 'text-error'">
                                  {{ verifyUser.message }}
@@ -323,8 +322,8 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="userDTO.corp_post" name="corp_post" label="우편번호" single-line density="comfortable" :readonly="true" />
-                              <v-btn variant="outlined" color="primary" @click="isDaumPostDialog = true" class="ml-2" >사무소 주소검색</v-btn >
+                              <VTextFieldWithValidation :style="checkMobile.isMobile?'width:80px':''" v-model="userDTO.corp_post" name="corp_post" label="우편번호" single-line density="comfortable" :readonly="true" />
+                              <v-btn :size="checkMobile.isMobile?'small':'default'" variant="outlined" color="primary" @click="isDaumPostDialog = true" class="ml-2" >사무소 주소검색</v-btn >
                               <v-divider class="border-0" />
                               <VTextFieldWithValidation v-model="userDTO.corp_addr" name="corp_addr" label="주소" single-line density="comfortable" class="w-full" :readonly="true"/>
                               <VTextFieldWithValidation v-model="userDTO.corp_addr_dtl" name="corp_addr_dtl" label="상세주소" single-line density="comfortable" class="w-full" maxlength="25" />
@@ -352,8 +351,8 @@
                   <!-- 개인 종료 -->
                   
                   <!-- 법인 시작-->
-                  <v-row class="v-box pa-10"  v-if="userDTO.user_cd === 'COR' || userDTO.user_cd === 'JNT'">
-                    <v-col cols="12">
+                  <v-row :class="checkMobile.isMobile?'v-box pa-0':'v-box pa-10'"  v-if="userDTO.user_cd === 'COR' || userDTO.user_cd === 'JNT'">
+                    <v-col cols="12" class="px-1">
                       <v-row class="v-board-table">
                         <v-col cols="12" sm="12" class="v-col">
                           <div class="head-col">
@@ -546,7 +545,7 @@
                           
                           <div class="data-col extend">
                             <VTextFieldWithValidation v-model="userDTO.user_email" name="user_email" label="ex) user@locktonpi.com" single-line density="comfortable" maxlength="40"/>
-                            <v-btn variant="outlined" color="primary" class="ml-2" @click="isVerifyUserEMail()" :disabled="userDTO.is_user_email">중복확인</v-btn >
+                            <v-btn :size="checkMobile.isMobile?'small':'default'" variant="outlined" color="primary" class="ml-2" @click="isVerifyUserEMail()" :disabled="userDTO.is_user_email">중복확인</v-btn >
                             <div class="ml-2">
                               <p :class="verifyEMail.success ? 'text-info' : 'text-error'">
                                 {{ verifyEMail.message }}
@@ -560,8 +559,8 @@
                             <sup class="text-error">*</sup>
                           </div>
                           <div class="data-col">
-                            <VTextFieldWithValidation v-model="userDTO.corp_post" name="corp_post" placeholder="우편번호" single-line density="comfortable"  :readonly="true"/>
-                            <v-btn variant="outlined"  color="primary" @click="isDaumPostDialog=true" class="ml-2">사무소 주소검색</v-btn>
+                            <VTextFieldWithValidation :style="checkMobile.isMobile?'width:80px':''" v-model="userDTO.corp_post" name="corp_post" placeholder="우편번호" single-line density="comfortable"  :readonly="true"/>
+                            <v-btn :size="checkMobile.isMobile?'small':'default'" variant="outlined"  color="primary" @click="isDaumPostDialog=true" class="ml-2">사무소 주소검색</v-btn>
                             <v-divider class="border-0"/>
                             <VTextFieldWithValidation v-model="userDTO.corp_addr" name="corp_addr" placeholder="주소" single-line density="comfortable" class="w-full" :readonly="true"/>
                             <VTextFieldWithValidation v-model="userDTO.corp_addr_dtl" name="corp_addr_dtl" placeholder="상세주소" single-line density="comfortable" class="w-full" maxlength="25"/>
@@ -593,7 +592,7 @@
                 <v-row>
                   <v-col cols="12" class="d-flex justify-center pa-0">
                     <v-card class="w-sm-600 v-box-table mt-4 mb-12 text-center">
-                      <v-card-text class="px-14 py-16">
+                      <v-card-text :class="checkMobile.isMobile?'px-12 py-4':'px-14 py-16'">
                         <v-avatar color="success" size="x-large">
                           <vue-feather type="check" class="feather-xlg"></vue-feather>
                         </v-avatar>
@@ -606,7 +605,7 @@
                               <div class="head-col justify-center">
                                 <p class="py-2">이름</p>
                               </div>
-                              <div class="data-col ml-16">
+                              <div :class="checkMobile.isMobile?'data-col ml-2':'data-col ml-16'">
                                 <p class="py-2">{{ userDTO.user_nm }}</p>
                               </div>
                             </v-col>
@@ -614,7 +613,7 @@
                               <div class="head-col justify-center">
                                 <p class="py-2">아이디</p>
                               </div>
-                              <div class="data-col ml-16">
+                              <div :class="checkMobile.isMobile?'data-col ml-2':'data-col ml-16'">
                                 <p class="py-2">{{ userDTO.user_id }}</p>
                               </div>
                             </v-col>
@@ -750,9 +749,11 @@ import TermsOfCreditInfo from '@/components/TermsOfCreditInfo.vue';
 import { MessageBoxDTO, CommonCode } from '@/model';
 import MessageBox from '@/components/MessageBox.vue';
 
-
 import apiUser from '../../api/api/user.api';
 import G_ITEMS from '../json/itemsData.json';
+
+import {useMobileStore} from "@/stores";
+const checkMobile = useMobileStore();
 
 const authStore = useAuthStore();
 const { _AUTH_USER } = storeToRefs(authStore);

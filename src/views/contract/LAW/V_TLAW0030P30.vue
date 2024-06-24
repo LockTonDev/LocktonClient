@@ -2,19 +2,20 @@
   <v-dialog persistent v-model="isOpenDialog" :width="isPdf ? '1000px' : '800px'" hide-overlay scrollable>
     <v-card>
       <v-card-title class="d-flex align-center justify-space-between certificate-font">
-        <div class="text-h6 font-weight-medium">
+        <div class="text-h6 font-weight-medium line-height-1-0">
           보험가입증명서
-          <span class="text-20 text-red ml-2" v-if="insuranceDTO.user_cd === 'IND' && !isAdmin"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 생년월일(6자리) 입니다.</span>
-          <span class="text-20 text-red ml-2" v-if="insuranceDTO.user_cd === 'JNT' && !isAdmin"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 사업자번호 뒤 5자리 입니다.</span>
+          <br v-if="checkMobile.isMobile"/>
+          <span :class="checkMobile.isMobile?'text-10 text-red ml-1':'text-20 text-red ml-2'" v-if="insuranceDTO.user_cd === 'IND' && !isAdmin"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 생년월일(6자리) 입니다.</span>
+          <span :class="checkMobile.isMobile?'text-10 text-red ml-1':'text-20 text-red ml-2'" v-if="insuranceDTO.user_cd === 'JNT' && !isAdmin"><i class="mdi mdi-alert-circle-outline mr-1"></i>비밀번호는 가입하신 사업자번호 뒤 5자리 입니다.</span>
         </div>
         <div class="d-flex justify-space-between align-end">
-          <v-btn v-if="isPdf" variant="flat" color="dark" @click="onExportPDF('down')">저장</v-btn>&nbsp;
-          <v-btn variant="outlined" color="dark" @click="close()">닫기</v-btn>
+          <v-btn :size="checkMobile.isMobile?'x-small':'default'" v-if="isPdf" variant="flat" color="dark" @click="onExportPDF('down')">저장</v-btn>&nbsp;
+          <v-btn :size="checkMobile.isMobile?'x-small':'default'" variant="outlined" color="dark" @click="close()">닫기</v-btn>
         </div>
       </v-card-title>
 
       <v-divider class="mb-0" />
-      <v-card-text class="pa-0">
+      <v-card-text :hidden="checkMobile.isMobile&&isPdf"  class="pa-0">
         <!-- PDF 출력 영역 시작-->
         <div :class="isPdf ? 'd-none' : ''">
           <div id="printDiv" class="newCertificatePrintFrame-wrap">
@@ -119,7 +120,8 @@
                     </tr>
                     <tr>
                       <th colspan="5" style="border-right: 1px solid #000;">특별약관</th>
-                      <td colspan="10" class="line-height-1-4" style="border-right: 1px solid #000; font-size: 10px">사무원의 부정직(또는 사기행위) 확장 조항 </td>
+                      <td colspan="10" class="line-height-1-4" style="border-right: 1px solid #000; font-size: 10px">사무원의 부정직(또는 사기행위) 확장 조항<br/>(Dishonesty
+                        Extension) </td>
                       <th colspan="5" style="border-right: 1px solid #000;">소급담보일</th>
                       <td colspan="10" >{{ insuranceDTO.spct_data.insr_retr_dt }} </td>
                     </tr>
@@ -292,6 +294,9 @@ import dayjs from 'dayjs';
 
 import '../../../assets/css/printpdf.css';
 
+import {useMobileStore} from "@/stores";
+const checkMobile = useMobileStore();
+
 const authStore = useAuthStore();
 const { _AUTH_ADMIN } = storeToRefs(authStore);
 const isAdmin = _AUTH_ADMIN.value === null ? false: true;
@@ -407,6 +412,8 @@ onMounted(async () => {
     const resultData = await apiLAW0030a.getDBSel(params, isAdmin);
     //insuranceDTO.value = resultData.data[0];
     Object.assign(insuranceDTO.value, resultData.data[0]);
+    const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
+    insuranceDTO.value.cbr_cnt = filter1.length;
     // console.log(insuranceDTO.value);
   } else {
   }

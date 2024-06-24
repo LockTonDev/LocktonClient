@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import { onMounted, watch, defineEmits, ref } from "vue";
 
+  import {useMobileStore} from "@/stores";
+  const checkMobile = useMobileStore();
  
   const agr_yn = ref({agr40_yn:'N', agr41_yn:'N'});
   const isReadonly = ref(false);
@@ -41,25 +43,25 @@
   <v-dialog persistent v-model="isOpenDialog" width="1000px" hide-overlay scrollable>
     <v-card>
       <v-card-title class="d-flex align-center justify-space-between">
-          <div class="text-h6 font-weight-medium">
+          <div class="text-h6 font-weight-medium text-wrap">
             변호사전문인배상책임보험 상품설명 확인서 <span class="text-18">(피보험자 변호사 확인)</span>
           </div>
       </v-card-title>   
 
       <v-divider class="mb-0"/>
-      <v-card-text class="px-10 pt-8 pb-14">
+      <v-card-text :class="checkMobile.isMobile?'px-2 pt-4 pb-4':'px-10 pt-8 pb-14'">
         <ul class="list-style-type-none font-weight-medium">
           <li>보험계약자	:	대한변호사협회 </li>
         </ul>
         <div class="v-board-table mt-4 d-flex justify-space-between">
-          <p class="pa-4 pr-0">변호사전문인배상책임보험의 주요사항에 대해 록톤컴퍼니즈코리아로부터 충분히 설명 받고 양지하였음을 확인합니다.<br/> 설명 받았다는 사실을 “확인” 란에 체크 해주시기 바랍니다.</p>
-          <p class="pa-4 text-center">
+          <p :class="checkMobile.isMobile?'pa-2 pr-0 text-16':'pa-4 pr-0'">변호사전문인배상책임보험의 주요사항에 대해 록톤컴퍼니즈코리아로부터 충분히 설명 받고 양지하였음을 확인합니다.<br/> 설명 받았다는 사실을 “확인” 란에 체크 해주시기 바랍니다.</p>
+          <p :class="checkMobile.isMobile?'pa-0 text-center w-100 d-flex':'pa-4 text-center'">
             <v-checkbox v-model="agr_yn.agr41_yn" true-value="Y" false-value="N" hide-details label="확인" :disabled="isReadonly"/>
           </p>
         </div>
         <div class="v-board-table">
           <table class="w-100">
-            <col style="width:80px"/>
+            <col :style="checkMobile.isMobile?'width:65px':'width:80px'"/>
             <col style="width:auto"/>
             <thead>
               <tr>
@@ -138,7 +140,13 @@
   
 <style scoped>
 .v-board-table{border-bottom: none;}
-.v-board-table tr th {font-size: 16px !important;padding: 14px 20px;text-align: left;border-bottom:1px solid #e9e9e9;text-align: center;}
-.v-board-table tr td {font-size:14px;padding: 14px 20px;text-align: left;border-bottom:1px solid #e9e9e9;}
+@media screen and (min-width:960px) {
+  .v-board-table tr th {font-size: 16px !important;padding: 14px 20px;text-align: left;border-bottom:1px solid #e9e9e9;text-align: center;}
+  .v-board-table tr td {font-size:14px;padding: 14px 20px;text-align: left;border-bottom:1px solid #e9e9e9;}
+}
+@media screen and (max-width:959px) {
+  .v-board-table tr th {font-size: 12px !important;padding: 14px 20px;text-align: left;border-bottom:1px solid #e9e9e9;text-align: center;}
+  .v-board-table tr td {font-size:10px;padding: 14px 20px;text-align: left;border-bottom:1px solid #e9e9e9;}
+}
 .v-board-table tr {border:none;}
 </style>
