@@ -242,6 +242,15 @@
                               <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" placeholder="이메일" single-line />
                             </div>
                           </v-col>
+                          <v-col cols="12" sm="4" class="v-col">
+                            <div class="head-col">
+                              <p>유지식별번호</p>
+                              <sup class="text-error">*</sup>
+                            </div>
+                            <div class="data-col">
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유지식별번호" single-line />
+                            </div>
+                          </v-col>
                           <v-col cols="12" sm="12" class="v-col">
                             <div class="head-col">
                               <p>사무소 주소<sup class="text-error">*</sup></p>
@@ -347,7 +356,7 @@
                               <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" placeholder="이메일" single-line />
                             </div>
                           </v-col>
-                          <v-col cols="12" sm="12" class="v-col">
+                          <v-col cols="12" sm="4" class="v-col">
                             <div class="head-col">
                               <p>소속 지방회</p>
                               <sup class="text-error">*</sup>
@@ -356,7 +365,15 @@
                               <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" density="compact" single-line></VSelectWithValidation>
                             </div>
                           </v-col>
-
+                          <v-col cols="12" sm="4" class="v-col">
+                            <div class="head-col">
+                              <p>유지식별번호</p>
+                              <sup class="text-error">*</sup>
+                            </div>
+                            <div class="data-col">
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유지식별번호" single-line />
+                            </div>
+                          </v-col>
                           <v-col cols="12" sm="12" class="v-col">
                             <div class="head-col">
                               <p>사무소 주소<sup class="text-error">*</sup></p>

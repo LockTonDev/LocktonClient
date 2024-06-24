@@ -2418,6 +2418,9 @@ onMounted(async () => {
   insuranceDTO.value.insurance_uuid = '';
 
 
+  console.log("INSR_RETR_DT_TODAY",INSR_RETR_DT_TODAY)
+  console.log("insuranceRateDTO.value.insr_st_dt",insuranceRateDTO.value.insr_st_dt)
+  console.log("TODAY",TODAY)
   if (INSR_RETR_DT_TODAY < insuranceRateDTO.value.insr_st_dt) {
     INSR_RETR_DT_TODAY = insuranceRateDTO.value.insr_st_dt
   }
@@ -2426,6 +2429,9 @@ onMounted(async () => {
     TODAY = insuranceRateDTO.value.insr_st_dt
   }
 
+  console.log("INSR_RETR_DT_TODAY",INSR_RETR_DT_TODAY)
+  console.log("insuranceRateDTO.value.insr_st_dt",insuranceRateDTO.value.insr_st_dt)
+  console.log("TODAY",TODAY)
   /**
    * 갱신가입
    * 
