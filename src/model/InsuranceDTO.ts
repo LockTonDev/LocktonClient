@@ -81,7 +81,6 @@ class CBRDataDTO {
     this.insr_base_amt = data.insr_base_amt || 0;
     this.isCheck = false;
     this.status_cd = data.status_cd || '';
-    this.isCheck = false;
   }
 }
 

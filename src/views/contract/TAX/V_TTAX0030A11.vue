@@ -700,6 +700,49 @@
                       >
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
                         >공동보험 미적용 선택 시 기준보험료 50% 할증 (보험료표 참조)
+                        <v-tooltip activator="parent" location="top">
+                          &check; 지급보험금 예시
+                          <v-divider class="my-1"/>
+                          <table class="tooltip-table mt-4 text-center" style="width: 620px; ">
+                            <colgroup>
+                              <col style="width: auto"/>
+                              <col style="width: 33.333%"/>
+                              <col style="width: 33.333%"/>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                              <th>공동보험비율</th>
+                              <th>미적용 (0%)</th>
+                              <th class="border-right-0">적용 (15.5% ~ 30.5%)</th>
+                            </tr>
+                            <tr>
+                              <td class="border-left-0">보험사 지급 비율</td>
+                              <td>보험사 100% 지급</td>
+                              <td class="border-right-0">보험사 84.5% ~ 69.5% 지급</td>
+                            </tr>
+                            </tbody>
+                            <tbody>
+                            <tr>
+                              <td colspan="3" class="bg-background border-right-0">
+                                <p class="color-primary text-14">손해배상액이 3천5백만원으로 확정된 경우 예상 보험금은?</p>
+                                <p class="color-gray-shadow">(보상한도 5천만원/자기부담금 2백만원 조건 가입시)</p>
+                                <p class="mt-4">손해배상액 3500만원 - 자기부담금 2백만원 = <span class="text-12">33,000,000원</span></p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="border-left-0">수령보험금</td>
+                              <td>
+                                <p>33,000,000원</p>
+                                <p class="color-gray-shadow">(전액수령)</p>
+                              </td>
+                              <td>
+                                <p>22,935,000원</p>
+                                <p class="color-gray-shadow">(10,065,000원 차감 -30.5% 적용)</p>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </v-tooltip>
                       </p>
                     </div>
                   </v-col>
@@ -739,6 +782,13 @@
                           >1억원</v-btn
                         >
                         <v-btn
+                            v-if="insuranceDTO.user_cd === 'COR'"
+                            color="primary"
+                            class="flex-grow-1"
+                            value="150000000|1억5천만원"
+                        >2억원</v-btn
+                        >
+                        <v-btn
                           v-if="insuranceDTO.user_cd === 'IND'"
                           color="primary"
                           class="flex-grow-1"
@@ -746,6 +796,12 @@
                           style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >2억원</v-btn
                         >
+                        <v-btn
+                            v-if="insuranceDTO.user_cd === 'IND'"
+                            color="primary"
+                            class="flex-grow-1"
+                            value="250000000|2억5천만원"
+                        >2억5천만원</v-btn>
                       </v-btn-toggle>
                       <p class="text-caption font-weight-light color-gray mt-2">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>1
@@ -1520,6 +1576,8 @@
   overflow-y: scroll;
 }
 .v-stepbox .v-tabs .v-btn.v-btn--disabled {opacity: 1;}
+
+
 </style>
 
 <script setup lang="ts">
@@ -2379,6 +2437,9 @@ onMounted(async () => {
   insuranceDTO.value.insurance_uuid = '';
 
 
+  console.log("INSR_RETR_DT_TODAY",INSR_RETR_DT_TODAY)
+  console.log("insuranceRateDTO.value.insr_st_dt",insuranceRateDTO.value.insr_st_dt)
+  console.log("TODAY",TODAY)
   if (INSR_RETR_DT_TODAY < insuranceRateDTO.value.insr_st_dt) {
     INSR_RETR_DT_TODAY = insuranceRateDTO.value.insr_st_dt
   }
@@ -2387,6 +2448,9 @@ onMounted(async () => {
     TODAY = insuranceRateDTO.value.insr_st_dt
   }
 
+  console.log("INSR_RETR_DT_TODAY",INSR_RETR_DT_TODAY)
+  console.log("insuranceRateDTO.value.insr_st_dt",insuranceRateDTO.value.insr_st_dt)
+  console.log("TODAY",TODAY)
   /**
    * 갱신가입
    * 
@@ -2443,7 +2507,7 @@ onMounted(async () => {
     // 보험료 기준정보 셋팅
     insuranceDTO.value.status_cd = '10' // 신청
     insuranceDTO.value.insr_retr_yn = 'N'; // 소금담보수기보정 X
-    insuranceDTO.value.insr_pblc_brdn_rt = '0|공동보험 적용'; // 초기값
+    // insuranceDTO.value.insr_pblc_brdn_rt = '0|공동보험 적용'; // 초기값
     insuranceDTO.value.insr_pcnt_sale_rt = 0; // 초기값
 
     insuranceDTO.value.insr_year = insuranceRateDTO.value.base_year;
