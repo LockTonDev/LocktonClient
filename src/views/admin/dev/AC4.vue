@@ -32,11 +32,6 @@
           <li>
           <span>갱신여부</span>
           <v-select v-model="searchParams.data['renewal_cd']" :items="searchRenewalCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
-
-          </li>
-          <li>
-          <span>갱신여부</span>
-          <v-select v-model="searchParams.data['renewal_cd']" :items="searchRenewalCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
           </li>
           <li class="ml-auto">
           <v-btn variant="flat" @click="fnSearch()">조회</v-btn>
@@ -175,6 +170,7 @@
                           <VTextFieldWithValidation v-model="insuranceDTO.user_regno" name="user_regno" placeholder="등록번호" single-line :maskOption="{ mask: '#######' }" type="date" />
                         </div>
                       </v-col>
+
                       <v-col cols="12" sm="4" class="v-col">
                         <div class="head-col">
                           <p>휴대전화</p>
@@ -185,7 +181,6 @@
                         </div>
                       </v-col>
 
-
                       <v-col cols="12" sm="4" class="v-col">
                         <div class="head-col">
                           <p>사무소명</p>
@@ -195,6 +190,7 @@
                           <VTextFieldWithValidation v-model="insuranceDTO.corp_nm" name="corp_nm" placeholder="사무소명" single-line maxlength="20" />
                         </div>
                       </v-col>
+
                       <v-col cols="12" sm="4" class="v-col">
                         <div class="head-col">
                           <p>사업자번호</p>
@@ -251,6 +247,7 @@
                           <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" placeholder="이메일" single-line />
                         </div>
                       </v-col>
+
                       <v-col cols="12" sm="4" class="v-col">
                         <div class="head-col">
                           <p>갱신여부</p>
@@ -263,11 +260,11 @@
 
                       <v-col cols="12" sm="4" class="v-col">
                         <div class="head-col">
-                          <p>유지식별번호</p>
+                          <p>유저식별번호</p>
                           <sup class="text-error">*</sup>
                         </div>
                         <div class="data-col">
-                          <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유지식별번호" single-line />
+                          <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유저식별번호" single-line />
                         </div>
                       </v-col>
 
@@ -397,11 +394,11 @@
 
                       <v-col cols="12" sm="4" class="v-col">
                         <div class="head-col">
-                          <p>유지식별번호</p>
+                          <p>유저식별번호</p>
                           <sup class="text-error">*</sup>
                         </div>
                         <div class="data-col">
-                          <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유지식별번호" single-line />
+                          <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유저식별번호" single-line />
                         </div>
                       </v-col>
 
@@ -859,14 +856,12 @@ import VSelectWithValidation from '@/components/VSelectWithValidation.vue';
 import VCheckBoxWithValidation from '@/components/VCheckBoxWithValidation.vue';
 import apiADMIN from '@/api/api/A_ADMIN';
 import apiCOMMON from '@/api/api/A_COMMON';
-
 import {
   DOWNLOAD_EXCEL,
   DOWNLOAD_RENEWAL_EXCEL,
   UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND, UPLOAD_EXCEL_INSURANCE_ADV_TRE_JNT, UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR_RENEWAL,
   UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND_RENEWAL
 } from "@/util/excelupdn";
-
 
 const route = useRoute();
 
@@ -1127,6 +1122,9 @@ async function initPage() {
 
 async function downloadAsExcel() {
 
+  // alert("작업예정");
+  // return false;
+
   let businessCdNm = businessCdItems.value.find(items => items.value == searchParams.value.data.business_cd).title;
   let insrYearCdNm = insrYearCdItems.value.find(items => items.value == searchParams.value.data.insr_year).title;
   let userCdNm = userCdItems.value.find(items => items.value == searchParams.value.data.user_cd).title;
@@ -1151,6 +1149,7 @@ async function downloadAsExcel() {
       }
 
       searchParams.value.data['excel_filenm'] = fileNm;
+
 
       if (resultData.data.length == 0) {
         messageBoxDTO.value.setInfo('Excel', '데이타가 없습니다. 검색조건을 확인하세요.');
@@ -1246,7 +1245,6 @@ async function fnExcelUpload(user_cd: string) {
   if (user_cd === 'IND') fileInputIND.value.click();
   if (user_cd === 'COR') fileInputCOR.value.click();
   if (user_cd === 'JNT') fileInputJNT.value.click();
-
 }
 
 

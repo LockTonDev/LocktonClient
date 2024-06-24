@@ -84,7 +84,6 @@ const ROW_MAPPERS = {
   PAT_IND_RENEWAL: mapperRow_PAT_IND_RENEWAL,
   PAT_JNT_RENEWAL: mapperRow_PAT_JNT_RENEWAL,
   PAT_COR_RENEWAL: mapperRow_PAT_COR_RENEWAL,*/
-
 };
 
 /**
@@ -1796,7 +1795,6 @@ function mapperRow_TAX_IND_RENEWAL(excelMapper: object, excelDataRow: any) {
   let row = {};
   row[excelMapper.순번] = insuranceDTO.index + 1;
   row[excelMapper.보험식별번호] = insuranceDTO.insurance_uuid;
-
   row[excelMapper.증권년도] = insuranceDTO.insr_year;
   row[excelMapper.갱신여부] = insuranceDTO.renewal_cd_nm;
   row[excelMapper.이름] = insuranceDTO.user_nm;
@@ -1838,10 +1836,8 @@ function mapperRow_TAX_COR_RENEWAL(excelMapper: object, excelDataRow: any) {
   let row = {};
   row[excelMapper.순번] = insuranceDTO.index + 1;
   row[excelMapper.보험식별번호] = insuranceDTO.insurance_uuid;
-
   row[excelMapper.증권년도] = insuranceDTO.insr_year;
   row[excelMapper.갱신여부] = insuranceDTO.renewal_cd_nm;
-
   row[excelMapper.법인명] = insuranceDTO.user_nm;
   row[excelMapper.대표자성명] = insuranceDTO.corp_ceo_nm;
   row[excelMapper.피보험자] = insuranceDTO.user_nm;
@@ -1856,7 +1852,6 @@ function mapperRow_TAX_COR_RENEWAL(excelMapper: object, excelDataRow: any) {
   row[excelMapper.소속지방회] = insuranceDTO.corp_region_cd;
   row[excelMapper.법인소급담보일] = insuranceDTO.insr_retr_dt;
   row[excelMapper.공동보험] = insuranceDTO.insr_pblc_brdn_rt?.getValueBySplit(1);
-
   row[excelMapper.보상한도] = insuranceDTO.insr_clm_lt_amt?.getValueBySplit(1);
   row[excelMapper.보상한도_총한도] = insuranceDTO.insr_year_clm_lt_amt;
   row[excelMapper.자기부담금] = insuranceDTO.insr_psnl_brdn_amt?.getValueBySplit(1);
@@ -3060,48 +3055,12 @@ function mapperRow_LAW_JNT(excelMapper: object, excelDataRow: any) {
   row[excelMapper.이메일] = insuranceDTO.corp_cust_email;
   row[excelMapper.총입금액] = insuranceDTO.insr_tot_paid_amt;
   row[excelMapper.차액] = insuranceDTO.insr_tot_unpaid_amt;
-
-  try {
-    row[excelMapper.입금구분1] = trxCdItems.find(item => item.value == insuranceDTO?.trx_data[0]?.trx_cd).title;
-  } catch (e) {
-    row[excelMapper.입금구분1] = '';
-    // console.log(e);
-  }
-
-  let result = insuranceDTO?.trx_data.filter(item => item.trx_cd != 'RE');
-  let relief_trx_data = insuranceDTO?.trx_data.filter(item => item.trx_cd == 'RE');
-  console.log(result)
-  console.log(relief_trx_data)
-  if(relief_trx_data.length > 0){
-    row[excelMapper.지원금입금액] = relief_trx_data[0].trx_amt;
-    row[excelMapper.지원금입금일자] = relief_trx_data[0].trx_dt;
-  }
-
-  row[excelMapper.입금금액1] = result[0]?.trx_amt;
-  row[excelMapper.처리일자1] = result[0]?.trx_dt;
-  row[excelMapper.비고1] = result[0]?.rmk;
-  row[excelMapper.예금주명1] = result[0]?.acct_nm;
-
-  // console.log('row[excelMapper.특약가입여부]',row[excelMapper.특약가입여부])
-  try {
-    row[excelMapper.입금구분2] = trxCdItems.find(item => item.value == result[1]?.trx_cd).title;
-  } catch (e) {
-    row[excelMapper.입금구분2] = '';
-    // console.log(e);
-  }
-
-  row[excelMapper.입금금액2] = result[1]?.trx_amt;
-  row[excelMapper.처리일자2] = result[1]?.trx_dt;
-  row[excelMapper.비고2] = result[1]?.rmk;
-  row[excelMapper.예금주명2] = result[1]?.acct_nm;
   row[excelMapper.ERP시작일] = insuranceDTO.erp_st_dt;
   row[excelMapper.ERP종료일] = insuranceDTO.erp_cncls_dt;
   row[excelMapper.ERP보험료] = insuranceDTO.erp_amt;
   row[excelMapper.ERP납입일] = insuranceDTO.erp_dt;
   row[excelMapper.변경일자] = insuranceDTO.change_dt;
   row[excelMapper.변경내용] = insuranceDTO.change_rmk;
-  return [row];
-}
 
   let trxIndex = 0;
 
@@ -3177,7 +3136,6 @@ function mapperRow_LAW_JNT(excelMapper: object, excelDataRow: any) {
     rows.push(subRow);
   }
   return rows;
-
 }
 
 
