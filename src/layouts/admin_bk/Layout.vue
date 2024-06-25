@@ -11,13 +11,14 @@
       <v-main class="admin-wrapper">
         
         <!-- 상단영역 ( 로고 )-->
-        <Header />
+<!--        <Header />-->
 
         <!-- 메뉴영역  -->
-        <!-- <Sidebar /> -->
+        <Sidebar />
   
         <!-- 컨텐츠 영역 -->
         <v-container class="admin-container-wrapper">
+
           <div class="maxWidth">
             <RouterView />
           </div>

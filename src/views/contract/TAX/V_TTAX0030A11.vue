@@ -700,6 +700,49 @@
                       >
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
                         >공동보험 미적용 선택 시 기준보험료 50% 할증 (보험료표 참조)
+                        <v-tooltip activator="parent" location="top">
+                          &check; 지급보험금 예시
+                          <v-divider class="my-1"/>
+                          <table class="tooltip-table mt-4 text-center" style="width: 620px; ">
+                            <colgroup>
+                              <col style="width: auto"/>
+                              <col style="width: 33.333%"/>
+                              <col style="width: 33.333%"/>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                              <th>공동보험비율</th>
+                              <th>미적용 (0%)</th>
+                              <th class="border-right-0">적용 (15.5% ~ 30.5%)</th>
+                            </tr>
+                            <tr>
+                              <td class="border-left-0">보험사 지급 비율</td>
+                              <td>보험사 100% 지급</td>
+                              <td class="border-right-0">보험사 84.5% ~ 69.5% 지급</td>
+                            </tr>
+                            </tbody>
+                            <tbody>
+                            <tr>
+                              <td colspan="3" class="bg-background border-right-0">
+                                <p class="color-primary text-14">손해배상액이 3천5백만원으로 확정된 경우 예상 보험금은?</p>
+                                <p class="color-gray-shadow">(보상한도 5천만원/자기부담금 2백만원 조건 가입시)</p>
+                                <p class="mt-4">손해배상액 3500만원 - 자기부담금 2백만원 = <span class="text-12">33,000,000원</span></p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="border-left-0">수령보험금</td>
+                              <td>
+                                <p>33,000,000원</p>
+                                <p class="color-gray-shadow">(전액수령)</p>
+                              </td>
+                              <td>
+                                <p>22,935,000원</p>
+                                <p class="color-gray-shadow">(10,065,000원 차감 -30.5% 적용)</p>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </v-tooltip>
                       </p>
                     </div>
                   </v-col>
@@ -721,31 +764,44 @@
                           color="primary"
                           class="flex-grow-1"
                           value="30000000|3천만원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >3천만원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
                           value="50000000|5천만원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >5천만원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
                           value="100000000|1억원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >1억원</v-btn
+                        >
+                        <v-btn
+                            v-if="insuranceDTO.user_cd === 'COR'"
+                            color="primary"
+                            class="flex-grow-1"
+                            value="150000000|1억5천만원"
+                        >1억5천만원</v-btn
                         >
                         <v-btn
                           v-if="insuranceDTO.user_cd === 'IND'"
                           color="primary"
                           class="flex-grow-1"
                           value="200000000|2억원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >2억원</v-btn
                         >
+                        <v-btn
+                            v-if="insuranceDTO.user_cd === 'IND'"
+                            color="primary"
+                            class="flex-grow-1"
+                            value="250000000|2억5천만원"
+                        >2억5천만원</v-btn>
                       </v-btn-toggle>
                       <p class="text-caption font-weight-light color-gray mt-2">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>1
@@ -1128,7 +1184,11 @@
                               >닫기</v-btn
                             >
                             <!-- 보험 약관 확인-->
-                            <TermsOfPolicy></TermsOfPolicy>
+                            <TermsOfPolicy
+                                :pdf_file_name=pdfFileName
+                                v-if="dialog2"
+                                @close="dialog2 = false"
+                            ></TermsOfPolicy>
                           </v-dialog>
                         </v-btn>
                       </td>
@@ -1164,6 +1224,7 @@
                           :agr32_yn="insuranceDTO.agr32_yn"
                           :agr33_yn="insuranceDTO.agr33_yn"
                           :agr34_yn="insuranceDTO.agr34_yn"
+                          :insurance_dto="insuranceDTO"
                           :isReadonly="isReadOnlyAll"
                           v-if="isTermsOfContractDialog"
                           @close="onTermsOfContractClose"
@@ -1222,7 +1283,10 @@
                     이 보험상품은 한국세무사회를 단체계약자, 가입 회원을
                     피보험자로 하는 단체계약 프로그램입니다.
                   </li>
-                  <li>
+                  <li v-if="insuranceDTO.insr_year=='2024'&& insuranceDTO.business_cd">
+                    보험회사 : DB손해보험㈜ <template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>보험중개사 : 록톤컴퍼니즈코리아손해보험중개(주)
+                  </li>
+                  <li v-else>
                     보험회사 : 현대해상화재보험㈜ <template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>보험중개사 : 록톤컴퍼니즈코리아손해보험중개(주)
                   </li>
                   <li>
@@ -1420,7 +1484,7 @@
           </p>
           <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'IND'">
             <i class="mdi mdi-alert-circle-outline mr-1"></i
-            ><span class="color-primary">변호사 성명과 등록번호</span>를 함께
+            ><span class="color-primary">세무사 성명과 등록번호</span>를 함께
             기재하여 송금해주시기 바랍니다.
           </p>
           <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'COR'">
@@ -1494,7 +1558,9 @@
       </v-card-title>
       <v-divider class="ma-0"/>
       <v-card-text class="pa-0">
-        <V_TTAX0030P10 />
+        <V_TTAX0030P10
+          :baseYear =insuranceDTO.insr_year
+        />
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -1520,6 +1586,8 @@
   overflow-y: scroll;
 }
 .v-stepbox .v-tabs .v-btn.v-btn--disabled {opacity: 1;}
+
+
 </style>
 
 <script setup lang="ts">
@@ -1568,7 +1636,7 @@ const isReadOnlyAll = ref(false);
 const isDuplication = ref(false);
 const renewalYN = ref('N');
 const insuranceUUID = ref('');
-
+const pdfFileName=ref('세무사_보험약관.pdf');
 const INSR_RATE_TABLE = ref([]);
 const INSR_RATE_MAX_DAYS = ref(0);
 
@@ -2276,6 +2344,33 @@ watch(
   }
 );
 
+/* 소속 지방회*/
+watch(() => [
+  insuranceDTO.value.corp_region_cd,
+], (newValue, oldValue) => {
+  if (regionCdItems.value.length > 0 && newValue[0]!=null) {
+    insuranceDTO.value.corp_region_nm = regionCdItems.value.filter(item => item.value == newValue[0])[0].title
+  }
+})
+
+/* 소속 팩스번호*/
+watch(() => [
+  insuranceDTO.value.corp_faxno1,
+  insuranceDTO.value.corp_faxno2,
+  insuranceDTO.value.corp_faxno3,
+], (newValue) => {
+  insuranceDTO.value.corp_faxno = newValue[0] + '-' + newValue[1] + '-' + newValue[2]
+})
+
+/* 소속 전화번호*/
+watch(() => [
+  insuranceDTO.value.corp_telno1,
+  insuranceDTO.value.corp_telno2,
+  insuranceDTO.value.corp_telno3,
+], (newValue) => {
+  insuranceDTO.value.corp_telno = newValue[0] + '-' + newValue[1] + '-' + newValue[2]
+})
+
 /**
  * 보험계약[기본담보] 보험기간 - 시작일자 변경시 종료일자는 자동으로 년도+1-01-01 변경 및 과거 날짜 선택불가
  */
@@ -2428,7 +2523,8 @@ onMounted(async () => {
     if (insuranceDTO.value.user_cd == 'IND') {
       // 전환여부 확인
       chkSaleRtIND();
-    }  
+    }
+
 
   }
 
@@ -2443,7 +2539,7 @@ onMounted(async () => {
     // 보험료 기준정보 셋팅
     insuranceDTO.value.status_cd = '10' // 신청
     insuranceDTO.value.insr_retr_yn = 'N'; // 소금담보수기보정 X
-    insuranceDTO.value.insr_pblc_brdn_rt = '0|공동보험 적용'; // 초기값
+    // insuranceDTO.value.insr_pblc_brdn_rt = '0|공동보험 적용'; // 초기값
     insuranceDTO.value.insr_pcnt_sale_rt = 0; // 초기값
 
     insuranceDTO.value.insr_year = insuranceRateDTO.value.base_year;
@@ -2495,6 +2591,12 @@ onMounted(async () => {
   // 초기화용 백업
  // Object.assign(insuranceDTOBackup.value, insuranceDTO.value);
   onLoading.value = true;
-  
+
+  console.log('pdfFileName',pdfFileName)
+  console.log("insuranceDTO.value.busnised",insuranceDTO.value.business_cd)
+  console.log("insuranceDTO.value.user_cd",insuranceDTO.value.user_cd)
+  console.log("insuranceDTO.value.insr_year",insuranceDTO.value.insr_year>2023)
+  if(insuranceDTO.value.insr_year>2023)
+    pdfFileName.value = '세무사_보험약관'+insuranceDTO.value.insr_year+'.pdf'
 });
 </script>

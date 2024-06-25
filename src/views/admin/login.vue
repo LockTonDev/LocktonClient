@@ -20,8 +20,9 @@
       </v-card>
      </v-col>
    </v-row>
- 
- 
+
+
+  <LoadingBar v-if="loadingBar"></LoadingBar>
  </template>
  
  
@@ -35,11 +36,13 @@ import { MessageBoxDTO } from '@/model';
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
 import jwt_decode from 'jwt-decode';
+import LoadingBar from "@/components/LoadingBar.vue";
  
 
 const authStore = useAuthStore();
 const { _AUTH_ADMIN } = storeToRefs(authStore);
-
+const { isLoading } = storeToRefs(authStore);
+const loadingBar = ref(isLoading?.value)
 // 초기정보 설정
 const messageBoxDTO = ref(new MessageBoxDTO());
 
@@ -49,6 +52,9 @@ const user_pwd = ref("");
 const router = useRouter();
 const loginErrorMessage = ref("");
 
+watch(() => isLoading?.value, (newValue, oldValue) => {
+  loadingBar.value = isLoading?.value
+});
 /**
  * 로그인
  * @param values 로그인 정보

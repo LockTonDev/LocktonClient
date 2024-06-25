@@ -26,14 +26,24 @@ const fileName = ref('');
 
 onMounted(async () => {
   // 보험료 조회
-  const params = { user_cd: _AUTH_USER.value.userCd, business_cd: _AUTH_USER.value.businessCd, base_year: props.baseYear };
-  const resultData = await apiContract.getDBSelInsuranceRate(params);
-  INSR_INFO.value = resultData.data[0];
+  console.log('props.baseYear',props.baseYear)
+  if (props.baseYear==undefined){
+    const params = { user_cd: _AUTH_USER.value.userCd, business_cd: _AUTH_USER.value.businessCd, base_year: props.baseYear };
+    const resultData = await apiContract.getDBSelInsuranceRate(params);
+    INSR_INFO.value = resultData.data[0];
 
-  if (_AUTH_USER.value.userCd == 'IND') {
-    fileName.value = '/assets/doc/insr_table/세무사_개인_보험료표_' + INSR_INFO.value.base_year + '.pdf';
-  } else if (_AUTH_USER.value.userCd == 'COR') {
-    fileName.value = '/assets/doc/insr_table/세무사_법인_보험료표_' + INSR_INFO.value.base_year + '.pdf';
+    if (_AUTH_USER.value.userCd == 'IND') {
+      fileName.value = '/assets/doc/insr_table/세무사_개인_보험료표_' + INSR_INFO.value.base_year + '.pdf';
+    } else if (_AUTH_USER.value.userCd == 'COR') {
+      fileName.value = '/assets/doc/insr_table/세무사_법인_보험료표_' + INSR_INFO.value.base_year + '.pdf';
+    }
+  }else{
+    if (_AUTH_USER.value.userCd == 'IND') {
+      fileName.value = '/assets/doc/insr_table/세무사_개인_보험료표_' + props.baseYear + '.pdf';
+    } else if (_AUTH_USER.value.userCd == 'COR') {
+      fileName.value = '/assets/doc/insr_table/세무사_법인_보험료표_' + props.baseYear + '.pdf';
+    }
   }
+
 });
 </script>

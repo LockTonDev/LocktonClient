@@ -53,8 +53,8 @@
              <td class="text-center text-body-1 text-no-wrap">{{ row.status_cd !== '91' && row.status_cd !== '10' ? row.insurance_no : '' }}</td>
             <td class="text-center text-body-1 text-no-wrap">{{ row.user_nm }}</td>
             <td class="text-center text-body-1 text-no-wrap">
-              <div v-if="!chkValidPeriod(row)">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
-              <div v-if="chkValidPeriod(row)" class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
+<!--              <div v-if="row.status_cd !== '10'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>-->
+              <div class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
             <td class="text-center text-body-1 text-no-wrap">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">
@@ -62,7 +62,7 @@
                 small
                 class="text-primary cursor-pointer"
                 title="신청서 출력"
-                @click="onInsuranceFormOpen(row.insurance_uuid);"
+                @click="onInsuranceFormOpen(row.insurance_uuid, row.insr_year);"
                 >mdi-printer</v-icon
               >
             </td>
@@ -71,7 +71,7 @@
                 small
                 class="text-primary cursor-pointer"
                 title="가입증명서 출력"
-                @click="onCertificatePrintFrameOpen(row.status_cd, row.insurance_uuid)"
+                @click="onCertificatePrintFrameOpen(row.status_cd, row.insurance_uuid, row.insr_year)"
                 v-if="row.status_cd == '80' || row.status_cd == '90'"
                 >mdi-printer</v-icon
                 >
@@ -103,11 +103,11 @@
 
   <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
 
-  <!-- 가입신청서 시작 -->
-  <V_TTAX0030P20 :insurance_uuid="insuranceUUID" :isPdf=true v-if="isInsuranceFormDialog" @close="onInsuranceFormClose" />
+  <!-- 2023 가입신청서 시작 -->
+  <V_TTAX0030P20 :insurance_uuid="insuranceUUID" :insr_year="insrYear" :isPdf=true v-if="isInsuranceFormDialog" @close="onInsuranceFormClose" />
   <!-- 가입증명서 종료 -->
 
-  <!-- 가입증명서 시작 -->
+  <!-- 2024 가입증명서 시작 -->
   <V_TTAX0030P30 :insurance_uuid="insuranceUUID" :isPdf=true v-if="isCertificatePrintFramDialog" @close="onCertificatePrintFrameClose" />
   <!-- 가입증명서 종료 -->
 
@@ -142,6 +142,7 @@
   const isCertificatePrintFramDialog = ref(false);
   const isInsuranceFormDialog = ref(false);
   const insuranceUUID = ref("");
+  const insrYear = ref("");
   const newInsrYN = ref("");
   const renewalInsrUUID= ref("");
   import {dateCompareWithNow} from '../../../util/util';
@@ -211,8 +212,9 @@
    * 보험가입신청서 팝업호출
    * @param param 
    */
-   const onInsuranceFormOpen = (param:string) => {
-    insuranceUUID.value = param;
+   const onInsuranceFormOpen = (insurance_UUID:string,insr_year:string) => {
+    insuranceUUID.value = insurance_UUID;
+    insrYear.value = insr_year;
     isInsuranceFormDialog.value = true;
 
   }
@@ -224,7 +226,7 @@
    * 보험가입증명서 팝업 호출
    * @param param 
    */
-  const onCertificatePrintFrameOpen = (status_cd:string, insurance_uuid:string) => {
+  const onCertificatePrintFrameOpen = (status_cd:string, insurance_uuid:string,insr_year:string) => {
     insuranceUUID.value = insurance_uuid;
     isCertificatePrintFramDialog.value = true;
   };
@@ -241,8 +243,6 @@
     isInsuranceFormDialog.value = false;
     // router.go(0);
   }
-
-
 
   const chkValidPeriod=(row)=>{
     let stat = false

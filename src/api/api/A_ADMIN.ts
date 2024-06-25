@@ -132,7 +132,6 @@ export default {
   async getRenewalTAXExcel(params: any) {
     return await api.authService.post('/ADM/TAX/EXCEL/renewal/gets', { params });
   },
-
   /**  ADV  */
   async setADV(params: any) {
     return await api.authService.post('/ADM/ADV/set', { params });
@@ -295,6 +294,9 @@ export default {
   async getLAWRenewals(params: any) {
     return await api.authService.post('/ADM/LAW/RENEWAL/gets', { params });
   },
+  async getRenewalLAWExcel(params: any) {
+    return await api.authService.post('/ADM/LAW/EXCEL/renewal/gets', { params });
+  },
 
   /** ============================================================================
    *  [증권시작일조회]
@@ -309,5 +311,12 @@ export default {
    */
   async setUserPassword(params: any) {
     return await api.authService.post('/ADM/USER/setUserPassword', {params});
-  }
+  },
+  /** ============================================================================
+   *  [보험DB]
+   *  ============================================================================
+   */
+  async getRenewalInsurance(params: any) {
+    return await api.authService.post('/ADM/MASTER/getRenwalInsurance', {params});
+  },
 };

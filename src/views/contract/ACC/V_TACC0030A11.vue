@@ -1318,7 +1318,30 @@ async function getUserInfoToSetUserInfoByInsurance() {
   insuranceDTO.value.corp_bnno = '';
 
 }
-
+/* 소속 지방회*/
+watch(() => [
+  insuranceDTO.value.corp_region_cd,
+], (newValue, oldValue) => {
+  if (regionCdItems.value.length > 0 && newValue[0]!=null) {
+    insuranceDTO.value.corp_region_nm = regionCdItems.value.filter(item => item.value == newValue[0])[0].title
+  }
+})
+/* 소속 팩스번호*/
+watch(() => [
+  insuranceDTO.value.corp_faxno1,
+  insuranceDTO.value.corp_faxno2,
+  insuranceDTO.value.corp_faxno3,
+], (newValue) => {
+  insuranceDTO.value.corp_faxno = newValue[0] + '-' + newValue[1] + '-' + newValue[2]
+})
+/* 소속 전화번호*/
+watch(() => [
+  insuranceDTO.value.corp_telno1,
+  insuranceDTO.value.corp_telno2,
+  insuranceDTO.value.corp_telno3,
+], (newValue) => {
+  insuranceDTO.value.corp_telno = newValue[0] + '-' + newValue[1] + '-' + newValue[2]
+})
 /**
  * 보험계약 - 보험료 계산
  */

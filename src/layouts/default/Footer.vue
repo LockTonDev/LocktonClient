@@ -69,15 +69,17 @@
     </v-card>
   </v-dialog>
 
+  <LoadingBar v-if="loadingBar"></LoadingBar>
 </template>
 
 <script setup lang="ts">
 import {ref, watch} from "vue";
   import { storeToRefs } from 'pinia';
   import { useAuthStore } from '@/stores';
-  import ImagesLogo from '@/components/ImagesLogo.vue';
   import TermsOfService from '@/components/TermsOfService.vue';
+  import LoadingBar from '@/components/LoadingBar.vue';
   import TermsOfPersonalInfo from '@/components/TermsOfPersonalInfo.vue';
+
   import {useMobileStore} from "@/stores";
   const termsOfService = ref(false);
   const termsOfPersonalInfo = ref(false);
@@ -87,11 +89,20 @@ import {ref, watch} from "vue";
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
 
+  const { isLoading } = storeToRefs(authStore);
+
+  const loadingBar = ref(isLoading?.value)
+
   const businessCd = ref(_AUTH_USER?.value?.businessCd);
 
   watch(() => _AUTH_USER?.value?.businessCd, (newValue, oldValue) => {
     businessCd.value = _AUTH_USER?.value?.businessCd;
   });
+
+  watch(() => isLoading?.value, (newValue, oldValue) => {
+    loadingBar.value = isLoading?.value
+  });
+
 
 function onTermsOfServiceClose(agrs: any) {
   termsOfService.value = false;

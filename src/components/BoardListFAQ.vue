@@ -38,7 +38,7 @@
   import apiBoard from '@/api/api/board.api';
 
   import { storeToRefs } from 'pinia';
-  import { useAuthStore } from '@/stores';
+  import { useAuthStore } from '@/stores';``
 
   import {useMobileStore} from "@/stores";
   const checkMobile = useMobileStore();
