@@ -54,7 +54,7 @@
                       보험가입신청서
                     </p>
                   </h1>
-                  <p v-if="insuranceDTO.insr_year>'2023'&& insuranceDTO.business_cd=='TAX'" class="mt-4 text-12 line-height-1-4 word-break-keep-all">
+                  <p v-if="insrYear>'2023'" class="mt-4 text-12 line-height-1-4 word-break-keep-all">
                     본 보험은 한국세무사회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 세무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
                   </p>
                   <p v-else class="mt-4 text-12 line-height-1-4 word-break-keep-all">
@@ -427,7 +427,11 @@
                       보험가입신청서
                     </p>
                   </h1>
-                  <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
+
+                  <p v-if="insrYear>'2023'"  class="mt-4 text-12 line-height-1-4 word-break-keep-all">
+                    본 보험은 한국세무사회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 세무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
+                  </p>
+                  <p v-else  class="mt-4 text-12 line-height-1-4 word-break-keep-all">
                     본 보험은 한국세무사회 및 현대해상화재보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 세무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
                   </p>
                 </header>
@@ -992,7 +996,10 @@ const props = defineProps({
     type: String,
     required: false
   },
-
+  insr_year:{
+    type: String,
+    required: false
+  },
   insurance_dto: {
     type: InsuranceDTO,
     required: false
@@ -1031,6 +1038,7 @@ const isPdf = ref(false);
 const isHistory = ref(false);
 const insuranceDTO = ref(new InsuranceDTO(props.insurance_dto));
 
+const insrYear = ref("");
 const chunkSize = 34;
 
 const chunkedDivCount = computed(() => {
@@ -1121,6 +1129,10 @@ const onExportPDF = (viewType: string) => {
 };
 
 onMounted(async () => {
+
+  if(props.insr_year!=undefined)
+    insrYear.value =props.insr_year
+
   statusCdItems.value = await CommonCode.getCodeList('COM030');
 
   isPdf.value = props.isPdf;
@@ -1148,9 +1160,10 @@ onMounted(async () => {
   }
 
   if(props.insurance_dto!=undefined){
-    insuranceDTO.value.business_cd =props.insurance_dto.business_cd
+    insrYear.value =props.insurance_dto.insr_year
   }
 
+  console.log(insrYear>'2023')
 });
 
 </script>
