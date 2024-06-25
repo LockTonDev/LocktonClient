@@ -54,7 +54,10 @@
                       보험가입신청서
                     </p>
                   </h1>
-                  <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
+                  <p v-if="insuranceDTO.insr_year>'2023'&& insuranceDTO.business_cd=='TAX'" class="mt-4 text-12 line-height-1-4 word-break-keep-all">
+                    본 보험은 한국세무사회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 세무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
+                  </p>
+                  <p v-else class="mt-4 text-12 line-height-1-4 word-break-keep-all">
                     본 보험은 한국세무사회 및 현대해상화재보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 세무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
                   </p>
                 </header>
@@ -1122,6 +1125,8 @@ onMounted(async () => {
 
   isPdf.value = props.isPdf;
   isNotAuth.value = props.isNotAuth;
+
+  console.log("insuranceDTO.value.busnised",insuranceDTO.value)
   if (props.insurance_uuid) {
     const params = { insurance_uuid: props.insurance_uuid };
     resultData.value = await apiContract.getDBSelHistory(params, isAdmin);
@@ -1140,6 +1145,10 @@ onMounted(async () => {
 
   if(isPdf.value) {
     onExportPDF('view');
+  }
+
+  if(props.insurance_dto!=undefined){
+    insuranceDTO.value.business_cd =props.insurance_dto.business_cd
   }
 
 });

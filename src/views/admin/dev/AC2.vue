@@ -248,7 +248,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유저식별번호" single-line />
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유저식별번호" single-line disabled />
                             </div>
                           </v-col>
                           <v-col cols="12" sm="12" class="v-col">
@@ -371,7 +371,7 @@
                               <sup class="text-error">*</sup>
                             </div>
                             <div class="data-col">
-                              <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유저식별번호" single-line />
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유저식별번호" single-line disabled />
                             </div>
                           </v-col>
                           <v-col cols="12" sm="12" class="v-col">
