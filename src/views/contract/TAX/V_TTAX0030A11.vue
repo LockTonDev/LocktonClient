@@ -764,40 +764,40 @@
                           color="primary"
                           class="flex-grow-1"
                           value="30000000|3천만원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >3천만원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
                           value="50000000|5천만원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >5천만원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
                           value="100000000|1억원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >1억원</v-btn
                         >
                         <v-btn
-                            v-if="insuranceDTO.user_cd === 'COR'"
+                            v-if="insuranceDTO.user_cd === 'COR' && insuranceDTO.insr_year > 2023"
                             color="primary"
                             class="flex-grow-1"
                             value="150000000|1억5천만원"
-                        >2억원</v-btn
+                        >1억5천만원</v-btn
                         >
                         <v-btn
                           v-if="insuranceDTO.user_cd === 'IND'"
                           color="primary"
                           class="flex-grow-1"
                           value="200000000|2억원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >2억원</v-btn
                         >
                         <v-btn
-                            v-if="insuranceDTO.user_cd === 'IND'"
+                            v-if="insuranceDTO.user_cd === 'IND' && insuranceDTO.insr_year > 2023"
                             color="primary"
                             class="flex-grow-1"
                             value="250000000|2억5천만원"
@@ -1184,7 +1184,11 @@
                               >닫기</v-btn
                             >
                             <!-- 보험 약관 확인-->
-                            <TermsOfPolicy></TermsOfPolicy>
+                            <TermsOfPolicy
+                                :pdf_file_name=pdfFileName
+                                v-if="dialog2"
+                                @close="dialog2 = false"
+                            ></TermsOfPolicy>
                           </v-dialog>
                         </v-btn>
                       </td>
@@ -1220,6 +1224,7 @@
                           :agr32_yn="insuranceDTO.agr32_yn"
                           :agr33_yn="insuranceDTO.agr33_yn"
                           :agr34_yn="insuranceDTO.agr34_yn"
+                          :insurance_dto="insuranceDTO"
                           :isReadonly="isReadOnlyAll"
                           v-if="isTermsOfContractDialog"
                           @close="onTermsOfContractClose"
@@ -1278,7 +1283,10 @@
                     이 보험상품은 한국세무사회를 단체계약자, 가입 회원을
                     피보험자로 하는 단체계약 프로그램입니다.
                   </li>
-                  <li>
+                  <li v-if="insuranceDTO.insr_year=='2024'&& insuranceDTO.business_cd">
+                    보험회사 : DB손해보험㈜ <template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>보험중개사 : 록톤컴퍼니즈코리아손해보험중개(주)
+                  </li>
+                  <li v-else>
                     보험회사 : 현대해상화재보험㈜ <template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>보험중개사 : 록톤컴퍼니즈코리아손해보험중개(주)
                   </li>
                   <li>
@@ -1476,7 +1484,7 @@
           </p>
           <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'IND'">
             <i class="mdi mdi-alert-circle-outline mr-1"></i
-            ><span class="color-primary">변호사 성명과 등록번호</span>를 함께
+            ><span class="color-primary">세무사 성명과 등록번호</span>를 함께
             기재하여 송금해주시기 바랍니다.
           </p>
           <p class="text-16 text-gray" v-if="insuranceDTO.user_cd === 'COR'">
@@ -1550,7 +1558,9 @@
       </v-card-title>
       <v-divider class="ma-0"/>
       <v-card-text class="pa-0">
-        <V_TTAX0030P10 />
+        <V_TTAX0030P10
+          :baseYear =insuranceDTO.insr_year
+        />
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -1626,7 +1636,7 @@ const isReadOnlyAll = ref(false);
 const isDuplication = ref(false);
 const renewalYN = ref('N');
 const insuranceUUID = ref('');
-
+const pdfFileName=ref('세무사_보험약관.pdf');
 const INSR_RATE_TABLE = ref([]);
 const INSR_RATE_MAX_DAYS = ref(0);
 
@@ -2334,6 +2344,33 @@ watch(
   }
 );
 
+/* 소속 지방회*/
+watch(() => [
+  insuranceDTO.value.corp_region_cd,
+], (newValue, oldValue) => {
+  if (regionCdItems.value.length > 0 && newValue[0]!=null) {
+    insuranceDTO.value.corp_region_nm = regionCdItems.value.filter(item => item.value == newValue[0])[0].title
+  }
+})
+
+/* 소속 팩스번호*/
+watch(() => [
+  insuranceDTO.value.corp_faxno1,
+  insuranceDTO.value.corp_faxno2,
+  insuranceDTO.value.corp_faxno3,
+], (newValue) => {
+  insuranceDTO.value.corp_faxno = newValue[0] + '-' + newValue[1] + '-' + newValue[2]
+})
+
+/* 소속 전화번호*/
+watch(() => [
+  insuranceDTO.value.corp_telno1,
+  insuranceDTO.value.corp_telno2,
+  insuranceDTO.value.corp_telno3,
+], (newValue) => {
+  insuranceDTO.value.corp_telno = newValue[0] + '-' + newValue[1] + '-' + newValue[2]
+})
+
 /**
  * 보험계약[기본담보] 보험기간 - 시작일자 변경시 종료일자는 자동으로 년도+1-01-01 변경 및 과거 날짜 선택불가
  */
@@ -2437,9 +2474,6 @@ onMounted(async () => {
   insuranceDTO.value.insurance_uuid = '';
 
 
-  console.log("INSR_RETR_DT_TODAY",INSR_RETR_DT_TODAY)
-  console.log("insuranceRateDTO.value.insr_st_dt",insuranceRateDTO.value.insr_st_dt)
-  console.log("TODAY",TODAY)
   if (INSR_RETR_DT_TODAY < insuranceRateDTO.value.insr_st_dt) {
     INSR_RETR_DT_TODAY = insuranceRateDTO.value.insr_st_dt
   }
@@ -2448,9 +2482,6 @@ onMounted(async () => {
     TODAY = insuranceRateDTO.value.insr_st_dt
   }
 
-  console.log("INSR_RETR_DT_TODAY",INSR_RETR_DT_TODAY)
-  console.log("insuranceRateDTO.value.insr_st_dt",insuranceRateDTO.value.insr_st_dt)
-  console.log("TODAY",TODAY)
   /**
    * 갱신가입
    * 
@@ -2492,7 +2523,8 @@ onMounted(async () => {
     if (insuranceDTO.value.user_cd == 'IND') {
       // 전환여부 확인
       chkSaleRtIND();
-    }  
+    }
+
 
   }
 
@@ -2559,6 +2591,12 @@ onMounted(async () => {
   // 초기화용 백업
  // Object.assign(insuranceDTOBackup.value, insuranceDTO.value);
   onLoading.value = true;
-  
+
+  console.log('pdfFileName',pdfFileName)
+  console.log("insuranceDTO.value.busnised",insuranceDTO.value.business_cd)
+  console.log("insuranceDTO.value.user_cd",insuranceDTO.value.user_cd)
+  console.log("insuranceDTO.value.insr_year",insuranceDTO.value.insr_year>2023)
+  if(insuranceDTO.value.insr_year>2023)
+    pdfFileName.value = '세무사_보험약관'+insuranceDTO.value.insr_year+'.pdf'
 });
 </script>

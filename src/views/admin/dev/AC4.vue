@@ -1,5 +1,6 @@
 <template>
   <div class="d-flex align-center">
+    <v-app-bar-nav-icon @click.stop="drawer = !drawer"> </v-app-bar-nav-icon>
     <p class="text-h6 color-primary subtitle mr-2">{{ businessCdItems?.find(items => items.value === searchParams.data['business_cd'])?.title }}</p>
     <div class="w-100">
       <AdminBaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></AdminBaseBreadcrumb>
@@ -264,7 +265,7 @@
                           <sup class="text-error">*</sup>
                         </div>
                         <div class="data-col">
-                          <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유저식별번호" single-line />
+                          <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유저식별번호" single-line disabled/>
                         </div>
                       </v-col>
 
@@ -398,7 +399,7 @@
                           <sup class="text-error">*</sup>
                         </div>
                         <div class="data-col">
-                          <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유저식별번호" single-line />
+                          <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유저식별번호" single-line disabled />
                         </div>
                       </v-col>
 
@@ -864,6 +865,8 @@ import {
 } from "@/util/excelupdn";
 
 const route = useRoute();
+let drawer = ref(true);
+
 
 const page = ref({
 	title: "계약갱신",

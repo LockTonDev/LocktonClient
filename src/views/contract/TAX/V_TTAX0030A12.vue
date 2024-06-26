@@ -422,31 +422,44 @@
                           color="primary"
                           class="flex-grow-1"
                           value="30000000|3천만원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >3천만원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
                           value="50000000|5천만원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >5천만원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
                           value="100000000|1억원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >1억원</v-btn
                         >
                         <v-btn
-                          v-if="insuranceDTO.user_cd === 'IND'"
-                          color="primary"
-                          class="flex-grow-1"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
-                          value="200000000|2억원"
-                          >2억원</v-btn
+                            v-if="insuranceDTO.user_cd === 'COR' && insuranceDTO.insr_year > 2023"
+                            color="primary"
+                            class="flex-grow-1"
+                            value="150000000|1억5천만원"
+                        >1억5천만원</v-btn
                         >
+                        <v-btn
+                            v-if="insuranceDTO.user_cd === 'IND'"
+                            color="primary"
+                            class="flex-grow-1"
+                            value="200000000|2억원"
+                            style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                        >2억원</v-btn
+                        >
+                        <v-btn
+                            v-if="insuranceDTO.user_cd === 'IND' && insuranceDTO.insr_year > 2023"
+                            color="primary"
+                            class="flex-grow-1"
+                            value="250000000|2억5천만원"
+                        >2억5천만원</v-btn>
                       </v-btn-toggle>
                       <p class="text-caption font-weight-light mt-2">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>1
@@ -717,7 +730,11 @@
                               >닫기</v-btn
                             >
                             <!-- 보험 약관 확인-->
-                            <TermsOfPolicy></TermsOfPolicy>
+                            <TermsOfPolicy
+                                :pdf_file_name=pdfFileName
+                                v-if="dialog2"
+                                @close="dialog2 = false">
+                            </TermsOfPolicy>
                           </v-dialog>
                         </v-btn>
                       </td>
@@ -811,7 +828,10 @@
                     이 보험상품은 한국세무사회를 단체계약자, 가입 회원을
                     피보험자로 하는 단체계약 프로그램입니다.
                   </li>
-                  <li>
+                  <li v-if="insuranceDTO.insr_year=='2024'&& insuranceDTO.business_cd=='TAX'">
+                    보험회사 : DB손해보험㈜ <template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>보험중개사 : 록톤컴퍼니즈코리아손해보험중개(주)
+                  </li>
+                  <li v-else>
                     보험회사 : 현대해상화재보험㈜ <template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>보험중개사 : 록톤컴퍼니즈코리아손해보험중개(주)
                   </li>
                   <li>
@@ -1234,6 +1254,7 @@ function onNextPage(values: any) {
 
 const actionType = ref('');
 const insuranceUUID = ref('');
+const pdfFileName=ref('세무사_보험약관_2023.pdf');
 const insuranceNO = ref('');
 /**
  * 초기로딩시 가입 / 수정 / 조회 를 선택해서 보여준다.
@@ -1253,5 +1274,8 @@ const insuranceNO = ref('');
 
     onLoading.value = true;
   }
+  console.log(insuranceDTO.value.insr_year)
+  if(insuranceDTO.value.insr_year>2023)
+     pdfFileName.value = '세무사_보험약관'+insuranceDTO.value.insr_year+'.pdf'
 });
 </script>

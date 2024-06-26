@@ -177,6 +177,7 @@
   import BaseCard from "@/components/BaseCard.vue";
 
   import {useMobileStore} from "@/stores";
+  import {InsuranceDTO} from "@/model";
   const checkMobile = useMobileStore();
 
   const agr_yn = ref({agr30_yn:'N'
@@ -193,8 +194,8 @@
     agr33_yn: String,
     agr34_yn: String,
     isReadonly:Boolean
-  
   });
+
 
   const emit = defineEmits([
     'close'
@@ -221,6 +222,7 @@
     agr_yn.value.agr33_yn = props.agr33_yn||'N';
     agr_yn.value.agr34_yn = props.agr34_yn||'N';
     isReadonly.value = props.isReadonly
+
   });
 
 </script>

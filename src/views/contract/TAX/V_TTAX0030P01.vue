@@ -7,8 +7,29 @@
       <v-divider class="mb-0"/>
       <v-card-text class="pa-0">
         <div>
-          <iframe src="/assets/doc/TAX/세무사_보험약관.pdf" width="100%" height="800px"></iframe>
+          <iframe :src=pdfFileName width="100%" height="800px"></iframe>
         </div>
       </v-card-text>
     </v-card>
   </template>
+
+
+
+  <script setup lang="ts">
+  import { onMounted, defineEmits, ref } from "vue";
+
+  const pdfFileName = ref("/assets/doc/TAX/세무사_보험약관.pdf");
+
+  const props = defineProps({
+    pdf_file_name: String
+  });
+
+  onMounted(async () => {
+    if(props.pdf_file_name!=undefined)
+      pdfFileName.value ="/assets/doc/TAX/"+ props.pdf_file_name
+  });
+
+
+
+  </script>
+
