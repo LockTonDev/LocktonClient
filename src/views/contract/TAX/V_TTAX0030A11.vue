@@ -803,9 +803,11 @@
                             value="250000000|2억5천만원"
                         >2억5천만원</v-btn>
                       </v-btn-toggle>
-                      <p class="text-caption font-weight-light color-gray mt-2">
-                        <i v-if="insuranceDTO.user_cd === 'IND'" class="mdi mdi-alert-circle-outline mr-2"></i>1 청구당 / 연간총보상한도
-                        <i v-else class="mdi mdi-alert-circle-outline mr-2"></i>1 청구당 / 연간총보상한도는 소속 세무사 수를 곱한 금액임
+                      <p class="text-caption font-weight-light color-gray mt-2" v-if="insuranceDTO.user_cd === 'IND'" >
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1 청구당 / 연간총보상한도
+                      </p>
+                      <p class="text-caption font-weight-light color-gray mt-2" v-else>
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1 청구당 / 연간총보상한도는 소속 세무사 수를 곱한 금액임
                       </p>
                       <v-divider class="border-0" />
                       <!-- 법인인 경우 문구 표기 시작 -->
