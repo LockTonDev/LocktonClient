@@ -41,7 +41,7 @@ export const calByString = (amount: string, num: number, maxAmt: number) => {
   if (num == 0 || num == null || num == undefined) num = 1;
   if (maxAmt == 0 || maxAmt == null || maxAmt == undefined) maxAmt = 0;
   var test = amount.split(/[0-9]/)
-  
+
   if(test.length>2)
     amount = amount.trim().replace(/억/g, '')
 

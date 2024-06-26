@@ -53,12 +53,12 @@
              <td class="text-center text-body-1 text-no-wrap">{{ row.status_cd !== '91' && row.status_cd !== '10' ? row.insurance_no : '' }}</td>
             <td class="text-center text-body-1 text-no-wrap">{{ row.user_nm }}</td>
             <td class="text-center text-body-1 text-no-wrap">
-              <div v-if="row.insr_year == '2022'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
+              <div v-if="row.use_yn=='N'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
               <div v-else class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
             <td class="text-center text-body-1 text-no-wrap">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">
-              <v-icon v-if="chkValidPeriod(row)"
+              <v-icon v-if="row.use_yn=='Y'"
                 small
                 class="text-primary cursor-pointer"
                 title="신청서 출력"
@@ -244,10 +244,16 @@
     // router.go(0);
   }
 
-  const chkValidPeriod=(row)=>{
+  const chkValidPeriod=(row,type)=>{
+    console.log(type)
     let stat = false
+    console.log('insr_st_dt',row.insr_st_dt)
+    console.log('curDate',curDate)
+    console.log('insr_cncls_dt',row.insr_cncls_dt)
     if (curDate<new Date(row.insr_cncls_dt) && curDate >= new Date(row.insr_st_dt))
       stat = true
+
+    console.log(stat)
     return stat;
   }
   
