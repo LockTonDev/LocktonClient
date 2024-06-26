@@ -40,9 +40,15 @@ export const calByString = (amount: string, num: number, maxAmt: number) => {
   if (amount == null || amount == undefined || !koreanRegex.test(amount)) return '';
   if (num == 0 || num == null || num == undefined) num = 1;
   if (maxAmt == 0 || maxAmt == null || maxAmt == undefined) maxAmt = 0;
+  var test = amount.split(koreanRegex)
+  console.log('test',test)
+  //if()
+    amount = amount.trim().replace(/억/g, '0')
+
   const amtNumber = parseInt(amount);
   const amtHangul = amount.match(/[ㄱ-ㅎㅏ-ㅣ가-힣]+/g).join(''); // 한글만 추출하여 문자열로 변환
-
+  console.log('amtNumber',amtNumber)
+  console.log('amtHangul',amtHangul)
   const unit = {
     만원: 10000,
     백만원: 1000000,
@@ -53,6 +59,7 @@ export const calByString = (amount: string, num: number, maxAmt: number) => {
   const totalAmount = amtNumber * num * unit[amtHangul];
   const units = Object.entries(unit).reverse();
 
+  console.log('totalAmount',totalAmount)
   let result = '';
   let remainingAmount = totalAmount;
 
@@ -70,6 +77,7 @@ export const calByString = (amount: string, num: number, maxAmt: number) => {
   }
 
 
+  console.log('result',result)
 
   return result.trim().replace(/원/g, '') + '원';
 };
@@ -118,7 +126,6 @@ export const calByString_ADV = (amount: string, num: number, maxAmt: number) => 
       result += count + unitString + '';
     }
   }
-
   return result.trim().replace(/원/g, '') + '원';
 };
 

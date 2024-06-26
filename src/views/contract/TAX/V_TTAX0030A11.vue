@@ -2334,6 +2334,9 @@ watch(
       calInsrAmt(insuranceDTO.value);
     }
 
+    console.log(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1))
+
+    console.log(calByString(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1), insuranceDTO.value?.cbr_data?.length, 1000000000))
     // 기본담보 - 보상한도(연보험)
     insuranceDTO.value.insr_year_clm_lt_amt = calByString(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1), insuranceDTO.value?.cbr_data?.length, 1000000000);
 
