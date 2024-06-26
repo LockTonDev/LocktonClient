@@ -18,14 +18,15 @@
   <script setup lang="ts">
   import { onMounted, defineEmits, ref } from "vue";
 
-  const pdfFileName = ref("");
+  const pdfFileName = ref("/assets/doc/TAX/세무사_보험약관.pdf");
 
   const props = defineProps({
     pdf_file_name: String
   });
 
   onMounted(async () => {
-    pdfFileName.value ="/assets/doc/TAX/"+ props.pdf_file_name
+    if(props.pdf_file_name!=undefined)
+      pdfFileName.value ="/assets/doc/TAX/"+ props.pdf_file_name
   });
 
 

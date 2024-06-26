@@ -782,7 +782,7 @@
                           >1억원</v-btn
                         >
                         <v-btn
-                            v-if="insuranceDTO.user_cd === 'COR'"
+                            v-if="insuranceDTO.user_cd === 'COR' && insuranceDTO.insr_year > 2023"
                             color="primary"
                             class="flex-grow-1"
                             value="150000000|1억5천만원"
@@ -797,7 +797,7 @@
                           >2억원</v-btn
                         >
                         <v-btn
-                            v-if="insuranceDTO.user_cd === 'IND'"
+                            v-if="insuranceDTO.user_cd === 'IND' && insuranceDTO.insr_year > 2023"
                             color="primary"
                             class="flex-grow-1"
                             value="250000000|2억5천만원"

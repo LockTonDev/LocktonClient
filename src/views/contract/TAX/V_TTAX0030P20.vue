@@ -1151,6 +1151,9 @@ onMounted(async () => {
     });
 
     isHistory.value = resultData.value.data.length > 1 ? true : false;
+
+    insrYear.value = insuranceDTO.value.insr_year
+
   } else {
    
   }
