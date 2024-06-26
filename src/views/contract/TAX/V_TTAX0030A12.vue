@@ -1254,7 +1254,7 @@ function onNextPage(values: any) {
 
 const actionType = ref('');
 const insuranceUUID = ref('');
-const pdfFileName=ref('세무사_보험약관.pdf');
+const pdfFileName=ref('세무사_보험약관_2023.pdf');
 const insuranceNO = ref('');
 /**
  * 초기로딩시 가입 / 수정 / 조회 를 선택해서 보여준다.
