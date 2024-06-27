@@ -107,8 +107,10 @@
   <V_TTAX0030P20 :insurance_uuid="insuranceUUID" :insr_year="insrYear" :isPdf=true v-if="isInsuranceFormDialog" @close="onInsuranceFormClose" />
   <!-- 가입증명서 종료 -->
 
-  <!-- 2024 가입증명서 시작 -->
+  <!-- 2023 가입증명서 시작 -->
   <V_TTAX0030P30 :insurance_uuid="insuranceUUID" :isPdf=true v-if="isCertificatePrintFramDialog" @close="onCertificatePrintFrameClose" />
+  <!-- 2024 가입증명서 시작 -->
+  <V_TTAX0030P31 :insurance_uuid="insuranceUUID" :isPdf=true v-if="isCertificatePrintFramDialog2" @close="onCertificatePrintFrameClose2" />
   <!-- 가입증명서 종료 -->
 
   <PopupList></PopupList>
@@ -125,6 +127,7 @@
   import BaseBreadcrumb from "@/components/BaseBreadcrumb.vue";
   import V_TTAX0030P20 from "@/views/contract/TAX/V_TTAX0030P20.vue";
   import V_TTAX0030P30 from "@/views/contract/TAX/V_TTAX0030P30.vue";
+  import V_TTAX0030P31 from "@/views/contract/TAX/V_TTAX0030P31.vue";
   import InsuranceForm from "@/components/InsuranceForm.vue";
   import apiContract from '@/api/api/A_CONTRACT';
   import router from "@/router";
@@ -140,6 +143,7 @@
   
   const isNoData = ref(false);
   const isCertificatePrintFramDialog = ref(false);
+  const isCertificatePrintFramDialog2 = ref(false);
   const isInsuranceFormDialog = ref(false);
   const insuranceUUID = ref("");
   const insrYear = ref("");
@@ -228,7 +232,12 @@
    */
   const onCertificatePrintFrameOpen = (status_cd:string, insurance_uuid:string,insr_year:string) => {
     insuranceUUID.value = insurance_uuid;
-    isCertificatePrintFramDialog.value = true;
+    if(insr_year<2024){
+      isCertificatePrintFramDialog.value = true;
+    }else{
+      isCertificatePrintFramDialog2.value = true;
+    }
+
   };
 
   const onCertificatePrintFrameClose = () => {
@@ -236,6 +245,13 @@
     isCertificatePrintFramDialog.value = false;
     // router.go(0);
    
+  }
+
+  const onCertificatePrintFrameClose2 = () => {
+    insuranceUUID.value = '';
+    isCertificatePrintFramDialog2.value = false;
+    // router.go(0);
+
   }
   
   const onInsuranceFormClose = () => {

@@ -465,7 +465,7 @@
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>1 청구당 / 연간 총 보상한도
                       </p>
                       <p class="text-caption font-weight-light color-gray mt-2" v-else>
-                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1 청구당 / 연간 총 보상한도는 소속 세무사 수를 곱한 금액임
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1 청구당 / 연간 총 보상한도는 1청구당 한도에 소속 세무사 수를 곱한 금액임
                       </p>
                       <v-divider class="border-0" />
                       <!-- 법인인 경우 문구 표기 시작 -->
