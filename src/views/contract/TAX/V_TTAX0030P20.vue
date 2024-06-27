@@ -823,8 +823,8 @@
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
-                            <col style="width: 50px" />
-                            <col style="width: 90px" />
+                            <col style="width: 70px" />
+                            <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
                           </colgroup>
@@ -916,7 +916,7 @@
                               <td :class="isMobile()?'text-7':''">{{ row.cbr_nm }}</td>
                               <td :class="isMobile()?'text-7':''">{{ row.cbr_brdt }}</td>
                               <td :class="isMobile()?'text-7':''">{{ row.cbr_regno }}</td>
-                              <td :class="isMobile()?'text-7':''">{{ row.insr_retr_dt }}</td>
+                              <td :class="isMobile()?'text-7':'w-25'">{{ row.insr_retr_dt }}</td>
                               <td :class="isMobile()?'text-7':''">{{ row.insr_sale_rt }} %</td>
                               <td :class="isMobile()?'text-7':''">
                                 {{ row?.insr_amt?.toLocaleString() }}원
@@ -1031,6 +1031,7 @@ const close = () => {
 };
 
 const isMobile = () => {
+  console.log('V_TTAX0030A10')
   return checkMobile.isMobile && !isPdf.value
 }
 
