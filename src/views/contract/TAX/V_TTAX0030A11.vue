@@ -1694,15 +1694,13 @@ const isInsrTableDialog = ref(false);
 
 function isReadonlyByInsrStDt()
 {
-  // console.log(insuranceDTO.value.base_insr_st_dt + ":" + TODAY + ":" + renewalYN.value + ":" + insuranceDTO.value.insr_retr_yn);///
-
   /**
    * 1. 법인은 보험시작일자를 변경 할 수 없다.
    * 2. 개인이면서 신규이면 항상 보험기간을 변경할 수 있게 한다
    * 3. 기준_보험시작일자가 소금담보일보다 작으면 갱신으로 판단하여 수정불가
    */
   if (insuranceDTO.value.user_cd === 'COR') return true;
-  if (insuranceDTO.value.user_cd === 'IND' && renewalYN.value !== 'Y') return false;
+  if (insuranceDTO.value.user_cd === 'IND' && (renewalYN.value==undefined || renewalYN.value !== 'Y') ) return false;
   if (insuranceDTO.value.base_insr_st_dt < insuranceDTO.value.insr_retr_dt) {
     return false;
   }

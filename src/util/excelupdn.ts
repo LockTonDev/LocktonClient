@@ -246,6 +246,7 @@ export const UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR_RENEWAL = async (event: any,rene
               insuranceDTO.insr_year_clm_lt_amt = row.getCell(EXCEL_TAX_COR.보상한도_총한도).value;
               insuranceDTO.insr_sale_year = row.getCell(EXCEL_TAX_COR.할인할증기준).value;
               insuranceDTO.insr_sale_rt = row.getCell(EXCEL_TAX_COR.할인할증).value;
+              console.log( row.getCell(EXCEL_TAX_COR.인원수).value)
               insuranceDTO.insr_pcnt_sale_rt = row.getCell(EXCEL_TAX_COR.인원수할인).value;
               insuranceDTO.insr_base_amt = row.getCell(EXCEL_TAX_COR.기준보험료).value;
               insuranceDTO.insr_tot_amt = row.getCell(EXCEL_TAX_COR.최종보험료).value;

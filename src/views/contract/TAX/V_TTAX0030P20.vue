@@ -463,7 +463,7 @@
                       </v-col>
                       <v-col :cols="isMobile()?'12':'6'" class="v-col">
                         <div :class="isMobile()?'head-col2':'head-col'">
-                          <p>피보험자 (법인명)</p>
+                          <p>피보험자</p>
                         </div>
                         <div class="data-col">
                           {{ insuranceDTO.user_nm }}
