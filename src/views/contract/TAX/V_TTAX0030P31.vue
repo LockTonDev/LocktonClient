@@ -29,8 +29,9 @@
                 <main>
                   <dl class="d-flex flex-wrap w-70 ma-auto my-16 text-18">
                     <dt class="my-1 w-20" >피 보 험 자 :</dt>
-                    <dd class="my-1 w-80" v-if="insuranceDTO.user_cd === 'COR' && insuranceDTO.cbr_data.length > 0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 세무사 외 {{ insuranceDTO.cbr_cnt - 1 }} 명</dd>
-                    <dd class="my-1 w-80" v-if="insuranceDTO.user_cd === 'IND'">{{ insuranceDTO.user_nm }} </dd>
+                    <dd class="my-1 w-80">{{ insuranceDTO.user_nm }} </dd>
+<!--                    <dd class="my-1 w-80" v-if="insuranceDTO.user_cd === 'COR' && insuranceDTO.cbr_data.length > 0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 세무사 외 {{ insuranceDTO.cbr_cnt - 1 }} 명</dd>
+                    <dd class="my-1 w-80" v-if="insuranceDTO.user_cd === 'IND'">{{ insuranceDTO.user_nm }} </dd>-->
                     <dt class="my-1 w-20">증 권 번 호 :</dt>
                     <dd class="my-1 w-80">{{ insuranceDTO.insurance_no }}</dd>
                     <dt class="my-1 w-20">보 험 기 간 :</dt>
@@ -72,7 +73,7 @@
                     </tr>
                     <tr>
                       <th colspan="5" style="border-right: 1px solid #000;">피보험자</th>
-                      <td colspan="25" v-if="insuranceDTO.user_cd === 'COR' && insuranceDTO.cbr_data.length > 0">{{ insuranceDTO.cbr_data[0].cbr_nm }} 세무사 외 {{ insuranceDTO.cbr_cnt - 1 }} 명 </td>
+                      <td colspan="25" v-if="insuranceDTO.user_cd === 'COR'">{{ insuranceDTO.user_nm }} </td>
                       <td colspan="10" v-if="insuranceDTO.user_cd === 'IND'" style="border-right: 1px solid #000;">{{ insuranceDTO.user_nm }} </td>
                       <th colspan="5" v-if="insuranceDTO.user_cd === 'IND'" style="border-right: 1px solid #000;">등록번호</th>
                       <td colspan="10" v-if="insuranceDTO.user_cd === 'IND'">{{ insuranceDTO.user_regno }}</td>
@@ -104,7 +105,7 @@
                     <tr>
                       <th colspan="5" style="border-right: 1px solid #000;">공동보험</th>
                       <td colspan="10" style="border-right: 1px solid #000;">{{ insuranceDTO?.insr_pblc_brdn_rt?.getValueBySplit(0) == '0' ? '적용' : '미적용' }}</td>
-                      <th colspan="5" style="border-right: 1px solid #000;">소급일자</th>
+                      <th colspan="5" style="border-right: 1px solid #000;">소급담보일</th>
                       <td v-if="insuranceDTO.user_cd === 'IND'" colspan="10">{{ insuranceDTO.insr_retr_dt }} </td>
                       <td v-if="insuranceDTO.user_cd === 'COR'" colspan="10"> 개별 기재 </td>
                     </tr>
@@ -161,7 +162,7 @@
                     <tr>
                       <th colspan="5" style="border-right: 1px solid #000;">공동보험</th>
                       <td colspan="10" style="border-right: 1px solid #000;">{{ insuranceDTO?.insr_pblc_brdn_rt?.getValueBySplit(0) == '0' ? '적용' : '미적용' }}</td>
-                      <th colspan="5" style="border-right: 1px solid #000;">소급일자</th>
+                      <th colspan="5" style="border-right: 1px solid #000;">소급담보일</th>
                       <td v-if="insuranceDTO.user_cd === 'COR'" colspan="10">피보험자명단 별첨</td>
                       <td v-if="insuranceDTO.user_cd === 'IND'" colspan="10">{{ insuranceDTO.insr_retr_dt }} </td>
                     </tr>
@@ -226,7 +227,7 @@
               <template v-for="(chunk, chunkIndex) in chunkedData" :key="chunkIndex">
                 <div class="print-wrap page3">
                   <header class="position-relative">
-                    <img src="../../../assets/images/new-db-join-logo2.png" alt="" />
+                    <img src="../../../assets/images/new-db-join-logo-tax.png" alt="" />
                     <h1 class="position-absolute text-center bottom-0 w-100 pb-3 color-white"></h1>
                   </header>
                   <main>
@@ -365,7 +366,7 @@ const onExportPDF = (viewType: string) => {
   }
 
   let opt = {
-    margin: [0, 5, 0, 5],
+    margin: [0, 3, 0, 3],
     filename: '가입증명서_세무사배상책임보험.pdf',
     pagebreak: {
       mode: ['avoid-all', 'css', 'legacy']

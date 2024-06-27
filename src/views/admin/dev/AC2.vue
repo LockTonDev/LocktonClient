@@ -1324,6 +1324,7 @@ import PAT_AC2 from './PAT/PAT_AC2.vue'
 import LAW_AC2 from './LAW/LAW_AC2.vue'
 import V_TTAX0030P20 from '@/views/contract/TAX/V_TTAX0030P20.vue';
 import V_TTAX0030P30 from '@/views/contract/TAX/V_TTAX0030P30.vue';
+import V_TTAX0030P31 from '@/views/contract/TAX/V_TTAX0030P31.vue';
 import V_TACC0030P20 from '@/views/contract/ACC/V_TACC0030P20.vue';
 import V_TACC0030P30 from '@/views/contract/ACC/V_TACC0030P30.vue';
 import V_TADV0030P20 from '@/views/contract/ADV/V_TADV0030P20.vue';
@@ -1580,7 +1581,11 @@ function getDynamicComponentName1() {
 function getDynamicComponentName2() {
   switch (insuranceDTO.value.business_cd) {
     case 'TAX':
-      return V_TTAX0030P30;
+      if(insuranceDTO.value.insr_year>2023){
+        return V_TTAX0030P31
+      }else{
+        return V_TTAX0030P30
+      }
     case 'ACC':
       return V_TACC0030P30;
     case 'ADV':

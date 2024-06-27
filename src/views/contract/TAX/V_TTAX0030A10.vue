@@ -22,7 +22,7 @@
       <div class="d-flex justify-space-between align-end">
         <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ InsuranceList.length }}</span> 건</p>
         <div>
-          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => item.status_cd === '80'||item.status_cd === '90').length == 0">신규 가입</v-btn>&nbsp;
+          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear)-1 ).length == 0">신규 가입</v-btn>&nbsp;
           <v-btn variant="flat" @click="onPageMove('renewal')" v-if="newInsrYN=='Y' && renewalInsrUUID != null">계약 갱신</v-btn>
          
         </div>
@@ -137,6 +137,7 @@
   import {useMobileStore} from "@/stores";
   const checkMobile = useMobileStore();
 
+  const maxInstYear =ref([]);
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
   let InsuranceList = ref([]);
@@ -277,9 +278,13 @@
       const params = ref([]);
       const resultData = await apiContract.getDBSelList(params);
       InsuranceList.value = resultData.data.list;
+      maxInstYear.value = InsuranceList.value[0].insr_year
+      console.log('maxInstYear',maxInstYear)
       newInsrYN.value = resultData.data.newInsrYN.data;
       renewalInsrUUID.value = resultData.data.renewalInsrUUID.data;
 
+
+      console.log(InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear.value)-1 ))
       if(InsuranceList.value.length == 0 && newInsrYN.value == 'Y' && renewalInsrUUID.value == null) {
         isNoData.value = true;
       }
