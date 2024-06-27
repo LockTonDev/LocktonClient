@@ -53,7 +53,7 @@
               <div class="html2pdf__page-break"></div>
               <div class="print-wrap page2">
                 <header class="position-relative">
-                  <img src="../../../assets/images/new-db-join-logo2.png" alt="" />
+                  <img src="../../../assets/images/new-db-join-logo-tax.png" alt="" />
                 </header>
                 <main>
                   <h2 class="title-wrap d-flex align-center ml-0 pl-0">
@@ -194,7 +194,13 @@
                           <li> Exclusion of Terrorism (테러위험 부담보 조항) </li>
                           <li> Claim Co-operation Clause (사고처리 협조조항)  </li>
                           <li> Extended Reporting Period : 60 days (보고연장기간 : 60일)  </li>
-                          <li> Co-Insurance Clause (피보험자 사고공동부담비율) </li>
+                          <li> Co-Insurance Clause (피보험자 사고공동부담비율)<br/>
+                            ※ 예상지급보험금 : (결정된 손해배상금-자기부담금)으로 공동보험비율 적용 전 예상보험금<br/>
+                            - 건당 예상지급보험금이 1,000만원 미만 : 피보험자의 공동보험비율 15.5%<br/>
+                            - 건당 예상지급보험금이 1,000만원 ~ 3,000만원 미만 : 피보험자의 공동보험비율 25.5%<br/>
+                            - 건당 예상지급보험금이 3,000만원 이상 : 피보험자의 공동보험비율 30.5%<br/>
+                            단, 공동보험 미적용을 선택하여 가입한 경우, 공동보험비율은 적용되지 않습니다.
+                          </li>
                           <li> Finanial Adviser/Investment Counselors Additional Exclusion(금융/투자자문 추가 부담보 조항)  </li>
                           <li> Exclusion for dishonesty or defamation (부정직, 명예훼손 부담보 조항) </li>
                           <li> Sanction Limitation and Exclusion Clause (제재위반 부담보 조항)  </li>
