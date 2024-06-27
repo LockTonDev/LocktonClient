@@ -1769,7 +1769,7 @@ function onInsuranceFormClose() {
   // console.log(sKey3);
   // console.log(nRate);
   // console.log(nPCnt);
-  if (!sKey1 || !sKey2 || !sKey3) return 0;
+  if (!sKey1 || !sKey2 || !sKey3 || insuranceDTO.value.insr_pblc_brdn_rt=='') return 0;
 
   let nTotAmt = 0;
   let nInitAmt = 0;
@@ -1940,7 +1940,7 @@ async function chkSaleRtCOR(list: any, rowIdx: number) {
 
   const params = { insr_year: insuranceDTO.value.insr_year, business_cd: _AUTH_USER.value.businessCd, user_nm: list.cbr_data[rowIdx].cbr_nm, user_birth: list.cbr_data[rowIdx].cbr_brdt, user_regno: list.cbr_data[rowIdx].cbr_regno };
   const result = await apiContract.getSaleRtNDupInfo(params);
-  console.log(result);
+  // console.log(result);
   if (result.success) {
 
     if (result.data.dup_cnt > 0) {
@@ -2005,7 +2005,7 @@ async function chkSaleRtCOR(list: any, rowIdx: number) {
         list.cbr_data[rowIdx].insr_st_dt = INSR_RETR_DT_TODAY;
         list.cbr_data[rowIdx].insr_cncls_dt = insuranceDTO.value.insr_cncls_dt;
         list.cbr_data[rowIdx].insr_retr_dt = INSR_RETR_DT_TODAY;
-        console.log(list.cbr_data[rowIdx]);
+        // console.log(list.cbr_data[rowIdx]);
       } else {
         messageBoxDTO.value.setInfo(
           '세무사 인증',
@@ -2336,9 +2336,7 @@ watch(
       calInsrAmt(insuranceDTO.value);
     }
 
-    console.log(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1))
-
-    console.log(calByString(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1), insuranceDTO.value?.cbr_data?.length, 1000000000))
+    // console.log(calByString(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1), insuranceDTO.value?.cbr_data?.length, 1000000000))
     // 기본담보 - 보상한도(연보험)
     insuranceDTO.value.insr_year_clm_lt_amt = calByString(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1), insuranceDTO.value?.cbr_data?.length, 1000000000);
 
@@ -2597,10 +2595,10 @@ onMounted(async () => {
  // Object.assign(insuranceDTOBackup.value, insuranceDTO.value);
   onLoading.value = true;
 
-  console.log('pdfFileName',pdfFileName)
-  console.log("insuranceDTO.value.busnised",insuranceDTO.value.business_cd)
-  console.log("insuranceDTO.value.user_cd",insuranceDTO.value.user_cd)
-  console.log("insuranceDTO.value.insr_year",insuranceDTO.value.insr_year>2023)
+  // console.log('pdfFileName',pdfFileName)
+  // console.log("insuranceDTO.value.busnised",insuranceDTO.value.business_cd)
+  // console.log("insuranceDTO.value.user_cd",insuranceDTO.value.user_cd)
+  // console.log("insuranceDTO.value.insr_year",insuranceDTO.value.insr_year>2023)
   if(insuranceDTO.value.insr_year>2023)
     pdfFileName.value = '세무사_보험약관'+insuranceDTO.value.insr_year+'.pdf'
 });

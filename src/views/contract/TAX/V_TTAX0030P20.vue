@@ -824,7 +824,7 @@
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: 50px" />
-                            <col style="width: auto" />
+                            <col style="width: 90px" />
                             <col style="width: auto" />
                             <col style="width: auto" />
                           </colgroup>

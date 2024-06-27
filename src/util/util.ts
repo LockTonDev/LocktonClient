@@ -74,10 +74,9 @@ export const calByString = (amount: string, num: number, maxAmt: number) => {
     }
   }
 
-
-
   result = result.trim().replace(/원/g, '') + '원'
-  if(test.length>2)
+  var test2 = result.split(/[0-9]/)
+  if(test2.length>2)
     result= result.trim().replace(/억원/g, '')
 
   return result;
