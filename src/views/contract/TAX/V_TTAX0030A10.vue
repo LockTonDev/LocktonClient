@@ -22,7 +22,7 @@
       <div class="d-flex justify-space-between align-end">
         <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ InsuranceList.length }}</span> 건</p>
         <div>
-          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear)-1 ).length == 0">신규 가입</v-btn>&nbsp;
+          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="(2024 - maxInstYear > 1) || (newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear)-1 ).length == 0)">{{}}신규 가입</v-btn>&nbsp;
           <v-btn variant="flat" @click="onPageMove('renewal')" v-if="newInsrYN=='Y' && renewalInsrUUID != null">계약 갱신</v-btn>
          
         </div>
