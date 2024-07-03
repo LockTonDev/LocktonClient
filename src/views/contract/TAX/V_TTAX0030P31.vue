@@ -54,7 +54,8 @@
               <div class="html2pdf__page-break"></div>
               <div class="print-wrap page2">
                 <header class="position-relative">
-                  <img src="../../../assets/images/new-db-join-logo-tax.png" alt="" />
+                  <img src="../../../assets/images/new-db-join-logo.png" alt="" />
+                  <h1 class="position-absolute bottom-0 left-header pb-8 color-white">세무사배상책임보험 <span class="text-24">가입조건 안내</span></h1>
                 </header>
                 <main>
                   <h2 class="title-wrap d-flex align-center ml-0 pl-0">
@@ -216,7 +217,7 @@
                       </td>
                     </tr>
                   </table>
-                  <div class="mt-10 text-12 line-height-1-4 text-left d-flex justify-end">
+                  <div class="mt-5 text-12 line-height-1-4 text-left d-flex justify-end">
                     <p>※ 상품 및 보상관련 문의 <br/>
                       록톤컴퍼니즈코리아손해보험중개㈜ 02) 2011-0300</p>
                   </div>
@@ -225,10 +226,10 @@
               <div class="html2pdf__page-break"></div>
 
               <template v-for="(chunk, chunkIndex) in chunkedData" :key="chunkIndex">
-                <div class="print-wrap page3">
+                <div class="print-wrap page1">
                   <header class="position-relative">
-                    <img src="../../../assets/images/new-db-join-logo-tax.png" alt="" />
-                    <h1 class="position-absolute text-center bottom-0 w-100 pb-3 color-white"></h1>
+                    <img src="../../../assets/images/new-db-join-logo.png" alt="" />
+                    <h1 class="position-absolute bottom-0 left-header pb-8 color-white">세무사배상책임보험 <span class="text-24">가입조건 안내</span></h1>
                   </header>
                   <main>
                     <h2 class="title-wrap d-flex align-center ml-0 pl-0">

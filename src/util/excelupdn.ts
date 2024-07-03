@@ -154,7 +154,7 @@ export const UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND_RENEWAL = async (event: any,rene
             insuranceDTO.insr_clm_lt_amt = insrClmLtAmtItems.find(item => item.title == insuranceDTO.insr_clm_lt_amt_excel).value;
             insuranceDTO.insr_year_clm_lt_amt = row.getCell(EXCEL_TAX_IND.보상한도_총한도).value;
             insuranceDTO.insr_sale_year = row.getCell(EXCEL_TAX_IND.할인할증기준).value;
-            insuranceDTO.insr_sale_rt = row.getCell(EXCEL_TAX_IND.할인할증).value;
+            insuranceDTO.insr_sale_rt = parseInt(row.getCell(EXCEL_TAX_IND.할인할증).value);
             insuranceDTO.insr_base_amt = row.getCell(EXCEL_TAX_IND.기준보험료).value;
             insuranceDTO.insr_tot_amt = row.getCell(EXCEL_TAX_IND.최종보험료).value;
             excelList.push(insuranceDTO);
@@ -263,7 +263,8 @@ export const UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR_RENEWAL = async (event: any,rene
                 cbrDataDTO.cbr_regno = row.getCell(EXCEL_TAX_COR.등록번호).value;
                 cbrDataDTO.insr_retr_dt = row.getCell(EXCEL_TAX_COR.소급담보일).value;
                 cbrDataDTO.insr_sale_year = row.getCell(EXCEL_TAX_COR.할인할증기준).value;
-                cbrDataDTO.insr_sale_rt = row.getCell(EXCEL_TAX_COR.할인할증).value;
+                //2024-06-28 엑셀 데이타 조회시 float로 표시되는 문제 수정
+                cbrDataDTO.insr_sale_rt = parseInt(row.getCell(EXCEL_TAX_COR.할인할증).value);
                 cbrDataDTO.insr_amt = row.getCell(EXCEL_TAX_COR.보험료).value;
                 cbrDataDTO.insr_st_dt = renewalInsurance.insr_st_dt;
                 cbrDataDTO.insr_cncls_dt = renewalInsurance.insr_cncls_dt;
