@@ -591,7 +591,7 @@
                         single-line
                         density="comfortable"
                         :min="insr_st_dt_min"
-                        :max="insuranceDTO.insr_cncls_dt"
+                        :max="insr_st_dt_max"
                         :readonly="isReadonlyByInsrStDt()"
                       />
                       <p class="mx-2">00:01 부터</p>
@@ -1608,6 +1608,7 @@ import MessageBox from '@/components/MessageBox.vue';
 
 import apiUser from '@/api/api/user.api';
 import apiContract from '@/api/api/A_CONTRACT';
+import apiCommon from '@/api/api/A_COMMON';
 
 import BaseBreadcrumb from '@/components/BaseBreadcrumb.vue';
 import BaseCard from '@/components/BaseCard.vue';
@@ -1658,8 +1659,10 @@ let TODAY = dayjs().format('YYYY-MM-DD');
 let INSR_RETR_DT_TODAY = dayjs().format('YYYY-MM-DD');
 
 let insr_st_dt_min = ref('')
-
+let insr_st_dt_max = ref('')
 const tab = ref("1");
+
+const isChangeCorToInd = ref(false);
 
 const page = ref({
   title: '전문인배상책임보험 가입',
@@ -1702,7 +1705,9 @@ function isReadonlyByInsrStDt()
    * 3. 기준_보험시작일자가 소금담보일보다 작으면 갱신으로 판단하여 수정불가
    */
   if (insuranceDTO.value.user_cd === 'COR') return true;
-  if (insuranceDTO.value.user_cd === 'IND' && (renewalYN.value==undefined || renewalYN.value !== 'Y') ) return false;
+  //if (insuranceDTO.value.user_cd === 'IND' && (renewalYN.value==undefined || renewalYN.value !== 'Y') ) return false;
+  if (insuranceDTO.value.user_cd === 'IND' && ( renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N'))) return false;
+
   if (insuranceDTO.value.base_insr_st_dt < insuranceDTO.value.insr_retr_dt) {
     return false;
   }
@@ -2025,7 +2030,6 @@ async function chkSaleRtIND() {
 
   const params = { insr_year: insuranceDTO.value.insr_year, business_cd: _AUTH_USER.value.businessCd, user_nm: insuranceDTO.value.user_nm, user_birth: insuranceDTO.value.user_birth, user_regno: insuranceDTO.value.user_regno };
   const result = await apiContract.getSaleRtNDupInfo(params);
-
   if (result.success) {
     if (result.data.dup_cnt > 0) {
       messageBoxDTO.value.setWarning('가입회원', '보험계약이 되어 있는 회원입니다.<br/>록톤코리아로 연락해주시기 바랍니다.');
@@ -2075,6 +2079,12 @@ async function chkSaleRtIND() {
         } else {
           // 개인전환 할인은 0% 고정
           insuranceDTO.value.insr_sale_rt = 0;
+
+          insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
+          isChangeCorToInd.value = true
+
+        //  const insrStartDtData = await apiCommon.getStockStartDtByBusinessCd({business_cd : _AUTH_USER.value.businessCd});
+        //  insuranceDTO.value.insr_st_dt = insrStartDtData.data.start_dt
         }
 
         messageBoxDTO.value.setWarning(
@@ -2086,6 +2096,7 @@ async function chkSaleRtIND() {
   }
   return true;
 }
+
 
 function checkDuplicateData(dataArray, rowIdx) {
   // 체크할 rowIdx를 제외한 배열 생성
@@ -2396,13 +2407,23 @@ watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
 
   // 과거일자로는 변경 불가, 원복시킨다.
   //if (TODAY > newValue[0]) {
-  //갱신일 경우 base_insr_st_dt로 시작날짜 세팅되어야 함 2024-07-01
-    if (renewalYN.value != 'Y' && TODAY > newValue[0]) {
-    insuranceDTO.value.insr_st_dt = TODAY;
-    insuranceDTO.value.insr_retr_dt = TODAY;
+  //갱신일 경우 base_insr_st_dt로 시작날짜 세팅되어야 함  수정 2024-07-01
+  //if ( renewalYN.value != 'Y' && TODAY > newValue[0]) {
+
+  //renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N')
+  console.log(insuranceDTO.value.insr_retr_yn)
+
+    //if (renewalYN.value!=undefined  && renewalYN.value != 'Y' && TODAY > newValue[0]) {
+    if(renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N')){
+      if(insuranceDTO.value.insurance_uuid == undefined || insuranceDTO.value.insurance_uuid == '') {
+        insuranceDTO.value.insr_st_dt = TODAY;
+        insuranceDTO.value.insr_retr_dt = TODAY;
+      }
       insr_st_dt_min.value = TODAY;
     showMessageBoxByInsrDt();
-  }
+  } else {
+      insr_st_dt_min.value = TODAY;
+    }
 
   // [보험료표] 보험개시일자가 과거이면 보험개시일로 변경한다.
   if (newValue[0] < insuranceRateDTO.value.insr_st_dt) {
@@ -2557,7 +2578,7 @@ onMounted(async () => {
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
 
     insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
-    
+
     // 갱신후 : 오늘일자로 설정 / 오늘일자 > [보험료표DB]_보험시작일자
     if(TODAY > insuranceRateDTO.value.insr_st_dt) {
       insuranceDTO.value.insr_st_dt = TODAY;
@@ -2568,11 +2589,11 @@ onMounted(async () => {
 
     // 소급담보일도 오늘일자로 재설정
     insuranceDTO.value.insr_retr_dt = insuranceDTO.value.insr_st_dt;
-
     if (insuranceDTO.value.user_cd == 'IND') {
       // 전환여부 확인
-      chkSaleRtIND();
+      chkSaleRtIND()
 
+        //법인 -> 개인 전환 일경우 신규지만 갱신으로 간주
     } else if (insuranceDTO.value.user_cd == 'COR') {
       addCBR(insuranceDTO.value);
     }
@@ -2587,10 +2608,12 @@ onMounted(async () => {
     if (resultData.data.length == 0) {
       router.push('/404');
     } else {
-
+      console.log(resultData.data[0])
       Object.assign(insuranceDTO.value, resultData.data[0]);
+      console.log(insuranceDTO.value)
       if(insuranceDTO.value.insr_retr_yn == 'Y') {
         insr_st_dt_min.value = resultData.data[0].base_insr_st_dt;
+        insr_st_dt_max.value = resultData.data[0].base_insr_st_dt;
       }
       //insuranceDTO.value.insr_st_dt = '2024-06-30'
       getUserInfoToSetUserInfoByInsurance();

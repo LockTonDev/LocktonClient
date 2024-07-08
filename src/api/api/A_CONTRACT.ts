@@ -43,7 +43,6 @@ export default {
     if (isAdmin) {
       return await api.authService.post('/TAX/TAX0030A/get', { params });
     } else {
-      console.log("params: ",params)
       return await api.commonService.post('/TAX/TAX0030A/get', { params });
     }
   },

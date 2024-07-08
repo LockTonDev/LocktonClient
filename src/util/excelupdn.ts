@@ -402,7 +402,7 @@ export const UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR = async (event: any) => {
               insuranceDTO = new InsuranceDTO();
 
               insuranceDTO.insurance_uuid = row.getCell(EXCEL_TAX_COR.보험식별번호).value;
-              insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_TAX_COR.총입금액).value;
+              insuranceDTO.insr_tot_paid_amt = (row.getCell(EXCEL_TAX_COR.총입금액).value == "")?null:row.getCell(EXCEL_TAX_COR.총입금액).value;
               insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_TAX_COR.차액).value;
 
               insuranceDTO.status_nm = row.getCell(EXCEL_TAX_COR.상태).value;

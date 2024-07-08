@@ -484,7 +484,6 @@ async function handleFileUploadCOR(event) {
     let resultData;
     if(route.params.business_cd!='ADV') {
       const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR(event);
-      console.log(excelList);
       resultData = await apiADMIN.setTAX_TRX(excelList);
       if (resultData.success) {
         messageBoxDTO.value.setInfo('확인', `저장 되었습니다. 업데이트 건수 : ${resultData.data.toLocaleString()}`);

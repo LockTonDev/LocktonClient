@@ -1139,7 +1139,6 @@ onMounted(async () => {
   isPdf.value = props.isPdf;
   isNotAuth.value = props.isNotAuth;
 
-  console.log("insuranceDTO.value.busnised",insuranceDTO.value)
   if (props.insurance_uuid) {
     const params = { insurance_uuid: props.insurance_uuid };
     resultData.value = await apiContract.getDBSelHistory(params, isAdmin);

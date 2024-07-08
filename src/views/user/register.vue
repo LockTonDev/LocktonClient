@@ -990,7 +990,12 @@ function isDisabledCorpBnno() {
  * @param values 로그인 정보
  */
 async function onSubmit(params: any) {
-
+  //회계사의 경우 사무소명에 법인이 있으면 입력 불가.
+  if(businessCd == 'ACC' && userDTO.value.corp_nm.trim().indexOf("법인") > -1) {
+    messageBoxDTO.value.setWarning( '회원가입', `한국공인회계사회 회원만 가입이 가능합니다.<br>회계법인 소속은 신규가입 불가합니다.`);
+    return false
+  }
+  alert(userDTO.value.corp_nm)
   if (!await checkValidation()) return false;
   let result = null;
 

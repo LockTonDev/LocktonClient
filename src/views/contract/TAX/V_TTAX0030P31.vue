@@ -57,8 +57,8 @@
                   <img src="../../../assets/images/new-db-join-logo.png" alt="" />
                   <h1 class="position-absolute bottom-0 left-header pb-8 color-white">세무사배상책임보험 <span class="text-24">가입조건 안내</span></h1>
                 </header>
-                <main>
-                  <h2 class="title-wrap d-flex align-center ml-0 pl-0">
+                <main class="mx-5">
+                  <h2 class="title-wrap d-flex align-center ml-0 pl-0 mt-1 pt-1">
                     <img src="../../../assets/images/new-db-circle.png" alt="" style="width: 10px;height: 20px"/>
                     <p class="h6 title">계약자 / 피보험자 관련사항</p>
                   </h2>
@@ -70,7 +70,7 @@
                       <th colspan="5" style="border-right: 1px solid #000; border-top: 1px solid #00B050;">계약자</th>
                       <td colspan="10" style="border-right: 1px solid #000; border-top: 1px solid #00B050;">한국세무사회</td>
                       <th colspan="5" style="border-right: 1px solid #000; border-top: 1px solid #00B050;">사업자등록번호</th>
-                      <td colspan="10" style="border-top: 1px solid #00B050;">211-82-04242</td>
+                      <td colspan="10" style="border-top: 1px solid #00B050;">214-82-01415</td>
                     </tr>
                     <tr>
                       <th colspan="5" style="border-right: 1px solid #000;">피보험자</th>
@@ -231,7 +231,7 @@
                     <img src="../../../assets/images/new-db-join-logo.png" alt="" />
                     <h1 class="position-absolute bottom-0 left-header pb-8 color-white">세무사배상책임보험 <span class="text-24">가입조건 안내</span></h1>
                   </header>
-                  <main>
+                  <main class="mx-5">
                     <h2 class="title-wrap d-flex align-center ml-0 pl-0">
                       <img src="../../../assets/images/new-db-circle.png" alt="" style="width: 10px;height: 20px"/>
                       <span class="h6 title">피보험자명단</span>
@@ -309,9 +309,9 @@ import {useMobileStore} from "@/stores";
 const checkMobile = useMobileStore();
 
 const authStore = useAuthStore();
-const { _AUTH_ADMIN } = storeToRefs(authStore);
-const isAdmin = _AUTH_ADMIN.value === null ? false: true;
-
+const { _AUTH_ADMIN ,_AUTH_USER} = storeToRefs(authStore);
+//const isAdmin = _AUTH_ADMIN.value === null ? false: true;
+let isAdmin = ref(false)
 const props = defineProps({
   insurance_uuid: {
     type: String,
@@ -388,7 +388,7 @@ const onExportPDF = (viewType: string) => {
     }
   };
 
-  if (!isAdmin) {
+  if (!isAdmin.value) {
     opt.jsPDF.encryption = {
       userPassword: pdfPassword,
       ownerPassword: pdfPassword,
@@ -418,14 +418,23 @@ const onExportPDF = (viewType: string) => {
 onMounted(async () => {
 
   isPdf.value = props.isPdf;
+
   if (props.insurance_uuid) {
+
+    if(document.location.href.indexOf('lcksl-fr') > -1) {
+      isAdmin.value = true
+    } else {
+      isAdmin.value = false
+    }
+
     const params = { insurance_uuid: props.insurance_uuid };
-    const resultData = await apiContract.getDBSel(params, isAdmin);
+    const resultData = await apiContract.getDBSel(params, isAdmin.value );
     //insuranceDTO.value = resultData.data[0];
     Object.assign(insuranceDTO.value, resultData.data[0]);
     const filter1 = insuranceDTO.value.cbr_data.filter(data => data.status_cd === '80');
     insuranceDTO.value.cbr_cnt = filter1.length;
-    // console.log(insuranceDTO.value);
+
+
   } else {
   }
   if (isPdf.value) {

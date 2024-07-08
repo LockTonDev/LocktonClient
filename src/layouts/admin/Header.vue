@@ -7,6 +7,7 @@ import { MessageBoxDTO, ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, C
 import MessageBox from '@/components/MessageBox.vue';
 import sidebarItems from "./SidebarItem";
 
+const logoutTimeLimt = ref(1800) // 타임아웃 시간 5분 (초단위)
 const warnTimeoutMin = 3
 const authStore = useAuthStore();
 let _AUTH_ADMIN = ref(JSON.parse(localStorage.getItem('_AUTH_ADMIN')));
@@ -28,10 +29,12 @@ let drawer = ref(true);
 let intervalId = null;
 
 function extendTime() {
-    authStore.refreshAdminAccessToken('_AUTH_ADMIN').then(function(response) {
-      _AUTH_ADMIN.value = JSON.parse(localStorage.getItem('_AUTH_ADMIN'));
-      initPage()
-    })
+     authStore.refreshAdminAccessToken('_AUTH_ADMIN').then(function(response) {
+       _AUTH_ADMIN.value = JSON.parse(localStorage.getItem('_AUTH_ADMIN'));
+       initPage()
+     })
+
+  initPage()
 }
 function initPage() {
   // setInterval 중복실행 방지
@@ -39,6 +42,28 @@ function initPage() {
     clearInterval(intervalId);
   }
   try {
+    /*
+    let remainLogoutTime = logoutTimeLimt.value;
+    intervalId = setInterval(() => {
+      const currentTime = Math.floor(Date.now() / 1000);
+
+      if (remainLogoutTime <= 0) {
+        clearInterval(intervalId);
+        authStore.adminLogout();
+      } else if(remainLogoutTime == warnTimeoutMin * 60) {
+        messageBoxDTO.value.setConfirm('시간연장', '세션 종료까지 '+warnTimeoutMin+'분 남았습니다. 연장하시겠습니까?<br> 취소 시 연장 버튼을 통해서도 세션 연장이 가능합니다.', null, (result, params) => {
+          if (result) {
+            extendTime()
+          }
+        });
+      } else {
+        console.log("remainLogoutTime :",remainLogoutTime)
+        timeLeft.value = convertSecondsToMinutes(remainLogoutTime);
+        remainLogoutTime -= 1;
+      }
+    }, 1000);
+
+     */
 
     const decoded = jwt_decode(_AUTH_ADMIN.value.accessToken);
     const expiresAt = decoded.exp;
@@ -59,6 +84,7 @@ function initPage() {
         timeLeft.value = convertSecondsToMinutes(remainingSeconds);
       }
     }, 1000);
+
   } catch(e) {
     console.error(e)
   }
@@ -78,6 +104,11 @@ const updateAuthAdminFromLocalStorage = (event: StorageEvent) => {
     _AUTH_ADMIN.value = JSON.parse(localStorage.getItem('_AUTH_ADMIN'));
 
     if (_AUTH_ADMIN.value == null) {
+      _AUTH_ADMIN.value = {
+        userId : '',
+        userNm : ''
+      }
+      clearInterval(intervalId);
       authStore.adminLogout();
     } else {
       initPage();

@@ -278,13 +278,17 @@
       const params = ref([]);
       const resultData = await apiContract.getDBSelList(params);
       InsuranceList.value = resultData.data.list;
-      maxInstYear.value = InsuranceList.value[0].insr_year
-      console.log('maxInstYear',maxInstYear)
+
+      if(InsuranceList.value.length > 0) {
+        maxInstYear.value = InsuranceList.value[0].insr_year
+      } else {
+        maxInstYear.value = []
+      }
       newInsrYN.value = resultData.data.newInsrYN.data;
       renewalInsrUUID.value = resultData.data.renewalInsrUUID.data;
 
 
-      console.log(InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear.value)-1 ))
+      //console.log(InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear.value)-1 ))
       if(InsuranceList.value.length == 0 && newInsrYN.value == 'Y' && renewalInsrUUID.value == null) {
         isNoData.value = true;
       }
