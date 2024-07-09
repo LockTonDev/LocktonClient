@@ -1708,7 +1708,7 @@ function isReadonlyByInsrStDt()
   //if (insuranceDTO.value.user_cd === 'IND' && (renewalYN.value==undefined || renewalYN.value !== 'Y') ) return false;
   if (insuranceDTO.value.user_cd === 'IND' && ( renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N'))) return false;
 
-  if (insuranceDTO.value.base_insr_st_dt < insuranceDTO.value.insr_retr_dt) {
+  if (insuranceDTO.value.base_insr_st_dt < insuranceDTO.value.insr_retr_dt && renewalYN.value == 'N') {
     return false;
   }
   
@@ -2414,16 +2414,16 @@ watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
   console.log(insuranceDTO.value.insr_retr_yn)
 
     //if (renewalYN.value!=undefined  && renewalYN.value != 'Y' && TODAY > newValue[0]) {
-    if(renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N')){
-      if(insuranceDTO.value.insurance_uuid == undefined || insuranceDTO.value.insurance_uuid == '') {
-        insuranceDTO.value.insr_st_dt = TODAY;
-        insuranceDTO.value.insr_retr_dt = TODAY;
-      }
-      insr_st_dt_min.value = TODAY;
+  if(renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N')){
+    if(insuranceDTO.value.insurance_uuid == undefined || insuranceDTO.value.insurance_uuid == '') {
+      insuranceDTO.value.insr_st_dt = TODAY;
+      insuranceDTO.value.insr_retr_dt = TODAY;
+    }
+    insr_st_dt_min.value = TODAY;
     showMessageBoxByInsrDt();
   } else {
-      insr_st_dt_min.value = TODAY;
-    }
+    insr_st_dt_min.value = TODAY;
+  }
 
   // [보험료표] 보험개시일자가 과거이면 보험개시일로 변경한다.
   if (newValue[0] < insuranceRateDTO.value.insr_st_dt) {
