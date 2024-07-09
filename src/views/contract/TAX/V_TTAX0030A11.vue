@@ -2411,19 +2411,9 @@ watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
   //if ( renewalYN.value != 'Y' && TODAY > newValue[0]) {
 
   //renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N')
-  console.log(insuranceDTO.value.insr_retr_yn)
 
     //if (renewalYN.value!=undefined  && renewalYN.value != 'Y' && TODAY > newValue[0]) {
-  if(renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N')){
-    if(insuranceDTO.value.insurance_uuid == undefined || insuranceDTO.value.insurance_uuid == '') {
-      insuranceDTO.value.insr_st_dt = TODAY;
-      insuranceDTO.value.insr_retr_dt = TODAY;
-    }
-    insr_st_dt_min.value = TODAY;
-    showMessageBoxByInsrDt();
-  } else {
-    insr_st_dt_min.value = TODAY;
-  }
+
 
   // [보험료표] 보험개시일자가 과거이면 보험개시일로 변경한다.
   if (newValue[0] < insuranceRateDTO.value.insr_st_dt) {
@@ -2634,5 +2624,16 @@ onMounted(async () => {
   // console.log("insuranceDTO.value.insr_year",insuranceDTO.value.insr_year>2023)
   if(insuranceDTO.value.insr_year>2023)
     pdfFileName.value = '세무사_보험약관'+insuranceDTO.value.insr_year+'.pdf'
+
+  if(renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N')){
+    if(insuranceDTO.value.insurance_uuid == undefined || insuranceDTO.value.insurance_uuid == '') {
+      insuranceDTO.value.insr_st_dt = TODAY;
+      insuranceDTO.value.insr_retr_dt = TODAY;
+    }
+    insr_st_dt_min.value = TODAY;
+    showMessageBoxByInsrDt();
+  } else {
+    insr_st_dt_min.value = TODAY;
+  }
 });
 </script>

@@ -1611,16 +1611,15 @@ onMounted(async () => {
 
   onLoading.value = true;
   if(renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N')){
-    console.log('insuranceDTO.value.insurance_uuid',insuranceDTO.value.insurance_uuid)
+
     if(insuranceDTO.value.insurance_uuid == undefined || insuranceDTO.value.insurance_uuid == '') {
-      console.log('2')
+
       insuranceDTO.value.insr_st_dt = TODAY;
       insuranceDTO.value.insr_retr_dt = TODAY;
     }
     insr_st_dt_min.value = TODAY;
     showMessageBoxByInsrDt();
   } else {
-    console.log('1-1')
     insr_st_dt_min.value = TODAY;
   }
 });
