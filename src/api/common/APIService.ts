@@ -23,7 +23,6 @@ const commonService = axios.create({
 
 commonService.interceptors.request.use(
   config => {
-      console.log("test1")
     // showLoading(); // Show loading bar
     const { _AUTH_USER } = useAuthStore();
     const isLoggedIn = !!_AUTH_USER?.accessToken;
@@ -51,13 +50,11 @@ commonService.interceptors.response.use(
     //console.log('commonService Response: ', response.data);
     //   hideLoading();
 
-      console.log("test1 hide")
     return response.data;
   },
   error => {
       hideLoading();
 
-      console.log("test1 hide")
     if (error.response && error.response.status === 401) {
       //  console.log(error);
       const authStore = useAuthStore();
@@ -159,7 +156,6 @@ const authService = axios.create({
 authService.interceptors.request.use(
   config => {
    showLoading(); // Show loading bar
-      console.log("test3")
 
     const { _AUTH_ADMIN } = useAuthStore();
     const isLoggedIn = !!_AUTH_ADMIN?.accessToken;
@@ -186,7 +182,6 @@ authService.interceptors.response.use(
   },
   error => {
     hideLoading();
-      console.log("test3 hide")
     if (error.response && error.response.status === 401) {
       const authStore = useAuthStore();
       const { _AUTH_ADMIN } = useAuthStore();

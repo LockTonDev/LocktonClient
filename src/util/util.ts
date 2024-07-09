@@ -40,7 +40,12 @@ export const calByString = (amount: string, num: number, maxAmt: number) => {
   if (amount == null || amount == undefined || !koreanRegex.test(amount)) return '';
   if (num == 0 || num == null || num == undefined) num = 1;
   if (maxAmt == 0 || maxAmt == null || maxAmt == undefined) maxAmt = 0;
-  const amtNumber = parseInt(amount);
+  var test = amount.split(/[0-9]/)
+
+  if(test.length>2)
+    amount = amount.trim().replace(/억/g, '')
+
+  const amtNumber = parseFloat(amount);
   const amtHangul = amount.match(/[ㄱ-ㅎㅏ-ㅣ가-힣]+/g).join(''); // 한글만 추출하여 문자열로 변환
 
   const unit = {
@@ -69,9 +74,15 @@ export const calByString = (amount: string, num: number, maxAmt: number) => {
     }
   }
 
+  result = result.trim().replace(/원/g, '') + '원'
 
+  var test2 = result.split(/[0-9]/)
+  if(result =='10억원')
+    return result;
+  if(test2.length>2)
+    result= result.trim().replace(/억원/g, '')
 
-  return result.trim().replace(/원/g, '') + '원';
+  return result;
 };
 
 /**
@@ -118,7 +129,6 @@ export const calByString_ADV = (amount: string, num: number, maxAmt: number) => 
       result += count + unitString + '';
     }
   }
-
   return result.trim().replace(/원/g, '') + '원';
 };
 

@@ -324,9 +324,27 @@
                       <sup class="text-error">*</sup>
                     </div>
                     <div :class="checkMobile.isMobile?'data-col date':'data-col justify-space-between date'">
-                      {{ insuranceDTO.insr_st_dt  }}
+                      <VTextFieldWithValidation
+                          v-model="insuranceDTO.insr_st_dt"
+                          name="insr_st_dt"
+                          label="보험시작일자"
+                          type="date"
+                          single-line
+                          density="comfortable"
+                          :min="insuranceDTO.insr_st_dt"
+                          :max="insuranceDTO.insr_cncls_dt"
+                          :readonly="isReadOnlyAll"
+                      />
                       <p class="mx-2">00:01 부터</p>
-                      {{ insuranceDTO.insr_cncls_dt  }}
+                      <VTextFieldWithValidation
+                          v-model="insuranceDTO.insr_cncls_dt"
+                          name="insr_cncls_dt"
+                          label="보험종료일자"
+                          type="date"
+                          single-line
+                          density="comfortable"
+                          readonly
+                      />
                       <p class="ml-2">00:01 까지</p>
                     </div>
                   </v-col>
@@ -461,9 +479,11 @@
                             value="250000000|2억5천만원"
                         >2억5천만원</v-btn>
                       </v-btn-toggle>
-                      <p class="text-caption font-weight-light mt-2">
-                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1
-                        청구당 / 연간총보상한도
+                      <p class="text-caption font-weight-light color-gray mt-2" v-if="insuranceDTO.user_cd === 'IND'" >
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1 청구당 / 연간 총 보상한도
+                      </p>
+                      <p class="text-caption font-weight-light color-gray mt-2" v-else>
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1 청구당 / 연간 총 보상한도는 1청구당 한도에 소속 세무사 수를 곱한 금액임
                       </p>
                       <v-divider class="border-0" />
                       <!-- 법인인 경우 문구 표기 시작 -->
@@ -1214,6 +1234,25 @@ const isTermsOfPolicyDialog = ref(false);
 
 const isDaumPostDialog = ref(false);
 const isInsrTableDialog = ref(false);
+
+
+function isReadonlyByInsrStDt()
+{
+  // console.log(insuranceDTO.value.base_insr_st_dt + ":" + TODAY + ":" + renewalYN.value + ":" + insuranceDTO.value.insr_retr_yn);///
+
+  /**
+   * 1. 법인은 보험시작일자를 변경 할 수 없다.
+   * 2. 개인이면서 신규이면 항상 보험기간을 변경할 수 있게 한다
+   * 3. 기준_보험시작일자가 소금담보일보다 작으면 갱신으로 판단하여 수정불가
+   */
+  if (insuranceDTO.value.user_cd === 'COR') return true;
+  if (insuranceDTO.value.user_cd === 'IND' && renewalYN.value !== 'Y') return false;
+  if (insuranceDTO.value.base_insr_st_dt < insuranceDTO.value.insr_retr_dt) {
+    return false;
+  }
+
+  return false;
+}
 
 function onTermsOfContractClose(agrs: any) {
   isTermsOfContractDialog.value = false;

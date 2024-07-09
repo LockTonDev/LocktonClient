@@ -463,7 +463,7 @@
                       </v-col>
                       <v-col :cols="isMobile()?'12':'6'" class="v-col">
                         <div :class="isMobile()?'head-col2':'head-col'">
-                          <p>피보험자 (법인명)</p>
+                          <p>피보험자</p>
                         </div>
                         <div class="data-col">
                           {{ insuranceDTO.user_nm }}
@@ -640,7 +640,7 @@
                       <b :class="isMobile()?'font-weight-medium color-error text-13 vertical-middle':'font-weight-medium color-error text-15 vertical-middle'">록톤컴퍼니즈코리아</b>
                     </li>
                     <li class="color-error line-height-1-2">
-                        법인명으로 일괄 송금하여 주시기 바랍니다.
+                        d법인명으로 일괄 송금하여 주시기 바랍니다.
                     </li>
                   </ul>
                   <!--최종 보험료 종료-->
@@ -823,7 +823,7 @@
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
-                            <col style="width: 50px" />
+                            <col style="width: 70px" />
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
@@ -916,7 +916,7 @@
                               <td :class="isMobile()?'text-7':''">{{ row.cbr_nm }}</td>
                               <td :class="isMobile()?'text-7':''">{{ row.cbr_brdt }}</td>
                               <td :class="isMobile()?'text-7':''">{{ row.cbr_regno }}</td>
-                              <td :class="isMobile()?'text-7':''">{{ row.insr_retr_dt }}</td>
+                              <td :class="isMobile()?'text-7':'w-25'">{{ row.insr_retr_dt }}</td>
                               <td :class="isMobile()?'text-7':''">{{ row.insr_sale_rt }} %</td>
                               <td :class="isMobile()?'text-7':''">
                                 {{ row?.insr_amt?.toLocaleString() }}원
@@ -1031,6 +1031,7 @@ const close = () => {
 };
 
 const isMobile = () => {
+  console.log('V_TTAX0030A10')
   return checkMobile.isMobile && !isPdf.value
 }
 
@@ -1039,7 +1040,7 @@ const isHistory = ref(false);
 const insuranceDTO = ref(new InsuranceDTO(props.insurance_dto));
 
 const insrYear = ref("");
-const chunkSize = 34;
+const chunkSize = 30;
 
 const chunkedDivCount = computed(() => {
   
@@ -1138,7 +1139,6 @@ onMounted(async () => {
   isPdf.value = props.isPdf;
   isNotAuth.value = props.isNotAuth;
 
-  console.log("insuranceDTO.value.busnised",insuranceDTO.value)
   if (props.insurance_uuid) {
     const params = { insurance_uuid: props.insurance_uuid };
     resultData.value = await apiContract.getDBSelHistory(params, isAdmin);

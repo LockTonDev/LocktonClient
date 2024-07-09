@@ -370,6 +370,11 @@ const props = defineProps({
   isPdf: {
     type: Boolean,
     required: false
+  },
+  isNotAuth: {
+    type: Boolean,
+    required: false,
+    default: false
   }
   
 });
@@ -378,7 +383,7 @@ const today = dayjs().format('YYYY-MM-DD');
 
 const pdfUrl = ref(null);
 const isOpenDialog = ref(true);
-
+const isNotAuth = ref(false);
 const emit = defineEmits(['close']);
 
 const close = () => {

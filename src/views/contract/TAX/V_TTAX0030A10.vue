@@ -22,7 +22,7 @@
       <div class="d-flex justify-space-between align-end">
         <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ InsuranceList.length }}</span> 건</p>
         <div>
-          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="newInsrYN=='Y' && renewalInsrUUID == null">신규 가입</v-btn>&nbsp;
+          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="(2024 - maxInstYear > 1) || (newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear)-1 ).length == 0)">{{}}신규 가입</v-btn>&nbsp;
           <v-btn variant="flat" @click="onPageMove('renewal')" v-if="newInsrYN=='Y' && renewalInsrUUID != null">계약 갱신</v-btn>
          
         </div>
@@ -53,12 +53,12 @@
              <td class="text-center text-body-1 text-no-wrap">{{ row.status_cd !== '91' && row.status_cd !== '10' ? row.insurance_no : '' }}</td>
             <td class="text-center text-body-1 text-no-wrap">{{ row.user_nm }}</td>
             <td class="text-center text-body-1 text-no-wrap">
-              <div v-if="row.insr_year == '2022'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
+              <div v-if="row.use_yn=='N'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
               <div v-else class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
             <td class="text-center text-body-1 text-no-wrap">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">
-              <v-icon v-if="chkValidPeriod(row)"
+              <v-icon v-if="row.use_yn=='Y'"
                 small
                 class="text-primary cursor-pointer"
                 title="신청서 출력"
@@ -107,8 +107,10 @@
   <V_TTAX0030P20 :insurance_uuid="insuranceUUID" :insr_year="insrYear" :isPdf=true v-if="isInsuranceFormDialog" @close="onInsuranceFormClose" />
   <!-- 가입증명서 종료 -->
 
-  <!-- 2024 가입증명서 시작 -->
+  <!-- 2023 가입증명서 시작 -->
   <V_TTAX0030P30 :insurance_uuid="insuranceUUID" :isPdf=true v-if="isCertificatePrintFramDialog" @close="onCertificatePrintFrameClose" />
+  <!-- 2024 가입증명서 시작 -->
+  <V_TTAX0030P31 :insurance_uuid="insuranceUUID" :isPdf=true v-if="isCertificatePrintFramDialog2" @close="onCertificatePrintFrameClose2" />
   <!-- 가입증명서 종료 -->
 
   <PopupList></PopupList>
@@ -125,6 +127,7 @@
   import BaseBreadcrumb from "@/components/BaseBreadcrumb.vue";
   import V_TTAX0030P20 from "@/views/contract/TAX/V_TTAX0030P20.vue";
   import V_TTAX0030P30 from "@/views/contract/TAX/V_TTAX0030P30.vue";
+  import V_TTAX0030P31 from "@/views/contract/TAX/V_TTAX0030P31.vue";
   import InsuranceForm from "@/components/InsuranceForm.vue";
   import apiContract from '@/api/api/A_CONTRACT';
   import router from "@/router";
@@ -134,12 +137,14 @@
   import {useMobileStore} from "@/stores";
   const checkMobile = useMobileStore();
 
+  const maxInstYear =ref([]);
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
   let InsuranceList = ref([]);
   
   const isNoData = ref(false);
   const isCertificatePrintFramDialog = ref(false);
+  const isCertificatePrintFramDialog2 = ref(false);
   const isInsuranceFormDialog = ref(false);
   const insuranceUUID = ref("");
   const insrYear = ref("");
@@ -228,7 +233,12 @@
    */
   const onCertificatePrintFrameOpen = (status_cd:string, insurance_uuid:string,insr_year:string) => {
     insuranceUUID.value = insurance_uuid;
-    isCertificatePrintFramDialog.value = true;
+    if(insr_year<2024){
+      isCertificatePrintFramDialog.value = true;
+    }else{
+      isCertificatePrintFramDialog2.value = true;
+    }
+
   };
 
   const onCertificatePrintFrameClose = () => {
@@ -237,6 +247,13 @@
     // router.go(0);
    
   }
+
+  const onCertificatePrintFrameClose2 = () => {
+    insuranceUUID.value = '';
+    isCertificatePrintFramDialog2.value = false;
+    // router.go(0);
+
+  }
   
   const onInsuranceFormClose = () => {
     insuranceUUID.value = '';
@@ -244,10 +261,16 @@
     // router.go(0);
   }
 
-  const chkValidPeriod=(row)=>{
+  const chkValidPeriod=(row,type)=>{
+    console.log(type)
     let stat = false
+    console.log('insr_st_dt',row.insr_st_dt)
+    console.log('curDate',curDate)
+    console.log('insr_cncls_dt',row.insr_cncls_dt)
     if (curDate<new Date(row.insr_cncls_dt) && curDate >= new Date(row.insr_st_dt))
       stat = true
+
+    console.log(stat)
     return stat;
   }
   
@@ -255,9 +278,17 @@
       const params = ref([]);
       const resultData = await apiContract.getDBSelList(params);
       InsuranceList.value = resultData.data.list;
+
+      if(InsuranceList.value.length > 0) {
+        maxInstYear.value = InsuranceList.value[0].insr_year
+      } else {
+        maxInstYear.value = []
+      }
       newInsrYN.value = resultData.data.newInsrYN.data;
       renewalInsrUUID.value = resultData.data.renewalInsrUUID.data;
 
+
+      //console.log(InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear.value)-1 ))
       if(InsuranceList.value.length == 0 && newInsrYN.value == 'Y' && renewalInsrUUID.value == null) {
         isNoData.value = true;
       }

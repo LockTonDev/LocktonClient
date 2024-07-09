@@ -591,7 +591,7 @@
                         single-line
                         density="comfortable"
                         :min="insr_st_dt_min"
-                        :max="insr_st_dt_max"
+                        :max="insuranceDTO.insr_cncls_dt"
                         :readonly="isReadonlyByInsrStDt()"
                       />
                       <p class="mx-2">00:01 부터</p>
@@ -1608,7 +1608,6 @@ import MessageBox from '@/components/MessageBox.vue';
 
 import apiUser from '@/api/api/user.api';
 import apiContract from '@/api/api/A_CONTRACT';
-import apiCommon from '@/api/api/A_COMMON';
 
 import BaseBreadcrumb from '@/components/BaseBreadcrumb.vue';
 import BaseCard from '@/components/BaseCard.vue';
@@ -1659,10 +1658,8 @@ let TODAY = dayjs().format('YYYY-MM-DD');
 let INSR_RETR_DT_TODAY = dayjs().format('YYYY-MM-DD');
 
 let insr_st_dt_min = ref('')
-let insr_st_dt_max = ref('')
-const tab = ref("1");
 
-const isChangeCorToInd = ref(false);
+const tab = ref("1");
 
 const page = ref({
   title: '전문인배상책임보험 가입',
@@ -1705,9 +1702,7 @@ function isReadonlyByInsrStDt()
    * 3. 기준_보험시작일자가 소금담보일보다 작으면 갱신으로 판단하여 수정불가
    */
   if (insuranceDTO.value.user_cd === 'COR') return true;
-  //if (insuranceDTO.value.user_cd === 'IND' && (renewalYN.value==undefined || renewalYN.value !== 'Y') ) return false;
-  if (insuranceDTO.value.user_cd === 'IND' && ( renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N'))) return false;
-
+  if (insuranceDTO.value.user_cd === 'IND' && (renewalYN.value==undefined || renewalYN.value !== 'Y') ) return false;
   if (insuranceDTO.value.base_insr_st_dt < insuranceDTO.value.insr_retr_dt) {
     return false;
   }
@@ -2030,6 +2025,7 @@ async function chkSaleRtIND() {
 
   const params = { insr_year: insuranceDTO.value.insr_year, business_cd: _AUTH_USER.value.businessCd, user_nm: insuranceDTO.value.user_nm, user_birth: insuranceDTO.value.user_birth, user_regno: insuranceDTO.value.user_regno };
   const result = await apiContract.getSaleRtNDupInfo(params);
+
   if (result.success) {
     if (result.data.dup_cnt > 0) {
       messageBoxDTO.value.setWarning('가입회원', '보험계약이 되어 있는 회원입니다.<br/>록톤코리아로 연락해주시기 바랍니다.');
@@ -2079,12 +2075,6 @@ async function chkSaleRtIND() {
         } else {
           // 개인전환 할인은 0% 고정
           insuranceDTO.value.insr_sale_rt = 0;
-
-          insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
-          isChangeCorToInd.value = true
-
-        //  const insrStartDtData = await apiCommon.getStockStartDtByBusinessCd({business_cd : _AUTH_USER.value.businessCd});
-        //  insuranceDTO.value.insr_st_dt = insrStartDtData.data.start_dt
         }
 
         messageBoxDTO.value.setWarning(
@@ -2096,7 +2086,6 @@ async function chkSaleRtIND() {
   }
   return true;
 }
-
 
 function checkDuplicateData(dataArray, rowIdx) {
   // 체크할 rowIdx를 제외한 배열 생성
@@ -2407,23 +2396,13 @@ watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
 
   // 과거일자로는 변경 불가, 원복시킨다.
   //if (TODAY > newValue[0]) {
-  //갱신일 경우 base_insr_st_dt로 시작날짜 세팅되어야 함  수정 2024-07-01
-  //if ( renewalYN.value != 'Y' && TODAY > newValue[0]) {
-
-  //renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N')
-  console.log(insuranceDTO.value.insr_retr_yn)
-
-    //if (renewalYN.value!=undefined  && renewalYN.value != 'Y' && TODAY > newValue[0]) {
-    if(renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N')){
-      if(insuranceDTO.value.insurance_uuid == undefined || insuranceDTO.value.insurance_uuid == '') {
-        insuranceDTO.value.insr_st_dt = TODAY;
-        insuranceDTO.value.insr_retr_dt = TODAY;
-      }
+  //갱신일 경우 base_insr_st_dt로 시작날짜 세팅되어야 함 2024-07-01
+    if (renewalYN.value != 'Y' && TODAY > newValue[0]) {
+    insuranceDTO.value.insr_st_dt = TODAY;
+    insuranceDTO.value.insr_retr_dt = TODAY;
       insr_st_dt_min.value = TODAY;
     showMessageBoxByInsrDt();
-  } else {
-      insr_st_dt_min.value = TODAY;
-    }
+  }
 
   // [보험료표] 보험개시일자가 과거이면 보험개시일로 변경한다.
   if (newValue[0] < insuranceRateDTO.value.insr_st_dt) {
@@ -2535,8 +2514,6 @@ onMounted(async () => {
     insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
-    //법인 경우 갱신 여부가 저장안됨 2024-07-02
-    insuranceDTO.value.insr_retr_yn = renewalYN.value
 
     // 갱신자는 인증처리 완료
     insuranceDTO.value.cbr_data.forEach(function (data) {
@@ -2578,7 +2555,7 @@ onMounted(async () => {
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
 
     insuranceDTO.value.insr_reg_dt = dayjs().format('YYYY-MM-DD');
-
+    
     // 갱신후 : 오늘일자로 설정 / 오늘일자 > [보험료표DB]_보험시작일자
     if(TODAY > insuranceRateDTO.value.insr_st_dt) {
       insuranceDTO.value.insr_st_dt = TODAY;
@@ -2589,11 +2566,11 @@ onMounted(async () => {
 
     // 소급담보일도 오늘일자로 재설정
     insuranceDTO.value.insr_retr_dt = insuranceDTO.value.insr_st_dt;
+
     if (insuranceDTO.value.user_cd == 'IND') {
       // 전환여부 확인
-      chkSaleRtIND()
+      chkSaleRtIND();
 
-        //법인 -> 개인 전환 일경우 신규지만 갱신으로 간주
     } else if (insuranceDTO.value.user_cd == 'COR') {
       addCBR(insuranceDTO.value);
     }
@@ -2602,22 +2579,43 @@ onMounted(async () => {
    * 수정가입
    */
   } else {
-    const params = { insurance_uuid: insuranceUUID.value };
+    let tempuuid = ["0177cc1ef4824053aebd17910cf6fb2a","01a1f117d15642b793dabc3213f180ce","03ad3bed8cf444fc94bf0bf02cd08782","049f0ec83e934bc8a3a3c6bfe884726c","05d56d7578d941fc8eebf8ab678e183c","06af745b6d724e0996f260fec87e5e17","0868c78eee7f43a389641676e2856467","0879e8afef894339b1bc509ad417b0ad","087d233d78d04eeb8332c18484b593de","08ccfea06f78473eb91feacf53bcaf5e","0921a457f3dd46299f875a7e8b019081","095e6f95b4dd4af89dc87862754c2b4d","0afeff833556443c8a9f5810e409bf68","0b1d30e9ab964b6c9640d00b3ceea547","0bb82118701b40e99dd078fb23757e5b","0bdadf98114f497ab14749aad038e752","0c074f7b4c28470383f5e7afff545569","0d0289b887814826a4389f36fa60b64a","10185441557d4074b4b517d8de6ca641","109309941f054d9d9ca0af9a22aaa900","112e3ae7b23449adb4195859ee8ecec5","118e2c441579437c9e5d10e9ac27b0f8","128c5736d45c486083df2e2a543899c4","128c6f5a5f45474291410b142b56c534","13dc35cf30494e84862e0770185312b5","15870ab8450b4682ba2986bfde8a9a08","16320d8f52424650b0a728f153160803","167f25ccc2224fcc8fd0b8b8c4049ef4","16a36ad504134fe88ac5c3e83051bcaf","17ea74b80278477b905674f4812089b4","17fa0822fe3944f08f3b8ca71576f81c","18a53a25e5a94d539ba48bfdd036c80e"]
+    //let tempuuid = ["18c331f667b7452f8e40aeba8457c0c7","19f58e9f21b14361a83f0563dad23013","1b34fcd359094d268af39373a928f267","1c1cb9b12c8e4dc49de14ca28df1691f","1c463eae57d74254bf033eb67431373c","1c8fcd032a00495e9c09aefd64abf06b","1d0878bba7144fb2ba8729ee7ee0ce42","1d48489a22ed476ab0061ce015046558","1d55685145eb4f68b71f510322c814ff","1eb0a5e32fea4e398e8ceea79cd36911","1f7e4dcf969d4935b852089fca05ede2","1fbb04f9b2a044259d575390e9876235","20041d65832a4eff8aab39ecf5764b2d","20e93b9ef12740fd953f275cb34f82bd","210f7430496e411091b3e91e328a6448"]
+    //let tempuuid =  ["2ad045b5b4a7424bb9a5211336873405","2aef38965ca941e092857424608fb878","2bb3f0b7cf444b528d8e16b90af2159a","2c5fe2c4cade49ffb7f46c0320ba2de3","2cb9d81079d8459b8be9fe52e3af03e4","2d13afca194b4a5599e6abbb14b2e262","2ed76eeb4e2942b697c78f0cb23179c6","30c56bc0c5354a1891b49d5f987d602f","3262acecc186462f9e56f180474d476f","32aa8762cfbb4bc99a6fe1e31224dbe8","331ba8aadf4747588ac837c40771a503","3420b16c2db34659a7744d3a1498edce","349638b69f3d43d29ce81b9ce3866b99","357a2415fce24138a42c85033f54f6ee","3590779ae04641fda3b286c67a303eb8","36f766f2d42c483c81c5d6532941a053","374c292f9514468cbdfc2259c7968f44"]
+    //let tempuuid =  ["377bdafdcec941b0a431fccd548487a1","37862ca22328436596a79e30db5d3c9e","378b985b3bfc4c86ab5fc22f4bf6a067","37c8e46c2ae3420a89789db89520cbf8","38273a10ba64473286d614501959319f","38ff87ed4e6e4cae9dbb328b6d5c428e","390c20acf2bd4ae88f7ce5618be9eced","3941590acf6240039f9544b1d390f424","39691c34cf3e4618a35ad8a02407f50c","39e93fb5fd344365818a88988d648086","39f040095365434aabf3c11c0eb3c423","39fcadf961fd4a24979d42205b13dbfc","3a2e297c654e40c6af7b69f4367bdd57","3a6d01374db34252a04ca228c2743b54","3a95092ca92f428fa591b1067d8aef9e","3be22c4ca441448db3ed9cf9c2309d3a","3c340cca7bc7420d9adca32a6246eb6a","3c8ee04fc58149c7bf436920d4c27c21","3d3259864a59440f8ed54076a41ecb87","3e0c633864f74ebf9e6ca6cb2e633761","3e8eff764ed3449393823abeb782cc86","3f3ca229f4894fc8ba4e4680ce8abcb6","3f5b8bf530a142d29b756ad03680e2ba","404292992e8b461d9f16b437c6852617","40ce44ac9a7749169aae23ea12ebf3d7","41ffc2e9ad86490a9224496ba3b321bf","4241885aea864e88ac9b5a5fd6ba7632","428f7eab264f4f899d14bd1b5966db10","42f3193038314aad8c7c48d3b0b50569","44d09b07dbc641fe86c4d2c2a8644a6b"]
+    //let tempuuid =  ["4b7b2eeb45794b178aad80ab4327736e","4bf74944ca504c158311fd7b1b40e919","4cd3ac96ffb14581b33aae076793f19a","4d29a0692ce849f583f944b2d5542f8b","4d5231420fad48fc9b738ee024ea70b3","4d74cd77cece4785a96258fdf4c74a5e","4da4dbb9e6b54158be596833a57c9dfb","4ed79955a9ab4169957ac61c8fc2ac70","5040315febe8428c8ddc2fae0ed064ce","5199d8e4ae674708a4afc044e6561f38","534326f493a245e2adadc5b15aa0ad1b","53442c9e5c2c426484606b34f68f2c0f","53670b2631804f1195090a51704e1faa","53c574a325ba4089986e56621b9235e6","562ad9c9594148bbbba7bc2bb4fea738","5758820ff4ea440a8241c81c18025793","58640bf9708542399731b0f1c567be1e","5921664f86924c2db956c5b8ed327e9c","59b0daa2f1b94047b2b3ed312a4759e2","59e71a6b33a64e04978d0c27d82c36d5","5a26276da11342ad8b4d54420e3cfbb5","5b149734d81c4163bb89178684632f29","5b32d91e109245ff8431e19822b73b4f","5de0a9761fc540f69578038bcc576033","5e3da1f5198f4faea3805e182cd72133","5ffa47782d5f408fbfde3cb290670f70","603d31da1edf4a449c6eabc8a7df1e20","627372ef9dc8413c956613e6a13a7fa4","63b2efffd2c943b9a4e380257963d521","6407ef24768441a09425d573bc607fbb"]
+    //let tempuuid = ["748e5549297748e9b897c537db3962a9","78bbb1bd612644ba9eaeb78122c12c89","7aa5da9df4ae4e2d9bc2441f3b7bad46","7af8fe56045b41f39b631d1ab4bb87f0","7bbd5604d6814e28b4516f264c55feda","7d7f1036be604a34add2c09cfd301d56","7d93ade439a644bab69fd4a5b1773840","7e12c7661ee64c61ba84529621e3c26f","7fc2e45721fe41bd8f6f49bdf732b3f0","80ed5416f212438ba55e8e205642f875","80f92b905dde490794f3e5f45f08460f","8126ecd27c6f4308b6b793c3bb168237","8136992afa384438a57be5bd630f7009","816446f6f35b4e20a84e993d4f8010fe","81cd08aab47f4ea2a1803f86af8510a5","81cd963297234279bd1f6883ff610dc6","8240c6c56e1e4adca02d28d3ea168be7","83559f2a91d34a69809b02f247937c79","8542c4ddd5a84a9f9c4e4d4657989e14","85609479353f4d37a1fd3e6c832e152b","8566aaf1efc04d788717b5c256ed4da6","85bc97d46e724731b7276f71510ad665","885e87b0411d421c93aed3223f0c01d8","89bafc9f2aee4e569ddd67992b7f92fe","89d6642be2084ee79fc3b4ace9bf2b43","8c976ef99b58426d9025561bd53407dc","8df1e68ce89142d6b6992ac461ab25a9","8e36e777004b4a27862d905476e1960c","8e4d435149c442a3a2d524a78eb58fda","8e726a32580047e19232068ddf7379dd","8ec2f6481f5e4a5ea137109230c7e567","8ed02e41c55b42e8b0ed4dc5b8c013b9"]
+    //let tempuuid = ["9c1cfc83ff9b491f832053ce86be8d32","9d072956c248403a857acaa2498f56bc"]
+    //let tempuuid = ["9e7d26f48e7944bfa863b87522c288b2", "9e8a05a0d1ff46cba15128cbce1748ac","9f32ce379b3e4a0ea736e48113615a67","a312d0abdc31442c8b7ece2c5054405b","a372154169974e3292441aa41be7a877","a446fb51abae47ca80de289d75863f4c","a5083d22309d4ad3a82f44b10a90e43a","a5a355a9544740488f84afe26aae661e","a626b7306002490299f8474c52769f6d","a6475be90e9b4b4f8a1b0f8ee0dc8445","a86451db9117496daf0ff79458f0d19d","a9213f859cef4077994387befaf5a151","ab02bcc894e84c238cd931b0514c3606","ab1195d13ca24bb69c8c6f683fe53274","abb58b9689e44472bd63d2b406357dd2","ae302d001605492484b9f1963aa7d08b","ae83420834fc405fb9472407baac1359","aedd64b893814792b3e0f56bac98ddff","aedfd5e8b07c4780b4bcb582fb896e7b","af19358f7f5444b4a3f88d81255bb8ba","af40a07c137c416983c8eabb816fb429","b02a45d6f4dc4ebf836eab0aa097ce4b","b030b47e3fd347b0a5380fd2e7e7d5bd","b1a2177ab0724ea8bd763d26cb1abe89","b28c926620fd4934b4b34a32072531fa","b3362e80c63745d5918bc04da680e392","b4e969d562d242d597b1ab3af843c0c7","b51ea71db1b34eb7b3d93b209605a553","b58d9343e81a4a09baeb8ba21fd41ed5","b65b16e2d0c3415e91a1f16ef752b34e"]
+    //let tempuuid = ["c458e10d7bb941f29dda07ae3d288fb4","c75f836822b54fcda1e05ef84005eeaa","c7771469c5e24687831e856cbd2f1871","c9bf7ec82bea440583cc63bae20db161","c9e888c4f4d54906912b1a63e61c6610","c9fdced49a7a4e2ab35c92391eece6b6","ca0fc7732f86455cb191586d8d8774e6","cbae90afd6344120ace237d6c113b9d7","cbc62432f76d4b70883907c098e9089d","cc2f770da5c34413bbc758a20e3ad6fe","ccc34626f99a4d8dbc56fd88ecaf1daf","cdf6a9503954469081037e5c7363a48a","ce6934b5bc68448db4ab134cfcab71e2","ce7395cfbc264d26a19403cc253a0500","ced5019aa21a4c959c73f6b6c4745140","d1a3bbdd37184c5db0b2986fecbfe05c","d1bfa714943947e48794327d32188aca","d4e022c31367491486f19dbee9181ef8","d6d38474623d42b586cabee42ecfa704","d72c70c0ac3c474fb1e908c7f020af61","d826e76ebe4f4c20a144b918c0f7848d","d90956a6b1e241a68d35b442860a294a","dae6d9a2d7ea45eca8325b6100e5d810","dd44f055974b4569801d2cec1f77b1e4","ddd7cdbb82c94d31b5e57d305e85a5ec","e02119bdd8494a4b9088f3de7bdbdd5f","e2313d17926043f1b425882579143315","e262365f17a742e3a9f62f5e8de510ed","e4758adccfb14bb0b430b1e72cd75f71","e61c899d6ccb40a1ae597857d084aa83","e621074bfb184327a25827b6437a678f","e650afc6be244193a570768e6a245019"]
+    //let tempuuid = ["f039edf52d854fb0983af58a1a496a00","f250b53d711f4d96856dcc23a5c5e674","f267bebd28dd42ff8f2da060960a4df0","f3a1e7fffcf847fb80ca9ddca360a351","f4e1bacdd9444195a3495fcbdd80147b","f654048f5a074bc496330426a4ed2451","f67cdb2a4c10429d83a3bdb38fac63d5","f795fcfd82144d339abff0a7adc74e99","fbb82928237a45dc97da6a50987857cc","fc0644275a084ffcb8bd3ec37dcb8cb5","fc0e08e55cde4d1aaddfb69ab5385991","fc82813bf55e48b0a5c2da68d081fd31","fd244ef05de24a11b7784a92b71c493c","fd452da1ae3c4017bba74eaf884e0d8d","fd89e73cc4bb4d7fb80fdaad6435b235","fef4191f80024ba489a726a102049e6a","fefccbe13c0f48f59002ec744be6c4e6","73130fce5f3a4bad882f13e30742f5a5","738b17df271049419ac83a2176d8d43a","ef62b1b6bb654121919c27edc95e8aec","ef8cd7160d8a4494a96db791ab969853","efd468c9263f43549c85ec21eb716764"]
+    //let tempuuid = ["743bcb210e484966914e71f04f9524a9","744127b249c14906aef2ef133324ca8a","21787a4ca6274c9586bc6b0d12999b3b","21fd20f0111c42c1a2c2d0835b51b13a","26276b571f5e4cf8bf32c887a11dad03","27da125d35cd45e3bd1f858d68df3cc0","453bfb912e1b4386bae611d5d1f31618","49a9470cc19342428b0331a0741e2067","4aec9e4a90034042965878e93a38f3ea","c28675f7d0fb4421a0c24a1c47fc35bd","c3f61bf50bb44e6ba37d15c1f40606c2","c3f822c354714f61884dfb25ed761c54"]
+    //let tempuuid = ["8ef2f77214b04e9088f64d94377cf2bd","920fed674c8346978208429ca0d4dc85","924f74e6243f410fbd8fd39f79ce8a8d","929c43e8d11940dabcf0357e15ebf36b","9384507facaa4844a8590f32e01dfa08","93e86c80cd9541ffa67a19e2fc78ad0d","948927ebda584d6f872d9122281bc08c","94b26898064e4e9188f988920cc208ea","94f15d9d1e6b4e439658d55cbf199ae5","95aca99082ce4fa0afd61fd1b1e0c2eb","9674e867c2734a5796c91b8bf1f5bbbc","98bf8d17a7c5412b9bd2323cb74ac488","99819b7690204befacfa19236686f8e9","99b11a88324d4e9092a885ff4895060d","9b44376625484694b78ea67caee9399f","9bd9d5abddae49e18b02940d648a2158","648758454f394730993dd65cbc73d2c0","66f1e6704386416492cf8f2fcd961dee","6749196b7e494dd2bd766ac4e4698c64","681159e58e0744b1b59db641c6739554"]
+    //let tempuuid = ["b66cd3860d504c3ca6584ffa5a0c3a34","b7085e3b878f460db658005d7041b289","b7a5ad1dffaa4b14854fb42682d1a691","b97223d8488e447991b5b5184f6e0f9f","ba6cae0c6d9946a0906afd129cb4c7ba","bac548ab24754515a0c626dc93d4391a","bacee3c137db45bea6272c1e6c4c7f0d","bb376feb9e6c4813ab9aa45cda6c4139","bc0a959c3f5649d691b2fdb8d9fcc946","bc343d549df6415c95f0d3948f0403c8","bc6a41fc5aab4bb99ec57458abf3dfe7","bd56a7aaf1b7403bb42fd453e2f7519d","be76aea942f8446685ec2738b24530aa","bf2d187db7694795a03857b4355e4054","bf9d801cf3b743299d722f9ef02a3384","c1074895eeb04ccb805e7043756be9c9","c12944ff866d4099b1942ee6dda6cb2c"]
+    //let tempuuid = ["e66c844f9d1d4b2dbab0dcf28e40ecf0","e739b1898bab4db2ab7fab9ad7ebf3cc","e745935bf849458daf5ac761e41ec690","e7628a8321a34001841d9215f3f00eeb","e7ba8d4b4fd4406f9ea078e4a9143c20","e85654b42f664890a92c68e0b9f9b29e","e9016c4a4ad74fd4af639d8356f1bed4","e99d7ff35db3470f9ab9e1c028520a31","eadbbd51bb684ed6aee0e69abf60124d","eb1eb0a88b8a4307bdccd5fa93c45ca8","eccc4afa03d44837b756ec0edbc7b741","ecd08c46e6ca4bd68f47d4d0f095cfa7","ed3dd80eae334e4ebe1fae48f4acf173","ed9b8c700d3a422dbb5388e41eb330e4","ee164a67e49b4c2db6d7f9b17befe87b"]
+    //let tempuuid = ["68da61d2cb14442483db893d3264d463","69aa8915ade74b88bc654f968298b6fa","6acb58f17f8544d291f9d56e7d0fd02e","6b29ca6d1ed34beeba5efc039f5aae42","6c6f3a88fe634ed48a73bb09320494c0","6cb1de584a794ca7a6a0c41572629e5a","6cf3d2928ba649648490704ef0191cd1","6d828e6b1a9c488c8bee80b2470f1d3f","6da51caa22484bac9095f144c55786ef","700d06ef4e9041159ee2e86bdbd562e8","7107f01e9b9f4dac8e599407a58da1cf","71f4a26543844e0c952b96351edee722","7282004c0fea43338d98116922e7d5f6"]
+    console.log("tempuuid : "+tempuuid.length)
+    //const params = { insurance_uuid: insuranceUUID.value };
+    for(let i =0;i < tempuuid.length;i++) {
+      console.log((i+1)+ " : "+tempuuid[i])
+
+    const params = { insurance_uuid: tempuuid[i]};
     const resultData = await apiContract.getDBSel(params);
   // 초기화용 백업
     if (resultData.data.length == 0) {
       router.push('/404');
     } else {
-      console.log(resultData.data[0])
+
       Object.assign(insuranceDTO.value, resultData.data[0]);
-      console.log(insuranceDTO.value)
       if(insuranceDTO.value.insr_retr_yn == 'Y') {
         insr_st_dt_min.value = resultData.data[0].base_insr_st_dt;
-        insr_st_dt_max.value = resultData.data[0].base_insr_st_dt;
       }
-      //insuranceDTO.value.insr_st_dt = '2024-06-30'
+      insuranceDTO.value.insr_st_dt = '2024-06-30'
       getUserInfoToSetUserInfoByInsurance();
+      console.log(insuranceDTO.value)
+      await apiContract.setDBUpd(insuranceDTO.value);
 
+    }
     }
   }
   // 재계산

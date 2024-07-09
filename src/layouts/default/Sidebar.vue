@@ -142,12 +142,12 @@ const toggleDrawer = () => {
 }
 
 onMounted(() => {
-  window.addEventListener('storage1', updateAuthUserFromLocalStorage);
-  initPage();
+  // window.addEventListener('storage1', updateAuthUserFromLocalStorage);
+  // initPage();
 });
 
 onUnmounted(() => {
-  window.removeEventListener('storage1', updateAuthUserFromLocalStorage);
+  // window.removeEventListener('storage1', updateAuthUserFromLocalStorage);
 });
 
 

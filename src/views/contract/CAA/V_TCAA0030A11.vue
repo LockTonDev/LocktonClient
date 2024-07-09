@@ -3048,7 +3048,6 @@ async function chkSaleRtTWO(list: any, rowIdx: number) {
 
 
   const params = { insr_year: insuranceDTO.value.insr_year, business_cd: _AUTH_USER.value.businessCd, user_cd: insuranceDTO.value.user_cd, user_nm: list.cbr_data[rowIdx].cbr_nm, user_birth: list.cbr_data[rowIdx].cbr_brdt, user_regno: list.cbr_data[rowIdx].cbr_regno };
-  console.log(params)
   const result = await apiA_TCAA0030A.getSaleRtNDupInfo(params);
   if (result.success) {
 
@@ -3155,7 +3154,6 @@ async function chkSaleRtConsTWO(list: any, rowIdx: number) {
 
 
   const params = { insr_year: insuranceDTO.value.insr_year, business_cd: _AUTH_USER.value.businessCd, user_cd: insuranceDTO.value.user_cd, user_nm: list.cbr_data[rowIdx].cbr_nm, user_birth: list.cbr_data[rowIdx].cbr_brdt, user_regno: list.cbr_data[rowIdx].cbr_regno };
-  console.log(params)
   const result = await apiA_TCAA0030A.getSaleRtNDupInfo(params);
   if (result.success) {
 

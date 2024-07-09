@@ -449,6 +449,7 @@
                           >5천만원</v-btn
                         >
                         <v-btn
+                            v-if="!hasAccCorNm"
                           color="primary"
                           class="flex-grow-1"
                           :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;':''"
@@ -456,6 +457,7 @@
                           >1억원</v-btn
                         >
                         <v-btn
+                            v-if="!hasAccCorNm"
                           color="primary"
                           class="flex-grow-1"
                           :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;':''"
@@ -1074,6 +1076,10 @@ const isTermsOfPolicyDialog = ref(false);
 
 const isDaumPostDialog = ref(false);
 const isInsrTableDialog = ref(false);
+
+//회계사 사무소명에 법인이 있을 경우 보상한도를 5천만원만 표시하기 위한 flag
+const hasAccCorNm = ref(false)
+
 function isReadonlyByInsrStDt()
 {
   // console.log(insuranceDTO.value.base_insr_st_dt + ":" + TODAY + ":" + renewalYN.value + ":" + insuranceDTO.value.insr_retr_yn);///
@@ -1193,6 +1199,12 @@ async function onNextPage(values: any) {
   if (!await checkValidation()) return false;
   if (isDuplication.value) return false;
   tab.value = (parseInt(tab.value) + 1).toString();
+
+  //회계사 사무소명에 법인 유무 판단
+  if(insuranceDTO.value.business_cd == 'ACC' && insuranceDTO.value.corp_nm.indexOf('법인') > -1) {
+    hasAccCorNm.value = true
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
