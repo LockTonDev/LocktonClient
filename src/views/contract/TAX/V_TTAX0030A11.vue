@@ -1706,9 +1706,11 @@ function isReadonlyByInsrStDt()
    */
   if (insuranceDTO.value.user_cd === 'COR') return true;
   //if (insuranceDTO.value.user_cd === 'IND' && (renewalYN.value==undefined || renewalYN.value !== 'Y') ) return false;
+  console.log('renewalYN',renewalYN.value)
+  console.log('insr_retr_yn',insuranceDTO.value.insr_retr_yn)
   if (insuranceDTO.value.user_cd === 'IND' && ( renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N'))) return false;
 
-  if (insuranceDTO.value.base_insr_st_dt < insuranceDTO.value.insr_retr_dt && renewalYN.value == 'N') {
+  if (insuranceDTO.value.base_insr_st_dt < insuranceDTO.value.insr_retr_dt) {
     return false;
   }
   
