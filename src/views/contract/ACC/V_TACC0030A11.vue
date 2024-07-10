@@ -1212,9 +1212,11 @@ async function onNextPage(values: any) {
   tab.value = (parseInt(tab.value) + 1).toString();
 
   //회계사 사무소명에 법인 유무 판단
-  if(insuranceDTO.value.business_cd == 'ACC' && insuranceDTO.value.corp_nm.indexOf('법인') > -1) {
+  if(insuranceDTO.value.business_cd == 'ACC' && insuranceDTO.value.corp_nm.indexOf('법인') > -1 && insuranceDTO.value.insr_clm_lt_amt != "50000000|5천만원" ) {
     hasAccCorNm.value = true
-    //insuranceDTO.value.insr_clm_lt_amt = "50000000|5천만원"
+    insuranceDTO.value.insr_clm_lt_amt = "50000000|5천만원"
+  }else{
+    hasAccCorNm.value = false
   }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
