@@ -1215,8 +1215,10 @@ async function onNextPage(values: any) {
 
   //회계사 사무소명에 법인 유무 판단
   if(insuranceDTO.value.business_cd == 'ACC' && insuranceDTO.value.corp_nm.indexOf('법인') > -1 && insuranceDTO.value.insr_clm_lt_amt != "50000000|5천만원" ) {
-    hasAccCorNm.value = true
     insuranceDTO.value.insr_clm_lt_amt = "50000000|5천만원"
+  }
+  if(insuranceDTO.value.business_cd == 'ACC' && insuranceDTO.value.corp_nm.indexOf('법인') > -1 ) {
+    hasAccCorNm.value = true
   }else{
     hasAccCorNm.value = false
   }
@@ -1415,7 +1417,7 @@ watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
   if (insuranceDTO.value.insr_retr_yn === 'Y') {
     return false;
   } else if (insuranceDTO.value.user_cd === 'IND' && TODAY <= newValue[0]) {
-    console.log('insr_retr_dt',insuranceDTO.value.insr_retr_dt )
+    console.log('insr_retr_dt_1',insuranceDTO.value.insr_retr_dt )
     insuranceDTO.value.insr_retr_dt = newValue[0];
   }
 
