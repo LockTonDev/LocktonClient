@@ -451,7 +451,7 @@
                         >5천만원</v-btn
                         >
                         <v-btn
-                            v-if="!hasAccCorNm"
+                            :disabled = "hasAccCorNm"
                             color="primary"
                             class="flex-grow-1"
                             :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;':''"
@@ -459,7 +459,7 @@
                         >1억원</v-btn
                         >
                         <v-btn
-                            v-if="!hasAccCorNm"
+                            :disabled = "hasAccCorNm"
                             color="primary"
                             class="flex-grow-1"
                             :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;':''"
@@ -470,6 +470,10 @@
                       <p class="text-caption font-weight-light mt-2">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>1
                         청구당 / 연간총보상한도
+                      </p>
+
+                      <p v-if="hasAccCorNm" class="v-col-sm-12 text-caption font-weight-light py-0 pl-0">
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>회계법인 소속 가입자는 보상한도 5천만원만 선택 가능합니다.
                       </p>
                     </div>
                   </v-col>
@@ -1210,6 +1214,7 @@ async function onNextPage(values: any) {
   //회계사 사무소명에 법인 유무 판단
   if(insuranceDTO.value.business_cd == 'ACC' && insuranceDTO.value.corp_nm.indexOf('법인') > -1) {
     hasAccCorNm.value = true
+    //insuranceDTO.value.insr_clm_lt_amt = "50000000|5천만원"
   }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1379,6 +1384,7 @@ watch(
 
       // 기본담보 - 보상한도(연보험)
       // 회계사는 개인 1명이라 계산이 필요없음
+
       insuranceDTO.value.insr_year_clm_lt_amt = insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1);
       // insuranceDTO.value.insr_year_clm_lt_amt = calByString(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1), insuranceDTO.value?.cbr_data?.length, 0);
 
@@ -1436,7 +1442,6 @@ watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
 
   // [보험료표] 보험개시일자가 과거이면 보험개시일로 변경한다.
   if (newValue[0] < insuranceRateDTO.value.insr_st_dt) {
-    console.log('3')
     INSR_RETR_DT_TODAY = insuranceRateDTO.value.insr_st_dt
   }
   console.log(insuranceDTO.value.insr_st_dt)

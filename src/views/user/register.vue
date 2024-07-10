@@ -995,7 +995,7 @@ async function onSubmit(params: any) {
     messageBoxDTO.value.setWarning( '회원가입', `한국공인회계사회 회원만 가입이 가능합니다.<br>회계법인 소속은 신규가입 불가합니다.`);
     return false
   }
-  alert(userDTO.value.corp_nm)
+
   if (!await checkValidation()) return false;
   let result = null;
 
