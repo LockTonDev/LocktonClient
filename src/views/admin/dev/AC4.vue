@@ -861,7 +861,7 @@ import {
   DOWNLOAD_EXCEL,
   DOWNLOAD_RENEWAL_EXCEL,
   UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND, UPLOAD_EXCEL_INSURANCE_ADV_TRE_JNT, UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR_RENEWAL,
-  UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND_RENEWAL
+  UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND_RENEWAL, UPLOAD_EXCEL_INSURANCE_ACC_TRE_IND_RENEWAL
 } from "@/util/excelupdn";
 
 const route = useRoute();
@@ -1183,8 +1183,13 @@ async function handleFileUploadIND(event) {
       Object.assign(params, searchParams.value.data);
       params.user_cd = 'IND'
       await fnSetInsuranceRate(params);
-      const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND_RENEWAL(event,insuranceRateDTO.value,insrClmLtAmtItems.value,insrPsnlBrdnAmtItems.value);
-      resultData = await apiADMIN.setTAXRenewal(excelList);
+      if(route.params.business_cd=='TAX'){
+        const excelList = await UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND_RENEWAL(event,insuranceRateDTO.value,insrClmLtAmtItems.value,insrPsnlBrdnAmtItems.value);
+        resultData = await apiADMIN.setTAXRenewal(excelList);
+      }else{
+        const excelList = await UPLOAD_EXCEL_INSURANCE_ACC_TRE_IND_RENEWAL(event,insuranceRateDTO.value,insrClmLtAmtItems.value,insrPsnlBrdnAmtItems.value);
+        resultData = await apiADMIN.setTAXRenewal(excelList);
+      }
     }
 
     if (resultData.success) {
