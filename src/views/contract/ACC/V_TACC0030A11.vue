@@ -285,6 +285,7 @@
                     <ul class="pl-3 text-body-2 mt-2 list-style-type-bull">
                       <li>가입정보에 수정 작성하는 내용(주소, 전화번호 등)은 회원 정보에 동일하게 반영되오니 신중히 기입하여 주시기 바랍니다.</li>
                       <li>가입정보에서 수정되지 않는 정보는 마이페이지-회원정보에서 수정하여 주시기 바랍니다.</li>
+                      <li>회계법인으로 소속이 변경된 경우 반드시 사무소명을 수정하여 주시기 바랍니다.</li>
                     </ul>
                   </div>
                 </v-col>
@@ -472,7 +473,7 @@
                         청구당 / 연간총보상한도
                       </p>
 
-                      <p v-if="hasAccCorNm" class="v-col-sm-12 text-caption font-weight-light py-0 pl-0">
+                      <p class="v-col-sm-12 text-caption font-weight-light py-0 pl-0">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>회계법인 소속 가입자는 보상한도 5천만원만 선택 가능합니다.
                       </p>
                     </div>
@@ -1205,6 +1206,7 @@ function onComplete_DaumPost(result: VueDaumPostcodeCompleteResult) {
 function onCancel() {
   router.push(`/contract/${_AUTH_USER.value.businessCd}/V_T${_AUTH_USER.value.businessCd}0030A10`);
 }
+
 
 async function onNextPage(values: any) {
   if (!await checkValidation()) return false;
