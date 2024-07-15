@@ -171,7 +171,7 @@
             <v-card-text v-if="isViewPWStep1">
               <h2 class="text-h5 font-weight-light">등록된 개인정보로<br/>비밀번호를 찾습니다.</h2>
               <div class="mt-10">
-                <VTextFieldWithValidation v-model="userDTO.user_id" name="user_id" placeholder="아이디" />
+                <VTextFieldWithValidation v-model="user_id_find" name="user_id" placeholder="아이디" />
               </div>
               <div class="d-flex justify-center mt-8">
                 <v-btn @click="setViewPwStep(true, false, false, false);" size="x-large" class="black" variant="outlined" color="black">뒤로가기</v-btn>
@@ -290,7 +290,7 @@ const isViewPWWithHpAuth = ref(false);
 const userDTO = ref(new UserDTO());
 const messageBoxDTO = ref(new MessageBoxDTO());
 const onlyIND = ['ACC']
-
+const user_id_find = ref('')
 
 async function isVerifyEMailAuthCode() {
   const params = { user_id: userDTO.value.user_id, auth_code: userDTO.value.auth_code, corp_bnno: userDTO.value.corp_bnno,business_cd: businessCd};
@@ -409,10 +409,12 @@ function setViewPwStep(isStep0:boolean, isStep1:boolean, isStep2:boolean, isStep
 }
 
 function isVerifyUserAuthWithPW() {
-  if (!userDTO.value.user_id) {
+  //if (!userDTO.value.user_id) {
+  if (!user_id_find.value) {
     messageBoxDTO.value.setWarning("입력확인", "아이디는 필수입력값 입니다.");
     return false;
   }
+  userDTO.value.user_id = user_id_find.value;
   userDTO.value.mode = 'PW';
 
   isVerifyUserAuth();
