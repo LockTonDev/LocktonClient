@@ -40,7 +40,7 @@
             <dd class="my-1 w-80">{{ insuranceDTO.insr_clm_lt_amt.getValueBySplit(1) }} / {{ insuranceDTO.insr_year_clm_lt_amt }} (1청구당/보상한도액)</dd>
           </dl>
           <h2 class="text-center my-16 py-8 text-34">회계사 배상책임보험<br />가입업체임을 증명함.</h2>
-          <p class="w-80 ma-auto word-break-keep-all text-18">귀 사(하)는 「회계사배상책임보험」에 가입하였으므로 상기 보험종목 의 보상하는 손해로 인하여 타인에 대한 법률상배상책임이 발생한 경우 보험약관에 의거 당사가 이를 보상하여 드립니다.</p>
+          <p class="w-80 ma-auto word-break-keep-all text-18">&nbsp;귀 사(하)는 「회계사배상책임보험」에 가입하였으므로 상기 보험종목의 보상하는 손해로 인하여 타인에 대한 법률상배상책임이 발생한 경우 보험약관에 의거 당사가 이를 보상하여 드립니다.</p>
           <p class="w-70 ma-auto mt-8 word-break-keep-all text-16 color-gray">※ 보험기간이 종료되었거나 보험료 미납으로 인해 계약이 해지된 경우에는 보험자의 보상책임이 발생하지 않습니다.</p>
         </main>
         <footer class="">
