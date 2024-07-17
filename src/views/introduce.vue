@@ -32,12 +32,12 @@
             <h3 class="font-family-serif text-h4">Lockton is the world's largest independent insurance brokerage</h3>
           </v-col>
           <v-col cols="12" sm="4" class="px-0 py-10 d-flex flex-column align-center">
-            <p class="text-h1 font-family-serif">100<sup class="text-h3 ml-4">+</sup></p>
+            <p class="text-h1 font-family-serif">140<sup class="text-h3 ml-4">+</sup></p>
             <hr class="color-hypen mt-6 mb-8"/>
             <p class="text-18">Offices worldwide</p>
           </v-col>
           <v-col cols="12" sm="4" class="px-0 py-10 d-flex flex-column align-center">
-            <p class="text-h1 font-family-serif">9,500<sup class="text-h3 ml-4">+</sup></p>
+            <p class="text-h1 font-family-serif">11,700<sup class="text-h3 ml-4">+</sup></p>
             <hr class="color-hypen mt-6 mb-8"/>
             <p class="text-18">Associates</p>
           </v-col>
@@ -47,14 +47,14 @@
             <p class="text-18">Clients</p>
           </v-col>
           <v-col cols="12" sm="4" class="px-0 py-10 d-flex flex-column align-center">
-            <p class="text-h1 font-family-serif">97<sup class="text-h3 ml-4">%</sup></p>
+            <p class="text-h1 font-family-serif">96<sup class="text-h3 ml-4">%</sup></p>
             <hr class="color-hypen mt-6 mb-8"/>
             <p class="text-18">Client retention rate</p>
           </v-col>
           <v-col cols="12" sm="4" class="px-0 py-10 d-flex flex-column align-center">
-            <p class="text-h1 font-family-serif">27<sup class="text-h3 ml-4">%</sup></p>
+            <p class="text-h1 font-family-serif">14<sup class="text-h3 ml-4">%</sup></p>
             <hr class="color-hypen mt-6 mb-8"/>
-            <p class="text-18">Organic growth FY 2022</p>
+            <p class="text-18">Organic growth FY 2024</p>
           </v-col>
         </v-row>
       </div>

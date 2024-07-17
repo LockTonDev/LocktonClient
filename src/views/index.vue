@@ -91,7 +91,8 @@
                     <p class="mb-2">보험 가입 및 이용</p>
                     <p class="text-body-2 font-weight-light">로그인 후 서비스 이용</p>
                   </li>
-                </ul>          
+                </ul><br/>
+                <p class="font-weight-bold">* 이미 회원가입 중인 전문인은 로그인하여 이용해 주시기 바랍니다.</p>
               </v-card-text>
               <v-card-actions class="justify-center">
                 <v-btn variant="outlined" size="large" color="dark" @click="popFirstUser = false">닫기</v-btn>
