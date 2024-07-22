@@ -25,6 +25,7 @@
             <v-row class="content-width h-100" justify="center" align-content="center" style="text-align:center;">
               <v-col>
                 <h1 class="text-h3 color-white font-weight-medium line-height-1-3">전문인 보험 가입 서비스<br/><span class="color-primary font-weight-bold">록톤코리아</span>가 함께 합니다</h1>
+
                 <v-btn v-if="!_AUTH_USER" color="white" size="x-large" class="pl-10 pr-10 mt-16 mr-6 border-radius-0" @click="popFirstUser = true">처음 이용하는 고객</v-btn>
                 <v-btn v-if="!_AUTH_USER" color="primary" size="x-large" class="pl-10 pr-10 mt-16 border-radius-0" to="/user/login">로그인</v-btn>
               </v-col>

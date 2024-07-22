@@ -27,12 +27,12 @@
 <!--            <v-select v-model="searchParams.data['status_cd']" :items="statusCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>-->
 <!--          </li>-->
           <li>
-          <span>피보험자</span>
-          <v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" placeholder="피보험자" @keyup.enter="fnSearch()"/>
+            <span>갱신여부</span>
+            <v-select v-model="searchParams.data['renewal_cd']" :items="searchRenewalCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
           </li>
           <li>
-          <span>갱신여부</span>
-          <v-select v-model="searchParams.data['renewal_cd']" :items="searchRenewalCdItems" variant="outlined" hide-details density="compact"  item-text="title"  item-value="value" ></v-select>
+          <span>피보험자</span>
+          <v-text-field v-model="searchParams.data['user_nm']" type="text" variant="outlined" hide-details="auto" density="compact" single-line class="text-body-2" placeholder="피보험자" @keyup.enter="fnSearch()"/>
           </li>
           <li class="ml-auto">
           <v-btn variant="flat" @click="fnSearch()">조회</v-btn>
@@ -1117,7 +1117,6 @@ async function initPage() {
 	searchParams.value.data['business_cd'] = businessCd;
 	searchParams.value.data['insr_year'] = '%';
 	searchParams.value.data['user_cd'] = '%';
-	searchParams.value.data['status_cd'] = '%';
   searchParams.value.data['renewal_cd'] = '%';
 	searchParams.value.data['user_nm'] = '';
 
@@ -1175,7 +1174,7 @@ async function handleFileUploadIND(event) {
     let resultData;
     if(route.params.business_cd=='ADV') {
       const excelList = await UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND(event);
-      resultData = await apiADMIN.setADV_TRX(excelList);
+      resultData = await apiADMIN.setADVRenewal(excelList);
     } else {
       let params = {}
       //searchParams.value.data;

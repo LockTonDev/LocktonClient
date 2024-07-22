@@ -193,7 +193,7 @@ export default [
         to: `/${adminPath}/dev/AJ2`
       },
       {
-        title: `보험료표`,
+        title: `증권정보`,
         to: `/${adminPath}/dev/AJ3`
       }
     ]

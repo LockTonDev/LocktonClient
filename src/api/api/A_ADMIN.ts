@@ -1,4 +1,7 @@
 import api from '../common/APIService';
+import {ref} from "vue";
+
+let _AUTH_ADMIN = ref(JSON.parse(localStorage.getItem('_AUTH_ADMIN')));
 
 export default {
   /** ============================================================================
@@ -313,10 +316,27 @@ export default {
     return await api.authService.post('/ADM/USER/setUserPassword', {params});
   },
   /** ============================================================================
-   *  [보험DB]
+   *  [기타관리 - 증권정보]
    *  ============================================================================
    */
   async getRenewalInsurance(params: any) {
     return await api.authService.post('/ADM/MASTER/getRenwalInsurance', {params});
+  },
+  async getInsuranceMaster(params: any) {
+    return await api.authService.post('/ADM/MASTER/insurance', {params});
+  },
+  async setInsuranceInfo(params: any) {
+    if(params[0].mode=='C') params[0].created_id = _AUTH_ADMIN.value.userId
+    params[0].updated_id = _AUTH_ADMIN.value.userId
+    return await api.authService.post('/ADM/MASTER/insurance/set', {params});
+  },
+  async delInsuranceInfo(params: any) {
+    return await api.authService.post('/ADM/MASTER/insurance/del', {params});
+  },
+  async chkDupInsuranceInfo(params: any) {
+    return await api.authService.post('/ADM/MASTER/insurance/chkDup', {params});
+  },
+  async setChgInsuranceNoAll(params: any) {
+    return await api.authService.post('/ADM/MASTER/insurance/chgInsuranceNo', {params});
   },
 };

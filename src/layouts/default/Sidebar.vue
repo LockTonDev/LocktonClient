@@ -175,7 +175,7 @@ onUnmounted(() => {
     </template>
     <template v-else>
       <div class="logo">
-        <router-link to="/introduce">
+        <router-link to="/main">
           <img src="/assets/Lockton_Logo_White_simbol.png" alt="" class="w-full">
         </router-link>
       </div>
@@ -258,7 +258,6 @@ onUnmounted(() => {
           </v-btn>
         </template>
       </v-menu>
-
       <v-menu anchor="bottom end" origin="auto" v-if="!_AUTH_USER">
         <template v-slot:activator="{ props }">
           <v-btn icon v-bind="props" to="/user/login" color="secondary">

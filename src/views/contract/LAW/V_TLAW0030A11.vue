@@ -2695,9 +2695,11 @@ watch(() => [clm_lt_amt.value, insuranceDTO.value.corp_region_cd, insuranceDTO.v
         if(year_clm_lt_amt && insuranceDTO.value.cbr_cnt >= 3 ){
           year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
         }
+        insuranceDTO.value.org_insr_year_clm_lt_amt = clm_lt_amt_value.split('/')[1]
         insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
       }else if (local_clm_lt_amt == undefined && local_clm_lt_amt !== '') {
         insuranceDTO.value.insr_clm_lt_amt = '';
+        insuranceDTO.value.org_insr_year_clm_lt_amt = '';
         insuranceDTO.value.insr_year_clm_lt_amt = '';
       }
       if(insuranceDTO.value.user_cd == 'IND') {

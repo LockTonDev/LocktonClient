@@ -55,7 +55,7 @@
               </caption>
               <colgroup>
                 <col style="width: auto" />
-                <col style="width: auto" />
+                <col style="xz width: auto" />
                 <col style="width: auto" />
                 <col style="width: 120px" />
                 <col style="width: auto" />

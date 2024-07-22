@@ -245,6 +245,19 @@ const 보험가입_변리사법인기본명단보험계약 = yup.object({
   insr_income_filename: yup.string().required('손익계산서를 첨부해주세요.')
 });
 
+const 증권정보 = yup.object({
+  business_cd: yup.string().required('전문인 구분을 입력해주세요.'),
+  user_cd: yup.string().required('사용자 구분을 입력해주세요.'),
+  base_year: yup.string().required('증권년도를 입력해주세요.'),
+  ver: yup.string().required('보험시작일을 입력해주세요.'),
+  insr_st_dt: yup.string().required('보험종료일를 입력해주세요.'),
+  insr_cncls_dt: yup.string().required('보험일수를 입력해주세요.'),
+  days: yup.string().required('사무소 우편번호를 입력해주세요.'),
+  insurance_no: yup.string().required('증권번호를 입력해주세요.'),
+  insurance_nm: yup.string().required('보험명을 입력해주세요.'),
+  use_yn: yup.string().required('사용유무를 입력해주세요.'),
+  contents: yup.string().required('보험료표를 입력해주세요.'),
+});
 
 export const InsuranceYup = {
 
@@ -444,5 +457,12 @@ export const InsuranceYup = {
   }),
   LAW_JNT_TAB4: yup.object().shape({
     ...보험가입_공통약관동의.fields
+  }),
+  /** ============================================================================
+   *  사이트 : 관리자
+   *  ============================================================================
+   */
+  MASTER_AJ3 : yup.object().shape({
+    ...증권정보.fields
   })
 };
