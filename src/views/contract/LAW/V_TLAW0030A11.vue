@@ -2341,7 +2341,7 @@ async function chkSaleRtJNT(list: any, rowIdx: number) {
 
 
         1. 법인 -> 개인
-        - 변경전 할증이 있으면 할증을 가져오고, 할인이 있다면 0% 로 적용
+        - 변경전 할증/할인 이 있으면 할증/할인 을 가져온다. (2024년 수정)
 
         2. 개인 -> 법인
         - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
@@ -2369,7 +2369,8 @@ async function chkSaleRtJNT(list: any, rowIdx: number) {
        *  - 할인할증이 0 이상(할증) 이면 할증을 가져온다.
        * 
        * 2. 할인 가져오기
-       *  - 법인 할인 가져온다.
+       *  - 개인/법인 할인 가져온다.
+       *
        */
       list.cbr_data[rowIdx].insr_sale_rt = insr_sale_rt;
       calInsrAmt(list);
@@ -2444,13 +2445,15 @@ async function chkSaleRtIND() {
           - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
       */
       if (result.data.renewal[0].user_cd === 'JNT') {
-        if (insr_sale_rt > 0) {
-          // 전환 대상자의 할증을 가져온다.
-          insuranceDTO.value.insr_sale_rt = insr_sale_rt;
-        } else {
-          // 개인전환 할인은 0% 고정
-          insuranceDTO.value.insr_sale_rt = 0;
-        }
+
+        insuranceDTO.value.insr_sale_rt = insr_sale_rt;
+        // if (insr_sale_rt > 0) {
+        //   // 전환 대상자의 할증을 가져온다.
+        //   insuranceDTO.value.insr_sale_rt = insr_sale_rt;
+        // } else {
+        //   // 개인전환 할인은 0% 고정
+        //   insuranceDTO.value.insr_sale_rt = 0;
+        // }
 
         messageBoxDTO.value.setWarning(
           '복수 갱신대상 이력이 조회됩니다.',
