@@ -22,7 +22,7 @@
       <div class="d-flex justify-space-between align-end">
         <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ InsuranceList.length }}</span> 건</p>
         <div>
-          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="(2024 - maxInstYear > 1) || (newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear)-1 ).length == 0)">{{}}신규 가입</v-btn>&nbsp;
+          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="(renewalInsrYear - maxInstYear > 1) || (newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear)-1 ).length == 0)">신규 가입</v-btn>&nbsp;
           <v-btn variant="flat" @click="onPageMove('renewal')" v-if="newInsrYN=='Y' && renewalInsrUUID != null">계약 갱신</v-btn>
          
         </div>
@@ -150,6 +150,7 @@
   const insrYear = ref("");
   const newInsrYN = ref("");
   const renewalInsrUUID= ref("");
+  const renewalInsrYear= ref("");
   import {dateCompareWithNow} from '../../../util/util';
 
   // 초기정보 설정
@@ -285,7 +286,13 @@
         maxInstYear.value = []
       }
       newInsrYN.value = resultData.data.newInsrYN[0].data;
-      renewalInsrUUID.value = resultData.data.renewalInsrUUID[0].data;
+      if(resultData.data.renewalInsrUUID.length > 0) {
+        renewalInsrUUID.value = resultData.data.renewalInsrUUID[0].data;
+        renewalInsrYear.value = resultData.data.renewalInsrUUID[0].insr_year;
+      }else {
+        renewalInsrUUID.value = null;
+        renewalInsrYear.value = "";
+      }
 
 
       //console.log(InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear.value)-1 ))

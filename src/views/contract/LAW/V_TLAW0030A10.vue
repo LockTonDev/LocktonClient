@@ -22,7 +22,8 @@
       <div class="d-flex justify-space-between align-end">
         <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ InsuranceList.length }}</span> 건</p>
         <div>
-          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="newInsrYN=='Y' && renewalInsrUUID === null">신규 가입</v-btn>&nbsp;
+          <!--    newInsrYN 2024년에 없다.      -->
+          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="(renewalInsrYear - maxInstYear > 1) || (newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear)-1 ).length == 0)">신규 가입</v-btn>&nbsp;
           <v-btn variant="flat" @click="onPageMove('renewal')" v-if="newInsrYN=='Y' && renewalInsrUUID !== null">계약 갱신</v-btn>
         </div>
       </div>
@@ -141,6 +142,7 @@
   import {useMobileStore} from "@/stores";
   const checkMobile = useMobileStore();
 
+  const maxInstYear =ref([]);
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
   let InsuranceList = ref([]);
@@ -243,7 +245,6 @@
   }
 
   onMounted(async () => {
-    console.log(window.innerWidth)
       const params = ref([]);
       user_cd.value = JSON.parse(localStorage.getItem('_AUTH_USER')).userCd;
       const resultData = await apiLAW0030a.getDBSelList(params);
@@ -257,9 +258,16 @@
         renewalInsrUUID.value = null;
         renewalInsrYear.value = "";
       }
+
+      if(InsuranceList.value.length > 0) {
+        maxInstYear.value = InsuranceList.value[0].insr_year
+      } else {
+        maxInstYear.value = []
+      }
       if(InsuranceList.value.length == 0) {
         isNoData.value = true;
       }
+
   });
 
   
