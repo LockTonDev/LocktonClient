@@ -284,8 +284,8 @@
       } else {
         maxInstYear.value = []
       }
-      newInsrYN.value = resultData.data.newInsrYN.data;
-      renewalInsrUUID.value = resultData.data.renewalInsrUUID.data;
+      newInsrYN.value = resultData.data.newInsrYN[0].data;
+      renewalInsrUUID.value = resultData.data.renewalInsrUUID[0].data;
 
 
       //console.log(InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear.value)-1 ))
