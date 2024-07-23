@@ -687,7 +687,7 @@
                         />
                         <span style="margin-left: 10px">원</span>
                       </div>
-                        <span class="color-red">
+                        <span class="text-error">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
                         >매출액은 연초에 업무보고한 직전년도 매출액을 반드시 기재요망 (전년도 1.1 ~ 12월말까지 매출)<br/>
                       <p class="ml-4"> * 대한법무사협회 전산신고한 업무보고서 매출 확인 </p>

@@ -44,7 +44,7 @@
     <v-card>
       <v-card-title class="d-flex align-center justify-space-between">
           <div class="text-h6 font-weight-medium text-wrap">
-            법무사전문인배상책임보험 상품설명 확인서 <span class="text-18">(피보험자 변호사 확인)</span>
+            법무사전문인배상책임보험 상품설명 확인서 <span class="text-18">(피보험자 법무사 확인)</span>
           </div>
       </v-card-title>   
 
