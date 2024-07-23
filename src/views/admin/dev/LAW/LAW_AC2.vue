@@ -1730,19 +1730,17 @@ watch(
     }
 );
 
-//
-// watch(
-//     () => insr_clm_lt_amt.value,
-//     data => {
-//       insuranceDTO.value.insr_clm_lt_amt = data.split('/')[0]
-//       let year_clm_lt_amt = data.split('/')[1];
-//
-//       // if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && insuranceDTO.value.cbr_cnt >= 3 ){
-//       //   year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
-//       // }
-//       insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
-//     }
-// );
+
+watch(
+    () => insr_clm_lt_amt.value,
+    data => {
+      if(insuranceDTO.value.user_cd=='IND'){
+        insuranceDTO.value.insr_clm_lt_amt = data.split('/')[0]
+        let year_clm_lt_amt = data.split('/')[1];
+        insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
+      }
+    }
+);
 
 watch(
     () => insuranceDTO.value.spct_data.insr_clm_lt_amt,
