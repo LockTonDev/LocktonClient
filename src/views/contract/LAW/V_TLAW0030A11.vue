@@ -687,9 +687,12 @@
                         />
                         <span style="margin-left: 10px">원</span>
                       </div>
+                        <span class="color-red">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
                         >매출액은 연초에 업무보고한 직전년도 매출액을 반드시 기재요망 (전년도 1.1 ~ 12월말까지 매출)<br/>
                       <p class="ml-4"> * 대한법무사협회 전산신고한 업무보고서 매출 확인 </p>
+
+                        </span>
                       <span v-if="insuranceDTO.user_cd=='JNT'">
                       <i class="mdi mdi-alert-circle-outline mr-2"></i
                       >법무사법인, 합동사무소의 연간총매출액을 법무사 수로 나눠 1인당 평균 매출액 기재<br/></span>
