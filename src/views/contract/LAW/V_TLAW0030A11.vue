@@ -1889,6 +1889,9 @@ const isSpctNew = ref(false)
 const psnl_yn = ref(false);
 const relief_yn = ref(false);
 
+//중복 최종제출을 막기 위한 FLAG
+let preventDupClick = false
+
 // 오늘일자
 let TODAY = dayjs().format('YYYY-MM-DD');
 let INSR_RETR_DT_TODAY = dayjs().format('YYYY-MM-DD');
@@ -2559,8 +2562,17 @@ async function checkValidation() {
  * @param values 가입 정보
  */
 async function onSubmit(params: any) {
-  if (!await checkValidation()) return false;
+  if(preventDupClick) {
+    alert("최종 제출이 진행 중입니다. 잠시만 기다려주세요.")
+    return false
+  }
+  preventDupClick = true;
 
+  if (!await checkValidation())
+  {
+    preventDupClick = true;
+    return false;
+  }
 
   let result;
   if(insuranceDTO.value.insurance_uuid == '') {
@@ -2570,6 +2582,7 @@ async function onSubmit(params: any) {
     result = await apiLAW0030a.setDBUpd(insuranceDTO.value);
   }else {
     alert('조회 상태에서는 저장할 수 없습니다.');
+    preventDupClick = false;
     return false;
 
   }
@@ -2586,6 +2599,7 @@ async function onSubmit(params: any) {
     } else {
       alert("보험가입 실패");
     }
+    preventDupClick = false;
   }
 }
 
