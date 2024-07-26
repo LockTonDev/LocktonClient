@@ -208,7 +208,7 @@
               <v-card-title class="text-h6 font-weight-medium">회원가입안내</v-card-title>
               <v-divider></v-divider>
               <v-card-text class="text-body-1">
-              <span v-if="businessInfo.value === 'ADV'">복수가입</span>
+              <span v-if="businessInfo.value === 'ADV' || businessInfo.value === 'LAW'">복수가입</span>
               <span v-if="businessInfo.value === 'PAT'">법인/합동가입</span>
               <span v-if="businessInfo.value === 'CAA'">법인/합동사무소</span>
               <span v-if="businessInfo.value === 'TAX'">법인</span>
