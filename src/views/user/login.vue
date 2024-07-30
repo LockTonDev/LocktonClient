@@ -363,7 +363,8 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
       business_cd: values.businessInfo.value,
       user_cd: userCd.value,
       [`user_id`]: values[user_id],
-      [`user_pwd`]: values[user_pwd]
+      [`user_pwd`]: values[user_pwd],
+      user_browser : navigator.userAgent
     };
     const authStore = useAuthStore();
     const result = await authStore.login(params);
@@ -389,7 +390,7 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
 
 
 onMounted(async () => {
-  console.log('businessInfo',businessInfo)
+  console.log('navigatornavigator',navigator.userAgent)
 });
  
 </script>

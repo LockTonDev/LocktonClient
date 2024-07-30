@@ -2570,7 +2570,7 @@ async function onSubmit(params: any) {
 
   if (!await checkValidation())
   {
-    preventDupClick = true;
+    preventDupClick = false;
     return false;
   }
 

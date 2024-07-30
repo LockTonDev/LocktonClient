@@ -640,7 +640,7 @@
                       <b :class="isMobile()?'font-weight-medium color-error text-13 vertical-middle':'font-weight-medium color-error text-15 vertical-middle'">록톤컴퍼니즈코리아</b>
                     </li>
                     <li class="color-error line-height-1-2">
-                        d법인명으로 일괄 송금하여 주시기 바랍니다.
+                        법인명으로 일괄 송금하여 주시기 바랍니다.
                     </li>
                   </ul>
                   <!--최종 보험료 종료-->
