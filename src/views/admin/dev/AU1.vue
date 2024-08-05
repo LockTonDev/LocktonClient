@@ -39,6 +39,6 @@ const pageViewData = ref(null);
 const onPageViewParent = (row) => {
 	pageViewData.value = row;
 };
-	
+
 
 </script>

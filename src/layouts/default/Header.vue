@@ -96,15 +96,14 @@ const toggleDrawer = () => {
           <v-list-item-title class="text-18">회사소개</v-list-item-title>
         </v-list-item>
       </router-link>
-      <!--20240119 장애조치 -->
-<!--      <router-link to="/user/login" class="text-decoration-none">-->
-<!--        <v-list-item :key="'menu-item-login'" class="ml-1 my-2 text-white" style="min-height: 35px !important;" v-if="!_AUTH_USER">-->
-<!--          <v-list-item-title class="text-18">로그인</v-list-item-title>-->
-<!--        </v-list-item>-->
-<!--      </router-link>-->
-<!--      <v-list-item @click="authStore.logout()" :key="'menu-item-logout'" class="ml-1 my-2 text-white" style="min-height: 35px !important;" v-if="_AUTH_USER">-->
-<!--        <v-list-item-title class="text-18">로그아웃</v-list-item-title>-->
-<!--      </v-list-item>-->
+      <router-link to="/user/login" class="text-decoration-none">
+        <v-list-item :key="'menu-item-login'" class="ml-1 my-2 text-white" style="min-height: 35px !important;" v-if="!_AUTH_USER">
+          <v-list-item-title class="text-18">로그인</v-list-item-title>
+        </v-list-item>
+      </router-link>
+      <v-list-item @click="authStore.logout()" :key="'menu-item-logout'" class="ml-1 my-2 text-white" style="min-height: 35px !important;" v-if="_AUTH_USER">
+        <v-list-item-title class="text-18">로그아웃</v-list-item-title>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>

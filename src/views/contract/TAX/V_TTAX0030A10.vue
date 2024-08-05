@@ -283,19 +283,25 @@
       if(InsuranceList.value.length > 0) {
         maxInstYear.value = InsuranceList.value[0].insr_year
       } else {
-        maxInstYear.value = []
+        maxInstYear.value = 0
       }
+      console.log(InsuranceList.value[0].cbr_data)
+      //과거 이력 해지자 상태 변경
+      let cbrInfo = InsuranceList.value[0].cbr_data?.filter(item =>(_AUTH_USER.value.userNm == item.cbr_nm))
+      if(cbrInfo != '80' || cbrInfo != '90' ) InsuranceList.value[0].status_cd = cbrInfo.status_cd
+
       newInsrYN.value = resultData.data.newInsrYN[0].data;
       if(resultData.data.renewalInsrUUID.length > 0) {
         renewalInsrUUID.value = resultData.data.renewalInsrUUID[0].data;
-        renewalInsrYear.value = resultData.data.renewalInsrUUID[0].insr_year;
+        //renewalInsrYear.value = resultData.data.renewalInsrUUID[0].insr_year;
       }else {
         renewalInsrUUID.value = null;
-        renewalInsrYear.value = "";
+        //renewalInsrYear.value = 0;
       }
 
+      //갱신증권년도
+      renewalInsrYear.value = resultData.data.baseYear[0].BASE_YEAR
 
-      //console.log(InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear.value)-1 ))
       if(InsuranceList.value.length == 0 && newInsrYN.value == 'Y' && renewalInsrUUID.value == null) {
         isNoData.value = true;
       }
