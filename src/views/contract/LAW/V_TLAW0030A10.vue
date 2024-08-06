@@ -260,7 +260,7 @@
       }
     //과거 이력 해지자 상태 변경
 
-    if(InsuranceList.value.length > 0 && InsuranceList.value[0]?.cbr_data?.length>0) {
+    if(InsuranceList.value.length > 0 && InsuranceList.value[0]?.cbr_data?.length>0 && _AUTH_USER.userCd=='IND') {
       let cbrInfo = InsuranceList.value[0].cbr_data?.filter(item => (_AUTH_USER.value.userNm == item.cbr_nm))
       if (cbrInfo != '80' || cbrInfo != '90') InsuranceList.value[0].status_cd = cbrInfo.status_cd
     }
