@@ -285,7 +285,6 @@
       } else {
         maxInstYear.value = 0
       }
-      console.log(InsuranceList.value[0].cbr_data)
       //과거 이력 해지자 상태 변경
       if(InsuranceList.value.length > 0 && InsuranceList.value[0]?.cbr_data?.length>0 && _AUTH_USER.value.userCd=='IND') {
         let cbrInfo = InsuranceList.value[0].cbr_data?.filter(item => (_AUTH_USER.value.userNm == item.cbr_nm))
