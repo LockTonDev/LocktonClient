@@ -2822,7 +2822,7 @@ watch(
       0,
       1
     );
-    console.log(insuranceDTO.value.insr_base_amt)
+    // console.log(insuranceDTO.value.insr_base_amt)
 
     // 특약 재계산
     if (insuranceDTO.value.spct_join_yn == 'Y') {

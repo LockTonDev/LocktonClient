@@ -1706,8 +1706,8 @@ function isReadonlyByInsrStDt()
    */
   if (insuranceDTO.value.user_cd === 'COR') return true;
   //if (insuranceDTO.value.user_cd === 'IND' && (renewalYN.value==undefined || renewalYN.value !== 'Y') ) return false;
-  console.log('renewalYN',renewalYN.value)
-  console.log('insr_retr_yn',insuranceDTO.value.insr_retr_yn)
+  // console.log('renewalYN',renewalYN.value)
+  // console.log('insr_retr_yn',insuranceDTO.value.insr_retr_yn)
   if (insuranceDTO.value.user_cd === 'IND' && ( renewalYN.value == 'N' || (renewalYN.value==undefined && insuranceDTO.value.insr_retr_yn == 'N'))) return false;
 
   if (insuranceDTO.value.base_insr_st_dt < insuranceDTO.value.insr_retr_dt) {
@@ -2522,6 +2522,7 @@ onMounted(async () => {
 
     insuranceDTO.value.status_cd = '10'     // 신청
     insuranceDTO.value.insurance_uuid = ''; // 초기값
+    insuranceDTO.value.insurance_no = insuranceRateDTO.value.insurance_no;
     insuranceDTO.value.base_insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
@@ -2562,7 +2563,7 @@ onMounted(async () => {
     insuranceDTO.value.insr_retr_yn = 'N'; // 소금담보수기보정 X
     // insuranceDTO.value.insr_pblc_brdn_rt = '0|공동보험 적용'; // 초기값
     insuranceDTO.value.insr_pcnt_sale_rt = 0; // 초기값
-
+    insuranceDTO.value.insurance_no = insuranceRateDTO.value.insurance_no;
     insuranceDTO.value.insr_year = insuranceRateDTO.value.base_year;
     insuranceDTO.value.base_insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
@@ -2600,9 +2601,9 @@ onMounted(async () => {
     if (resultData.data.length == 0) {
       router.push('/404');
     } else {
-      console.log(resultData.data[0])
+      // console.log(resultData.data[0])
       Object.assign(insuranceDTO.value, resultData.data[0]);
-      console.log(insuranceDTO.value)
+      // console.log(insuranceDTO.value)
       if(insuranceDTO.value.insr_retr_yn == 'Y') {
         insr_st_dt_min.value = resultData.data[0].base_insr_st_dt;
         insr_st_dt_max.value = resultData.data[0].base_insr_st_dt;

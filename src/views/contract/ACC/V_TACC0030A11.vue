@@ -1404,7 +1404,7 @@ watch(
  */
 watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
   // 읽기전용일 경우 해당로직 제외
-  console.log(insuranceDTO.value.insr_st_dt)
+  // console.log(insuranceDTO.value.insr_st_dt)
   if (isReadOnlyAll.value) return false;
 
   // console.log(TODAY);
@@ -1417,12 +1417,12 @@ watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
   if (insuranceDTO.value.insr_retr_yn === 'Y') {
     return false;
   } else if (insuranceDTO.value.user_cd === 'IND' && TODAY <= newValue[0]) {
-    console.log('insr_retr_dt_1',insuranceDTO.value.insr_retr_dt )
+    // console.log('insr_retr_dt_1',insuranceDTO.value.insr_retr_dt )
     insuranceDTO.value.insr_retr_dt = newValue[0];
   }
 
 
-  console.log('insr_retr_yn',insuranceDTO.value.insr_retr_yn)
+  // console.log('insr_retr_yn',insuranceDTO.value.insr_retr_yn)
   // 과거일자로는 변경 불가, 원복시킨다.
   //if (TODAY > newValue[0]) {
   //갱신일 경우 base_insr_st_dt로 시작날짜 세팅되어야 함  수정 2024-07-01
@@ -1450,7 +1450,7 @@ watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
   if (newValue[0] < insuranceRateDTO.value.insr_st_dt) {
     INSR_RETR_DT_TODAY = insuranceRateDTO.value.insr_st_dt
   }
-  console.log(insuranceDTO.value.insr_st_dt)
+  // console.log(insuranceDTO.value.insr_st_dt)
 });
 
 
@@ -1542,6 +1542,7 @@ onMounted(async () => {
 
     insuranceDTO.value.status_cd = '10'     // 신청
     insuranceDTO.value.insurance_uuid = ''; // 초기값
+    insuranceDTO.value.insurance_no = insuranceRateDTO.value.insurance_no;
     insuranceDTO.value.base_insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
@@ -1570,6 +1571,7 @@ onMounted(async () => {
     insuranceDTO.value.insr_pblc_brdn_rt = '0|공동부담비율 없음'; // 초기값
     insuranceDTO.value.insr_pcnt_sale_rt = 0; // 초기값
 
+    insuranceDTO.value.insurance_no = insuranceRateDTO.value.insurance_no;
     insuranceDTO.value.insr_year = insuranceRateDTO.value.base_year;
     insuranceDTO.value.base_insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
@@ -1607,7 +1609,7 @@ onMounted(async () => {
       router.push('/404');
     } else {
       Object.assign(insuranceDTO.value, resultData.data[0]);
-      console.log(insuranceDTO.value)
+      // console.log(insuranceDTO.value)
       if(insuranceDTO.value.insr_retr_yn == 'Y') {
         insr_st_dt_min.value = resultData.data[0].base_insr_st_dt;
         insr_st_dt_max.value = resultData.data[0].base_insr_st_dt;
