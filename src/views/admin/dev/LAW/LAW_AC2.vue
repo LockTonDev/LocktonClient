@@ -1313,8 +1313,7 @@ import VCheckBoxWithValidation from '@/components/VCheckBoxWithValidation.vue';
 import apiADMIN from '@/api/api/A_ADMIN';
 import { UPLOAD_EXCEL_INSURANCE_LAW_TRE_IND, UPLOAD_EXCEL_INSURANCE_LAW_TRE_JNT} from "../../../../util/excelupdn";
 import dayjs from "dayjs";
-import RATE_ITEMS from '../../json/discountRateByMemData.json';
-import {getDiscountRate, getInsrAmt} from '@/util/calUtils';
+import {getDiscountRate} from '@/util/calUtils';
 
 const route = useRoute();
 
