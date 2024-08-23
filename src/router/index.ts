@@ -86,10 +86,10 @@ router.beforeEach(async function (to, from, next) {
       const allowedIPs = ['110.9.11.206', '110.35.173.2', '222.233.19.63','210.91.70.141'];
 
       // Add your IP blocking logic here
-      // if (!allowedIPs.includes(ipAddress)) {
-      //   next('/error');
-      //   return;
-      // }
+      if (!allowedIPs.includes(ipAddress)) {
+        next('/error');
+        return;
+      }
 
       if (authAdminRequired && !_AUTH_ADMIN.value) {
         next('/lcksl-fr/lypts/sol01/login');
