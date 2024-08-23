@@ -1,4 +1,4 @@
-<template>
+               <template>
   <BaseBreadcrumb :title="page.title" :image="page.image"></BaseBreadcrumb>
 
   <v-row>
@@ -120,7 +120,7 @@
                   </v-avatar>
                   <v-card color="background">
                     <v-card-text>
-                      <p class="text-h6 text-center line-height-1-4">IMI 코리아<br />손해보험중개㈜ 설립</p>
+                      <p class="text-h6 text-center line-height-1-4">대한민국 최초<br />보험중개허가 취득</p>
                     </v-card-text>
                   </v-card>
                 </div>
@@ -141,7 +141,7 @@
                   </v-avatar>
                   <v-card color="background">
                     <v-card-text>
-                      <p class="text-h6 text-center line-height-1-4">IMI 코리아<br />손해보험중개㈜ 설립</p>
+                      <p class="text-h6 text-center line-height-1-4">글로벌 회사인<br />록톤컴퍼니즈가 인수</p>
                     </v-card-text>
                   </v-card>
                 </div>
