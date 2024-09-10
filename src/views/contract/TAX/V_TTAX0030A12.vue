@@ -324,9 +324,27 @@
                       <sup class="text-error">*</sup>
                     </div>
                     <div :class="checkMobile.isMobile?'data-col date':'data-col justify-space-between date'">
-                      {{ insuranceDTO.insr_st_dt  }}
+                      <VTextFieldWithValidation
+                          v-model="insuranceDTO.insr_st_dt"
+                          name="insr_st_dt"
+                          label="보험시작일자"
+                          type="date"
+                          single-line
+                          density="comfortable"
+                          :min="insuranceDTO.insr_st_dt"
+                          :max="insuranceDTO.insr_cncls_dt"
+                          :readonly="isReadOnlyAll"
+                      />
                       <p class="mx-2">00:01 부터</p>
-                      {{ insuranceDTO.insr_cncls_dt  }}
+                      <VTextFieldWithValidation
+                          v-model="insuranceDTO.insr_cncls_dt"
+                          name="insr_cncls_dt"
+                          label="보험종료일자"
+                          type="date"
+                          single-line
+                          density="comfortable"
+                          readonly
+                      />
                       <p class="ml-2">00:01 까지</p>
                     </div>
                   </v-col>
@@ -422,35 +440,50 @@
                           color="primary"
                           class="flex-grow-1"
                           value="30000000|3천만원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >3천만원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
                           value="50000000|5천만원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >5천만원</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
                           value="100000000|1억원"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                          style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
                           >1억원</v-btn
                         >
                         <v-btn
-                          v-if="insuranceDTO.user_cd === 'IND'"
-                          color="primary"
-                          class="flex-grow-1"
-                          style="flex-basis: 25%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
-                          value="200000000|2억원"
-                          >2억원</v-btn
+                            v-if="insuranceDTO.user_cd === 'COR' && insuranceDTO.insr_year > 2023"
+                            color="primary"
+                            class="flex-grow-1"
+                            value="150000000|1억5천만원"
+                        >1억5천만원</v-btn
                         >
+                        <v-btn
+                            v-if="insuranceDTO.user_cd === 'IND'"
+                            color="primary"
+                            class="flex-grow-1"
+                            value="200000000|2억원"
+                            style="flex-basis: 20%;min-width: 20px !important; padding-left: 0px; padding-right: 0px"
+                        >2억원</v-btn
+                        >
+                        <v-btn
+                            v-if="insuranceDTO.user_cd === 'IND' && insuranceDTO.insr_year > 2023"
+                            color="primary"
+                            class="flex-grow-1"
+                            value="250000000|2억5천만원"
+                        >2억5천만원</v-btn>
                       </v-btn-toggle>
-                      <p class="text-caption font-weight-light mt-2">
-                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1
-                        청구당 / 연간총보상한도
+                      <p class="text-caption font-weight-light color-gray mt-2" v-if="insuranceDTO.user_cd === 'IND'" >
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1 청구당 / 연간 총 보상한도
+                      </p>
+                      <p class="text-caption font-weight-light color-gray mt-2" v-else>
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>1 청구당 / 연간 총 보상한도는 1청구당 한도에 소속 세무사 수를 곱한 금액임
                       </p>
                       <v-divider class="border-0" />
                       <!-- 법인인 경우 문구 표기 시작 -->
@@ -717,7 +750,11 @@
                               >닫기</v-btn
                             >
                             <!-- 보험 약관 확인-->
-                            <TermsOfPolicy></TermsOfPolicy>
+                            <TermsOfPolicy
+                                :pdf_file_name=pdfFileName
+                                v-if="dialog2"
+                                @close="dialog2 = false">
+                            </TermsOfPolicy>
                           </v-dialog>
                         </v-btn>
                       </td>
@@ -811,7 +848,10 @@
                     이 보험상품은 한국세무사회를 단체계약자, 가입 회원을
                     피보험자로 하는 단체계약 프로그램입니다.
                   </li>
-                  <li>
+                  <li v-if="insuranceDTO.insr_year=='2024'&& insuranceDTO.business_cd=='TAX'">
+                    보험회사 : DB손해보험㈜ <template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>보험중개사 : 록톤컴퍼니즈코리아손해보험중개(주)
+                  </li>
+                  <li v-else>
                     보험회사 : 현대해상화재보험㈜ <template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>보험중개사 : 록톤컴퍼니즈코리아손해보험중개(주)
                   </li>
                   <li>
@@ -1195,6 +1235,25 @@ const isTermsOfPolicyDialog = ref(false);
 const isDaumPostDialog = ref(false);
 const isInsrTableDialog = ref(false);
 
+
+function isReadonlyByInsrStDt()
+{
+  // console.log(insuranceDTO.value.base_insr_st_dt + ":" + TODAY + ":" + renewalYN.value + ":" + insuranceDTO.value.insr_retr_yn);///
+
+  /**
+   * 1. 법인은 보험시작일자를 변경 할 수 없다.
+   * 2. 개인이면서 신규이면 항상 보험기간을 변경할 수 있게 한다
+   * 3. 기준_보험시작일자가 소금담보일보다 작으면 갱신으로 판단하여 수정불가
+   */
+  if (insuranceDTO.value.user_cd === 'COR') return true;
+  if (insuranceDTO.value.user_cd === 'IND' && renewalYN.value !== 'Y') return false;
+  if (insuranceDTO.value.base_insr_st_dt < insuranceDTO.value.insr_retr_dt) {
+    return false;
+  }
+
+  return false;
+}
+
 function onTermsOfContractClose(agrs: any) {
   isTermsOfContractDialog.value = false;
   insuranceDTO.value.agr30_yn = agrs.value.agr30_yn;
@@ -1234,6 +1293,7 @@ function onNextPage(values: any) {
 
 const actionType = ref('');
 const insuranceUUID = ref('');
+const pdfFileName=ref('세무사_보험약관_2023.pdf');
 const insuranceNO = ref('');
 /**
  * 초기로딩시 가입 / 수정 / 조회 를 선택해서 보여준다.
@@ -1253,5 +1313,8 @@ const insuranceNO = ref('');
 
     onLoading.value = true;
   }
+  console.log(insuranceDTO.value.insr_year)
+  if(insuranceDTO.value.insr_year>2023)
+     pdfFileName.value = '세무사_보험약관'+insuranceDTO.value.insr_year+'.pdf'
 });
 </script>

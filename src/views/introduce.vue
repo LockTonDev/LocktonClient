@@ -1,4 +1,4 @@
-<template>
+               <template>
   <BaseBreadcrumb :title="page.title" :image="page.image"></BaseBreadcrumb>
 
   <v-row>
@@ -32,12 +32,12 @@
             <h3 class="font-family-serif text-h4">Lockton is the world's largest independent insurance brokerage</h3>
           </v-col>
           <v-col cols="12" sm="4" class="px-0 py-10 d-flex flex-column align-center">
-            <p class="text-h1 font-family-serif">100<sup class="text-h3 ml-4">+</sup></p>
+            <p class="text-h1 font-family-serif">140<sup class="text-h3 ml-4">+</sup></p>
             <hr class="color-hypen mt-6 mb-8"/>
             <p class="text-18">Offices worldwide</p>
           </v-col>
           <v-col cols="12" sm="4" class="px-0 py-10 d-flex flex-column align-center">
-            <p class="text-h1 font-family-serif">9,500<sup class="text-h3 ml-4">+</sup></p>
+            <p class="text-h1 font-family-serif">11,700<sup class="text-h3 ml-4">+</sup></p>
             <hr class="color-hypen mt-6 mb-8"/>
             <p class="text-18">Associates</p>
           </v-col>
@@ -47,14 +47,14 @@
             <p class="text-18">Clients</p>
           </v-col>
           <v-col cols="12" sm="4" class="px-0 py-10 d-flex flex-column align-center">
-            <p class="text-h1 font-family-serif">97<sup class="text-h3 ml-4">%</sup></p>
+            <p class="text-h1 font-family-serif">96<sup class="text-h3 ml-4">%</sup></p>
             <hr class="color-hypen mt-6 mb-8"/>
             <p class="text-18">Client retention rate</p>
           </v-col>
           <v-col cols="12" sm="4" class="px-0 py-10 d-flex flex-column align-center">
-            <p class="text-h1 font-family-serif">27<sup class="text-h3 ml-4">%</sup></p>
+            <p class="text-h1 font-family-serif">14<sup class="text-h3 ml-4">%</sup></p>
             <hr class="color-hypen mt-6 mb-8"/>
-            <p class="text-18">Organic growth FY 2022</p>
+            <p class="text-18">Organic growth FY 2024</p>
           </v-col>
         </v-row>
       </div>
@@ -120,7 +120,7 @@
                   </v-avatar>
                   <v-card color="background">
                     <v-card-text>
-                      <p class="text-h6 text-center line-height-1-4">IMI 코리아<br />손해보험중개㈜ 설립</p>
+                      <p class="text-h6 text-center line-height-1-4">대한민국 최초<br />보험중개허가 취득</p>
                     </v-card-text>
                   </v-card>
                 </div>
@@ -141,7 +141,7 @@
                   </v-avatar>
                   <v-card color="background">
                     <v-card-text>
-                      <p class="text-h6 text-center line-height-1-4">IMI 코리아<br />손해보험중개㈜ 설립</p>
+                      <p class="text-h6 text-center line-height-1-4">글로벌 회사인<br />록톤컴퍼니즈가 인수</p>
                     </v-card-text>
                   </v-card>
                 </div>

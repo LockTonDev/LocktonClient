@@ -208,7 +208,7 @@
               <v-card-title class="text-h6 font-weight-medium">회원가입안내</v-card-title>
               <v-divider></v-divider>
               <v-card-text class="text-body-1">
-              <span v-if="businessInfo.value === 'ADV'">복수가입</span>
+              <span v-if="businessInfo.value === 'ADV' || businessInfo.value === 'LAW'">복수가입</span>
               <span v-if="businessInfo.value === 'PAT'">법인/합동가입</span>
               <span v-if="businessInfo.value === 'CAA'">법인/합동사무소</span>
               <span v-if="businessInfo.value === 'TAX'">법인</span>
@@ -363,7 +363,8 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
       business_cd: values.businessInfo.value,
       user_cd: userCd.value,
       [`user_id`]: values[user_id],
-      [`user_pwd`]: values[user_pwd]
+      [`user_pwd`]: values[user_pwd],
+      user_browser : navigator.userAgent
     };
     const authStore = useAuthStore();
     const result = await authStore.login(params);
@@ -389,7 +390,7 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
 
 
 onMounted(async () => {
-
+  console.log('navigatornavigator',navigator.userAgent)
 });
  
 </script>

@@ -22,5 +22,13 @@ export default {
    */
   async getCodeALL() {
     return await api.commonService.post('/COMMON/code/all');
-  }
+  },
+
+  /** ============================================================================
+   *  [증권시작일조회]
+   *  ============================================================================
+   */
+  async getStockStartDtByBusinessCd(params) {
+    return await api.commonService.post('/COMMON/code/getStockStartDtByBusinessCd', {params});
+  },
 };

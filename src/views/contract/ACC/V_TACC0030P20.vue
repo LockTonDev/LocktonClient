@@ -54,7 +54,7 @@
                         <div :class="isMobile()?'head-col2':'head-col'">
                           <p>보험기간</p>
                         </div>
-                        <div class="data-col">{{ insuranceDTO.insr_st_dt }}(00:01) ~ {{ insuranceDTO.insr_cncls_dt }}(00:01)</div>
+                        <div class="data-col">{{ insuranceDTO.base_insr_st_dt }}(00:01) ~ {{ insuranceDTO.base_insr_cncls_dt }}(00:01)</div>
                       </v-col>
                       <v-col :cols="isMobile()?'12':'6'" class="v-col">
                         <div :class="isMobile()?'head-col2':'head-col'">

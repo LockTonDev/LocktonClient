@@ -4,8 +4,9 @@ import {MenuDEF, MenuACC, MenuTAX, MenuADV, MenuCAA, MenuPAT, MenuLAW}  from "./
 
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
+import { useStore } from '@/stores/mutation'
 import jwt_decode from 'jwt-decode';
-import { MessageBoxDTO, ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, CBRDataDTO } from '@/model';
+import { MessageBoxDTO,  ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, CBRDataDTO } from '@/model';
 import MessageBox from '@/components/MessageBox.vue';
 
 import {useMobileStore} from "@/stores";
@@ -14,6 +15,9 @@ const checkMobile = useMobileStore();
 
 const authStore = useAuthStore();
 const _AUTH_USER  = ref(JSON.parse(localStorage.getItem('_AUTH_USER')));
+
+const store = useStore();
+const { isLoading } = storeToRefs(store);
 
 const height = ref({ max: "90", min:"64" });
 const admin = false;
@@ -24,6 +28,7 @@ const drawer = ref(false);
 
 const warnTimeoutMin = 29//3
 const messageBoxDTO = ref(new MessageBoxDTO());
+//const LoadingBarDTO = ref(new LoadingBarDTO());
 
 // REFRESH 시 기본 설정값 셋팅
 switch(_AUTH_USER?.value?.businessCd) {
@@ -137,12 +142,12 @@ const toggleDrawer = () => {
 }
 
 onMounted(() => {
-  window.addEventListener('storage1', updateAuthUserFromLocalStorage);
-  initPage();
+  // window.addEventListener('storage1', updateAuthUserFromLocalStorage);
+  // initPage();
 });
 
 onUnmounted(() => {
-  window.removeEventListener('storage1', updateAuthUserFromLocalStorage);
+  // window.removeEventListener('storage1', updateAuthUserFromLocalStorage);
 });
 
 
@@ -150,6 +155,7 @@ onUnmounted(() => {
 </script>
 
 <template>
+
   <v-app-bar flat :height="height.max" app >
     <!-- ---------------------------------------------- -->
     <!---Logo part -->
@@ -169,7 +175,7 @@ onUnmounted(() => {
     </template>
     <template v-else>
       <div class="logo">
-        <router-link to="/introduce">
+        <router-link to="/main">
           <img src="/assets/Lockton_Logo_White_simbol.png" alt="" class="w-full">
         </router-link>
       </div>
@@ -252,7 +258,6 @@ onUnmounted(() => {
           </v-btn>
         </template>
       </v-menu>
-
       <v-menu anchor="bottom end" origin="auto" v-if="!_AUTH_USER">
         <template v-slot:activator="{ props }">
           <v-btn icon v-bind="props" to="/user/login" color="secondary">

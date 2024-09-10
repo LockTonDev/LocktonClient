@@ -446,7 +446,6 @@ async function fnExcelDownload() {
       if (resultData.data.length == 0) {
         messageBoxDTO.value.setInfo('Excel', '데이타가 없습니다. 검색조건을 확인하세요.');
       } else {
-        console.log("resultData.data",resultData.data)
         DOWNLOAD_EXCEL(searchParams.value, resultData.data);
       }
     }
@@ -524,7 +523,6 @@ async function initPage() {
   statusCdItems.value.unshift({ title: '전체', value: '%' });
   userCdItems.value.unshift({ title: '전체', value: '%' });
   trxCdItems.value = await CommonCode.getCodeList('COM031');
-  console.log(trxCdItems.value)
 
   insrYearCdItems.value = [];
   insrYearCdItems.value.unshift({ title: '전체', value: '%' });

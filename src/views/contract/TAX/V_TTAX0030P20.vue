@@ -54,7 +54,10 @@
                       보험가입신청서
                     </p>
                   </h1>
-                  <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
+                  <p v-if="insrYear>'2023'" class="mt-4 text-12 line-height-1-4 word-break-keep-all">
+                    본 보험은 한국세무사회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 세무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
+                  </p>
+                  <p v-else class="mt-4 text-12 line-height-1-4 word-break-keep-all">
                     본 보험은 한국세무사회 및 현대해상화재보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 세무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
                   </p>
                 </header>
@@ -424,7 +427,11 @@
                       보험가입신청서
                     </p>
                   </h1>
-                  <p class="mt-4 text-12 line-height-1-4 word-break-keep-all">
+
+                  <p v-if="insrYear>'2023'"  class="mt-4 text-12 line-height-1-4 word-break-keep-all">
+                    본 보험은 한국세무사회 및 DB손해보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 세무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
+                  </p>
+                  <p v-else  class="mt-4 text-12 line-height-1-4 word-break-keep-all">
                     본 보험은 한국세무사회 및 현대해상화재보험㈜ 그리고 록톤컴퍼니즈코리아손해보험중개㈜ 간에 체결된 보험업무협약에 따라 피보험자가 세무사로서 수행한 업무상 과실에 따른 법률상 손해배상책임을 보장합니다.
                   </p>
                 </header>
@@ -456,7 +463,7 @@
                       </v-col>
                       <v-col :cols="isMobile()?'12':'6'" class="v-col">
                         <div :class="isMobile()?'head-col2':'head-col'">
-                          <p>피보험자 (법인명)</p>
+                          <p>피보험자</p>
                         </div>
                         <div class="data-col">
                           {{ insuranceDTO.user_nm }}
@@ -816,7 +823,7 @@
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
-                            <col style="width: 50px" />
+                            <col style="width: 70px" />
                             <col style="width: auto" />
                             <col style="width: auto" />
                             <col style="width: auto" />
@@ -909,7 +916,7 @@
                               <td :class="isMobile()?'text-7':''">{{ row.cbr_nm }}</td>
                               <td :class="isMobile()?'text-7':''">{{ row.cbr_brdt }}</td>
                               <td :class="isMobile()?'text-7':''">{{ row.cbr_regno }}</td>
-                              <td :class="isMobile()?'text-7':''">{{ row.insr_retr_dt }}</td>
+                              <td :class="isMobile()?'text-7':'w-25'">{{ row.insr_retr_dt }}</td>
                               <td :class="isMobile()?'text-7':''">{{ row.insr_sale_rt }} %</td>
                               <td :class="isMobile()?'text-7':''">
                                 {{ row?.insr_amt?.toLocaleString() }}원
@@ -989,7 +996,10 @@ const props = defineProps({
     type: String,
     required: false
   },
-
+  insr_year:{
+    type: String,
+    required: false
+  },
   insurance_dto: {
     type: InsuranceDTO,
     required: false
@@ -1021,6 +1031,7 @@ const close = () => {
 };
 
 const isMobile = () => {
+  console.log('V_TTAX0030A10')
   return checkMobile.isMobile && !isPdf.value
 }
 
@@ -1028,7 +1039,8 @@ const isPdf = ref(false);
 const isHistory = ref(false);
 const insuranceDTO = ref(new InsuranceDTO(props.insurance_dto));
 
-const chunkSize = 34;
+const insrYear = ref("");
+const chunkSize = 30;
 
 const chunkedDivCount = computed(() => {
   
@@ -1118,10 +1130,15 @@ const onExportPDF = (viewType: string) => {
 };
 
 onMounted(async () => {
+
+  if(props.insr_year!=undefined)
+    insrYear.value =props.insr_year
+
   statusCdItems.value = await CommonCode.getCodeList('COM030');
 
   isPdf.value = props.isPdf;
   isNotAuth.value = props.isNotAuth;
+
   if (props.insurance_uuid) {
     const params = { insurance_uuid: props.insurance_uuid };
     resultData.value = await apiContract.getDBSelHistory(params, isAdmin);
@@ -1134,6 +1151,9 @@ onMounted(async () => {
     });
 
     isHistory.value = resultData.value.data.length > 1 ? true : false;
+
+    insrYear.value = insuranceDTO.value.insr_year
+
   } else {
    
   }
@@ -1142,6 +1162,11 @@ onMounted(async () => {
     onExportPDF('view');
   }
 
+  if(props.insurance_dto!=undefined){
+    insrYear.value =props.insurance_dto.insr_year
+  }
+
+  console.log(insrYear>'2023')
 });
 
 </script>

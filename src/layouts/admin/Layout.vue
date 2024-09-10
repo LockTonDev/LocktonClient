@@ -14,7 +14,7 @@
         <Header />
 
         <!-- 메뉴영역  -->
-        <Sidebar />
+        <!-- <Sidebar /> -->
   
         <!-- 컨텐츠 영역 -->
         <v-container class="admin-container-wrapper">

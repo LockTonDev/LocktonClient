@@ -22,7 +22,8 @@
       <div class="d-flex justify-space-between align-end">
         <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ InsuranceList.length }}</span> 건</p>
         <div>
-          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="newInsrYN=='Y' && renewalInsrUUID === null">신규 가입</v-btn>&nbsp;
+          <!--    newInsrYN 2024년에 없다.      -->
+          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="(renewalInsrYear - maxInstYear > 1) || (newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear)-1 ).length == 0)">신규 가입</v-btn>&nbsp;
           <v-btn variant="flat" @click="onPageMove('renewal')" v-if="newInsrYN=='Y' && renewalInsrUUID !== null">계약 갱신</v-btn>
         </div>
       </div>
@@ -56,12 +57,12 @@
               <p v-if="row.user_cd == 'JNT' && row.cbr_data.length > 0">{{ row.cbr_data[0].cbr_nm }} 외 {{row.cbr_cnt - 1}} 명</p>
             </td>
             <td class="text-center text-body-1 text-no-wrap">
-              <div v-if="row.insr_year === '2000' && row.status_cd !== '10'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
+              <div v-if="row.use_yn=='N'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
               <div v-else class="title cursor-pointer text-no-wrap" @click.prevent="onPageView(row.status_cd, row.insurance_uuid, row.insr_year)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
             <td class="text-center text-body-1 text-no-wrap">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
             <td class="text-center text-body-1">
-              <v-icon v-if="row.insr_year !== '2022'"
+              <v-icon v-if="row.use_yn=='Y'"
                 small
                 class="text-primary cursor-pointer"
                 title="신청서 출력"
@@ -141,6 +142,7 @@
   import {useMobileStore} from "@/stores";
   const checkMobile = useMobileStore();
 
+  const maxInstYear =ref([]);
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
   let InsuranceList = ref([]);
@@ -243,7 +245,6 @@
   }
 
   onMounted(async () => {
-    console.log(window.innerWidth)
       const params = ref([]);
       user_cd.value = JSON.parse(localStorage.getItem('_AUTH_USER')).userCd;
       const resultData = await apiLAW0030a.getDBSelList(params);
@@ -252,14 +253,30 @@
       newInsrYN.value = resultData.data.newInsrYN[0].data;
       if(resultData.data.renewalInsrUUID.length > 0) {
         renewalInsrUUID.value = resultData.data.renewalInsrUUID[0].data;
-        renewalInsrYear.value = resultData.data.renewalInsrUUID[0].insr_year;
+        //renewalInsrYear.value = resultData.data.renewalInsrUUID[0].insr_year;
       }else {
         renewalInsrUUID.value = null;
-        renewalInsrYear.value = "";
+        //renewalInsrYear.value = "";
+      }
+      //과거 이력 해지자 상태 변경
+
+      if(InsuranceList.value.length > 0 && InsuranceList.value[0]?.cbr_data?.length>0 && _AUTH_USER.value.userCd=='IND') {
+        let cbrInfo = InsuranceList.value[0].cbr_data?.filter(item => (_AUTH_USER.value.userNm == item.cbr_nm))
+        if (cbrInfo != '80' || cbrInfo != '90') InsuranceList.value[0].status_cd = cbrInfo.status_cd
+      }
+
+      //갱신증권년도
+      renewalInsrYear.value = resultData.data.baseYear[0].BASE_YEAR
+
+      if(InsuranceList.value.length > 0) {
+        maxInstYear.value = InsuranceList.value[0].insr_year
+      } else {
+        maxInstYear.value = []
       }
       if(InsuranceList.value.length == 0) {
         isNoData.value = true;
       }
+
   });
 
   

@@ -36,7 +36,7 @@
           </p>
           <div class="ml-auto">
             <v-btn variant="outlined" size="small" @click="fnAdd('IND')" class="mx-1">개인 신규</v-btn>
-            <v-btn variant="outlined" size="small" @click="fnAdd('COR')" class="mx-1">법인 신규</v-btn>
+<!--            <v-btn variant="outlined" size="small" @click="fnAdd('COR')" class="mx-1">법인 신규</v-btn>-->
             <v-btn variant="outlined" size="small" @click="fnAdd('JNT')" class="mx-1">합동 신규</v-btn>
           </div>
         </v-card-title>
@@ -461,7 +461,7 @@
                                   <VSelectWithValidation v-model="insuranceDTO.insr_take_sec" name="insr_take_sec" label="공동보험" :items="insrTakesSectionItems" single-line density="compact"></VSelectWithValidation>
                                 </div>
                               </v-col>
-                              <v-col cols="12" class="v-col">
+                              <v-col cols="12" class="v-col" v-if="insuranceDTO.user_cd == 'IND'">
                                 <div class="head-col">
                                   <p>보상한도(1청구당/연간총)</p>
                                   <sup class="text-error">*</sup>
@@ -469,6 +469,27 @@
                                 <div class="data-col">
                                   <VSelectWithValidation v-model="insr_clm_lt_amt" name="insr_clm_lt_amt" label="보상한도" :items="insrClmLtAmtItems" single-line density="compact"></VSelectWithValidation>
                                   <v-divider class="border-0" />
+                                </div>
+                              </v-col>
+                              <v-col cols="12" class="v-col"  v-if="insuranceDTO.user_cd == 'JNT'">
+                                <div class="head-col">
+                                  <p>기본보상한도</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col" style="width: 140px;">
+                                  <VSelectWithValidation v-model="org_insr_clm_lt_amt" name="org_insr_clm_lt_amt" label="보상한도" :items="insrClmLtAmtCaseItems" single-line density="compact"></VSelectWithValidation>
+                                </div>
+                                <div class="data-col" style="width: 170px;">
+                                  <VTextFieldWithValidation v-model="org_insr_clm_lt_amt" single-line density="compact" readonly></VTextFieldWithValidation>
+                                </div>
+                              </v-col>
+                              <v-col cols="12" class="v-col"  v-if="insuranceDTO.user_cd == 'JNT'">
+                                <div class="head-col">
+                                  <p>최종보상한도</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col">
+                                  <VTextFieldWithValidation v-model="insr_clm_lt_amt" single-line density="compact" readonly></VTextFieldWithValidation>
                                 </div>
                               </v-col>
                               <v-col cols="12" class="v-col">
@@ -1290,10 +1311,9 @@ import VTextFieldWithValidation from '@/components/VTextFieldWithValidation.vue'
 import VSelectWithValidation from '@/components/VSelectWithValidation.vue';
 import VCheckBoxWithValidation from '@/components/VCheckBoxWithValidation.vue';
 import apiADMIN from '@/api/api/A_ADMIN';
-import {UPLOAD_EXCEL_INSURANCE_TAX_TRE_COR, UPLOAD_EXCEL_INSURANCE_TAX_TRE_IND} from "../../../../util/excelupdn";
+import { UPLOAD_EXCEL_INSURANCE_LAW_TRE_IND, UPLOAD_EXCEL_INSURANCE_LAW_TRE_JNT} from "../../../../util/excelupdn";
 import dayjs from "dayjs";
-import RATE_ITEMS from '../../json/discountRateByMemData.json';
-import {getDiscountRate, getInsrAmt} from '@/util/calUtils';
+import {getDiscountRate} from '@/util/calUtils';
 
 const route = useRoute();
 
@@ -1327,7 +1347,9 @@ const trxCdItems = ref([]);
 const insrTakesSectionItems = ref([]);
 const insrPblcBrdnRtItems = ref([]);
 const insrClmLtAmtItems = ref([]);
+const insrClmLtAmtCaseItems = ref([]);
 const insrPsnlBrdnAmtItems = ref([]);
+const org_insr_clm_lt_amt = ref('');
 const insr_clm_lt_amt = ref('');
 
 //변호사 특약 selectList
@@ -1399,9 +1421,15 @@ async function fnSetInsuranceRateCombo() {
   }));
 
   insrClmLtAmtItems.value = insuranceRateDTO.value.contents['기본담보']['구분'].map(({ code, value }) => ({
-    title: value,
+    title:  value,
     value: `${value}`
   }));
+
+  insrClmLtAmtCaseItems.value = insuranceRateDTO.value.contents['기본담보']['구분'].map(({ code, value }) => ({
+    title:  'CASE'+code,
+    value: `${value}`
+  }));
+
 
   insrPsnlBrdnAmtItems.value = insuranceRateDTO.value.contents['기본담보']['자기부담금'].map(({ code, value }) => ({
     title: value,
@@ -1420,10 +1448,14 @@ async function fnSearchDtl(insurance_uuid: string) {
 
     Object.assign(insuranceDTO.value, resultData.data[0]);
 
+    if(insuranceDTO.value.user_cd=='JNT'){
+      //기본보상한도
+      let org_year_clm_lt_amt = insuranceDTO.value.org_insr_year_clm_lt_amt;
+      org_insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + org_year_clm_lt_amt;
+    }
+
+    //최종보상한도
     let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt;
-    // if(insuranceDTO.value.cbr_cnt > 2){
-    //   year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
-    // }
     insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
 
     insuranceDTO.value.cbr_data.sort(function(a, b) {
@@ -1460,7 +1492,6 @@ function getDynamicComponentName1() {
   return V_TLAW0030P20;
 }
 function getDynamicComponentName2() {
-  console.log('insuranceDTO.value.cbr_cnt ',insuranceDTO.value.cbr_cnt )
   return V_TLAW0030P30;
 }
 
@@ -1520,10 +1551,8 @@ async function fnAddCBR(user_cd: string) {
   //0531 인원추가시 변경
   const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
   let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt
-  console.log('validMemberCount',validMemberCount)
   if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && validMemberCount.length == 3 ){
     year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
-    console.log('명단 추가 !!! year_clm_lt_amt'+year_clm_lt_amt)
   }
   insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
   insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
@@ -1532,7 +1561,6 @@ async function fnAddCBR(user_cd: string) {
 
 
 function fnDelCBR(rowIdx: number) {
-  console.log(rowIdx);
   insuranceDTO.value.cbr_data.splice(rowIdx, 1);
   insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
 
@@ -1543,7 +1571,6 @@ function fnDelCBR(rowIdx: number) {
     year_clm_lt_amt = (parseInt(year_clm_lt_amt) / 2) + '억원'
   }
   insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
-  console.log('삭제 !! year_clm_lt_amt'+year_clm_lt_amt)
   insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
 
   /*const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
@@ -1662,14 +1689,14 @@ const onCalculateInsurance = async (confirmYn) => {
     }
 
     //insuranceDTO.value.insr_clm_lt_amt = data.split('/')[0]
-    let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt
-
-    if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && insuranceDTO.value.cbr_data.length >= 3 ){
-      year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
-    }
-    insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
-    console.log('year_clm_lt_amt'+year_clm_lt_amt)
-    insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
+    // let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt
+    //
+    // if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && insuranceDTO.value.cbr_data.length >= 3 ){
+    //   year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
+    // }
+    // insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
+    // console.log('year_clm_lt_amt'+year_clm_lt_amt)
+    // insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt + '/' + year_clm_lt_amt;
 
 
     // 입금금액 계산
@@ -1687,15 +1714,30 @@ watch(
 );
 
 watch(
-    () => insr_clm_lt_amt.value,
+    () => org_insr_clm_lt_amt.value,
     data => {
       insuranceDTO.value.insr_clm_lt_amt = data.split('/')[0]
       let year_clm_lt_amt = data.split('/')[1];
+      let org_year_clm_lt_amt = data.split('/')[1];
 
-      // if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && insuranceDTO.value.cbr_cnt >= 3 ){
-      //   year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
-      // }
+      if(parseInt(year_clm_lt_amt) != (parseInt(org_year_clm_lt_amt) * 2) && insuranceDTO.value.cbr_cnt >= 3 ){
+        year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
+      }
       insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
+      insuranceDTO.value.org_insr_year_clm_lt_amt = org_year_clm_lt_amt
+      insr_clm_lt_amt.value = insuranceDTO.value.insr_clm_lt_amt +'/'+year_clm_lt_amt
+    }
+);
+
+
+watch(
+    () => insr_clm_lt_amt.value,
+    data => {
+      if(insuranceDTO.value.user_cd=='IND'){
+        insuranceDTO.value.insr_clm_lt_amt = data.split('/')[0]
+        let year_clm_lt_amt = data.split('/')[1];
+        insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
+      }
     }
 );
 
@@ -1734,10 +1776,9 @@ function fnChangeStatus(memStatus) {
   //0531 인원추가시 변경
  // const validMemberCount = insuranceDTO.value.cbr_data.filter((item) => item.status_cd == '80');
   let year_clm_lt_amt = insuranceDTO.value.insr_year_clm_lt_amt
-  console.log('validMemberCount',validMemberCount)
   if(parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) * 2) && validMemberCount.length == 3 ){
     year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
-  }else if (parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) / 2) && validMemberCount.length == 2 ){
+  }else if (parseInt(year_clm_lt_amt) != (parseInt(year_clm_lt_amt) / 2) && validMemberCount.length == 2 && memStatus!='80' ){
     year_clm_lt_amt = (parseInt(year_clm_lt_amt) / 2) + '억원'
   }
   insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
@@ -1833,7 +1874,6 @@ async function initPage() {
   businessCdItems.value = await CommonCode.getCodeList('COM001');
   statusCdItems.value = await CommonCode.getCodeList('COM030');
   userCdItems.value = await CommonCode.getCodeList('TAX002');
-  console.log("businessCd==>",businessCd)
   regionCdItems.value = await CommonCode.getCodeList(businessCd+'001');
   trxCdItems.value = await CommonCode.getCodeList('COM031');
   statusCdItems.value.unshift({ title: '전체', value: '%' });
@@ -1848,8 +1888,6 @@ async function initPage() {
   StockStartDtList.value.data.forEach(item=>{
     if(item.business_cd == businessCd) stockStartDt = item.start_dt
   })
-
-  console.log("stockStartDt>>", stockStartDt)
 
   for (let year = new Date().getFullYear(); year >= 2022; year--) {
     insrYearCdItems.value.push({ title: year.toString(), value: year.toString(), rmk: null });

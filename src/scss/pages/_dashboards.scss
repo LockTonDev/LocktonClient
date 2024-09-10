@@ -502,6 +502,36 @@
   tr:last-child td {border-right:none;}
 }
 
+//tooltip-table
+.tooltip-table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  th {
+    @media screen and (min-width:960px) {
+      padding: 5px 4px;
+    }
+    @media screen and (max-width:959px) {
+      padding: 5px 7px;
+      font-size: 8px;
+    }
+    border:1px solid $color-tableborder;background-color: $color-lightbackground;font-weight: normal;
+  }
+  td {
+    @media screen and (min-width:960px) {
+      padding: 5px 4px;
+    }
+    @media screen and (max-width:959px) {
+      padding: 5px 7px;
+      font-size: 8px;
+    }
+    border:1px solid $color-tableborder;
+  }
+  tr:first-child th,
+  tr:first-child td {border-left: none;}
+  tr:last-child td {border-right:none;}
+}
+
 //v-table
 .v-table{
   &.size-small {

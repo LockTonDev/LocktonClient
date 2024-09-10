@@ -687,9 +687,12 @@
                         />
                         <span style="margin-left: 10px">원</span>
                       </div>
+                        <span class="text-error">
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
                         >매출액은 연초에 업무보고한 직전년도 매출액을 반드시 기재요망 (전년도 1.1 ~ 12월말까지 매출)<br/>
                       <p class="ml-4"> * 대한법무사협회 전산신고한 업무보고서 매출 확인 </p>
+
+                        </span>
                       <span v-if="insuranceDTO.user_cd=='JNT'">
                       <i class="mdi mdi-alert-circle-outline mr-2"></i
                       >법무사법인, 합동사무소의 연간총매출액을 법무사 수로 나눠 1인당 평균 매출액 기재<br/></span>
@@ -1886,6 +1889,9 @@ const isSpctNew = ref(false)
 const psnl_yn = ref(false);
 const relief_yn = ref(false);
 
+//중복 최종제출을 막기 위한 FLAG
+let preventDupClick = false
+
 // 오늘일자
 let TODAY = dayjs().format('YYYY-MM-DD');
 let INSR_RETR_DT_TODAY = dayjs().format('YYYY-MM-DD');
@@ -2341,7 +2347,7 @@ async function chkSaleRtJNT(list: any, rowIdx: number) {
 
 
         1. 법인 -> 개인
-        - 변경전 할증이 있으면 할증을 가져오고, 할인이 있다면 0% 로 적용
+        - 변경전 할증/할인 이 있으면 할증/할인 을 가져온다. (2024년 수정)
 
         2. 개인 -> 법인
         - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
@@ -2369,7 +2375,8 @@ async function chkSaleRtJNT(list: any, rowIdx: number) {
        *  - 할인할증이 0 이상(할증) 이면 할증을 가져온다.
        * 
        * 2. 할인 가져오기
-       *  - 법인 할인 가져온다.
+       *  - 개인/법인 할인 가져온다.
+       *
        */
       list.cbr_data[rowIdx].insr_sale_rt = insr_sale_rt;
       calInsrAmt(list);
@@ -2444,13 +2451,15 @@ async function chkSaleRtIND() {
           - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
       */
       if (result.data.renewal[0].user_cd === 'JNT') {
-        if (insr_sale_rt > 0) {
-          // 전환 대상자의 할증을 가져온다.
-          insuranceDTO.value.insr_sale_rt = insr_sale_rt;
-        } else {
-          // 개인전환 할인은 0% 고정
-          insuranceDTO.value.insr_sale_rt = 0;
-        }
+
+        insuranceDTO.value.insr_sale_rt = insr_sale_rt;
+        // if (insr_sale_rt > 0) {
+        //   // 전환 대상자의 할증을 가져온다.
+        //   insuranceDTO.value.insr_sale_rt = insr_sale_rt;
+        // } else {
+        //   // 개인전환 할인은 0% 고정
+        //   insuranceDTO.value.insr_sale_rt = 0;
+        // }
 
         messageBoxDTO.value.setWarning(
           '복수 갱신대상 이력이 조회됩니다.',
@@ -2553,8 +2562,17 @@ async function checkValidation() {
  * @param values 가입 정보
  */
 async function onSubmit(params: any) {
-  if (!await checkValidation()) return false;
+  if(preventDupClick) {
+    alert("최종 제출이 진행 중입니다. 잠시만 기다려주세요.")
+    return false
+  }
+  preventDupClick = true;
 
+  if (!await checkValidation())
+  {
+    preventDupClick = false;
+    return false;
+  }
 
   let result;
   if(insuranceDTO.value.insurance_uuid == '') {
@@ -2564,6 +2582,7 @@ async function onSubmit(params: any) {
     result = await apiLAW0030a.setDBUpd(insuranceDTO.value);
   }else {
     alert('조회 상태에서는 저장할 수 없습니다.');
+    preventDupClick = false;
     return false;
 
   }
@@ -2580,6 +2599,7 @@ async function onSubmit(params: any) {
     } else {
       alert("보험가입 실패");
     }
+    preventDupClick = false;
   }
 }
 
@@ -2695,9 +2715,11 @@ watch(() => [clm_lt_amt.value, insuranceDTO.value.corp_region_cd, insuranceDTO.v
         if(year_clm_lt_amt && insuranceDTO.value.cbr_cnt >= 3 ){
           year_clm_lt_amt = (parseInt(year_clm_lt_amt) * 2) + '억원'
         }
+        insuranceDTO.value.org_insr_year_clm_lt_amt = clm_lt_amt_value.split('/')[1]
         insuranceDTO.value.insr_year_clm_lt_amt = year_clm_lt_amt
       }else if (local_clm_lt_amt == undefined && local_clm_lt_amt !== '') {
         insuranceDTO.value.insr_clm_lt_amt = '';
+        insuranceDTO.value.org_insr_year_clm_lt_amt = '';
         insuranceDTO.value.insr_year_clm_lt_amt = '';
       }
       if(insuranceDTO.value.user_cd == 'IND') {
@@ -2800,7 +2822,7 @@ watch(
       0,
       1
     );
-    console.log(insuranceDTO.value.insr_base_amt)
+    // console.log(insuranceDTO.value.insr_base_amt)
 
     // 특약 재계산
     if (insuranceDTO.value.spct_join_yn == 'Y') {

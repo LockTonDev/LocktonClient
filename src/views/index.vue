@@ -8,15 +8,13 @@
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
 
-
   const popFirstUser = ref(false);
 </script>
 
 <template>
     <v-app>
-      
       <v-main>
-        
+
         <!-- 상단영역 ( 로고 )-->
         <Header />
 
@@ -27,6 +25,7 @@
             <v-row class="content-width h-100" justify="center" align-content="center" style="text-align:center;">
               <v-col>
                 <h1 class="text-h3 color-white font-weight-medium line-height-1-3">전문인 보험 가입 서비스<br/><span class="color-primary font-weight-bold">록톤코리아</span>가 함께 합니다</h1>
+
                 <v-btn v-if="!_AUTH_USER" color="white" size="x-large" class="pl-10 pr-10 mt-16 mr-6 border-radius-0" @click="popFirstUser = true">처음 이용하는 고객</v-btn>
                 <v-btn v-if="!_AUTH_USER" color="primary" size="x-large" class="pl-10 pr-10 mt-16 border-radius-0" to="/user/login">로그인</v-btn>
               </v-col>
@@ -93,7 +92,8 @@
                     <p class="mb-2">보험 가입 및 이용</p>
                     <p class="text-body-2 font-weight-light">로그인 후 서비스 이용</p>
                   </li>
-                </ul>          
+                </ul><br/>
+                <p class="font-weight-bold">* 이미 회원가입 중인 전문인은 로그인하여 이용해 주시기 바랍니다.</p>
               </v-card-text>
               <v-card-actions class="justify-center">
                 <v-btn variant="outlined" size="large" color="dark" @click="popFirstUser = false">닫기</v-btn>
@@ -111,4 +111,19 @@
     </v-app>
   </template>
 
-  
+<!--
+  <script>
+  export default {
+    mounted() {
+      console.log("Test")
+    }
+  };
+  </script>-->
+<!--
+  <script>
+  export default {
+    mounted() {
+      console.log("Test")
+    }
+  };
+  </script>-->

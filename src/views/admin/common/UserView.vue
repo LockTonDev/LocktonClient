@@ -313,7 +313,7 @@
                 <sup class="text-error">*</sup>
               </div>
               <div class="data-col">
-                <VSelectWithValidation v-model="userDTO.business_cd" name="corp_region_cd" label="" :items="businessCdItems" class="w-200" single-line density="comfortable"></VSelectWithValidation>
+                <VSelectWithValidation v-model="userDTO.business_cd" name="business_cd" label="" :items="businessCdItems" class="w-200" single-line density="comfortable"></VSelectWithValidation>
               </div>
             </v-col>
               <v-col cols="12" sm="12" class="v-col">
@@ -613,10 +613,6 @@ function fnAdd(user_cd:string) {
   userDTO.value.status_cd = ((user_cd === 'COR' || user_cd === 'JNT') ? '20' : '30');
   userDTO.value.rmk = genPassword(10);
 
- // 임시암호 발급용 임시 코드
- // for(let i = 0 ; i < 246; i++) {
- //   console.log(genPassword(10))
- // }
 }
 
 async function fnSearch(user_uuid: string) {
@@ -750,12 +746,16 @@ async function isVerifyUserEMail() {
  * 페이지 로딩시 셋팅할 정보
  */
 async function initPage() {
-  regionCdItems.value = await CommonCode.getCodeList('TAX001');
+  const businessCd = userDTO.value.business_cd;
+  console.log(userDTO.value.business_cd)
+  //regionCdItems.value = await CommonCode.getCodeList('TAX001');
   // businessCdItems.value = await CommonCode.getCodeList('COM001');
   statusCdItems.value = await CommonCode.getCodeList('COM010');
   // statusCdItems.value.unshift({ title: '전체', value: '%' });/
   businessCdItems.value = await CommonCode.getCodeList('COM001');
   corpTypeItems.value = await CommonCode.getCodeList('COM050');
+
+  regionCdItems.value = await CommonCode.getCodeList(businessCd+'001');
 
 }
 
@@ -765,6 +765,19 @@ async function initPage() {
 onMounted(async () => {
   // 로딩시 초기 데이터 셋팅
   initPage();
+
+  // 임시암호 발급용 임시 코드
+  //for(let i = 0 ; i < 36; i++) {
+  //  console.log(genPassword(10))
+  //}
 });
+
+
+watch(
+    () => userDTO.value.business_cd,
+    newBusinessCd => {
+      initPage();
+    },
+);
 
 </script>

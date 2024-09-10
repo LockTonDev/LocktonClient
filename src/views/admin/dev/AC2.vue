@@ -43,9 +43,9 @@
               전체 <span class="color-primary font-weight-bold">{{ Number(InsuranceList.length).toLocaleString() }}</span> 건
             </p>
             <div class="ml-auto">
-              <v-btn variant="outlined" size="small" @click="fnAdd('IND')" class="mx-1">개인 신규</v-btn>
-              <v-btn variant="outlined" size="small" @click="fnAdd('COR')" class="mx-1">법인 신규</v-btn>
-              <v-btn variant="outlined" size="small" @click="fnAdd('JNT')" class="mx-1">합동 신규</v-btn>
+              <v-btn variant="outlined"  size="small" @click="fnAdd('IND')" class="mx-1">개인 신규</v-btn>
+              <v-btn variant="outlined"  v-if="route.params.business_cd == 'TAX'" size="small" @click="fnAdd('COR')" class="mx-1">법인 신규</v-btn>
+              <v-btn variant="outlined" v-if="route.params.business_cd == 'ADV'" size="small" @click="fnAdd('JNT')" class="mx-1">합동 신규</v-btn>
             </div>
           </v-card-title>
           <v-card-text class="pa-0 v-result-box">
@@ -55,7 +55,7 @@
               </caption>
               <colgroup>
                 <col style="width: auto" />
-                <col style="width: auto" />
+                <col style="xz width: auto" />
                 <col style="width: auto" />
                 <col style="width: 120px" />
                 <col style="width: auto" />
@@ -242,6 +242,15 @@
                               <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" placeholder="이메일" single-line />
                             </div>
                           </v-col>
+                          <v-col cols="12" sm="4" class="v-col">
+                            <div class="head-col">
+                              <p>유저식별번호</p>
+                              <sup class="text-error">*</sup>
+                            </div>
+                            <div class="data-col">
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유저식별번호" single-line disabled />
+                            </div>
+                          </v-col>
                           <v-col cols="12" sm="12" class="v-col">
                             <div class="head-col">
                               <p>사무소 주소<sup class="text-error">*</sup></p>
@@ -347,7 +356,7 @@
                               <VTextFieldWithValidation v-model="insuranceDTO.corp_cust_email" name="corp_cust_email" placeholder="이메일" single-line />
                             </div>
                           </v-col>
-                          <v-col cols="12" sm="12" class="v-col">
+                          <v-col cols="12" sm="4" class="v-col">
                             <div class="head-col">
                               <p>소속 지방회</p>
                               <sup class="text-error">*</sup>
@@ -356,7 +365,15 @@
                               <VSelectWithValidation v-model="insuranceDTO.corp_region_cd" name="corp_region_cd" label="소속 지방회 선택" :items="regionCdItems" density="compact" single-line></VSelectWithValidation>
                             </div>
                           </v-col>
-
+                          <v-col cols="12" sm="4" class="v-col">
+                            <div class="head-col">
+                              <p>유저식별번호</p>
+                              <sup class="text-error">*</sup>
+                            </div>
+                            <div class="data-col">
+                              <VTextFieldWithValidation v-model="insuranceDTO.user_uuid" name="corp_cust_email" placeholder="유저식별번호" single-line disabled />
+                            </div>
+                          </v-col>
                           <v-col cols="12" sm="12" class="v-col">
                             <div class="head-col">
                               <p>사무소 주소<sup class="text-error">*</sup></p>
@@ -1307,6 +1324,7 @@ import PAT_AC2 from './PAT/PAT_AC2.vue'
 import LAW_AC2 from './LAW/LAW_AC2.vue'
 import V_TTAX0030P20 from '@/views/contract/TAX/V_TTAX0030P20.vue';
 import V_TTAX0030P30 from '@/views/contract/TAX/V_TTAX0030P30.vue';
+import V_TTAX0030P31 from '@/views/contract/TAX/V_TTAX0030P31.vue';
 import V_TACC0030P20 from '@/views/contract/ACC/V_TACC0030P20.vue';
 import V_TACC0030P30 from '@/views/contract/ACC/V_TACC0030P30.vue';
 import V_TADV0030P20 from '@/views/contract/ADV/V_TADV0030P20.vue';
@@ -1563,7 +1581,11 @@ function getDynamicComponentName1() {
 function getDynamicComponentName2() {
   switch (insuranceDTO.value.business_cd) {
     case 'TAX':
-      return V_TTAX0030P30;
+      if(insuranceDTO.value.insr_year>2023){
+        return V_TTAX0030P31
+      }else{
+        return V_TTAX0030P30
+      }
     case 'ACC':
       return V_TACC0030P30;
     case 'ADV':

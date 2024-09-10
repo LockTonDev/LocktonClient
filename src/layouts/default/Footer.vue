@@ -22,7 +22,7 @@
       <v-col :cols="checkMobile.isMobile?'':'6'" class="pa-0">
         <p class="text-body-2 mb-2">록톤컴퍼니즈코리아손해보험중개(주)</p>
         <p class="text-body-2">대표자: 손방의</p>
-        <p class="text-body-2">사업자등록번호 : 220-81-20652<span class="mx-2 text-10 vertical-align-top">|</span>통신판매신고번호 : 제2023-서울종로-0230호</p>
+        <p class="text-body-2">사업자등록번호 : 220-81-20652<span class="mx-2 text-10 vertical-align-top">|</span>통신판매신고번호 : 제2024-서울중구-0272호</p>
         <p class="text-body-2">주소 : (04520) 서울시 중구 세종대로 136, 서울파이낸스센터13층<span class="mx-2 text-10 vertical-align-top">|</span>대표전화:02-2011-0300</p>
       </v-col>
       <v-col :cols="checkMobile.isMobile?'':'4'" :class="checkMobile.isMobile?'pt-5 pa-0':'pa-0'">
@@ -69,15 +69,17 @@
     </v-card>
   </v-dialog>
 
+  <LoadingBar v-if="loadingBar"></LoadingBar>
 </template>
 
 <script setup lang="ts">
 import {ref, watch} from "vue";
   import { storeToRefs } from 'pinia';
   import { useAuthStore } from '@/stores';
-  import ImagesLogo from '@/components/ImagesLogo.vue';
   import TermsOfService from '@/components/TermsOfService.vue';
+  import LoadingBar from '@/components/LoadingBar.vue';
   import TermsOfPersonalInfo from '@/components/TermsOfPersonalInfo.vue';
+
   import {useMobileStore} from "@/stores";
   const termsOfService = ref(false);
   const termsOfPersonalInfo = ref(false);
@@ -87,11 +89,20 @@ import {ref, watch} from "vue";
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
 
+  const { isLoading } = storeToRefs(authStore);
+
+  const loadingBar = ref(isLoading?.value)
+
   const businessCd = ref(_AUTH_USER?.value?.businessCd);
 
   watch(() => _AUTH_USER?.value?.businessCd, (newValue, oldValue) => {
     businessCd.value = _AUTH_USER?.value?.businessCd;
   });
+
+  watch(() => isLoading?.value, (newValue, oldValue) => {
+    loadingBar.value = isLoading?.value
+  });
+
 
 function onTermsOfServiceClose(agrs: any) {
   termsOfService.value = false;

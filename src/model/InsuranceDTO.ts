@@ -1,6 +1,8 @@
 class InsuranceRateDTO {
   business_cd: string;
   user_cd: string;
+  business_cd_nm: string;
+  user_cd_nm: string;
   base_year: string;
   insr_st_dt: string;
   insr_cncls_dt: string;
@@ -11,10 +13,19 @@ class InsuranceRateDTO {
   contents: string;
   rmk: string;
   use_yn: string;
+  mode: string;
+  rn_st_dt: string;
+  rn_en_dt:string;
+  created_id: string;
+  created_ip: string;
+  updated_id: string;
+  updated_ip: string;
 
   constructor(data: Partial<InsuranceRateDTO> = {}) {
     this.business_cd = data.business_cd || '';
     this.user_cd = data.user_cd || '';
+    this.business_cd_nm = data.business_cd_nm || '';
+    this.user_cd_nm = data.user_cd_nm || '';
     this.base_year = data.base_year || '';
     this.insr_st_dt = data.insr_st_dt || '';
     this.insr_cncls_dt = data.insr_cncls_dt || '';
@@ -22,10 +33,16 @@ class InsuranceRateDTO {
     this.insurance_no = data.insurance_no || '';
     this.insurance_nm = data.insurance_nm || '';
     this.contents = data.contents || '';
-    this.contents = data.contents || '';
     this.days = data.days || 0;
     this.rmk = data.rmk || '';
     this.use_yn = data.use_yn || '';
+    this.mode = data.mode || '';
+    this.rn_st_dt = data.rn_st_dt || '';
+    this.rn_en_dt = data.rn_en_dt || '';
+    this.created_id = data.created_id || '';
+    this.created_ip = data.created_ip || '';
+    this.updated_id = data.updated_id || '';
+    this.updated_ip = data.updated_ip || '';
   }
 }
 
@@ -81,7 +98,6 @@ class CBRDataDTO {
     this.insr_base_amt = data.insr_base_amt || 0;
     this.isCheck = false;
     this.status_cd = data.status_cd || '';
-    this.isCheck = false;
   }
 }
 
@@ -148,6 +164,7 @@ class InsuranceDTO {
   insr_take_sec: string;
   insr_clm_lt_amt: string;
   insr_year_clm_lt_amt: string;
+  org_insr_year_clm_lt_amt: string;
   insr_psnl_brdn_amt: string;
   insr_program_yn: string;
   insr_program: string;
@@ -285,6 +302,7 @@ class InsuranceDTO {
     this.insr_take_sec = data.insr_take_sec || '';
     this.insr_relief = data.insr_relief || 0;
     this.insr_year_clm_lt_amt = data.insr_year_clm_lt_amt || '';
+    this.org_insr_year_clm_lt_amt = data.org_insr_year_clm_lt_amt || '';
     this.insr_clm_lt_amt = data.insr_clm_lt_amt || '';
     this.insr_psnl_brdn_amt = data.insr_psnl_brdn_amt || '';
     this.insr_program_yn = data.insr_program_yn || 'N';
