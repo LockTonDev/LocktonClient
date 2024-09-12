@@ -100,6 +100,10 @@ export default {
     return await api.authService.post('/ADM/COM/setUsersTemp', { params });
   },
 
+  async downloadIncomeFile(params: any) {
+    return await api.authService.post('/ADM/PAT/downloadIncomeFile', { params })
+  },
+
   /** ============================================================================
    *  [보험DB]
    *  ============================================================================
