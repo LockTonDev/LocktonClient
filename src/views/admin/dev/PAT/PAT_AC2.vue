@@ -514,7 +514,7 @@
                                   <VCheckBoxWithValidation v-model="insuranceDTO.insr_program_yn" name="insr_program_yn" label="프로그램여부" class="v-checkbox" density="compact" />
                                 </div>
                               </v-col>
-                              <v-col cols="12" class="v-col">
+                              <v-col v-if="insuranceDTO.user_cd === 'COR'" cols="12" class="v-col">
                                 <div class="head-col">
                                   <p>손익계산서</p>
                                   <sup class="text-error">*</sup>
