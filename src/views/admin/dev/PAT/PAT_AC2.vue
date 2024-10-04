@@ -514,6 +514,16 @@
                                   <VCheckBoxWithValidation v-model="insuranceDTO.insr_program_yn" name="insr_program_yn" label="프로그램여부" class="v-checkbox" density="compact" />
                                 </div>
                               </v-col>
+                              <v-col v-if="insuranceDTO.user_cd === 'COR'" cols="12" class="v-col">
+                                <div class="head-col">
+                                  <p>손익계산서</p>
+                                  <sup class="text-error">*</sup>
+                                </div>
+                                <div class="data-col">
+                                  <!-- {{ insuranceDTO.insr_pcnt_sale_rt }} % -->
+                                  <a @click="downloadFile" style="cursor: pointer;">{{insuranceDTO.insr_income_filename}}</a>
+                                </div>
+                              </v-col>
                             </v-row>
                           </v-col>
                           <!-- 보험 요금정보 -->
@@ -1250,6 +1260,45 @@ function fnDelCBR(rowIdx: number) {
   console.log(rowIdx);
   insuranceDTO.value.cbr_data.splice(rowIdx, 1);
   insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
+}
+
+function saveFile(fileName, base64Data) {
+  // Base64 데이터를 Blob으로 변환
+  const byteCharacters = atob(base64Data);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray]);
+
+  // Blob을 사용하여 파일 다운로드
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.setAttribute('download', fileName); // 다운로드할 파일의 이름 설정
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+async function downloadFile() {
+
+  let params = { fileName: insuranceDTO.value.insr_income_filename, user_nm: insuranceDTO.value.user_nm, insr_year: insuranceDTO.value.insr_year}
+  try {
+    apiADMIN.downloadIncomeFile(params).then(response => {
+      console.log(response)
+      if (response.success) {
+        console.log('downLoad', response.data.fileName, response.data.fileData)
+        saveFile(response.data.fileName, response.data.fileData);
+      } else {
+        console.error('File download failed:', response.message);
+      }
+    })
+
+
+  } catch (error) {
+    console.error('Error downloading the file:', error);
+  }
 }
 
 async function fnSave() {
