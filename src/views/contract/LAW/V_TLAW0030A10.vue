@@ -21,9 +21,10 @@
     <v-col cols="12" sm="12" class="mt-16">
       <div class="d-flex justify-space-between align-end">
         <p class="text-body-1">전체 <span class="color-primary font-weight-bold">{{ InsuranceList.length }}</span> 건</p>
-        <div>
           <!--    newInsrYN 2024년에 없다.      -->
-          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="(renewalInsrYear - maxInstYear > 1) || (newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInstYear)-1 ).length == 0)">신규 가입</v-btn>&nbsp;
+        <div>
+<!--          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="(renewalBaseYear - maxInsrYear > 1) ||  (newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInsrYear)-1 ).length == 0)">신규 가입</v-btn>-->
+          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="newInsrYN=='Y' && renewalInsrUUID == null">신규 가입</v-btn>
           <v-btn variant="flat" @click="onPageMove('renewal')" v-if="newInsrYN=='Y' && renewalInsrUUID !== null">계약 갱신</v-btn>
         </div>
       </div>
@@ -142,7 +143,7 @@
   import {useMobileStore} from "@/stores";
   const checkMobile = useMobileStore();
 
-  const maxInstYear =ref([]);
+  const maxInsrYear =ref([]);
   const authStore = useAuthStore();
   const { _AUTH_USER } = storeToRefs(authStore);
   let InsuranceList = ref([]);
@@ -154,6 +155,7 @@
   const newInsrYN = ref("");
   const renewalInsrUUID= ref("");
   const renewalInsrYear= ref("");
+  const renewalBaseYear= ref("");
 
   // 초기정보 설정
   const messageBoxDTO = ref(new MessageBoxDTO());
@@ -253,10 +255,10 @@
       newInsrYN.value = resultData.data.newInsrYN[0].data;
       if(resultData.data.renewalInsrUUID.length > 0) {
         renewalInsrUUID.value = resultData.data.renewalInsrUUID[0].data;
-        //renewalInsrYear.value = resultData.data.renewalInsrUUID[0].insr_year;
+        renewalInsrYear.value = resultData.data.renewalInsrUUID[0].insr_year;
       }else {
         renewalInsrUUID.value = null;
-        //renewalInsrYear.value = "";
+        renewalInsrYear.value = "";
       }
       //과거 이력 해지자 상태 변경
 
@@ -266,17 +268,24 @@
       }
 
       //갱신증권년도
-      renewalInsrYear.value = resultData.data.baseYear[0].BASE_YEAR
-
+      renewalBaseYear.value = resultData.data.baseYear[0].BASE_YEAR
+    
       if(InsuranceList.value.length > 0) {
-        maxInstYear.value = InsuranceList.value[0].insr_year
+        maxInsrYear.value = InsuranceList.value[0].insr_year
       } else {
-        maxInstYear.value = []
+        maxInsrYear.value = []
       }
       if(InsuranceList.value.length == 0) {
         isNoData.value = true;
       }
 
+      console.log('renewalInsrYear', renewalInsrYear.value)
+      console.log('maxInsrYear',maxInsrYear.value)
+    console.log('newInsrYN',newInsrYN)
+    console.log('renewalInsrUUID',renewalInsrUUID)
+      console.log(InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInsrYear)-1 ).length)
+
+console.log((renewalInsrYear.value - maxInsrYear.value > 1) || (newInsrYN.value=='Y' && renewalInsrUUID.value == null && InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInsrYear.value)-1 ).length == 0))
   });
 
   
