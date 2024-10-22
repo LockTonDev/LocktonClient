@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LocktonClient_Upgrade.iml" filepath="$PROJECT_DIR$/LocktonClient_Upgrade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LocktonClient.iml" filepath="$PROJECT_DIR$/LocktonClient.iml" />
     </modules>
   </component>
 </project>

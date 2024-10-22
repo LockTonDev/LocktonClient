@@ -437,7 +437,7 @@ async function fnSave() {
       messageBoxDTO.value.setInfo('확인', '저장 되었습니다.');
       fnSearch([insuranceRateDTO.value]);
     } else {
-      messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+      messageBoxDTO.value.setWarning('실패', `저장에 실패하였습니다.<br/>${resultData.message}`);
     }
   }
 }

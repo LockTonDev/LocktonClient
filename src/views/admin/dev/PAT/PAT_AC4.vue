@@ -776,7 +776,7 @@ async function fnSave() {
         fnSearch();
       }
     } else {
-      messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+      messageBoxDTO.value.setWarning('실패', `저장에 실패하였습니다.<br/>${resultData.message}`);
     }
   }
 

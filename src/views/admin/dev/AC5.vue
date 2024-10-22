@@ -402,7 +402,7 @@ async function fnSave() {
 
       fnSearch();
     } else {
-      messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+      messageBoxDTO.value.setWarning('실패', `저장에 실패하였습니다.<br/>${resultData.message}`);
     }
   }
 }
@@ -534,10 +534,9 @@ async function fnExcelDownload() {
   await messageBoxDTO.value.setConfirm('다운로드', `${fileNm} 자료를 다운 받으시겠습니까?`, null, (result, params) => {
     isRun = result;
   });
-
+  let resultData;
   try {
     if (isRun) {
-      let resultData;
       if(route.params.business_cd == 'ADV') {
         resultData = await apiADMIN.getADVExcel(searchParams.value.data);
       } else {
@@ -549,12 +548,12 @@ async function fnExcelDownload() {
       if (resultData.data.length == 0) {
         messageBoxDTO.value.setInfo('Excel', '데이타가 없습니다. 검색조건을 확인하세요.');
       } else {
-        console.log("resultData.data",resultData.data)
+        //console.log("resultData.data",resultData.data)
         DOWNLOAD_EXCEL(searchParams.value, resultData.data);
       }
     }
   } catch (e) {
-    messageBoxDTO.value.setWarning('오류', `엑셀다운로드에 실패하였습니다<br/>${e}`);
+    messageBoxDTO.value.setWarning('오류', `엑셀다운로드에 실패하였습니다<br/>${resultData.message}`);
   }
 }
 

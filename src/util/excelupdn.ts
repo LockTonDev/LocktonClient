@@ -3,7 +3,7 @@ import { saveAs } from 'file-saver';
 import { EXCEL_TAX_IND, EXCEL_TAX_COR, EXCEL_ACC_IND, InsuranceDTO, TRXDataDTO, UserDTO, CommonCode, ParamsDTO,
   EXCEL_ADV_IND, EXCEL_ADV_JNT, EXCEL_CAA_IND, EXCEL_CAA_JNT, EXCEL_CAA_COR, EXCEL_PAT_IND, EXCEL_PAT_JNT,
   EXCEL_PAT_COR, EXCEL_LAW_IND, EXCEL_LAW_JNT, RENEWAL_EXCEL_TAX_IND, RENEWAL_EXCEL_TAX_COR,
-  RENEWAL_EXCEL_LAW_IND, RENEWAL_EXCEL_LAW_JNT} from '@/model';
+  RENEWAL_EXCEL_LAW_IND, RENEWAL_EXCEL_LAW_JNT, EXCEL_USER} from '@/model';
 import { convertStringToNumber, getEmpty } from '../util/util';
 import dayjs from 'dayjs';
 import {CBRDataDTO, InsuranceRateDTO} from "../model";
@@ -54,7 +54,7 @@ const EXCEL_MAPPERS = {
   TAX_COR_RENEWAL: RENEWAL_EXCEL_TAX_COR,
   ACC_IND_RENEWAL: RENEWAL_EXCEL_TAX_IND,
   LAW_IND_RENEWAL: RENEWAL_EXCEL_LAW_IND,
-  LAW_JNT_RENEWAL: RENEWAL_EXCEL_LAW_JNT
+  LAW_JNT_RENEWAL: RENEWAL_EXCEL_LAW_JNT,
   /* ADV_IND_RENEWAL: RENEWAL_EXCEL_ADV_IND,
    ADV_JNT_RENEWAL: RENEWAL_EXCEL_ADV_JNT,
    CAA_IND_RENEWAL: RENEWAL_EXCEL_CAA_IND,
@@ -63,6 +63,7 @@ const EXCEL_MAPPERS = {
    PAT_IND_RENEWAL: RENEWAL_EXCEL_PAT_IND,
    PAT_JNT_RENEWAL: RENEWAL_EXCEL_PAT_JNT,
    PAT_COR_RENEWAL: RENEWAL_EXCEL_PAT_COR,*/
+   USER_ALL : EXCEL_USER
 };
 
 const ROW_MAPPERS = {
@@ -83,7 +84,7 @@ const ROW_MAPPERS = {
   TAX_COR_RENEWAL: mapperRow_TAX_COR_RENEWAL,
   ACC_IND_RENEWAL: mapperRow_TAX_IND_RENEWAL,
   LAW_IND_RENEWAL: mapperRow_LAW_IND_RENEWAL,
-  LAW_JNT_RENEWAL: mapperRow_LAW_JNT_RENEWAL
+  LAW_JNT_RENEWAL: mapperRow_LAW_JNT_RENEWAL,
   /*ADV_IND_RENEWAL: mapperRow_ADV_IND_RENEWAL,
   ADV_JNT_RENEWAL: mapperRow_ADV_JNT_RENEWAL,
   CAA_IND_RENEWAL: mapperRow_CAA_IND_RENEWAL,
@@ -92,6 +93,7 @@ const ROW_MAPPERS = {
   PAT_IND_RENEWAL: mapperRow_PAT_IND_RENEWAL,
   PAT_JNT_RENEWAL: mapperRow_PAT_JNT_RENEWAL,
   PAT_COR_RENEWAL: mapperRow_PAT_COR_RENEWAL,*/
+  USER_ALL : mapperRow_USER
 };
 
 /**
@@ -3628,4 +3630,86 @@ function mapperRow_LAW_JNT_RENEWAL(excelMapper: object, excelDataRow: any) {
     rows.push(subRow);
   }
   return rows;
+}
+
+/**
+ * 공통 엑셀다운로드 - 사용자
+ * @param searchParams
+ * @param excelList
+ * @returns
+ */
+export const DOWNLOAD_USER_EXCEL = async (searchParams: ParamsDTO, excelList: any[]) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let workbook = new Workbook();
+      let sheetName = businessCdItems.find(item => item.value === searchParams.data.business_cd).title + '_' + userCdItems.find(item => item.value === searchParams.data.user_cd).title;
+      let worksheet = workbook.addWorksheet(sheetName);
+      // let mapperKey = `${searchParams.data.business_cd}_${searchParams.data.user_cd}_RENEWAL`;
+      let mapperKey = `USER_ALL`;
+
+      let excelMapper = EXCEL_MAPPERS[mapperKey];
+      let rowMapper = ROW_MAPPERS[mapperKey];
+      let headers = Object.keys(excelMapper).map(key => ({ header: key, key: excelMapper[key] }));
+
+
+      // Assign columns
+      worksheet.columns = headers;
+      excelList.forEach((dataRow, index) => {
+        dataRow.index = index;
+        let rows = rowMapper(excelMapper, dataRow);
+
+        rows.forEach((row, rowNumber) => {
+          worksheet.addRow(row);
+        });
+      });
+      // 마지막 접속일이 1년이 지난 사용자의 미접속 일수는 붉은색으로 표시
+      worksheet.eachRow(function(row, rowNumber){
+        row.eachCell( function(cell, colNumber){
+          if(rowNumber > 1 && colNumber == 11) {//Header 제외 미접속기간 컬럼 index 일 경우
+            if(Number(cell.value) > 366) {
+              row.getCell(colNumber).font = {bold: true, color: {argb: "ef0000"}};
+            }
+          }
+        })
+      });
+      // Write to the buffer
+      const buffer = await workbook.xlsx.writeBuffer();
+
+      // Convert buffer to blob
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+      // Use FileSaver.js to save the file
+      saveAs(blob, `${searchParams.data.excel_filenm}_${dayjs().format('_YYYYMMDDHHmmss')}.xlsx`);
+      resolve(excelList);
+    } catch (e) {
+      console.log(e);
+      reject(e);
+    }
+  });
+};
+
+/**
+ * 사용자 EXCEL Mapper
+ *
+ * @param excelMapper
+ * @param excelDataRow
+ * @returns
+ */
+function mapperRow_USER(excelMapper: object, excelDataRow: any) {
+  let insuranceDTO = new InsuranceDTO();
+  Object.assign(insuranceDTO, excelDataRow);
+  let row = {};
+  row[excelMapper.순번] = insuranceDTO.index + 1;
+  row[excelMapper.전문인유형] = insuranceDTO.business_cd_nm;
+  row[excelMapper.회원구분] = insuranceDTO.user_cd_nm;
+  row[excelMapper.이름] = insuranceDTO.user_nm;
+  row[excelMapper.아이디] = insuranceDTO.user_id;
+  row[excelMapper.등록번호] = insuranceDTO.user_regno;
+  row[excelMapper.사업자번호] = insuranceDTO.corp_cnno;
+  row[excelMapper.소속지방회] = insuranceDTO.corp_region_cd_nm;
+  row[excelMapper.회원상태] = insuranceDTO.status_cd_nm;
+  row[excelMapper.최근접속일] = insuranceDTO.login_at;
+  row[excelMapper.미접속일수] = insuranceDTO.last_login;
+
+  return [row];
 }

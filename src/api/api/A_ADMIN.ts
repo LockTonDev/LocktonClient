@@ -343,4 +343,7 @@ export default {
   async setChgInsuranceNoAll(params: any) {
     return await api.authService.post('/ADM/MASTER/insurance/chgInsuranceNo', {params});
   },
+  async getUserExcel(params: any) {
+    return await api.authService.post('/ADM/USER/EXCEL/get', { params });
+  },
 };

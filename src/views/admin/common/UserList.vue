@@ -96,6 +96,7 @@
 			</v-expansion-panel>
 		</v-expansion-panels>
 	</v-card>
+  <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
 </template>
 
 <script setup lang="ts">
@@ -108,6 +109,10 @@ import { useAuthStore } from '@/stores';
 import MessageBox from "@/components/MessageBox.vue";
 import apiADMIN from '@/api/api/A_ADMIN';
 import apiCOMMON from '@/api/api/A_COMMON';
+
+import {
+  DOWNLOAD_USER_EXCEL
+} from "@/util/excelupdn";
 
 const authStore = useAuthStore();
 const { _AUTH_ADMIN } = storeToRefs(authStore);
@@ -162,7 +167,40 @@ async function initPage() {
   //fnSearch();
 }
 
-function downloadAsExcel() {
+async function downloadAsExcel() {
+
+  let businessCdNm = businessCdItems.value.find(items => items.value == searchParams.value.data.business_cd).title;
+  let userCdNm = userCdItems.value.find(items => items.value == searchParams.value.data.user_cd).title;
+  let fileNm = `${businessCdNm}_${userCdNm}_회원리스트`;
+  let isRun = false;
+
+  if(userCdNm == '전체'){
+    messageBoxDTO.value.setInfo('Excel', '가입 유형을 선택해 주세요.');
+    return false;
+  }
+
+  await messageBoxDTO.value.setConfirm('다운로드', `${fileNm} 자료를 다운 받으시겠습니까?`, null, (result, params) => {
+    isRun = result;
+  });
+
+  let resultData;
+  try {
+    if (isRun) {
+        resultData = await apiADMIN.getUserExcel(searchParams.value.data);
+        // console.log("User Excel : ", resultData)
+        searchParams.value.data['excel_filenm'] = fileNm;
+
+
+      if (resultData.data.length == 0) {
+        messageBoxDTO.value.setInfo('Excel', '데이타가 없습니다. 검색조건을 확인하세요.');
+      } else {
+        console.log("fileNm",fileNm)
+        DOWNLOAD_USER_EXCEL(searchParams.value, resultData.data);
+      }
+    }
+  } catch (e) {
+    messageBoxDTO.value.setWarning('오류', `엑셀다운로드에 실패하였습니다<br/>${resultData.message}`);
+  }
 }
 
 /**

@@ -241,7 +241,7 @@ async function fnSave(mode:string) {
       if(resultData.message == 'DUP') {
         messageBoxDTO.value.setWarning('실패', "동일한 등록번호가 존재 합니다.<br>등록번호 확인 후 다시 시도 해주세요.");
       } else {
-        messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+        messageBoxDTO.value.setWarning('실패', `저장에 실패하였습니다.<br/>${resultData.message}`);
       }
 
     }

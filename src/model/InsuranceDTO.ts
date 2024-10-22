@@ -243,6 +243,8 @@ class InsuranceDTO {
   updated_ip: string;
   renewal_cd: string;
   renewal_cd_nm: string;
+  login_at : string;
+  last_login : number;
 
   constructor(data: Partial<InsuranceDTO> = {}) {
     this.mode = data.mode || '';
@@ -382,6 +384,8 @@ class InsuranceDTO {
     this.table_name = data.table_name || '';
     this.renewal_cd = data.renewal_cd || '';
     this.renewal_cd_nm = data.renewal_cd_nm || '';
+    this.login_at = data.login_at || ''
+    this.last_login = data.last_login || 0;
   }
 }
 export { TRXDataDTO, CBRDataDTO, InsuranceDTO, InsuranceRateDTO };

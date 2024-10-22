@@ -1677,25 +1677,28 @@ async function fnSave() {
   if (isRun) {
     let resultData;
     insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length
-    if (route.params.business_cd == 'ADV'){
-      resultData = await apiADMIN.setADV([insuranceDTO.value]);
-    }
-    else {
-      resultData = await apiADMIN.setTAX([insuranceDTO.value]);
-    }
-
-    if (resultData.success) {
-      messageBoxDTO.value.setInfo('확인', '저장 되었습니다.');
-      fnSearch(false);
-      if (insuranceDTO.value.mode == 'U') {
-        fnSearchDtl(insuranceDTO.value.insurance_uuid);
+    try {
+      if (route.params.business_cd == 'ADV') {
+        resultData = await apiADMIN.setADV([insuranceDTO.value]);
       } else {
-
+        resultData = await apiADMIN.setTAX([insuranceDTO.value]);
       }
-      console.log('fnSave :',insuranceDTO.value.insurance_uuid)
 
-    } else {
-      messageBoxDTO.value.setWarning('실패', '저장에 실패하였습니다.');
+      if (resultData.success) {
+        messageBoxDTO.value.setInfo('확인', '저장 되었습니다.');
+        fnSearch(false);
+        if (insuranceDTO.value.mode == 'U') {
+          fnSearchDtl(insuranceDTO.value.insurance_uuid);
+        } else {
+
+        }
+        console.log('fnSave :', insuranceDTO.value.insurance_uuid)
+
+      } else {
+        messageBoxDTO.value.setWarning('실패', `저장에 실패하였습니다.<br/>${resultData.message}`);
+      }
+    }catch(e) {
+      console.log(e.status)
     }
   }
 }

@@ -759,7 +759,6 @@ const RENEWAL_EXCEL_TAX_IND = {
   이메일: 'Y',
 
 };
-
 const RENEWAL_EXCEL_TAX_COR = {
   순번: 'A',
   보험식별번호: 'B',
@@ -851,5 +850,20 @@ const RENEWAL_EXCEL_LAW_JNT = {
   //----------------------
 };
 
+
+const EXCEL_USER = {
+  순번: 'A',
+  전문인유형: 'B',
+  회원구분: 'C',
+  이름: 'D',
+  아이디: 'E',
+  등록번호: 'F',
+  사업자번호: 'G',
+  소속지방회: 'H',
+  회원상태: 'I',
+  최근접속일: 'J',
+  미접속일수: 'K'
+
+};
 export { EXCEL_TAX_IND, EXCEL_TAX_COR, EXCEL_ACC_IND, EXCEL_ADV_IND, EXCEL_ADV_JNT, EXCEL_CAA_IND, EXCEL_CAA_JNT, EXCEL_CAA_COR, EXCEL_PAT_IND, EXCEL_PAT_COR, EXCEL_PAT_JNT, EXCEL_LAW_IND, EXCEL_LAW_JNT
-  , RENEWAL_EXCEL_TAX_IND, RENEWAL_EXCEL_TAX_COR, RENEWAL_EXCEL_LAW_IND, RENEWAL_EXCEL_LAW_JNT };
+  , RENEWAL_EXCEL_TAX_IND, RENEWAL_EXCEL_TAX_COR, RENEWAL_EXCEL_LAW_IND, RENEWAL_EXCEL_LAW_JNT,EXCEL_USER };
