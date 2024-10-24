@@ -790,6 +790,7 @@
                           :agr32_yn="insuranceDTO.agr32_yn"
                           :agr33_yn="insuranceDTO.agr33_yn"
                           :agr34_yn="insuranceDTO.agr34_yn"
+                          :insurance_dto="insuranceDTO"
                           :isReadonly="isReadOnlyAll"
                           v-if="isTermsOfContractDialog"
                           @close="onTermsOfContractClose"
