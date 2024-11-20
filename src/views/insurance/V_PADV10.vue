@@ -266,7 +266,7 @@
                     </v-card-title>
                     <v-divider class="mb-0"/>
                     <v-card-text class="pa-0">
-                      <iframe src="/assets/doc/ADV/2023 예상질문에 대한 답변서.pdf" width="100%" height="800px"></iframe>
+                      <iframe src="/assets/doc/ADV/2024_예상질문에_대한_답변서.pdf" width="100%" height="800px"></iframe>
                     </v-card-text>
                   </v-card>
                 </v-dialog>
@@ -393,7 +393,7 @@
                   <td class="border-right-0">
                     사고 인지 후 30일 이내에 반드시 보험사로 서면 통지하여야 하며,<br/>
                     기간 내 통지가 이루어지지 않을 경우 면책처리됨<br/>
-                    <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mt-2 px-4 py-1 text-14" href="/assets/doc/ADV/변호사_사고통보서.pdf" download>
+                    <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mt-2 px-4 py-1 text-14" href="/assets/doc/ADV/변호사_사고통보서_back.pdf" download>
                       <span class="mr-1">사고 통보서 다운로드</span>
                       <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
                     </a>
@@ -579,7 +579,7 @@
                 <dt class="color-primary">사고접수 양식 다운로드</dt>
                 <dd class="mt-1">사고 인지 즉시 서면에 의한 사고 접수를 하여야 함(피보험자 상황 통지 의무)</dd>
                 <dd class="mt-2">
-                  <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mr-4 px-4 py-1 text-14" href="/assets/doc/ADV/변호사_사고통보서.pdf" download>
+                  <a class="v-btn v-btn--flat text-primary rounded-md v-btn--variant-outlined mr-4 px-4 py-1 text-14" href="/assets/doc/ADV/변호사_사고통보서_back.pdf" download>
                     <span class="mr-1">다운로드</span>
                     <vue-feather type="download" class="feather-sm vertical-align-middle"></vue-feather>
                   </a>
