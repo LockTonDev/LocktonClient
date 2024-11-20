@@ -116,7 +116,7 @@
                 <td class="text-center">7</td>
                 <td>
                   <span class="font-weight-medium">* 고용직원의 부정직(또는 사기행위)확장 조항(Dishonesty Extension):</span>
-                  고용직원의 부정직(또는 사기행위)확장조항을 추가 가입 할 경우, 피보험자의 고용인이 피보험자를 대신하여 전문서비스를 수행하는 동안 행한 부정직(또는 사기 행위)의 직접적인 결과로 보험기간 중에 인지된 금전적인 손실을 담보합니다. <span class="font-weight-bold" style="text-decoration: underline">사고가 인지(Discovery)된 이후 30일 이내에 해당 사실을 서면으로 보험회사에 통지해야 합니다.</span> 지방 변호사회에 등록된 전 사무원의 일괄가입을 전제로 하며, 변호사는 제외됩니다.
+                  고용직원의 부정직(또는 사기행위)확장조항을 추가 가입 할 경우, 피보험자의 고용인이 피보험자를 대신하여 전문서비스를 수행하는 동안 행한 부정직(또는 사기 행위)의 직접적인 결과로 보험기간 중에 인지된 금전적인 손실을 담보합니다. <span class="font-weight-bold" style="text-decoration: underline">사고가 인지(Discovery)된 이후 30일 이내에 해당 사실을 서면으로 보험회사에 통지해야 합니다.</span> 지방 변호사회에 등록된 전 사무원의 일괄가입을 전제로 하며, 변호사, 배우자 및 친족 등은 제외됩니다.
                 </td>
               </tr>
               <tr>
