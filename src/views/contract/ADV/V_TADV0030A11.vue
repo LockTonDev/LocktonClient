@@ -2193,7 +2193,7 @@ async function chkSaleRtJNT(list: any, rowIdx: number) {
         - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
      */
 
-    if (result.data.renewal.length > 0) {
+    if (result.data.renewal.length > 0 && renewalYN.value === 'Y') {
 
       const insr_sale_year = Number(result.data.renewal[0].insr_sale_year);
       const insr_sale_rt = Number(result.data.renewal[0].insr_sale_rt);
@@ -2259,7 +2259,7 @@ async function chkSaleRtIND() {
       return false;
     }
 
-    if (result.data.renewal.length > 0) {
+    if (result.data.renewal.length > 0 && renewalYN.value === 'Y') {
       const insr_sale_year = Number(result.data.renewal[0].insr_sale_year);
       const insr_sale_rt = Number(result.data.renewal[0].insr_sale_rt);
       const insr_retr_dt = result.data.renewal[0].insr_retr_dt;
@@ -2801,6 +2801,7 @@ onMounted(async () => {
    
   insuranceDTO.value.insurance_uuid = '';
 
+  console.log("insuranceDTO.value.insurance_uuid >> ", insuranceDTO.value.insurance_uuid)
 
   if (INSR_RETR_DT_TODAY < insuranceRateDTO.value.insr_st_dt) {
     INSR_RETR_DT_TODAY = insuranceRateDTO.value.insr_st_dt
