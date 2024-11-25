@@ -864,6 +864,8 @@
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>
                         각 지방 변호사회에 사무원으로 등록된 전 직원의 일괄가입 조건이며, 변호사 유자격자는 제외.<br/>
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>
+                        배우자 및 친족 등 제외<br/>
+                        <i class="mdi mdi-alert-circle-outline mr-2"></i>
                         직원수 10명 초과시 개별 문의
                       </p>
                     </div>

@@ -369,7 +369,7 @@
               </p>
               <table class="normal-table mt-6">
                 <colgroup>
-                  <col style="width: 35%"/>
+                  <col style="width: 25%"/>
                   <col style="width: auto"/>
                 </colgroup>
                 <tbody>
@@ -384,7 +384,8 @@
                   <th class="border-left-0">가입조건 </th>
                   <td class="border-right-0">
                     - 기본담보의 50%적용을 원칙으로 함 <br/>
-                    - 각 지방 변호사회에 사무원으로 등록된 전 직원의 일괄가입이 조건임 <br/>(변호사 유자격자 제외)
+                    - 각 지방 변호사회에 사무원으로 등록된 전 직원의 일괄가입이 조건임 (변호사 유자격자 제외)<br/>
+                    - 배우자 및 친족 등 제외
                   </td>
                 </tr>
                 <tr>
