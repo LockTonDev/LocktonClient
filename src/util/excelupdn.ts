@@ -855,22 +855,22 @@ export const UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND = async (event: any) => {
       const reader = new FileReader();
 
       reader.onload = e => {
-        const data = new Uint8Array(e.target.result);
-        const workbook = new Workbook();
-        workbook.xlsx.load(data).then(() => {
-          const worksheet = workbook.getWorksheet(1);
-
+          const data = new Uint8Array(e.target.result);
+          const workbook = new Workbook();
+          workbook.xlsx.load(data).then(() => {
+            const worksheet = workbook.getWorksheet(1);
+          console.log('worksheet',worksheet);
           worksheet.eachRow((row, index) => {
             if (index === 1) return;
             let insuranceDTO = new InsuranceDTO();
             let trxDataDTO1 = new TRXDataDTO();
             let trxDataDTO2 = new TRXDataDTO();
 
-            insuranceDTO.insurance_uuid = row.getCell(EXCEL_TAX_IND.보험식별번호).value;
-            insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_TAX_IND.총입금액).value;
-            insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_TAX_IND.차액).value;
+            insuranceDTO.insurance_uuid = row.getCell(EXCEL_ADV_IND.보험식별번호).value;
+            insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_ADV_IND.총입금액).value;
+            insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_ADV_IND.차액).value;
 
-            insuranceDTO.status_nm = row.getCell(EXCEL_TAX_IND.상태).value;
+            insuranceDTO.status_nm = row.getCell(EXCEL_ADV_IND.상태).value;
             try {
               insuranceDTO.status_cd = statusCdItems.find(item => item.title == insuranceDTO.status_nm).value;
             } catch (e) {
@@ -878,11 +878,11 @@ export const UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND = async (event: any) => {
               // console.log(e);
             }
 
-            trxDataDTO1.trx_nm = row.getCell(EXCEL_TAX_IND.입금구분1).value;
-            trxDataDTO1.trx_amt = row.getCell(EXCEL_TAX_IND.입금금액1).value;
-            trxDataDTO1.trx_dt = dayjs(row.getCell(EXCEL_TAX_IND.처리일자1).value).format('YYYY-MM-DD');
-            trxDataDTO1.rmk = row.getCell(EXCEL_TAX_IND.비고1).value;
-            trxDataDTO1.acct_nm = row.getCell(EXCEL_TAX_IND.예금주명1).value;
+            trxDataDTO1.trx_nm = row.getCell(EXCEL_ADV_IND.입금구분1).value;
+            trxDataDTO1.trx_amt = row.getCell(EXCEL_ADV_IND.입금금액1).value;
+            trxDataDTO1.trx_dt = dayjs(row.getCell(EXCEL_ADV_IND.처리일자1).value).format('YYYY-MM-DD');
+            trxDataDTO1.rmk = row.getCell(EXCEL_ADV_IND.비고1).value;
+            trxDataDTO1.acct_nm = row.getCell(EXCEL_ADV_IND.예금주명1).value;
 
             try {
               trxDataDTO1.trx_cd = trxCdItems.find(item => item.title == trxDataDTO1.trx_nm).value;
@@ -891,11 +891,11 @@ export const UPLOAD_EXCEL_INSURANCE_ADV_TRE_IND = async (event: any) => {
               // console.log(e);
             }
 
-            trxDataDTO2.trx_nm = row.getCell(EXCEL_TAX_IND.입금구분2).value;
-            trxDataDTO2.trx_amt = row.getCell(EXCEL_TAX_IND.입금금액2).value;
-            trxDataDTO2.trx_dt = dayjs(row.getCell(EXCEL_TAX_IND.처리일자2).value).format('YYYY-MM-DD');
-            trxDataDTO2.rmk = row.getCell(EXCEL_TAX_IND.비고2).value;
-            trxDataDTO2.acct_nm = row.getCell(EXCEL_TAX_IND.예금주명2).value;
+            trxDataDTO2.trx_nm = row.getCell(EXCEL_ADV_IND.입금구분2).value;
+            trxDataDTO2.trx_amt = row.getCell(EXCEL_ADV_IND.입금금액2).value;
+            trxDataDTO2.trx_dt = dayjs(row.getCell(EXCEL_ADV_IND.처리일자2).value).format('YYYY-MM-DD');
+            trxDataDTO2.rmk = row.getCell(EXCEL_ADV_IND.비고2).value;
+            trxDataDTO2.acct_nm = row.getCell(EXCEL_ADV_IND.예금주명2).value;
 
             try {
               trxDataDTO2.trx_cd = trxCdItems.find(item => item.title == trxDataDTO2.trx_nm).value;
@@ -1058,9 +1058,9 @@ export const UPLOAD_EXCEL_INSURANCE_ACC_IND_N = async (event: any) => {
             let trxDataDTO1 = new TRXDataDTO();
             let trxDataDTO2 = new TRXDataDTO();
 
-            insuranceDTO.insurance_uuid = row.getCell(EXCEL_TAX_IND.보험식별번호).value;
-            insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_TAX_IND.총입금액).value;
-            insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_TAX_IND.차액).value;
+            insuranceDTO.insurance_uuid = row.getCell(EXCEL_ADV_IND.보험식별번호).value;
+            insuranceDTO.insr_tot_paid_amt = row.getCell(EXCEL_ADV_IND.총입금액).value;
+            insuranceDTO.insr_tot_unpaid_amt = row.getCell(EXCEL_ADV_IND.차액).value;
             insuranceDTO.status_nm = row.getCell(EXCEL_ACC_IND.상태).value;
 
             try {
@@ -1070,11 +1070,11 @@ export const UPLOAD_EXCEL_INSURANCE_ACC_IND_N = async (event: any) => {
               // console.log(e);
             }
 
-            trxDataDTO1.trx_nm = row.getCell(EXCEL_ACC_IND.입금구분1).value;
-            trxDataDTO1.trx_amt = row.getCell(EXCEL_ACC_IND.입금금액1).value;
-            trxDataDTO1.trx_dt = dayjs(row.getCell(EXCEL_ACC_IND.처리일자1).value).format('YYYY-MM-DD');
-            trxDataDTO1.rmk = row.getCell(EXCEL_ACC_IND.비고1).value;
-            trxDataDTO1.acct_nm = row.getCell(EXCEL_ACC_IND.예금주명1).value;
+            trxDataDTO1.trx_nm = row.getCell(EXCEL_ADV_IND.입금구분1).value;
+            trxDataDTO1.trx_amt = row.getCell(EXCEL_ADV_IND.입금금액1).value;
+            trxDataDTO1.trx_dt = dayjs(row.getCell(EXCEL_ADV_IND.처리일자1).value).format('YYYY-MM-DD');
+            trxDataDTO1.rmk = row.getCell(EXCEL_ADV_IND.비고1).value;
+            trxDataDTO1.acct_nm = row.getCell(EXCEL_ADV_IND.예금주명1).value;
 
             try {
               trxDataDTO1.trx_cd = trxCdItems.find(item => item.title == trxDataDTO1.trx_nm).value;
@@ -1083,11 +1083,11 @@ export const UPLOAD_EXCEL_INSURANCE_ACC_IND_N = async (event: any) => {
               // console.log(e);
             }
 
-            trxDataDTO2.trx_nm = row.getCell(EXCEL_ACC_IND.입금구분2).value;
-            trxDataDTO2.trx_amt = row.getCell(EXCEL_ACC_IND.입금금액2).value;
-            trxDataDTO2.trx_dt = dayjs(row.getCell(EXCEL_ACC_IND.처리일자2).value).format('YYYY-MM-DD');
-            trxDataDTO2.rmk = row.getCell(EXCEL_ACC_IND.비고2).value;
-            trxDataDTO2.acct_nm = row.getCell(EXCEL_ACC_IND.예금주명2).value;
+            trxDataDTO2.trx_nm = row.getCell(EXCEL_ADV_IND.입금구분2).value;
+            trxDataDTO2.trx_amt = row.getCell(EXCEL_ADV_IND.입금금액2).value;
+            trxDataDTO2.trx_dt = dayjs(row.getCell(EXCEL_ADV_IND.처리일자2).value).format('YYYY-MM-DD');
+            trxDataDTO2.rmk = row.getCell(EXCEL_ADV_IND.비고2).value;
+            trxDataDTO2.acct_nm = row.getCell(EXCEL_ADV_IND.예금주명2).value;
 
             try {
               trxDataDTO2.trx_cd = trxCdItems.find(item => item.title == trxDataDTO2.trx_nm).value;
