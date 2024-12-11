@@ -279,6 +279,7 @@
 
   const loginErrorMessage = ref("");
 
+  const authStore = useAuthStore();
   watch(() => businessInfo.value, (newValue, oldValue) => {
     // console.log("newValue ", newValue);
     if(businessInfo.value == undefined) {
@@ -366,7 +367,7 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
       [`user_pwd`]: values[user_pwd],
       user_browser : navigator.userAgent
     };
-    const authStore = useAuthStore();
+
     const result = await authStore.login(params);
     // console.log(result);
     if (result.success) {
@@ -390,7 +391,8 @@ watch(password, () => { // 18번) 다음과 같이 사용하거나, (단, method
 
 
 onMounted(async () => {
-  console.log('navigatornavigator',navigator.userAgent)
+  authStore.logout()
+  // console.log('navigatornavigator',navigator.userAgent)
 });
  
 </script>

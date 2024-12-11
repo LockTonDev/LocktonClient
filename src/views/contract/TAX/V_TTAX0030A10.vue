@@ -51,33 +51,38 @@
         <tbody v-if="InsuranceList.length">
         <tr v-for="(row, index) in InsuranceList">
           <td class="text-center text-body-1 text-no-wrap">{{ row.status_cd !== '91' && row.status_cd !== '10' ? row.insurance_no : '' }}</td>
-          <td class="text-center text-body-1 text-no-wrap">{{ row.user_nm }}</td>
-          <td class="text-center text-body-1 text-no-wrap">
-            <div v-if="row.use_yn=='N'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
-            <div v-else class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
-          </td>
-          <td class="text-center text-body-1 text-no-wrap">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
-          <td class="text-center text-body-1">
-            <v-icon v-if="row.use_yn=='Y'"
-                    small
-                    class="text-primary cursor-pointer"
-                    title="신청서 출력"
-                    @click="onInsuranceFormOpen(row.insurance_uuid, row.insr_year);"
-            >mdi-printer</v-icon
-            >
-          </td>
-          <td class="text-center text-body-1">
-            <v-icon
-                small
-                class="text-primary cursor-pointer"
-                title="가입증명서 출력"
-                @click="onCertificatePrintFrameOpen(row.status_cd, row.insurance_uuid, row.insr_year)"
-                v-if="row.status_cd == '80' || row.status_cd == '90'"
-            >mdi-printer</v-icon
-            >
-          </td>
-          <td class="text-center text-body-1"><span v-if="dateCompareWithNow(row.insr_cncls_dt)">{{row.status_nm}}</span><span v-else class="color-gray font-italic">기간종료</span>
-          </td>
+          <template v-if="row.user_cd === user_cd">
+            <td class="text-center text-body-1 text-no-wrap">{{ row.user_nm }}</td>
+            <td class="text-center text-body-1 text-no-wrap">
+              <div v-if="row.use_yn=='N'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
+              <div v-else class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
+            </td>
+            <td class="text-center text-body-1 text-no-wrap">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
+            <td class="text-center text-body-1">
+              <v-icon v-if="row.use_yn=='Y'"
+                      small
+                      class="text-primary cursor-pointer"
+                      title="신청서 출력"
+                      @click="onInsuranceFormOpen(row.insurance_uuid, row.insr_year);"
+              >mdi-printer</v-icon
+              >
+            </td>
+            <td class="text-center text-body-1">
+              <v-icon
+                  small
+                  class="text-primary cursor-pointer"
+                  title="가입증명서 출력"
+                  @click="onCertificatePrintFrameOpen(row.status_cd, row.insurance_uuid, row.insr_year)"
+                  v-if="row.status_cd == '80' || row.status_cd == '90'"
+              >mdi-printer</v-icon
+              >
+            </td>
+            <td class="text-center text-body-1"><span v-if="dateCompareWithNow(row.insr_cncls_dt)">{{row.status_nm}}</span><span v-else class="color-gray font-italic">기간종료</span>
+            </td>
+          </template>
+          <template v-else>
+            <td colspan="5" class="text-center">{{ row.user_nm }} 법인 가입</td>
+          </template>
         </tr>
         </tbody>
         <tbody v-else>
@@ -156,6 +161,7 @@ import {dateCompareWithNow} from '../../../util/util';
 // 초기정보 설정
 const messageBoxDTO = ref(new MessageBoxDTO());
 
+const user_cd = ref('');
 
 const page = ref({
   title: "전문인배상책임보험 보험계약",
@@ -277,6 +283,7 @@ const chkValidPeriod=(row,type)=>{
 
 onMounted(async () => {
   const params = ref([]);
+  user_cd.value = JSON.parse(localStorage.getItem('_AUTH_USER')).userCd;
   const resultData = await apiContract.getDBSelList(params);
   InsuranceList.value = resultData.data.list;
 

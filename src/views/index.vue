@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref } from "vue";
+  import { onMounted, ref } from "vue";
   import Header from "@/layouts/default/Header.vue";
   import Footer from "@/layouts/default/Footer.vue";
   import { storeToRefs } from 'pinia';
@@ -9,6 +9,11 @@
   const { _AUTH_USER } = storeToRefs(authStore);
 
   const popFirstUser = ref(false);
+
+  onMounted(async () => {
+    authStore.logoutUnexpected()
+    // clearTimeout();
+  });
 </script>
 
 <template>

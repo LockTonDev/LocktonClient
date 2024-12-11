@@ -227,7 +227,7 @@ const onInsuranceFormOpen = (param:string) => {
  * @param param
  */
 const onCertificatePrintFrameOpen = (status_cd:string, insurance_uuid:string) => {
-  if(status_cd == '80') {
+  if(status_cd == '80' || status_cd == '90') {
     insuranceUUID.value = insurance_uuid;
     isCertificatePrintFramDialog.value = true;
   }

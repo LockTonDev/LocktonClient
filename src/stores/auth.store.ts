@@ -105,6 +105,13 @@ export const useAuthStore = defineStore({
       // localStorage.clear();
       router.push('/user/login');
     },
+    logoutUnexpected() {
+      this._AUTH_USER = null;
+      localStorage.removeItem('_AUTH_USER');
+      localStorage.removeItem('_COMMON_CODES');
+      // localStorage.clear();
+      router.push('/');
+    },
     adminLogout() {
       this._AUTH_ADMIN = null;
       //localStorage.clear();
