@@ -83,7 +83,7 @@
               </td>
             </template>
             <template v-else>
-              <td colspan="5" class="text-center">{{ row.user_nm }} 복수 가입</td>
+              <td colspan="5" class="text-center">{{ row.user_nm }} [{{(row.user_cd == 'IND')?'개인': '복수'}}] 가입</td>
             </template>
             <td class="text-center text-body-1">{{row.status_nm}}
             </td>

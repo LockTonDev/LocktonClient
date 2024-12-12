@@ -452,6 +452,7 @@ async function fnExcelDownload() {
       }
     }
   } catch (e) {
+    console.log(e)
     messageBoxDTO.value.setWarning('오류', `엑셀다운로드에 실패하였습니다<br/>${resultData.message}`);
   }
 }

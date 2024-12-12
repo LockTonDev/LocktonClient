@@ -2649,11 +2649,15 @@ function mapperRow_CAA_JNT(excelMapper: object, excelDataRow: any) {
     row[excelMapper.입금구분] = '';
     // console.log(e);
   }
-  console.log(insuranceDTO)
-  row[excelMapper.입금금액] = insuranceDTO?.trx_data[0]?.trx_amt;
-  row[excelMapper.처리일자] = insuranceDTO?.trx_data[0]?.trx_dt;
-  row[excelMapper.비고] = insuranceDTO?.trx_data[0]?.rmk;
-  row[excelMapper.예금주명] = insuranceDTO?.trx_data[0]?.acct_nm;
+  // console.log(insuranceDTO)
+  if(insuranceDTO.trx_data && insuranceDTO.trx_data.length > 0) { // trx_data가 없을 null이거나 [] 인 경우
+    row[excelMapper.입금금액] = (insuranceDTO)?.trx_data[0]?.trx_amt;
+    row[excelMapper.처리일자] = insuranceDTO?.trx_data[0]?.trx_dt;
+    row[excelMapper.비고] = insuranceDTO?.trx_data[0]?.rmk;
+    row[excelMapper.예금주명] = insuranceDTO?.trx_data[0]?.acct_nm;
+  } else {
+    insuranceDTO.trx_data = []
+  }
 
   rows.push(row);
   
@@ -2854,17 +2858,21 @@ function mapperRow_CAA_COR(excelMapper: object, excelDataRow: any) {
     row[excelMapper.입금구분] = '';
     // console.log(e);
   }
+  if(insuranceDTO.trx_data && insuranceDTO.trx_data.length > 0) {
+    row[excelMapper.입금금액] = insuranceDTO?.trx_data[0]?.trx_amt;
+    row[excelMapper.처리일자] = insuranceDTO?.trx_data[0]?.trx_dt;
+    row[excelMapper.비고] = insuranceDTO?.trx_data[0]?.rmk;
+    row[excelMapper.예금주명] = insuranceDTO?.trx_data[0]?.acct_nm;
+  } else {
+    insuranceDTO.trx_data = []
+  }
 
-  row[excelMapper.입금금액] = insuranceDTO?.trx_data[0]?.trx_amt;
-  row[excelMapper.처리일자] = insuranceDTO?.trx_data[0]?.trx_dt;
-  row[excelMapper.비고] = insuranceDTO?.trx_data[0]?.rmk;
-  row[excelMapper.예금주명] = insuranceDTO?.trx_data[0]?.acct_nm;
 
   rows.push(row);
 
   let maxLength = Math.max(insuranceDTO.cbr_data.length, insuranceDTO.trx_data.length, spct_tot_cnt - 1);
   let cbrCnt = 0;
-  console.log(maxLength)
+  // console.log(maxLength)
   for (let i = 0; i < maxLength; i++) {
     let subRow = {};
     if (insuranceDTO.cbr_data[i]) {
