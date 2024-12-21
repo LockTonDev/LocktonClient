@@ -6,6 +6,7 @@ import { useAuthStore } from '@/stores';
 import { MessageBoxDTO, ParamsDTO, CommonCode, InsuranceDTO, InsuranceRateDTO, CBRDataDTO } from '@/model';
 import MessageBox from '@/components/MessageBox.vue';
 import sidebarItems from "./SidebarItem";
+import router from "@/router";
 
 const logoutTimeLimt = ref(1800) // 타임아웃 시간 5분 (초단위)
 const warnTimeoutMin = 3
@@ -96,6 +97,15 @@ function logoutAction() {
   }
 
   authStore.adminLogout()
+}
+
+function goRoute(path) {
+  if(path.indexOf('AJ4') < 0) {
+    router.push({path: path})
+  } else {
+    window.open(path,"portal_password_pocity","width=614, height=1000")
+    // window.open("/policy.html","portal_password_pocity","width=614, height=1000")
+  }
 }
 
 // storage 이벤트를 사용해 localStorage 의 _AUTH_ADMIN 변경을 감지하고 스토어를 업데이트
@@ -196,9 +206,13 @@ onUnmounted(() => {
             <!-- ---------------------------------------------- -->
             <!---Sub Item-->
             <!-- ---------------------------------------------- -->
-            <v-list-item v-for="(subitem, i) in item.children" :key="i" :value="subitem.to" :to="subitem.to" variant="flat" class="py-2 bg-dark">
-              <v-list-item-title v-text="subitem.title" class="text-14"></v-list-item-title>
-            </v-list-item>
+            <span v-for="(subitem, i) in item.children" >
+<!--              <v-list-item  :key="i" :value="subitem.to" :to="subitem.to" variant="flat" class="py-2 bg-dark">-->
+              <v-list-item  :key="i" :value="subitem.to"  @click="goRoute(subitem.to)" variant="flat" class="py-2 bg-dark">
+                <v-list-item-title v-text="subitem.title" class="text-14"></v-list-item-title>
+              </v-list-item>
+
+            </span>
           </v-list-group>
           <!-- ---------------------------------------------- -->
           <!---Single Item-->
@@ -218,3 +232,4 @@ onUnmounted(() => {
   </v-navigation-drawer>
   <MessageBox :messageBoxDTO="messageBoxDTO"></MessageBox>
 </template>
+

@@ -2514,7 +2514,8 @@ function mapperRow_CAA_IND(excelMapper: object, excelDataRow: any) {
   let spct_tot_cnt = 0;
   let spct_cnt = 0;
   if(insuranceDTO.spct_join_yn=='Y' && insuranceDTO.spct_data?.cbr_cnt > 0) {
-    row[excelMapper.특약상태] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].status_cd : '';
+    // row[excelMapper.특약상태] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].status_cd : '';
+    row[excelMapper.특약상태] = (insuranceDTO.spct_join_yn == 'Y' && insuranceDTO.spct_data?.cbr_data[0].status_cd)? statusCdItems.find(items => items.value === insuranceDTO.spct_data?.cbr_data[0].status_cd).title  : '';
     row[excelMapper.특약직원성명] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].cbr_nm : '';
     row[excelMapper.특약직원생년월일] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].cbr_brdt : '';
     row[excelMapper.특약소급담보일] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].insr_retr_dt : '';
@@ -2559,7 +2560,8 @@ function mapperRow_CAA_IND(excelMapper: object, excelDataRow: any) {
   for (let i = 0; i < spct_tot_cnt - 1; i++) {
     let subRow = {};
     if(insuranceDTO.spct_join_yn=='Y' && insuranceDTO.spct_data.cbr_data[i + 1]) {
-      subRow[excelMapper.특약상태] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].status_cd : '';
+      // subRow[excelMapper.특약상태] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].status_cd : '';
+      subRow[excelMapper.특약상태] = (insuranceDTO.spct_join_yn == 'Y' && insuranceDTO.spct_data?.cbr_data[i + 1].status_cd)? statusCdItems.find(items => items.value === insuranceDTO.spct_data?.cbr_data[i+1].status_cd).title  : '';
       subRow[excelMapper.특약직원성명] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].cbr_nm : '';
       subRow[excelMapper.특약직원생년월일] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].cbr_brdt : '';
       subRow[excelMapper.특약소급담보일] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].insr_retr_dt : '';
@@ -2632,7 +2634,8 @@ function mapperRow_CAA_JNT(excelMapper: object, excelDataRow: any) {
   let spct_tot_cnt = 0;
   let spct_cnt = 0;
   if(insuranceDTO.spct_join_yn=='Y' && insuranceDTO.spct_data?.cbr_cnt > 0) {
-    row[excelMapper.특약상태] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].status_cd : '';
+    // row[excelMapper.특약상태] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].status_cd : '';
+    row[excelMapper.특약상태] = (insuranceDTO.spct_join_yn == 'Y' && insuranceDTO.spct_data?.cbr_data[0].status_cd)? statusCdItems.find(items => items.value === insuranceDTO.spct_data?.cbr_data[0].status_cd).title  : '';
     row[excelMapper.특약직원성명] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].cbr_nm : '';
     row[excelMapper.특약직원생년월일] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].cbr_brdt : '';
     row[excelMapper.특약소급담보일] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].insr_retr_dt : '';
@@ -2704,7 +2707,8 @@ function mapperRow_CAA_JNT(excelMapper: object, excelDataRow: any) {
     }
 
     if(insuranceDTO.spct_join_yn=='Y' && insuranceDTO.spct_data.cbr_data[i + 1]) {
-      subRow[excelMapper.특약상태] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].status_cd : '';
+      // subRow[excelMapper.특약상태] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].status_cd : '';
+      subRow[excelMapper.특약상태] = (insuranceDTO.spct_join_yn == 'Y' && insuranceDTO.spct_data?.cbr_data[i + 1].status_cd)? statusCdItems.find(items => items.value === insuranceDTO.spct_data?.cbr_data[i+1].status_cd).title  : '';
       subRow[excelMapper.특약직원성명] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].cbr_nm : '';
       subRow[excelMapper.특약직원생년월일] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].cbr_brdt : '';
       subRow[excelMapper.특약소급담보일] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].insr_retr_dt : '';
@@ -2841,7 +2845,8 @@ function mapperRow_CAA_COR(excelMapper: object, excelDataRow: any) {
   let spct_tot_cnt = 0;
   let spct_cnt = 0;
   if(insuranceDTO.spct_join_yn=='Y' && insuranceDTO.spct_data?.cbr_cnt > 0) {
-    row[excelMapper.특약상태] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].status_cd : '';
+    // row[excelMapper.특약상태] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].status_cd : '';
+    row[excelMapper.특약상태] = (insuranceDTO.spct_join_yn == 'Y' && insuranceDTO.spct_data?.cbr_data[0].status_cd)? statusCdItems.find(items => items.value === insuranceDTO.spct_data?.cbr_data[0].status_cd).title  : '';
     row[excelMapper.특약직원성명] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].cbr_nm : '';
     row[excelMapper.특약직원생년월일] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].cbr_brdt : '';
     row[excelMapper.특약소급담보일] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[0].insr_retr_dt : '';
@@ -2864,7 +2869,7 @@ function mapperRow_CAA_COR(excelMapper: object, excelDataRow: any) {
     row[excelMapper.비고] = insuranceDTO?.trx_data[0]?.rmk;
     row[excelMapper.예금주명] = insuranceDTO?.trx_data[0]?.acct_nm;
   } else {
-    insuranceDTO.trx_data = []
+    insuranceDTO.trx_data
   }
 
 
@@ -2909,7 +2914,8 @@ function mapperRow_CAA_COR(excelMapper: object, excelDataRow: any) {
     }
 
     if(insuranceDTO.spct_join_yn=='Y' && insuranceDTO.spct_data.cbr_data[i + 1]) {
-      subRow[excelMapper.특약상태] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].status_cd : '';
+      subRow[excelMapper.특약상태] = (insuranceDTO.spct_join_yn == 'Y' && insuranceDTO.spct_data?.cbr_data[i + 1].status_cd)? statusCdItems.find(items => items.value === insuranceDTO.spct_data?.cbr_data[i+1].status_cd).title  : '';
+          // insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].status_cd : '';
       subRow[excelMapper.특약직원성명] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].cbr_nm : '';
       subRow[excelMapper.특약직원생년월일] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].cbr_brdt : '';
       subRow[excelMapper.특약소급담보일] = insuranceDTO.spct_join_yn == 'Y' ? insuranceDTO.spct_data?.cbr_data[i + 1].insr_retr_dt : '';

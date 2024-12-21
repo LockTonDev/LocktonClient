@@ -14,6 +14,7 @@ import boardRouter from './board';
 import userRouter from './user';
 import insuranceRouter from './insurance';
 import contractRouter from './contract';
+import popupRouter from './popup';
 import axios from 'axios';
 
 const router = createRouter({
@@ -34,7 +35,9 @@ const router = createRouter({
     { ...boardRouter },
     { ...userRouter },
     { ...insuranceRouter },
-    { ...contractRouter }
+    { ...contractRouter },
+    { ...popupRouter }
+
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

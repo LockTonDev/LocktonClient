@@ -195,6 +195,10 @@ export default [
       {
         title: `증권정보`,
         to: `/${adminPath}/dev/AJ3`
+      },
+      {
+        title: `관리자패스워드정책`,
+        to: `/#/${adminPath}/dev/AJ4`
       }
     ]
   }

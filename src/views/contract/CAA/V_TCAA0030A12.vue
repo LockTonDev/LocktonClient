@@ -419,7 +419,7 @@
                         color="primary"
                         class="flex-grow-1"
                         :style="checkMobile.isMobile?'flex-basis:33.3%; font-size:7px !important;':''"
-                        value="1|공동부담 없음"
+                        value="1|공동부담없음"
                         >공동부담 없음</v-btn
                       >
                       <v-btn
@@ -715,7 +715,7 @@
                             color="primary"
                             class="flex-grow-1"
                             :style="checkMobile.isMobile?'flex-basis:33.3%; font-size:7px !important;':''"
-                            value="1|공동부담 없음"
+                            value="1|공동부담없음"
                             >공동부담 없음</v-btn
                           >
                           <v-btn

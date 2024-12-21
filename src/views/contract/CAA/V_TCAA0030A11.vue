@@ -693,7 +693,7 @@
                           color="primary"
                           class="flex-grow-1"
                           :style="checkMobile.isMobile?'flex-basis:33.3%; font-size:7px !important;':''"
-                          value="1|공동부담 없음"
+                          value="1|공동부담없음"
                           >공동부담 없음</v-btn
                         >
                         <v-btn
@@ -1062,7 +1062,7 @@
                               color="primary"
                               class="flex-grow-1"
                               :style="checkMobile.isMobile?'flex-basis:33.3%; font-size:7px !important;':''"
-                              value="1|공동부담 없음"
+                              value="1|공동부담없음"
                               >공동부담 없음</v-btn
                             >
                             <v-btn
@@ -2441,6 +2441,7 @@ let preventDupClick = false
  * @param sKey3 자기부담금
  * @param nRate 할인/할증률
  * @param nPCnt 인원수
+ * @param sKey4 컨설팅 계산유무
  */
 const getInsrAmt = (
   sSDt: string,
@@ -2449,7 +2450,8 @@ const getInsrAmt = (
   sKey2: string,
   sKey3: string,
   nRate: number,
-  nPCnt: number
+  nPCnt: number,
+  sKey4: string
 ) => {
   if (!sKey1 || !sKey2 || !sKey3) return 0;
 
@@ -2479,7 +2481,14 @@ const getInsrAmt = (
 
     // 보험 계산식
     // 보험 계산식 ( 기본금액 * 공동보험 할증 * 인원수 할인 * 기간일수) * 할인할증률  10원단위 절사
-    nTotAmt = (nInitAmt * (nDCnt / INSR_RATE_MAX_DAYS.value)) * (1 + nRate / 100);
+
+    if(sKey4 == 'Y') {
+      console.log("sKey4 :",nInitAmt)
+      nTotAmt = nInitAmt
+    } else {
+      console.log("sKey5 :",nInitAmt)
+      nTotAmt = (nInitAmt * (nDCnt / INSR_RATE_MAX_DAYS.value)) * (1 + nRate / 100);
+    }
     nTotAmt = Math.floor(nTotAmt / 10) * 10;
   } catch (err) {
     console.log(err);
@@ -2562,7 +2571,8 @@ const calInsrAmt = (data: any) => {
         data.insr_clm_lt_amt,
         data.insr_psnl_brdn_amt,
         0,
-        1
+        1,
+        'N'
       );
       // 합계보험료 - 기간, 할인할증 적용 보험료
       data.cbr_data[idx].insr_amt = getInsrAmt(
@@ -2572,7 +2582,8 @@ const calInsrAmt = (data: any) => {
         data.insr_clm_lt_amt,
         data.insr_psnl_brdn_amt,
         data.cbr_data[idx].insr_sale_rt,
-        data.cbr_cnt
+        data.cbr_cnt,
+          'N'
       );
       // 기본담보 보험료(할인할증적용)
       totAmt += data.cbr_data[idx].insr_amt;
@@ -3361,7 +3372,9 @@ watch(
       insuranceDTO.value.insr_clm_lt_amt,
       insuranceDTO.value.insr_psnl_brdn_amt,
       0,
-      1
+      1,
+        'N'
+
     );
 
     // 특약 재계산
@@ -3379,7 +3392,8 @@ watch(
         insuranceDTO.value.insr_clm_lt_amt,
         insuranceDTO.value.insr_psnl_brdn_amt,
         insuranceDTO.value.insr_sale_rt,
-        insuranceDTO.value.cbr_cnt
+        insuranceDTO.value.cbr_cnt,
+          'N'
       );
     } else {
       calInsrAmt(insuranceDTO.value);
@@ -3409,9 +3423,10 @@ watch(
       insuranceDTO.value.cons_data.insr_clm_lt_amt,
       insuranceDTO.value.cons_data.insr_psnl_brdn_amt,
       0,
-      1
+      1,
+      'Y'
     );
-
+    console.log("insuranceDTO.value.cons_data.insr_base_amt : ",insuranceDTO.value.cons_data.insr_base_amt)
     calInsrAmt(insuranceDTO.value.cons_data);
   }
 );
