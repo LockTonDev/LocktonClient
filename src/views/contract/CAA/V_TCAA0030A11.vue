@@ -1530,8 +1530,8 @@
                           v-for="(row, index) in insuranceDTO.spct_data
                             .cbr_data"
                         >
-                          <td class="text-center">{{ index + 1 }}</td>
-                          <td class="text-center">
+                          <td class="text-center" v-if="row.cbr_nm!=null">{{ index + 1 }}</td>
+                          <td class="text-center" v-if="row.cbr_nm!=null">
                             <v-text-field
                               v-model="row.cbr_nm"
                               variant="outlined"
@@ -1544,7 +1544,7 @@
                               :style="checkMobile.isMobile?'width:50px':''"
                             />
                           </td>
-                          <td class="text-center">
+                          <td class="text-center" v-if="row.cbr_nm!=null">
                             <v-text-field
                               v-model="row.cbr_brdt"
                               variant="outlined"
@@ -1558,11 +1558,11 @@
                               :style="checkMobile.isMobile?'width:60px':''"
                             />
                           </td>
-                          <td class="text-center">{{ row.insr_retr_dt }}</td>
-                          <td class="text-center">
+                          <td class="text-center" v-if="row.cbr_nm!=null">{{ row.insr_retr_dt }}</td>
+                          <td class="text-center" v-if="row.cbr_nm!=null">
                             {{ Number(row.insr_amt).toLocaleString() }}원
                           </td>
-                          <td class="text-center">
+                          <td class="text-center" v-if="row.cbr_nm!=null">
                             <vue-feather
                               type="minus-square"
                               class="text-gray cursor-pointer"
@@ -3841,7 +3841,13 @@ onMounted(async () => {
         if(insuranceDTO.value.spct_join_yn === 'N'){
           isSpctNew.value = true
           insuranceDTO.value.spct_data.insr_st_dt = TODAY
+        }else{
+          console.log('111 !@#!@#!@#'+ JSON.stringify(insuranceDTO.value.spct_data.cbr_data))
+          let filteredList = insuranceDTO.value.spct_data.cbr_data.filter(item=>item.cbr_nm!=null)
+          insuranceDTO.value.spct_data.cbr_data = filteredList;
+          console.log('222 !@#!@#!@#'+ JSON.stringify(insuranceDTO.value.spct_data.cbr_data))
         }
+
         // console.log('111 !@#!@#!@#'+ JSON.stringify(insuranceDTO.value.spct_data.cbr_data[0]))
         insuranceDTO.value.spct_data.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
       }else {
