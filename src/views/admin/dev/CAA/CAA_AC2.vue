@@ -2012,7 +2012,7 @@ async function initPage() {
   console.log("stockStartDt>>", stockStartDt)
 
 
-  for (let year = new Date().getFullYear(); year >= 2022; year--) {
+  for (let year = new Date().getFullYear()+1; year >= 2022; year--) {
     insrYearCdItems.value.push({ title: year.toString(), value: year.toString(), rmk: null });
   }
 
