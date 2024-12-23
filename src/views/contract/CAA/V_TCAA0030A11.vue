@@ -1528,7 +1528,7 @@
                       <tbody>
                         <tr
                           v-for="(row, index) in insuranceDTO.spct_data
-                            .cbr_data" v-if="row.cbr_nm != null"
+                            .cbr_data"
                         >
                           <td class="text-center">{{ index + 1 }}</td>
                           <td class="text-center">
@@ -2606,7 +2606,7 @@ const calInsrSpctAmt = (data: any) => {
   if (data.cbr_data != undefined) {
     for (var idx in data.cbr_data) {
       // 소급담보일이 수기등록이 아니면 보험 시작일자로 변경
-      if (data.cbr_data[idx].insr_retr_yn != 'Y') {
+      if (data.cbr_data[idx].insr_retr_yn != 'Y' && renewalYN.value!=='Y') {
         data.cbr_data[idx].insr_retr_dt = insuranceDTO.value.insr_st_dt;
       }
 
@@ -2791,7 +2791,7 @@ function formTelNumber() {
 
 function formFaxNumber() {
   let numericValue = insuranceDTO.value.corp_faxno.replace(/\D/g, "");
-  console.log("numericValue :",numericValue)
+  // console.log("numericValue :",numericValue)
   // 전화번호 형식에 맞게 변환
   if (numericValue.length == 9) {
     if(numericValue.startsWith('02')) {
@@ -3423,7 +3423,7 @@ watch(
       1,
       'Y'
     );
-    console.log("insuranceDTO.value.cons_data.insr_base_amt : ",insuranceDTO.value.cons_data.insr_base_amt)
+    // console.log("insuranceDTO.value.cons_data.insr_base_amt : ",insuranceDTO.value.cons_data.insr_base_amt)
     calInsrAmt(insuranceDTO.value.cons_data);
   }
 );
@@ -3524,6 +3524,7 @@ watch(
         1
     );
 
+    // console.log('33!@#!@#!@#'+ JSON.stringify(insuranceDTO.value.spct_data.cbr_data[0]))
     calInsrSpctAmt(insuranceDTO.value.spct_data);
     insuranceDTO.value.spct_data.insr_year_clm_lt_amt = insuranceDTO.value.spct_data.insr_clm_lt_amt?.getValueBySplit(0) > 1000000000 ? '10억원' : insuranceDTO.value.spct_data.insr_clm_lt_amt?.getValueBySplit(1)
   }
@@ -3580,6 +3581,7 @@ watch(
       spct_data_backup.value = JSON.parse(JSON.stringify(insuranceDTO.value.spct_data));
       insuranceDTO.value.spct_data = {}
     } else {
+      // console.log('test!@#!@#!@#'+ JSON.stringify(insuranceDTO.value.spct_data.cbr_data[0]))
       if(Object.keys(spct_data_backup.value).length !== 0) {
         insuranceDTO.value.spct_data = JSON.parse(JSON.stringify(spct_data_backup.value));
         spct_data_backup.value = {}
@@ -3589,6 +3591,7 @@ watch(
         addSpctCBR(insuranceDTO.value.spct_data, '특약');
       }
       calInsrSpctAmt(insuranceDTO.value.spct_data);
+      // console.log('test!@#!@#!@#'+ insuranceDTO.value.spct_data.cbr_data[0].insr_retr_dt)
     }
   }
 );
@@ -3839,6 +3842,7 @@ onMounted(async () => {
           isSpctNew.value = true
           insuranceDTO.value.spct_data.insr_st_dt = TODAY
         }
+        // console.log('111 !@#!@#!@#'+ JSON.stringify(insuranceDTO.value.spct_data.cbr_data[0]))
         insuranceDTO.value.spct_data.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
       }else {
         insuranceDTO.value.insr_year = renewalData.data[0].insr_year
@@ -3861,6 +3865,7 @@ onMounted(async () => {
     insuranceDTO.value.cons_data.insr_sale_rt = insuranceDTO.value.insr_sale_rt;
 
     if(insuranceDTO.value.cons_join_yn != null && insuranceDTO.value.cons_join_yn == 'Y' ){
+      // console.log(insuranceDTO.value.cons_data.insr_retr_dt )
       if(insuranceDTO.value.cons_data.insr_retr_dt == null || insuranceDTO.value.cons_data.insr_retr_dt == ''){
         insuranceDTO.value.cons_data.insr_retr_dt = insuranceDTO.value.insr_retr_dt
       }
