@@ -1528,7 +1528,7 @@
                       <tbody>
                         <tr
                           v-for="(row, index) in insuranceDTO.spct_data
-                            .cbr_data"
+                            .cbr_data" v-if="row.cbr_nm != null"
                         >
                           <td class="text-center">{{ index + 1 }}</td>
                           <td class="text-center">
