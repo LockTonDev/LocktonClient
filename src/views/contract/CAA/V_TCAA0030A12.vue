@@ -426,14 +426,14 @@
                         color="primary"
                         class="flex-grow-1"
                         :style="checkMobile.isMobile?'flex-basis:33.3%; font-size:7px !important;':''"
-                        value="2|공동부담비율 15%"
+                        value="2|공동부담비율15%"
                         >공동부담비율 15%</v-btn
                       >
                       <v-btn
                         color="primary"
                         class="flex-grow-1"
                         :style="checkMobile.isMobile?'flex-basis:33.3%; font-size:7px !important;':''"
-                        value="3|공동부담비율 30%"
+                        value="3|공동부담비율30%"
                         >공동부담비율 30%</v-btn
                       >
                     </v-btn-toggle>
@@ -722,14 +722,14 @@
                             color="primary"
                             class="flex-grow-1"
                             :style="checkMobile.isMobile?'flex-basis:33.3%; font-size:7px !important;':''"
-                            value="2|공동부담비율 15%"
+                            value="2|공동부담비율15%"
                             >공동부담비율 15%</v-btn
                           >
                           <v-btn
                             color="primary"
                             class="flex-grow-1"
                             :style="checkMobile.isMobile?'flex-basis:33.3%; font-size:7px !important;':''"
-                            value="3|공동부담비율 30%"
+                            value="3|공동부담비율30%"
                             >공동부담비율 30%</v-btn
                           >
                         </v-btn-toggle>

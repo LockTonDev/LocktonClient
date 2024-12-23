@@ -700,14 +700,14 @@
                           color="primary"
                           class="flex-grow-1"
                           :style="checkMobile.isMobile?'flex-basis:33.3%; font-size:7px !important;':''"
-                          value="2|공동부담비율 15%"
+                          value="2|공동부담비율15%"
                           >공동부담비율 15%</v-btn
                         >
                         <v-btn
                           color="primary"
                           class="flex-grow-1"
                           :style="checkMobile.isMobile?'flex-basis:33.3%; font-size:7px !important;':''"
-                          value="3|공동부담비율 30%"
+                          value="3|공동부담비율30%"
                           >공동부담비율 30%</v-btn
                         >
                       </v-btn-toggle>
@@ -1069,14 +1069,14 @@
                               color="primary"
                               class="flex-grow-1"
                               :style="checkMobile.isMobile?'flex-basis:33.3%; font-size:7px !important;':''"
-                              value="2|공동부담비율 15%"
+                              value="2|공동부담비율15%"
                               >공동부담비율 15%</v-btn
                             >
                             <v-btn
                               color="primary"
                               class="flex-grow-1"
                               :style="checkMobile.isMobile?'flex-basis:33.3%; font-size:7px !important;':''"
-                              value="3|공동부담비율 30%"
+                              value="3|공동부담비율30%"
                               >공동부담비율 30%</v-btn
                             >
                           </v-btn-toggle>
@@ -2483,15 +2483,12 @@ const getInsrAmt = (
     // 보험 계산식 ( 기본금액 * 공동보험 할증 * 인원수 할인 * 기간일수) * 할인할증률  10원단위 절사
 
     if(sKey4 == 'Y') {
-      console.log("sKey4 :",nInitAmt)
       nTotAmt = nInitAmt
     } else {
-      console.log("sKey5 :",nInitAmt)
       nTotAmt = (nInitAmt * (nDCnt / INSR_RATE_MAX_DAYS.value)) * (1 + nRate / 100);
     }
     nTotAmt = Math.floor(nTotAmt / 10) * 10;
   } catch (err) {
-    console.log(err);
     nTotAmt = 0;
   }
 
@@ -3808,6 +3805,7 @@ onMounted(async () => {
   // console.log("renewalUpdateYN.value  : ", renewalUpdateYN.value)
   Object.assign(insuranceRateDTO.value, resultData.data[0]);
   INSR_RATE_TABLE.value = resultData.data[0].contents;
+  console.log(INSR_RATE_TABLE.value)
   INSR_RATE_MAX_DAYS.value = resultData.data[0].days;
   insuranceNO.value = resultData.data[0].insurance_no;
   insuranceDTO.value.base_insr_st_dt = insuranceRateDTO.value.insr_st_dt;
