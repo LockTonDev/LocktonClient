@@ -309,7 +309,7 @@
                   <!--최종 보험료 시작-->
                   <div class="mt-4" v-if="insuranceDTO.spct_join_yn == 'Y'">
                     <p class="font-weight-bold text-14 mb-2">총 납입보험료 정보</p>
-                    <div :class="isMobile()?'table pa-2 text-center':'table pa-4 text-center'">
+                    <div :class="isMobile()?'table pa-2 text-center':'table pa-2 text-center'">
                       <span :class="isMobile()?'text-10 mx-2':'text-12 mx-4'">기본 보험료</span>
                       <span :class="isMobile()?'text-12 mx-2 font-weight-medium':'text-14 mx-4 font-weight-medium'"
                       >{{
