@@ -191,9 +191,9 @@
                   </div>
                   <div class="data-col w-100">
                     <v-btn-toggle v-model="insuranceDTO.insr_pblc_brdn_rt" name="insr_pblc_brdn_rt" divided variant="outlined" density="comfortable" class="w-100" :disabled="isReadOnlyAll">
-                      <v-btn color="primary" class="flex-grow-1" :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: 7px !important':''" value="0|공동부담비율 없음">공동부담없음</v-btn>
-                      <v-btn color="primary" class="flex-grow-1" :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: 7px !important':''" value="10|공동부담비율 10%">공동부담비율 10%</v-btn>
-                      <v-btn color="primary" class="flex-grow-1" :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: 7px !important':''" value="20|공동부담비율 20%">공동부담비율 20%</v-btn>
+                      <v-btn color="primary" class="flex-grow-1" :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: 7px !important':''" value="0|공동부담없음">공동부담없음</v-btn>
+                      <v-btn color="primary" class="flex-grow-1" :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: 7px !important':''" value="10|공동부담비율 10%">공동부담비율10%</v-btn>
+                      <v-btn color="primary" class="flex-grow-1" :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: 7px !important':''" value="20|공동부담비율 20%">공동부담비율20%</v-btn>
                     </v-btn-toggle>
                   </div>
                 </v-col>
