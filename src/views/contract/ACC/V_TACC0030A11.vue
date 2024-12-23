@@ -409,7 +409,7 @@
                         <v-btn
                             color="primary"
                             class="flex-grow-1"
-                            value="0|공동부담없음"
+                            value="0|공동부담 없음"
                             :style="checkMobile.isMobile?'flex-basis: 30%; border: 1px solid #EEEEEE; text-align: center;font-size: 7px !important':''"
                         >공동부담비율 없음</v-btn
                         >
@@ -1568,7 +1568,7 @@ onMounted(async () => {
     // 보험료 기준정보 셋팅
     insuranceDTO.value.status_cd = '10' // 신청
     insuranceDTO.value.insr_retr_yn = 'N'; // 소금담보수기보정 X
-    insuranceDTO.value.insr_pblc_brdn_rt = '0|공동부담없음'; // 초기값
+    insuranceDTO.value.insr_pblc_brdn_rt = '0|공동부담 없음'; // 초기값
     insuranceDTO.value.insr_pcnt_sale_rt = 0; // 초기값
 
     insuranceDTO.value.insurance_no = insuranceRateDTO.value.insurance_no;
