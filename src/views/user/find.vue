@@ -496,7 +496,7 @@ async function isVerifyUserHp(imp_uid: string) {
 
       if (userDTO.value.mode === 'PW') {
         // 비밀번호 찾기
-        const params = { user_id: userDTO.value.user_id, user_nm: userDTO.value.user_nm, user_birth: userDTO.value.user_birth, user_hpno: userDTO.value.user_hpno};
+        const params = { business_cd :route.params.business_cd, user_cd : userDTO.value.user_cd, user_id: userDTO.value.user_id, user_nm: userDTO.value.user_nm, user_birth: userDTO.value.user_birth, user_hpno: userDTO.value.user_hpno};
         const userData = await apiUser.isVerifyUserUUID(params);
         console.log(userData);
         if (userData.success) {
