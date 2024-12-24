@@ -1,26 +1,26 @@
 <template xmlns="http://www.w3.org/1999/html">
   <BaseBreadcrumb
-    :title="page.title"
-    :subtitle="page.subtitle"
-    :breadcrumbs="breadcrumbs"
-    :image="page.image"
+      :title="page.title"
+      :subtitle="page.subtitle"
+      :breadcrumbs="breadcrumbs"
+      :image="page.image"
   ></BaseBreadcrumb>
   <Form
-    as="v-form"
-    keep-values
-    @submit="onSubmit"
-    :initial-values="insuranceDTO"
-    v-if="!isSubmit"
+      as="v-form"
+      keep-values
+      @submit="onSubmit"
+      :initial-values="insuranceDTO"
+      v-if="!isSubmit"
   >
     <!-- 개인회원 -->
     <v-row class="mt-10">
       <v-col cols="12" sm="12">
         <div class="v-stepbox">
           <v-tabs
-            v-model="tab"
-            color="primary"
-            next-icon="mdi-arrow-left"
-            prev-icon="mdi-arrow-left"
+              v-model="tab"
+              color="primary"
+              next-icon="mdi-arrow-left"
+              prev-icon="mdi-arrow-left"
           >
             <v-tab value="1" class="flex-grow-1" :disabled="true">가입정보</v-tab>
             <v-tab value="2" class="flex-grow-1" :disabled="true">보험계약 {{ renewalYN === 'Y'?'(갱신)':'' }}</v-tab>
@@ -46,7 +46,7 @@
               </v-col>
               <v-col cols="12" :class="checkMobile.isMobile?'pt-2':'pt-6'" v-if="insuranceDTO.user_cd == 'IND'">
                 <v-row
-                  class="v-board-table"
+                    class="v-board-table"
                 >
                   <v-col cols="12" sm="6" class="v-col">
                     <div class="head-col">
@@ -67,10 +67,10 @@
                     </div>
                   </v-col>
                   <v-col
-                    cols="12"
-                    sm="6"
-                    class="v-col"
-                    v-if="insuranceDTO.user_cd == 'IND'"
+                      cols="12"
+                      sm="6"
+                      class="v-col"
+                      v-if="insuranceDTO.user_cd == 'IND'"
                   >
                     <div class="head-col">
                       <p>등록번호</p>
@@ -108,13 +108,13 @@
                     </div>
                     <div class="data-col">
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_nm"
-                        name="corp_nm"
-                        placeholder="사무소명"
-                        single-line
-                        density="comfortable"
-                        maxlength="20"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_nm"
+                          name="corp_nm"
+                          placeholder="사무소명"
+                          single-line
+                          density="comfortable"
+                          maxlength="20"
+                          :readonly="isReadOnlyAll"
                       />
                     </div>
                   </v-col>
@@ -126,13 +126,13 @@
                     </div>
                     <div class="data-col">
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_cnno"
-                        name="corp_cnno"
-                        placeholder="사업자번호"
-                        :maskOption="{ mask: '###-##-#####' }"
-                        single-line
-                        density="comfortable"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_cnno"
+                          name="corp_cnno"
+                          placeholder="사업자번호"
+                          :maskOption="{ mask: '###-##-#####' }"
+                          single-line
+                          density="comfortable"
+                          :readonly="isReadOnlyAll"
                       />
                     </div>
                   </v-col>
@@ -142,31 +142,31 @@
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col col-tel">
-                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_telno1"
-                        name="corp_telno1"
-                        single-line
-                        density="comfortable"
-                        :maskOption="{ mask: '###' }"
-                        :readonly="isReadOnlyAll"
+                      <VTextFieldWithValidation
+                          v-model="insuranceDTO.corp_telno1"
+                          name="corp_telno1"
+                          single-line
+                          density="comfortable"
+                          :maskOption="{ mask: '###' }"
+                          :readonly="isReadOnlyAll"
                       />
                       <span class="mx-1">-</span>
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_telno2"
-                        name="corp_telno2"
-                        single-line
-                        density="comfortable"
-                        :maskOption="{ mask: '####' }"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_telno2"
+                          name="corp_telno2"
+                          single-line
+                          density="comfortable"
+                          :maskOption="{ mask: '####' }"
+                          :readonly="isReadOnlyAll"
                       />
                       <span class="mx-1">-</span>
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_telno3"
-                        name="corp_telno3"
-                        single-line
-                        density="comfortable"
-                        :maskOption="{ mask: '####' }"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_telno3"
+                          name="corp_telno3"
+                          single-line
+                          density="comfortable"
+                          :maskOption="{ mask: '####' }"
+                          :readonly="isReadOnlyAll"
                       />
                     </div>
                   </v-col>
@@ -177,30 +177,30 @@
                     </div>
                     <div class="data-col col-fax">
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_faxno1"
-                        name="corp_faxno1"
-                        single-line
-                        density="comfortable"
-                        :maskOption="{ mask: '####' }"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_faxno1"
+                          name="corp_faxno1"
+                          single-line
+                          density="comfortable"
+                          :maskOption="{ mask: '####' }"
+                          :readonly="isReadOnlyAll"
                       />
                       <span class="mx-1">-</span>
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_faxno2"
-                        name="corp_faxno2"
-                        single-line
-                        density="comfortable"
-                        :maskOption="{ mask: '####' }"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_faxno2"
+                          name="corp_faxno2"
+                          single-line
+                          density="comfortable"
+                          :maskOption="{ mask: '####' }"
+                          :readonly="isReadOnlyAll"
                       />
                       <span class="mx-1">-</span>
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_faxno3"
-                        name="corp_faxno3"
-                        single-line
-                        density="comfortable"
-                        :maskOption="{ mask: '####' }"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_faxno3"
+                          name="corp_faxno3"
+                          single-line
+                          density="comfortable"
+                          :maskOption="{ mask: '####' }"
+                          :readonly="isReadOnlyAll"
                       />
                       <!-- <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_faxno"
@@ -219,14 +219,14 @@
                     </div>
                     <div class="data-col">
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_cust_nm"
-                        name="corp_cust_nm"
-                        placeholder="담당자 성명"
-                        single-line
-                        density="comfortable"
-                        maxlength="20"
-                        :readonly="isReadOnlyAll"
-                      /> 
+                          v-model="insuranceDTO.corp_cust_nm"
+                          name="corp_cust_nm"
+                          placeholder="담당자 성명"
+                          single-line
+                          density="comfortable"
+                          maxlength="20"
+                          :readonly="isReadOnlyAll"
+                      />
                     </div>
                   </v-col>
 
@@ -244,43 +244,43 @@
                     </div>
                     <div class="data-col">
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_post"
-                        name="corp_post"
-                        placeholder="우편번호"
-                        single-line
-                        density="comfortable"
-                        readonly
-                        style="width: 80px;"
+                          v-model="insuranceDTO.corp_post"
+                          name="corp_post"
+                          placeholder="우편번호"
+                          single-line
+                          density="comfortable"
+                          readonly
+                          style="width: 80px;"
                       />
                       <v-btn
-                        :size="checkMobile.isMobile?'small':'default'"
-                        variant="outlined"
-                        color="primary"
-                        @click="isDaumPostDialog = true"
-                        class="ml-2"
-                        v-if="!isReadOnlyAll"
-                        >사무소 주소검색</v-btn
+                          :size="checkMobile.isMobile?'small':'default'"
+                          variant="outlined"
+                          color="primary"
+                          @click="isDaumPostDialog = true"
+                          class="ml-2"
+                          v-if="!isReadOnlyAll"
+                      >사무소 주소검색</v-btn
                       >
                       <v-divider class="border-0" />
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_addr"
-                        name="corp_addr"
-                        placeholder="주소"
-                        single-line
-                        density="comfortable"
-                        class="w-full"
-                        maxlength="40"
-                        readonly
+                          v-model="insuranceDTO.corp_addr"
+                          name="corp_addr"
+                          placeholder="주소"
+                          single-line
+                          density="comfortable"
+                          class="w-full"
+                          maxlength="40"
+                          readonly
                       />
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_addr_dtl"
-                        name="corp_addr_dtl"
-                        placeholder="상세주소"
-                        single-line
-                        density="comfortable"
-                        class="w-full"
-                        maxlength="25"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_addr_dtl"
+                          name="corp_addr_dtl"
+                          placeholder="상세주소"
+                          single-line
+                          density="comfortable"
+                          class="w-full"
+                          maxlength="25"
+                          :readonly="isReadOnlyAll"
                       />
                     </div>
                   </v-col>
@@ -341,31 +341,31 @@
                       <sup class="text-error">*</sup>
                     </div>
                     <div class="data-col col-tel">
-                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_telno1"
-                        name="corp_telno1"
-                        single-line
-                        density="comfortable"
-                        :maskOption="{ mask: '###' }"
-                        :readonly="isReadOnlyAll"
+                      <VTextFieldWithValidation
+                          v-model="insuranceDTO.corp_telno1"
+                          name="corp_telno1"
+                          single-line
+                          density="comfortable"
+                          :maskOption="{ mask: '###' }"
+                          :readonly="isReadOnlyAll"
                       />
                       <span class="mx-1">-</span>
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_telno2"
-                        name="corp_telno2"
-                        single-line
-                        density="comfortable"
-                        :maskOption="{ mask: '####' }"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_telno2"
+                          name="corp_telno2"
+                          single-line
+                          density="comfortable"
+                          :maskOption="{ mask: '####' }"
+                          :readonly="isReadOnlyAll"
                       />
                       <span class="mx-1">-</span>
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_telno3"
-                        name="corp_telno3"
-                        single-line
-                        density="comfortable"
-                        :maskOption="{ mask: '####' }"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_telno3"
+                          name="corp_telno3"
+                          single-line
+                          density="comfortable"
+                          :maskOption="{ mask: '####' }"
+                          :readonly="isReadOnlyAll"
                       />
                     </div>
                   </v-col>
@@ -376,30 +376,30 @@
                     </div>
                     <div class="data-col col-fax">
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_faxno1"
-                        name="corp_faxno1"
-                        single-line
-                        density="comfortable"
-                        :maskOption="{ mask: '####' }"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_faxno1"
+                          name="corp_faxno1"
+                          single-line
+                          density="comfortable"
+                          :maskOption="{ mask: '####' }"
+                          :readonly="isReadOnlyAll"
                       />
                       <span class="mx-1">-</span>
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_faxno2"
-                        name="corp_faxno2"
-                        single-line
-                        density="comfortable"
-                        :maskOption="{ mask: '####' }"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_faxno2"
+                          name="corp_faxno2"
+                          single-line
+                          density="comfortable"
+                          :maskOption="{ mask: '####' }"
+                          :readonly="isReadOnlyAll"
                       />
                       <span class="mx-1">-</span>
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_faxno3"
-                        name="corp_faxno3"
-                        single-line
-                        density="comfortable"
-                        :maskOption="{ mask: '####' }"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_faxno3"
+                          name="corp_faxno3"
+                          single-line
+                          density="comfortable"
+                          :maskOption="{ mask: '####' }"
+                          :readonly="isReadOnlyAll"
                       />
                       <!-- <VTextFieldWithValidation
                         v-model="insuranceDTO.corp_faxno"
@@ -418,13 +418,13 @@
                     </div>
                     <div class="data-col">
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_cust_nm"
-                        name="corp_cust_nm"
-                        label="담당자 성명"
-                        single-line
-                        density="comfortable"
-                        maxlength="20"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_cust_nm"
+                          name="corp_cust_nm"
+                          label="담당자 성명"
+                          single-line
+                          density="comfortable"
+                          maxlength="20"
+                          :readonly="isReadOnlyAll"
                       />
                     </div>
                   </v-col>
@@ -434,13 +434,13 @@
                     </div>
                     <div class="data-col">
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_cust_hpno"
-                        name="user_hpno"
-                        label="휴대전화"
-                        single-line
-                        density="comfortable"
-                        :readonly="isReadOnlyAll"
-                        :maskOption="{ mask: '###-####-####' }"
+                          v-model="insuranceDTO.corp_cust_hpno"
+                          name="user_hpno"
+                          label="휴대전화"
+                          single-line
+                          density="comfortable"
+                          :readonly="isReadOnlyAll"
+                          :maskOption="{ mask: '###-####-####' }"
                       />
                     </div>
                   </v-col>
@@ -460,57 +460,57 @@
                       /> -->
                     </div>
                   </v-col>
-                  
+
                   <v-col cols="12" sm="12" class="v-col">
                     <div class="head-col">
                       <p>사무소 주소<sup class="text-error">*</sup></p>
                     </div>
                     <div class="data-col">
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_post"
-                        name="corp_post"
-                        label="우편번호"
-                        single-line
-                        density="comfortable"
-                        readonly
-                        style="width: 80px;"
+                          v-model="insuranceDTO.corp_post"
+                          name="corp_post"
+                          label="우편번호"
+                          single-line
+                          density="comfortable"
+                          readonly
+                          style="width: 80px;"
                       />
                       <v-btn
-                        :size="checkMobile.isMobile?'small':'default'"
-                        variant="outlined"
-                        color="primary"
-                        @click="isDaumPostDialog = true"
-                        class="ml-2"
-                        v-if="!isReadOnlyAll"
-                        >사무소 주소검색</v-btn
+                          :size="checkMobile.isMobile?'small':'default'"
+                          variant="outlined"
+                          color="primary"
+                          @click="isDaumPostDialog = true"
+                          class="ml-2"
+                          v-if="!isReadOnlyAll"
+                      >사무소 주소검색</v-btn
                       >
                       <v-divider class="border-0" />
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_addr"
-                        name="corp_addr"
-                        label="주소"
-                        single-line
-                        density="comfortable"
-                        class="w-full"
-                        maxlength="40"
-                        readonly
+                          v-model="insuranceDTO.corp_addr"
+                          name="corp_addr"
+                          label="주소"
+                          single-line
+                          density="comfortable"
+                          class="w-full"
+                          maxlength="40"
+                          readonly
                       />
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.corp_addr_dtl"
-                        name="corp_addr_dtl"
-                        label="상세주소"
-                        single-line
-                        density="comfortable"
-                        class="w-full"
-                        maxlength="25"
-                        :readonly="isReadOnlyAll"
+                          v-model="insuranceDTO.corp_addr_dtl"
+                          name="corp_addr_dtl"
+                          label="상세주소"
+                          single-line
+                          density="comfortable"
+                          class="w-full"
+                          maxlength="25"
+                          :readonly="isReadOnlyAll"
                       />
                     </div>
                   </v-col>
                 </v-row>
               </v-col>
               <!-- 법인/합동 끝-->
-              
+
               <v-row>
                 <v-col cols="12">
                   <div class="mt-6 pa-8 bg-background">
@@ -526,24 +526,24 @@
               </v-row>
 
             </v-row>
- 
+
             <v-row class="mt-10">
               <v-col class="d-flex justify-center pa-0">
                 <v-btn
-                  :size="checkMobile.isMobile?'default':'x-large'"
-                  variant="outlined"
-                  color="dark"
-                  @click="onCancel"
-                  class="mr-4"
-                  >취소</v-btn
+                    :size="checkMobile.isMobile?'default':'x-large'"
+                    variant="outlined"
+                    color="dark"
+                    @click="onCancel"
+                    class="mr-4"
+                >취소</v-btn
                 >
                 <v-btn
-                  :size="checkMobile.isMobile?'default':'x-large'"
-                  variant="flat"
-                  color="dark"
-                  v-if="!isDuplication"
-                  @click="onNextPage()"
-                  >다음</v-btn
+                    :size="checkMobile.isMobile?'default':'x-large'"
+                    variant="flat"
+                    color="dark"
+                    v-if="!isDuplication"
+                    @click="onNextPage()"
+                >다음</v-btn
                 >
               </v-col>
             </v-row>
@@ -560,11 +560,11 @@
                   </div>
                   <v-spacer />
                   <v-btn
-                    variant="outlined"
-                    color="primary"
-                    class="ml-auto flex-grow-0"
-                    @click="isInsrTableDialog = true"
-                    >보험료표 보기</v-btn
+                      variant="outlined"
+                      color="primary"
+                      class="ml-auto flex-grow-0"
+                      @click="isInsrTableDialog = true"
+                  >보험료표 보기</v-btn
                   >
                 </div>
                 <p class="text-body-2 color-gray-shadow">
@@ -581,25 +581,25 @@
                     </div>
                     <div :class="checkMobile.isMobile?'data-col date':'data-col justify-space-between date'">
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.insr_st_dt"
-                        name="insr_st_dt"
-                        label="보험시작일자"
-                        type="date"
-                        single-line
-                        density="comfortable"
-                        :min="insuranceDTO.insr_st_dt"
-                        :max="insuranceDTO.insr_cncls_dt"
-                        :readonly="isReadonlyByInsrStDt()"
+                          v-model="insuranceDTO.insr_st_dt"
+                          name="insr_st_dt"
+                          label="보험시작일자"
+                          type="date"
+                          single-line
+                          density="comfortable"
+                          :min="insuranceDTO.insr_st_dt"
+                          :max="insuranceDTO.insr_cncls_dt"
+                          :readonly="isReadonlyByInsrStDt()"
                       />
                       <p class="mx-2">00:01 부터</p>
                       <VTextFieldWithValidation
-                        v-model="insuranceDTO.insr_cncls_dt"
-                        name="insr_cncls_dt"
-                        label="보험종료일자"
-                        type="date"
-                        single-line
-                        density="comfortable"
-                        readonly
+                          v-model="insuranceDTO.insr_cncls_dt"
+                          name="insr_cncls_dt"
+                          label="보험종료일자"
+                          type="date"
+                          single-line
+                          density="comfortable"
+                          readonly
                       />
                       <p class="ml-2">00:01 까지</p>
                     </div>
@@ -620,9 +620,9 @@
                     </div>
                   </v-col>
                   <v-col
-                    cols="12"
-                    sm="6"
-                    class="v-col"
+                      cols="12"
+                      sm="6"
+                      class="v-col"
                   >
                     <div class="head-col">
                       <p>소급담보일</p>
@@ -649,17 +649,17 @@
                       <p
                           class="text-caption font-weight-light  color-gray flex-grow-1"
                       >
-                      <div class="data-col w-max-full">
-                        <v-text-field
-                            name="insr_take_amt"
-                            v-model="insuranceDTO.cbr_cnt"
-                            variant="outlined"
-                            hide-details="auto"
-                            type="number"
-                            @keydown.enter.prevent="blurField"
-                            style="width:100px"
-                        /><p style="font-size: 18px; margin-left: 10px">명</p>
-                      </div>
+                        <div class="data-col w-max-full">
+                          <v-text-field
+                              name="insr_take_amt"
+                              v-model="insuranceDTO.cbr_cnt"
+                              variant="outlined"
+                              hide-details="auto"
+                              type="number"
+                              @keydown.enter.prevent="blurField"
+                              style="width:100px"
+                          /><p style="font-size: 18px; margin-left: 10px">명</p>
+                        </div>
                       </p>
                     </div>
                   </v-col>
@@ -672,10 +672,10 @@
                     <div class="data-col w-100">
 
                       <p
-                        class="text-caption font-weight-light  color-gray flex-grow-1"
+                          class="text-caption font-weight-light  color-gray flex-grow-1"
                       >
                         <div class="data-col w-max-full">
-                      <v-text-field
+                          <v-text-field
                               name="insr_take_amt"
                               v-model="insr_take_amt"
                               @input="changeTakeAmount"
@@ -683,8 +683,8 @@
                               hide-details="auto"
                               @keydown.enter.prevent="blurField"
                               :style="checkMobile.isMobile?'width:160px':'width:320px'"
-                    /><p style="font-size: 18px; margin-left: 10px">원</p>
-                    </div>
+                          /><p style="font-size: 18px; margin-left: 10px">원</p>
+                        </div>
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
                         >전년도 손익계산서상의 매출액 기재 (예시: 2024.1.1 가입시 2022년 손익계산서)<br/>
                         <i class="mdi mdi-alert-circle-outline mr-2"></i
@@ -723,20 +723,20 @@
                     </div>
                     <div class="data-col w-100 d-block">
                       <v-btn-toggle
-                        v-model="clm_lt_amt"
-                        name="insr_clm_lt_amt"
-                        divided
-                        :disabled="isReadOnlyAll"
-                        class="d-flex flex-wrap overflow-visible"
-                        variant="outlined"
+                          v-model="clm_lt_amt"
+                          name="insr_clm_lt_amt"
+                          divided
+                          :disabled="isReadOnlyAll"
+                          class="d-flex flex-wrap overflow-visible"
+                          variant="outlined"
                       >
-                          <v-btn
+                        <v-btn
                             color="primary"
                             class="flex-grow-0"
                             style="flex-basis: 33.3%; border: 1px solid #EEEEEE"
                             v-for="(item, index) in INSR_RATE_TABLE.기본담보.보상한도" :key="index" :value="item.code">
-                            {{ item.value }}
-                          </v-btn>
+                          {{ item.value }}
+                        </v-btn>
                       </v-btn-toggle>
                       <p class="text-caption font-weight-light color-gray mt-15 " >
                         <i class="mdi mdi-alert-circle-outline mr-2"></i>1
@@ -752,13 +752,13 @@
                     </div>
                     <div class="data-col w-100 align-stretch">
                       <v-btn-toggle
-                        v-model="insuranceDTO.insr_psnl_brdn_amt"
-                        name="insr_psnl_brdn_amt"
-                        divided
-                        variant="outlined"
-                        class="d-flex flex-wrap overflow-visible w-100"
-                        :disabled="isReadOnlyAll"
-                        v-if="insuranceDTO.user_cd!=='COR'"
+                          v-model="insuranceDTO.insr_psnl_brdn_amt"
+                          name="insr_psnl_brdn_amt"
+                          divided
+                          variant="outlined"
+                          class="d-flex flex-wrap overflow-visible w-100"
+                          :disabled="isReadOnlyAll"
+                          v-if="insuranceDTO.user_cd!=='COR'"
                       >
                         <v-btn
                             color="primary"
@@ -867,8 +867,8 @@
                         <p
                             class="text-caption font-weight-light  color-gray flex-grow-1"
                         >
-                        <i class="mdi mdi-alert-circle-outline mr-2"></i
-                        >전년도 손익계산서 첨부 (예시 : 2024.1.1 가입시 2022년 손익계산서 첨부)<br/>
+                          <i class="mdi mdi-alert-circle-outline mr-2"></i
+                          >전년도 손익계산서 첨부 (예시 : 2024.1.1 가입시 2022년 손익계산서 첨부)<br/>
                         </p>
                       </div>
                     </div>
@@ -991,20 +991,20 @@
             <v-row class="mt-10">
               <v-col class="pa-0 d-flex justify-center">
                 <v-btn
-                  :size="checkMobile.isMobile?'default':'x-large'"
-                  variant="outlined"
-                  color="dark"
-                  v-if="tab > 1 && tab < 4"
-                  @click="onPrevPage()"
-                  class="mr-4"
-                  >이전</v-btn
+                    :size="checkMobile.isMobile?'default':'x-large'"
+                    variant="outlined"
+                    color="dark"
+                    v-if="tab > 1 && tab < 4"
+                    @click="onPrevPage()"
+                    class="mr-4"
+                >이전</v-btn
                 >
                 <v-btn
-                  :size="checkMobile.isMobile?'default':'x-large'"
-                  variant="flat"
-                  color="dark"
-                  @click="onNextPage()"
-                  >다음</v-btn
+                    :size="checkMobile.isMobile?'default':'x-large'"
+                    variant="flat"
+                    color="dark"
+                    @click="onNextPage()"
+                >다음</v-btn
                 >
               </v-col>
             </v-row>
@@ -1019,92 +1019,92 @@
 
                 <v-table :class="checkMobile.isMobile?'v-board-table mt-10 remove-padding':'v-board-table mt-10'">
                   <tbody>
-                    <tr>
-                      <td>
-                        <span class="text-16">신청내용 확인</span>
-                      </td>
-                      <td>
-                        <VCheckBoxWithValidation
+                  <tr>
+                    <td>
+                      <span class="text-16">신청내용 확인</span>
+                    </td>
+                    <td>
+                      <VCheckBoxWithValidation
                           v-model="insuranceDTO.agr10_yn"
                           name="agr10_yn"
                           label="확인함 (필수)"
                           class="v-checkbox"
                           :disabled="isReadOnlyAll"
-                        />
-                      </td>
-                      <td>
-                        <v-btn
+                      />
+                    </td>
+                    <td>
+                      <v-btn
                           :size="checkMobile.isMobile?'small':'default'"
                           color="gray"
                           variant="outlined"
                           class="ml-4"
                           @click="onInsuranceFormOpen(false)"
-                          >보기</v-btn
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <span class="text-16">보험 약관 확인</span>
-                      </td>
-                      <td>
-                        <VCheckBoxWithValidation
+                      >보기</v-btn
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span class="text-16">보험 약관 확인</span>
+                    </td>
+                    <td>
+                      <VCheckBoxWithValidation
                           v-model="insuranceDTO.agr20_yn"
                           name="agr20_yn"
                           label="확인함 (필수)"
                           class="v-checkbox"
                           :disabled="isReadOnlyAll"
-                        />
-                      </td>
-                      <td>
-                        <v-btn color="gray" variant="outlined" class="ml-4" :size="checkMobile.isMobile?'small':'default'">보기
-                          <v-dialog
+                      />
+                    </td>
+                    <td>
+                      <v-btn color="gray" variant="outlined" class="ml-4" :size="checkMobile.isMobile?'small':'default'">보기
+                        <v-dialog
                             persistent
                             v-model="dialog2"
                             activator="parent"
                             scrollable
                             max-width="1000"
-                          >
-                            <v-btn
+                        >
+                          <v-btn
                               variant="outlined"
                               color="dark"
                               @click="dialog2 = false"
                               class="position-absolute right-0 mt-3 mr-4 z-index-1"
-                              >닫기</v-btn
-                            >
-                            <!-- 보험 약관 확인-->
-                            <TermsOfPolicy></TermsOfPolicy>
-                          </v-dialog>
-                        </v-btn>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
+                          >닫기</v-btn
+                          >
+                          <!-- 보험 약관 확인-->
+                          <TermsOfPolicy></TermsOfPolicy>
+                        </v-dialog>
+                      </v-btn>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
                         <span class="text-16"
-                          >계약 체결·이행 등을 위한 개인(신용)정보 처리
+                        >계약 체결·이행 등을 위한 개인(신용)정보 처리
                           동의</span
                         >
-                      </td>
-                      <td>
-                        <VCheckBoxWithValidation
+                    </td>
+                    <td>
+                      <VCheckBoxWithValidation
                           v-model="insuranceDTO.agr30_yn"
                           name="agr30_yn"
                           label="동의함 (필수)"
                           class="v-checkbox"
                           @click="isTermsOfContractDialog = true"
                           :disabled="isReadOnlyAll"
-                        />
-                      </td>
-                      <td>
-                        <v-btn
+                      />
+                    </td>
+                    <td>
+                      <v-btn
                           :size="checkMobile.isMobile?'small':'default'"
                           color="gray"
                           variant="outlined"
                           class="ml-4"
                           @click="isTermsOfContractDialog = true"
-                          >보기</v-btn
-                        >
-                        <TermsOfContract
+                      >보기</v-btn
+                      >
+                      <TermsOfContract
                           :agr31_yn="insuranceDTO.agr31_yn"
                           :agr32_yn="insuranceDTO.agr32_yn"
                           :agr33_yn="insuranceDTO.agr33_yn"
@@ -1112,45 +1112,45 @@
                           :isReadonly="isReadOnlyAll"
                           v-if="isTermsOfContractDialog"
                           @close="onTermsOfContractClose"
-                        ></TermsOfContract>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <span class="text-16">상품설명확인서 확인</span>
-                      </td>
-                      <td>
-                        <VCheckBoxWithValidation
+                      ></TermsOfContract>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span class="text-16">상품설명확인서 확인</span>
+                    </td>
+                    <td>
+                      <VCheckBoxWithValidation
                           v-model="insuranceDTO.agr40_yn"
                           name="agr40_yn"
                           label="확인함 (필수)"
                           class="v-checkbox"
                           @click="isTermsOfPolicyDialog = true"
                           :disabled="isReadOnlyAll"
-                        />
-                      </td>
-                      <td>
-                        <v-btn
+                      />
+                    </td>
+                    <td>
+                      <v-btn
                           :size="checkMobile.isMobile?'small':'default'"
                           color="gray"
                           variant="outlined"
                           class="ml-4"
                           @click="isTermsOfPolicyDialog = true"
-                          >보기</v-btn
-                        >
-                        <TermsOfInsurance
+                      >보기</v-btn
+                      >
+                      <TermsOfInsurance
                           :agr41_yn="insuranceDTO.agr41_yn"
                           :isReadonly="isReadOnlyAll"
                           v-if="isTermsOfPolicyDialog"
                           @close="onTermsOfInsuranceClose"
-                        ></TermsOfInsurance>
-                      </td>
-                    </tr>
+                      ></TermsOfInsurance>
+                    </td>
+                  </tr>
                   </tbody>
                 </v-table>
 
                 <ul
-                  class="list-style-type-coution text-14 word-break-keep-all text-gray line-height-1-4 mt-4 pl-4"
+                    class="list-style-type-coution text-14 word-break-keep-all text-gray line-height-1-4 mt-4 pl-4"
                 >
                   <li>
                     귀하는 계약체결&middot;이행 등을 위한 개인(신용)정보처리
@@ -1161,7 +1161,7 @@
                 </ul>
 
                 <ul
-                  class="list-style-size-small list-style-type-disc text-14 mt-8 pl-5"
+                    class="list-style-size-small list-style-type-disc text-14 mt-8 pl-5"
                 >
                   <li>
                     이 보험상품은 대한변리사회를 단체계약자, 가입 회원을
@@ -1173,10 +1173,10 @@
                   <li>
                     보험료 입금 계좌번호 :
                     <b class="font-weight-medium text-error text-18"
-                      >신한은행 140-005-862100</b
+                    >신한은행 140-005-862100</b
                     ><template v-if="checkMobile.isMobile"><br/></template><template v-else><span class="text-caption mx-3">|</span></template>예금주 :
                     <b class="font-weight-medium text-error text-18"
-                      >록톤컴퍼니즈코리아</b
+                    >록톤컴퍼니즈코리아</b
                     >
                   </li>
                 </ul>
@@ -1193,19 +1193,19 @@
                 </p>
                 <div class="d-flex justify-end my-2">
                   <VCheckBoxWithValidation
-                    v-model="insuranceDTO.agr50_yn"
-                    name="agr50_yn"
-                    label="확인함 (필수)"
-                    class="v-checkbox flex-grow-0"
-                    :disabled="isReadOnlyAll"
+                      v-model="insuranceDTO.agr50_yn"
+                      name="agr50_yn"
+                      label="확인함 (필수)"
+                      class="v-checkbox flex-grow-0"
+                      :disabled="isReadOnlyAll"
                   />
                 </div>
                 <div class="text-right">
                   <p class="text-body-2">
                     가입신청일 :
                     <span class="d-inline-block w-sm-min-110 v-box px-4 py-1">{{
-                      insuranceDTO.insr_reg_dt
-                    }}</span>
+                        insuranceDTO.insr_reg_dt
+                      }}</span>
                   </p>
                   <p class="text-body-2 mt-2">
                     피보험자 :
@@ -1226,32 +1226,32 @@
             <v-row class="mt-10">
               <v-col class="pa-0 d-flex justify-center">
                 <v-btn
-                  :size="checkMobile.isMobile?'default':'x-large'"
-                  variant="outlined"
-                  color="dark"
-                  v-if="tab > 1"
-                  @click="onPrevPage()"
-                  class="mr-4"
-                  >이전</v-btn
+                    :size="checkMobile.isMobile?'default':'x-large'"
+                    variant="outlined"
+                    color="dark"
+                    v-if="tab > 1"
+                    @click="onPrevPage()"
+                    class="mr-4"
+                >이전</v-btn
                 >
                 <v-btn
-                  :size="checkMobile.isMobile?'default':'x-large'"
-                  variant="flat"
-                  color="primary"
-                  type="submit"
-                  depressed
-                  v-if="!isReadOnlyAll"
-                  >최종 제출</v-btn
+                    :size="checkMobile.isMobile?'default':'x-large'"
+                    variant="flat"
+                    color="primary"
+                    type="submit"
+                    depressed
+                    v-if="!isReadOnlyAll"
+                >최종 제출</v-btn
                 >
                 <v-btn
-                  :size="checkMobile.isMobile?'default':'x-large'"
-                  variant="flat"
-                  color="primary"
-                  type="submit"
-                  depressed
-                  v-if="isReadOnlyAll"
-                  to="/contract/PAT/V_TPAT0030A10"
-                  >목록</v-btn
+                    :size="checkMobile.isMobile?'default':'x-large'"
+                    variant="flat"
+                    color="primary"
+                    type="submit"
+                    depressed
+                    v-if="isReadOnlyAll"
+                    to="/contract/PAT/V_TPAT0030A10"
+                >목록</v-btn
                 >
               </v-col>
             </v-row>
@@ -1381,22 +1381,22 @@
           </p>
           <v-row class="mt-10">
             <v-col class="pa-0 d-flex justify-center">
-             
+
               <v-btn
-                :size="checkMobile.isMobile?'default':'x-large'"
-                variant="flat"
-                color="primary"
-                class="mr-4"
-                @click="onInsuranceFormOpen(true);"
-                >출력</v-btn
+                  :size="checkMobile.isMobile?'default':'x-large'"
+                  variant="flat"
+                  color="primary"
+                  class="mr-4"
+                  @click="onInsuranceFormOpen(true);"
+              >출력</v-btn
               >
               <v-btn
-                :size="checkMobile.isMobile?'default':'x-large'"
-                variant="outlined"
-                color="dark"
-                to="/contract/PAT/V_TPAT0030A10"
-                depressed
-                >가입조회</v-btn
+                  :size="checkMobile.isMobile?'default':'x-large'"
+                  variant="outlined"
+                  color="dark"
+                  to="/contract/PAT/V_TPAT0030A10"
+                  depressed
+              >가입조회</v-btn
               >
             </v-col>
           </v-row>
@@ -1413,8 +1413,8 @@
         <div class="d-flex justify-space-between">
           <h3 class="text-h6 font-weight-bold">사무소 주소검색</h3>
           <v-avatar
-          color="dark"              
-          class="pointer-cursor"
+              color="dark"
+              class="pointer-cursor"
           >
             <v-btn variant="none" color="white" @click="isDaumPostDialog = false">
               <v-icon small title="닫기">mdi-close</v-icon>
@@ -1433,10 +1433,10 @@
       <v-card-title class="d-flex justify-space-between">
         <h3 class="text-h6 font-weight-bold">보험료표</h3>
         <v-btn
-          variant="outlined"
-          color="dark"
-          @click="isInsrTableDialog = false"
-          >닫기</v-btn
+            variant="outlined"
+            color="dark"
+            @click="isInsrTableDialog = false"
+        >닫기</v-btn
         >
       </v-card-title>
       <v-divider class="ma-0"/>
@@ -1586,7 +1586,7 @@ function isReadonlyByInsrStDt()
   if (new Date(insuranceDTO.value.base_insr_st_dt) > new Date(insuranceDTO.value.insr_retr_dt)) {
     return true;
   }
-  
+
   return false;
 }
 
@@ -1605,15 +1605,15 @@ function onTermsOfInsuranceClose(agrs: any) {
   insuranceDTO.value.agr41_yn = agrs.value.agr41_yn;
 }
 
-  /**
-   * 보험가입신청서 팝업호출
-   * @param param 
-   */
-  const onInsuranceFormOpen = (isPdfOption:boolean) => {
-    isPdf.value = isPdfOption;
-    isInsuranceFormDialog.value = true;
+/**
+ * 보험가입신청서 팝업호출
+ * @param param
+ */
+const onInsuranceFormOpen = (isPdfOption:boolean) => {
+  isPdf.value = isPdfOption;
+  isInsuranceFormDialog.value = true;
 
-  }
+}
 
 function onInsuranceFormClose() {
   isInsuranceFormDialog.value = false;
@@ -1631,15 +1631,15 @@ function onInsuranceFormClose() {
  * @param nRate 할인/할증률
  * @param nPCnt 인원수
  */
- const getInsrAmt = (
-  sSDt: string,
-  sEDt: string,
-  sKey1: string,
-  sKey2: string,
-  sKey3: string,
-  nRate1: number,
-  nRate2: number,
-  nPCnt: number
+const getInsrAmt = (
+    sSDt: string,
+    sEDt: string,
+    sKey1: string,
+    sKey2: string,
+    sKey3: string,
+    nRate1: number,
+    nRate2: number,
+    nPCnt: number
 ) => {
   if (!sKey2 || !sKey3) return 0;
 
@@ -1780,7 +1780,7 @@ function delCBR(list: any, rowIdx: number) {
 
 /**
  * 법인 대상 로직
- * 
+ *
  * 1. 법인 -> 법인
  * 2. 개인 -> 법인
  */
@@ -1812,22 +1812,22 @@ async function chkSaleRtJNT(list: any, rowIdx: number) {
 
     /**
      *  엑셀컬럼기준 할인/할증 개념
-        1. '2022년할인할증' 값이 양수 경우는 할증이다. 
-        2. '2022년할인할증' 값이 음수 경우는 할인이다.
-        3.  단, '할인/할증기준' 값이 1000 이상인 경우 할증으로 인식하고 '2022년할인할증값' 값을 가져온다 (0% 할증)
+     1. '2022년할인할증' 값이 양수 경우는 할증이다.
+     2. '2022년할인할증' 값이 음수 경우는 할인이다.
+     3.  단, '할인/할증기준' 값이 1000 이상인 경우 할증으로 인식하고 '2022년할인할증값' 값을 가져온다 (0% 할증)
 
 
-        1. 법인 -> 개인
-        - 변경전 할증이 있으면 할증을 가져오고, 할인이 있다면 0% 로 적용
+     1. 법인 -> 개인
+     - 변경전 할증이 있으면 할증을 가져오고, 할인이 있다면 0% 로 적용
 
-        2. 개인 -> 법인
-        - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
+     2. 개인 -> 법인
+     - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
 
-        3. 법인 -> 법인
-        - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
+     3. 법인 -> 법인
+     - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
      */
 
-    if (result.data.renewal.length > 0) {
+    if (result.data.renewal.length > 0 && renewalYN.value === 'Y' ) {
 
       const insr_sale_year = Number(result.data.renewal[0].insr_sale_year);
       const insr_sale_rt = Number(result.data.renewal[0].insr_sale_rt);
@@ -1840,15 +1840,42 @@ async function chkSaleRtJNT(list: any, rowIdx: number) {
 
       /**
        * 할인할증률 가져오기
-       * 
-       * 1. 할증 가져오기
-       *  - 할인/할증기준 값이  1000 이상인 경우 할증을 가져온다 (0% 할인 포함)
-       *  - 할인할증이 0 이상(할증) 이면 할증을 가져온다.
-       * 
-       * 2. 할인 가져오기
-       *  - 법인 할인 가져온다.
+       *
+       * 관리자 고도화 새로운 기준으로 적용
+       *
+       * 개인 -> 복수	할인적용 O 할증적용 O
+       * 법인 -> 복수	할인적용 X 할증적용 O
+       * 개인 -> 법인	할인적용 X 할증적용 O
+       * 복수 -> 법인	할인적용 X 할증적용 X
        */
-      list.cbr_data[rowIdx].insr_sale_rt = insr_sale_rt;
+
+      if(insuranceDTO.value.user_cd==='JNT'){
+        if (result.data.renewal[0].user_cd === 'IND') {
+          list.cbr_data[rowIdx].insr_sale_rt = insr_sale_rt;
+        }else{
+          if (insr_sale_rt > 0) {
+            insuranceDTO.value.insr_sale_rt = insr_sale_rt;
+          } else {
+            insuranceDTO.value.insr_sale_rt = 0;
+          }
+        }
+      }else if(insuranceDTO.value.user_cd==='COR'){
+        if(insuranceDTO.value.user_cd === 'JNT'){
+          list.cbr_data[rowIdx].insr_sale_rt = 0;
+        }else{
+          if (insr_sale_rt > 0) {
+            insuranceDTO.value.insr_sale_rt = insr_sale_rt;
+          } else {
+            insuranceDTO.value.insr_sale_rt = 0;
+          }
+        }
+      }
+
+      messageBoxDTO.value.setWarning(
+          `갱신대상 이력이 조회됩니다.`,
+          '신규가입시, 기존 가입 때의 소급담보일을 인정해드리고 있으니 참고 바랍니다.'
+      );
+
       calInsrAmt(list);
 
     } else {
@@ -1863,9 +1890,9 @@ async function chkSaleRtJNT(list: any, rowIdx: number) {
         list.cbr_data[rowIdx].insr_retr_dt = INSR_RETR_DT_TODAY;
       } else {
         messageBoxDTO.value.setInfo(
-          '변리사 인증',
-          '변리사 생년월일 또는 등록번호가 일치하지 않습니다.<br/>정확한 내용을 확인 바라며, 반복 오류시 록톤코리아로 연락해주시기 바랍니다.'
-          );
+            '변리사 인증',
+            '변리사 생년월일 또는 등록번호가 일치하지 않습니다.<br/>정확한 내용을 확인 바라며, 반복 오류시 록톤코리아로 연락해주시기 바랍니다.'
+        );
       }
       calInsrAmt(list);
     }
@@ -1886,14 +1913,14 @@ async function chkSaleRtIND() {
       isDuplication.value = true;
       return false;
     }
-    
+
     if (result.data.mbr_cnt !== 1) {
       messageBoxDTO.value.setWarning('비회원', '전문인 명단에 등록된 회원이 아닙니다.<br/>록톤코리아로 연락해주시기 바랍니다.');
       isDuplication.value = true;
       return false;
     }
 
-    if (result.data.renewal.length > 0) {
+    if (result.data.renewal.length > 0 && renewalYN.value === 'Y' ) {
       const insr_sale_year = Number(result.data.renewal[0].insr_sale_year);
       const insr_sale_rt = Number(result.data.renewal[0].insr_sale_rt);
       const insr_retr_dt = result.data.renewal[0].insr_retr_dt;
@@ -1906,21 +1933,35 @@ async function chkSaleRtIND() {
 
       /**
        *  엑셀컬럼기준 할인/할증 개념
-          1. '2022년할인할증' 값이 양수 경우는 할증이다. 
-          2. '2022년할인할증' 값이 음수 경우는 할인이다.
-          3.  단, '할인/할증기준' 값이 1000 이상인 경우 할증으로 인식하고 '2022년할인할증값' 값을 가져온다 (0% 할증)
-  
-  
-          1. 법인 -> 개인
-          - 변경전 할증이 있으면 할증을 가져오고, 할인이 있다면 0% 로 적용
-  
-          2. 개인 -> 법인
-          - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
-  
-          3. 법인 -> 법인
-          - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
-      */
+       1. '2022년할인할증' 값이 양수 경우는 할증이다.
+       2. '2022년할인할증' 값이 음수 경우는 할인이다.
+       3.  단, '할인/할증기준' 값이 1000 이상인 경우 할증으로 인식하고 '2022년할인할증값' 값을 가져온다 (0% 할증)
+
+
+       1. 법인 -> 개인
+       - 변경전 할증이 있으면 할증을 가져오고, 할인이 있다면 0% 로 적용
+
+       2. 개인 -> 법인
+       - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
+
+       3. 법인 -> 법인
+       - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
+       */
       if (result.data.renewal[0].user_cd === 'JNT') {
+        //2024-10-29 고도화 적용
+        //if (insr_sale_rt > 0) {
+        // 전환 대상자의 할증을 가져온다.
+        insuranceDTO.value.insr_sale_rt = insr_sale_rt;
+        // } else {
+        //   // 개인전환 할인은 0% 고정
+        //   insuranceDTO.value.insr_sale_rt = 0;
+        // }
+
+        messageBoxDTO.value.setWarning(
+            '복수 갱신대상 이력이 조회됩니다.',
+            '개인으로 신규가입시, 복수 가입 때의 소급담보일을 인정해드리고 있으니 참고 바랍니다.'
+        );
+      }else if(result.data.renewal[0].user_cd === 'COR'){
         if (insr_sale_rt > 0) {
           // 전환 대상자의 할증을 가져온다.
           insuranceDTO.value.insr_sale_rt = insr_sale_rt;
@@ -1930,10 +1971,11 @@ async function chkSaleRtIND() {
         }
 
         messageBoxDTO.value.setWarning(
-          '복수 갱신대상 이력이 조회됩니다.',
-          '개인으로 신규가입시, 복수 가입 때의 소급담보일을 인정해드리고 있으니 참고 바랍니다.'
+            '법인 갱신대상 이력이 조회됩니다.',
+            '개인으로 신규가입시, 법인 가입 때의 소급담보일을 인정해드리고 있으니 참고 바랍니다.'
         );
       }
+
     }
   }
   return true;
@@ -1948,12 +1990,12 @@ function checkDuplicateData(dataArray, rowIdx) {
 
   const duplicateData = arrayWithoutRowIdx.filter((data, index, array) => {
     return (
-      array.findIndex(
-        (item) =>
-          item.cbr_nm === data.cbr_nm &&
-          item.cbr_brdt === data.cbr_brdt &&
-          item.cbr_regno === data.cbr_regno
-      ) !== index
+        array.findIndex(
+            (item) =>
+                item.cbr_nm === data.cbr_nm &&
+                item.cbr_brdt === data.cbr_brdt &&
+                item.cbr_regno === data.cbr_regno
+        ) !== index
     );
   });
 
@@ -1993,8 +2035,8 @@ async function onPrevPage(values: any) {
 function showMessageBoxByInsrDt() {
   return true;
   messageBoxDTO.value.setInfo(
-    '보험기간 소급가입',
-    '소급가입을 원하시는 경우 록톤코리아(02-2011-0300)로 연락주시기 바랍니다.'
+      '보험기간 소급가입',
+      '소급가입을 원하시는 경우 록톤코리아(02-2011-0300)로 연락주시기 바랍니다.'
   );
 }
 
@@ -2005,16 +2047,16 @@ async function checkValidation() {
   const validationSchema = InsuranceYup[`PAT_${insuranceDTO.value.user_cd}_TAB${tab.value}`];
 
   const isValidate = await validationSchema.validate(insuranceDTO.value, { abortEarly: false })
-    .then(() => {
-      return true;
-    })
-    .catch(error => {
-      // 유효성 검사 실패
-      console.log(error.errors)
-      console.log(error.inner)
-      messageBoxDTO.value.setWarning( '입력확인', error.inner[0].message);
-      return false;
-    });
+  .then(() => {
+    return true;
+  })
+  .catch(error => {
+    // 유효성 검사 실패
+    console.log(error.errors)
+    console.log(error.inner)
+    messageBoxDTO.value.setWarning( '입력확인', error.inner[0].message);
+    return false;
+  });
 
   return isValidate;
 }
@@ -2073,8 +2115,8 @@ async function onSubmit(params: any) {
   }else {
     if (result.message === "DUPLICATION_FAILED") {
       messageBoxDTO.value.setWarning(
-        '가입 이력이 있습니다.',
-        `변리사 명단 중 이미 보험계약이 되어있는 회원이 있습니다.<br/>퇴사자 등이 있는 경우 명단에서 삭제 후 재신청 바랍니다.
+          '가입 이력이 있습니다.',
+          `변리사 명단 중 이미 보험계약이 되어있는 회원이 있습니다.<br/>퇴사자 등이 있는 경우 명단에서 삭제 후 재신청 바랍니다.
          <br/>(추가문의 : 록톤코리아 02-2011-0300)`
       );
     } else {
@@ -2087,21 +2129,21 @@ async function onSubmit(params: any) {
 
 /**
  * 회원정보 업데이트
- * 
+ *
  * @param values
  */
 async function getUserInfoToSetUserInfoByInsurance() {
   const userResult = await apiUser.getUserInfo();
-  
+
   /**
    * Object.assign 시 동일컬럼이 덮어 씌워지는 오류 있음
-   * 
+   *
    * 해당컬럼 제외시키던지 백업후 재설정  해줘야함
-   * 
+   *
    * 현재는 백업후 재설정해주고 있음
-   * 
+   *
    * 상태값 : status_cd
-   * 
+   *
    */
 
   // 사용자DTO
@@ -2109,7 +2151,7 @@ async function getUserInfoToSetUserInfoByInsurance() {
 
   // 제외 컬럼
   const status_cd = insuranceDTO.value.status_cd;
-  
+
   // 가입정보DTO
   Object.assign(insuranceDTO.value, userDTO.value);
 
@@ -2136,7 +2178,7 @@ async function getUserInfoToSetUserInfoByInsurance() {
     insuranceDTO.value.corp_bnno = '';
 
 
-  // 법인 가입정보 설정
+    // 법인 가입정보 설정
   } else if (insuranceDTO.value.user_cd == 'JNT') {
     insuranceDTO.value.user_birth = '';
     insuranceDTO.value.user_regno = '';
@@ -2166,84 +2208,84 @@ watch(() => [
 });
 
 watch(() => clm_lt_amt.value
-  ,
- (newValue, oldValue) => {
-   const start_key = clm_lt_amt.value + '|' +insuranceDTO.value.insr_psnl_brdn_amt.getValueBySplit(0)
+    ,
+    (newValue, oldValue) => {
+      const start_key = clm_lt_amt.value + '|' +insuranceDTO.value.insr_psnl_brdn_amt.getValueBySplit(0)
 
-   const list = INSR_RATE_TABLE.value.기본담보.보험료.filter(item => item.key.endsWith(start_key))
-   if(list.length === 0){
-     insuranceDTO.value.insr_psnl_brdn_amt=''
-   }
+      const list = INSR_RATE_TABLE.value.기본담보.보험료.filter(item => item.key.endsWith(start_key))
+      if(list.length === 0){
+        insuranceDTO.value.insr_psnl_brdn_amt=''
+      }
 
-  if(newValue != null) {
-    insuranceDTO.value.insr_clm_lt_amt = INSR_RATE_TABLE.value.기본담보.보상한도.find(item => item.code == newValue).value.split('/')[0]
-    insuranceDTO.value.insr_year_clm_lt_amt = INSR_RATE_TABLE.value.기본담보.보상한도.find(item => item.code == newValue).value.split('/')[1]
-  }else {
-    insuranceDTO.value.insr_clm_lt_amt = '';
-    insuranceDTO.value.insr_year_clm_lt_amt = '';
-  }
-})
+      if(newValue != null) {
+        insuranceDTO.value.insr_clm_lt_amt = INSR_RATE_TABLE.value.기본담보.보상한도.find(item => item.code == newValue).value.split('/')[0]
+        insuranceDTO.value.insr_year_clm_lt_amt = INSR_RATE_TABLE.value.기본담보.보상한도.find(item => item.code == newValue).value.split('/')[1]
+      }else {
+        insuranceDTO.value.insr_clm_lt_amt = '';
+        insuranceDTO.value.insr_year_clm_lt_amt = '';
+      }
+    })
 
 /**
  * 보험계약 - 보험료 계산
  */
-  watch(
-  () => [
-    insuranceDTO.value.insr_st_dt,
-    insuranceDTO.value.insr_cncls_dt,
-    insuranceDTO.value.insr_take_sec,
-    clm_lt_amt.value,
-    insuranceDTO.value.insr_program_yn,
-    insuranceDTO.value.insr_psnl_brdn_amt,
-    insuranceDTO.value.user_cd,
-    insuranceDTO.value.insr_sale_rt,
-    insuranceDTO.value.cbr_cnt
-  ],
-  (newValue, oldValue) => {
-    // 읽기전용일 경우 해당로직 제외
-    if (isReadOnlyAll.value) return false;
-
-    const discount_program = (insuranceDTO.value.insr_program_yn == 'Y' ? -10 : 0) ;
-    const key1 = insuranceDTO.value.user_cd === 'COR' ? insuranceDTO.value.insr_take_sec.getValueBySplit(0) :
-        insuranceDTO.value.user_cd === 'JNT' ? insuranceDTO.value.cbr_cnt : null
-    // 기준보험료 계산
-    insuranceDTO.value.insr_base_amt = getInsrAmt(
-      null,
-      null,
-      key1,
+watch(
+    () => [
+      insuranceDTO.value.insr_st_dt,
+      insuranceDTO.value.insr_cncls_dt,
+      insuranceDTO.value.insr_take_sec,
       clm_lt_amt.value,
+      insuranceDTO.value.insr_program_yn,
       insuranceDTO.value.insr_psnl_brdn_amt,
-      0,
-      0,
-      1
-    );
+      insuranceDTO.value.user_cd,
+      insuranceDTO.value.insr_sale_rt,
+      insuranceDTO.value.cbr_cnt
+    ],
+    (newValue, oldValue) => {
+      // 읽기전용일 경우 해당로직 제외
+      if (isReadOnlyAll.value) return false;
 
-
-    if (insuranceDTO.value.user_cd !== 'JNT') {
-      calInsrAmt(insuranceDTO.value);
-
-      // 개인일 경우 보험사 명단이 없으므로 1명으로 설정하여 보험료를 가져온다.
-      insuranceDTO.value.insr_amt = getInsrAmt(
-        insuranceDTO.value.insr_st_dt,
-        insuranceDTO.value.insr_cncls_dt,
-        key1,
-        clm_lt_amt.value,
-        insuranceDTO.value.insr_psnl_brdn_amt,
-        discount_program,
-        insuranceDTO.value.insr_sale_rt,
-        1
+      const discount_program = (insuranceDTO.value.insr_program_yn == 'Y' ? -10 : 0) ;
+      const key1 = insuranceDTO.value.user_cd === 'COR' ? insuranceDTO.value.insr_take_sec.getValueBySplit(0) :
+          insuranceDTO.value.user_cd === 'JNT' ? insuranceDTO.value.cbr_cnt : null
+      // 기준보험료 계산
+      insuranceDTO.value.insr_base_amt = getInsrAmt(
+          null,
+          null,
+          key1,
+          clm_lt_amt.value,
+          insuranceDTO.value.insr_psnl_brdn_amt,
+          0,
+          0,
+          1
       );
-    }else {
-      calInsrAmt(insuranceDTO.value);
+
+
+      if (insuranceDTO.value.user_cd !== 'JNT') {
+        calInsrAmt(insuranceDTO.value);
+
+        // 개인일 경우 보험사 명단이 없으므로 1명으로 설정하여 보험료를 가져온다.
+        insuranceDTO.value.insr_amt = getInsrAmt(
+            insuranceDTO.value.insr_st_dt,
+            insuranceDTO.value.insr_cncls_dt,
+            key1,
+            clm_lt_amt.value,
+            insuranceDTO.value.insr_psnl_brdn_amt,
+            discount_program,
+            insuranceDTO.value.insr_sale_rt,
+            1
+        );
+      }else {
+        calInsrAmt(insuranceDTO.value);
+      }
+
+      // 기본담보 - 보상한도(연보험)
+      //insuranceDTO.value.insr_year_clm_lt_amt = calByString_ADV(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1), insuranceDTO.value?.cbr_data?.length, 1000000000);
+      insuranceDTO.value.insr_premium_amt = insuranceDTO.value?.insr_amt;
+      // 최종보험료
+      //insuranceDTO.value.insr_tot_amt = insuranceDTO.value?.insr_amt;
+
     }
-
-    // 기본담보 - 보상한도(연보험)
-    //insuranceDTO.value.insr_year_clm_lt_amt = calByString_ADV(insuranceDTO.value.insr_clm_lt_amt?.getValueBySplit(1), insuranceDTO.value?.cbr_data?.length, 1000000000);
-    insuranceDTO.value.insr_premium_amt = insuranceDTO.value?.insr_amt;
-    // 최종보험료
-    //insuranceDTO.value.insr_tot_amt = insuranceDTO.value?.insr_amt;
-
-  }
 );
 
 
@@ -2275,57 +2317,57 @@ watch(() => [insuranceDTO.value.insr_st_dt], (newValue, oldValue) => {
 });
 
 watch( () => [insuranceDTO.value.insr_take_amt],
-  (newVal, oldVal) => {
-    const total_insr_take_amt = insuranceDTO.value.insr_take_amt
-    if(total_insr_take_amt == 0) {
-      insr_take_sec.value = ''
-    }
-    else if (total_insr_take_amt < 500000000){
-      insr_take_sec.value = '1|5억미만'
-    }else if (total_insr_take_amt < 1000000000){
-      insr_take_sec.value = '2|10억미만'
-    }else if (total_insr_take_amt < 2000000000){
-      insr_take_sec.value = '3|20억미만'
-    }else if (total_insr_take_amt < 3000000000){
-      insr_take_sec.value = '4|30억미만'
-    }else if (total_insr_take_amt < 5000000000){
-      insr_take_sec.value = '5|50억미만'
-    }else if (total_insr_take_amt < 7000000000){
-      insr_take_sec.value = '6|70억미만'
-    }else if (total_insr_take_amt < 10000000000){
-      insr_take_sec.value = '7|100억미만'
-    }else if (total_insr_take_amt < 13000000000){
-      insr_take_sec.value = '8|130억미만'
-    }else if (total_insr_take_amt < 15000000000){
-      insr_take_sec.value = '9|150억미만'
-    }
-    insuranceDTO.value.insr_take_sec = insr_take_sec.value
+    (newVal, oldVal) => {
+      const total_insr_take_amt = insuranceDTO.value.insr_take_amt
+      if(total_insr_take_amt == 0) {
+        insr_take_sec.value = ''
+      }
+      else if (total_insr_take_amt < 500000000){
+        insr_take_sec.value = '1|5억미만'
+      }else if (total_insr_take_amt < 1000000000){
+        insr_take_sec.value = '2|10억미만'
+      }else if (total_insr_take_amt < 2000000000){
+        insr_take_sec.value = '3|20억미만'
+      }else if (total_insr_take_amt < 3000000000){
+        insr_take_sec.value = '4|30억미만'
+      }else if (total_insr_take_amt < 5000000000){
+        insr_take_sec.value = '5|50억미만'
+      }else if (total_insr_take_amt < 7000000000){
+        insr_take_sec.value = '6|70억미만'
+      }else if (total_insr_take_amt < 10000000000){
+        insr_take_sec.value = '7|100억미만'
+      }else if (total_insr_take_amt < 13000000000){
+        insr_take_sec.value = '8|130억미만'
+      }else if (total_insr_take_amt < 15000000000){
+        insr_take_sec.value = '9|150억미만'
+      }
+      insuranceDTO.value.insr_take_sec = insr_take_sec.value
 
-})
+    })
 
 /**
  * 보험계약[기본담보] - 변호사 할인할증 값 변경시 재계산
  * 법인일 경우 상세 정보가 변경될때 재계산해준다.
  */
 watch(
-  insuranceDTO.value.cbr_data,
-  (newVal, oldVal) => {
-    // 읽기전용일 경우 해당로직 제외
+    insuranceDTO.value.cbr_data,
+    (newVal, oldVal) => {
+      // 읽기전용일 경우 해당로직 제외
 
-    if (isReadOnlyAll.value) return false;
+      if (isReadOnlyAll.value) return false;
 
-    newVal.forEach((row, index) => {
-      if ((newVal[index].insr_sale_rt != oldVal[index].insr_sale_rt)) {
-        calInsrAmt(insuranceDTO.value);
-      }
-    });
+      newVal.forEach((row, index) => {
+        if ((newVal[index].insr_sale_rt != oldVal[index].insr_sale_rt)) {
+          calInsrAmt(insuranceDTO.value);
+        }
+      });
 
-    // // 10억을 초과 제한
-    // if(insuranceDTO.value.insr_year_clm_lt_amt > 1000000000) {
-    //   insuranceDTO.value.insr_year_clm_lt_amt = 1000000000;
-    // }
-  },
-  { deep: true }
+      // // 10억을 초과 제한
+      // if(insuranceDTO.value.insr_year_clm_lt_amt > 1000000000) {
+      //   insuranceDTO.value.insr_year_clm_lt_amt = 1000000000;
+      // }
+    },
+    { deep: true }
 );
 
 /**
@@ -2366,7 +2408,7 @@ onMounted(async () => {
 
   /**
    * 보험료표 조회
-   * 
+   *
    */
   const params = { user_cd: _AUTH_USER.value.userCd , business_cd: _AUTH_USER.value.businessCd };
   const resultData = await apiPAT0030a.getDBSelInsuranceRate(params);
@@ -2377,13 +2419,13 @@ onMounted(async () => {
 
   /**
    * 공통_기본정보 설정
-   * 
-   * 
+   *
+   *
    * 0. 사용자 정보 조회
    * 1. 회원정보
    * 2. 보험_기준정보
    */
-   
+
   insuranceDTO.value.insurance_uuid = '';
 
 
@@ -2397,7 +2439,7 @@ onMounted(async () => {
 
   /**
    * 갱신가입
-   * 
+   *
    * 갱신DB 있는 그대로 가져와서 설정한다
    */
   if(renewalYN.value === 'Y' && insuranceUUID.value !== '') {
@@ -2456,14 +2498,14 @@ onMounted(async () => {
 
     // 갱신자는 인증처리 완료
     insuranceDTO.value.cbr_data.forEach(function (data) {
-      
-        // 갱신자는 인증통과
-        data.isCheck = true;
-        data.insr_retr_yn = 'Y';
-        
-        // 수기처리가 아니면 기초셋팅 
-        data.insr_st_dt = insuranceDTO.value.insr_st_dt;
-        data.insr_cncls_dt = insuranceDTO.value.insr_cncls_dt;
+
+      // 갱신자는 인증통과
+      data.isCheck = true;
+      data.insr_retr_yn = 'Y';
+
+      // 수기처리가 아니면 기초셋팅
+      data.insr_st_dt = insuranceDTO.value.insr_st_dt;
+      data.insr_cncls_dt = insuranceDTO.value.insr_cncls_dt;
     });
     if (insuranceDTO.value.user_cd == 'IND') {
       // 전환여부 확인
@@ -2498,12 +2540,12 @@ onMounted(async () => {
     insuranceDTO.value.base_insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
     insuranceDTO.value.insr_st_dt = insuranceRateDTO.value.insr_st_dt;
     insuranceDTO.value.insr_cncls_dt = insuranceRateDTO.value.insr_cncls_dt;
-    
+
     // 갱신후 : 오늘일자로 설정 / 오늘일자 > [보험료표DB]_보험시작일자  
     if(TODAY > insuranceRateDTO.value.insr_st_dt) {
       insuranceDTO.value.insr_st_dt = TODAY;
     } else {
-    // 갱신전 : [보험료표DB]_보험시작일자로 적용
+      // 갱신전 : [보험료표DB]_보험시작일자로 적용
       insuranceDTO.value.insr_st_dt = insuranceDTO.value.base_insr_st_dt;
     }
 
@@ -2519,13 +2561,13 @@ onMounted(async () => {
       insuranceDTO.value.cbr_cnt = 1;
     }
 
-  /**
-   * 수정가입
-   */
+    /**
+     * 수정가입
+     */
   } else {
     const params = { insurance_uuid: insuranceUUID.value };
     const resultData = await apiPAT0030a.getDBSel(params);
-  // 초기화용 백업
+    // 초기화용 백업
     if (resultData.data.length == 0) {
       router.push('/404');
     } else {
@@ -2550,10 +2592,10 @@ onMounted(async () => {
     renewalYN.value = renewalUpdateYN.value;
   }
   calInsrAmt(insuranceDTO.value);
-    insuranceDTOBackup.value = JSON.parse(JSON.stringify(insuranceDTO.value));
+  insuranceDTOBackup.value = JSON.parse(JSON.stringify(insuranceDTO.value));
   // console.log(insuranceDTOBackup.value);
   // 초기화용 백업
- // Object.assign(insuranceDTOBackup.value, insuranceDTO.value);
+  // Object.assign(insuranceDTOBackup.value, insuranceDTO.value);
   onLoading.value = true;
 
 });
