@@ -239,7 +239,7 @@
                     </v-card-title>
                     <v-divider class="mb-0"/>
                     <v-card-text class="pa-0">
-                      <iframe src="/assets/doc/CAA/관세사2024_예상질문에 대한 답변서.pdf" width="100%" height="800px"></iframe>
+                      <iframe src="/assets/doc/CAA/관세사2025_예상질문에 대한 답변서.pdf" width="100%" height="800px"></iframe>
                     </v-card-text>
                   </v-card>
                 </v-dialog>
