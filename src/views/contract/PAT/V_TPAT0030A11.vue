@@ -2591,6 +2591,7 @@ onMounted(async () => {
   if(renewalUpdateYN.value || renewalUpdateYN.value === 'Y') {
     renewalYN.value = renewalUpdateYN.value;
   }
+  insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
   calInsrAmt(insuranceDTO.value);
   insuranceDTOBackup.value = JSON.parse(JSON.stringify(insuranceDTO.value));
   // console.log(insuranceDTOBackup.value);
