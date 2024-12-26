@@ -2511,7 +2511,7 @@ onMounted(async () => {
       // 전환여부 확인
       chkSaleRtIND();
     }  else if(insuranceDTO.value.user_cd === 'COR'){
-      // insuranceDTO.value.cbr_cnt = '';
+       // insuranceDTO.value.cbr_cnt = '';
     }
 
   }
@@ -2591,7 +2591,7 @@ onMounted(async () => {
   if(renewalUpdateYN.value || renewalUpdateYN.value === 'Y') {
     renewalYN.value = renewalUpdateYN.value;
   }
-  insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
+  if (insuranceDTO.value.user_cd == 'JNT')  insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
   calInsrAmt(insuranceDTO.value);
   insuranceDTOBackup.value = JSON.parse(JSON.stringify(insuranceDTO.value));
   // console.log(insuranceDTOBackup.value);
