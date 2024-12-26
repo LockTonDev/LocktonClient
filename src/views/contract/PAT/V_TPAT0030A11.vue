@@ -868,7 +868,7 @@
                             class="text-caption font-weight-light  color-gray flex-grow-1"
                         >
                           <i class="mdi mdi-alert-circle-outline mr-2"></i
-                          >전년도 손익계산서 첨부 (예시 : 2024.1.1 가입시 2022년 손익계산서 첨부)<br/>
+                          >전년도 손익계산서 첨부 (예시 : 2025.1.1 가입시 2023년 손익계산서 첨부)<br/>
                         </p>
                       </div>
                     </div>
@@ -2591,6 +2591,7 @@ onMounted(async () => {
   if(renewalUpdateYN.value || renewalUpdateYN.value === 'Y') {
     renewalYN.value = renewalUpdateYN.value;
   }
+  insuranceDTO.value.cbr_cnt = insuranceDTO.value.cbr_data.length;
   calInsrAmt(insuranceDTO.value);
   insuranceDTOBackup.value = JSON.parse(JSON.stringify(insuranceDTO.value));
   // console.log(insuranceDTOBackup.value);
