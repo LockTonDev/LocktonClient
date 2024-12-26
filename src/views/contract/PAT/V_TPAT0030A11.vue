@@ -2511,7 +2511,7 @@ onMounted(async () => {
       // 전환여부 확인
       chkSaleRtIND();
     }  else if(insuranceDTO.value.user_cd === 'COR'){
-      insuranceDTO.value.cbr_cnt = '';
+      // insuranceDTO.value.cbr_cnt = '';
     }
 
   }

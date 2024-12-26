@@ -3295,7 +3295,7 @@ async function chkSaleRtIND() {
       const insr_sale_year = Number(result.data.renewal[0].insr_sale_year);
       const insr_sale_rt = Number(result.data.renewal[0].insr_sale_rt);
       const insr_retr_dt = result.data.renewal[0].insr_retr_dt;
-
+      console.log('insr_sale_year>>',insr_sale_year)
       insuranceDTO.value.insr_retr_yn = 'Y';
       insuranceDTO.value.insr_sale_year = insr_sale_year;
       insuranceDTO.value.insr_retr_dt = insr_retr_dt;
