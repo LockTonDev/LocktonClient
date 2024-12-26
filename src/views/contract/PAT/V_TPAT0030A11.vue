@@ -814,7 +814,7 @@
                         >사용함</v-btn
                         >
                       </v-btn-toggle>
-                      <p><i class="mdi mdi-alert-circle-outline mr-2"></i>기일관리프로그램 사용 시 보험료 10% 할인적용<br>
+                      <p class="color-gray"><i class="mdi mdi-alert-circle-outline mr-2"></i>기일관리프로그램 사용 시 보험료 10% 할인적용<br>
                          <i class="mdi mdi-alert-circle-outline mr-2"></i>단, 자체제작프로그램의 경우 할인 제외
                       </p>
                     </div>
