@@ -1921,7 +1921,7 @@ async function chkSaleRtIND() {
       return false;
     }
 
-    if (result.data.renewal.length > 0 && renewalYN.value === 'Y' ) {
+    if (result.data.renewal.length > 0) {
       const insr_sale_year = Number(result.data.renewal[0].insr_sale_year);
       const insr_sale_rt = Number(result.data.renewal[0].insr_sale_rt);
       const insr_retr_dt = result.data.renewal[0].insr_retr_dt;
