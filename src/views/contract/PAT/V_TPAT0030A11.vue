@@ -1827,7 +1827,7 @@ async function chkSaleRtJNT(list: any, rowIdx: number) {
      - 변경전 할증이 있다면 할증을 가져오고, 변경전 할인이 있다면 변경후 법인 할인으로 적용
      */
 
-    if (result.data.renewal.length > 0 && renewalYN.value === 'Y' ) {
+    if (result.data.renewal.length > 0 ) {
 
       const insr_sale_year = Number(result.data.renewal[0].insr_sale_year);
       const insr_sale_rt = Number(result.data.renewal[0].insr_sale_rt);
