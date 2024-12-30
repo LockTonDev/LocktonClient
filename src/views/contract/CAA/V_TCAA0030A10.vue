@@ -56,7 +56,7 @@
               <p>{{ row.user_nm }}</p>
             </td>
             <td class="text-center text-body-1 text-no-wrap">
-              <div v-if="row.insr_year === '2023' && row.status_cd !== '10'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
+              <div v-if="row.use_yn=='N'">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</div>
               <div v-else class="title cursor-pointer" @click.prevent="onPageView(row.status_cd, row.insurance_uuid, row.insr_year)"><span class="color-primary font-weight">{{ row.insr_st_dt }} ~ {{ row.insr_cncls_dt }}</span></div>
             </td>
             <td class="text-center text-body-1 text-no-wrap">{{ Number(row?.insr_tot_amt).toLocaleString()}} 원</td>
