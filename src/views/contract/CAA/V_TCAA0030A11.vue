@@ -2863,6 +2863,7 @@ function addCBR(list: any, cbr_type: string) {
     cbrDataDTO.cbr_type = cbr_type;
     cbrDataDTO.insr_retr_dt = INSR_RETR_DT_TODAY;
     cbrDataDTO.insr_st_dt = INSR_RETR_DT_TODAY;
+    cbrDataDTO.insr_cncls_dt = insuranceDTO.value.insr_cncls_dt;
     cbrDataDTO.status_cd = '80'
     list.cbr_data.push(cbrDataDTO);
     list.cbr_cnt = list.cbr_data.length;
@@ -2891,6 +2892,7 @@ function addSpctCBR(list: any, cbr_type: string) {
   const cbrDataDTO = new CBRDataDTO();
   cbrDataDTO.cbr_type = cbr_type;
   cbrDataDTO.insr_retr_dt = INSR_RETR_DT_TODAY;
+  cbrDataDTO.insr_cncls_dt = insuranceDTO.value.insr_cncls_dt;
 
   list.cbr_data.push(cbrDataDTO);
   list.cbr_cnt = list.cbr_data.length;
