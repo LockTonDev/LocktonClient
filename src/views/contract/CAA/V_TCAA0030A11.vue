@@ -3100,6 +3100,7 @@ async function chkSaleRtTWO(list: any, rowIdx: number) {
       list.cbr_data[rowIdx].isCheck = true;
       list.cbr_data[rowIdx].insr_retr_yn = 'Y';
       list.cbr_data[rowIdx].insr_retr_dt = insr_retr_dt;
+      list.cbr_data[rowIdx].insr_sale_year = insr_sale_year;
       list.cbr_data[rowIdx].insr_st_dt = insuranceRateDTO.value.insr_st_dt;
       list.cbr_data[rowIdx].insr_cncls_dt = insuranceDTO.value.insr_cncls_dt;
 
@@ -3115,7 +3116,6 @@ async function chkSaleRtTWO(list: any, rowIdx: number) {
        */
       if (insr_sale_year >= 1000 || insr_sale_rt > 0) {
         // 전환 대상자의 할증을 가져온다.
-        list.cbr_data[rowIdx].insr_sale_year = insr_sale_year;
         list.cbr_data[rowIdx].insr_sale_rt = insr_sale_rt;
       } else {
         // 현재 법인 할인율을 가져온다
@@ -3217,6 +3217,7 @@ async function chkSaleRtConsTWO(list: any, rowIdx: number) {
       list.cbr_data[rowIdx].isCheck = true;
       list.cbr_data[rowIdx].insr_retr_yn = 'Y';
       list.cbr_data[rowIdx].insr_retr_dt = insr_retr_dt;
+      list.cbr_data[rowIdx].insr_sale_year = insr_sale_year;
       list.cbr_data[rowIdx].insr_st_dt = insuranceRateDTO.value.insr_st_dt;
       list.cbr_data[rowIdx].insr_cncls_dt = insuranceDTO.value.insr_cncls_dt;
 
@@ -3232,7 +3233,6 @@ async function chkSaleRtConsTWO(list: any, rowIdx: number) {
        */
       if (insr_sale_year >= 1000 || insr_sale_rt > 0) {
         // 전환 대상자의 할증을 가져온다.
-        list.cbr_data[rowIdx].insr_sale_year = insr_sale_year;
         list.cbr_data[rowIdx].insr_sale_rt = insr_sale_rt;
       } else {
         // 현재 법인 할인율을 가져온다
