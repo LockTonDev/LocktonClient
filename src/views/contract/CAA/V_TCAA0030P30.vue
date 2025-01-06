@@ -472,7 +472,7 @@
                 <th colspan="2">소급담보일자</th>
               </tr>
               <tr>
-                <td colspan="2">{{ insuranceDTO.cons_data.insr_st_dt}} ~ {{ insuranceDTO.cons_data.insr_cncls_dt}}</td>
+                <td colspan="2">{{ insuranceDTO.insr_st_dt}} ~ {{ insuranceDTO.insr_cncls_dt}}</td>
                 <td>{{ insuranceDTO.cons_data.insr_pblc_brdn_rt.getValueBySplit(1)}}</td>
                 <td colspan="2">{{ insuranceDTO.cons_data.insr_retr_dt}} </td>
               </tr>
