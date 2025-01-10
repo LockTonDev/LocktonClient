@@ -86,17 +86,7 @@
                       <p>휴대전화</p>
                       <sup class="text-error">*</sup>
                     </div>
-                    <div class="data-col">
-                      <VTextFieldWithValidation
-                          v-model="insuranceDTO.corp_cust_hpno"
-                          name="user_hpno"
-                          placeholder="휴대전화"
-                          single-line
-                          density="comfortable"
-                          :readonly="isReadOnlyAll"
-                          :maskOption="{ mask: '###-####-####' }"
-                      />
-                    </div>
+                    <div class="data-col">{{ insuranceDTO.corp_cust_hpno }}</div>
                   </v-col>
 
                   <v-divider class="border-0" />
@@ -432,17 +422,7 @@
                     <div class="head-col">
                       <p>휴대전화</p>
                     </div>
-                    <div class="data-col">
-                      <VTextFieldWithValidation
-                          v-model="insuranceDTO.corp_cust_hpno"
-                          name="user_hpno"
-                          label="휴대전화"
-                          single-line
-                          density="comfortable"
-                          :readonly="isReadOnlyAll"
-                          :maskOption="{ mask: '###-####-####' }"
-                      />
-                    </div>
+                    <div class="data-col">{{ insuranceDTO.corp_cust_hpno }}</div>
                   </v-col>
                   <v-col cols="12" sm="6" class="v-col">
                     <div class="head-col">

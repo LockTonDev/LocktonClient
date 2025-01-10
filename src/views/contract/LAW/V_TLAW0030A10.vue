@@ -24,7 +24,7 @@
           <!--    newInsrYN 2024년에 없다.      -->
         <div>
 <!--          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="(renewalBaseYear - maxInsrYear > 1) ||  (newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInsrYear)-1 ).length == 0)">신규 가입</v-btn>-->
-          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="newInsrYN=='Y' && renewalInsrUUID == null">신규 가입</v-btn>
+          <v-btn variant="flat" @click="onPageMove('insert')"  v-if="newInsrYN=='Y' && renewalInsrUUID == null && InsuranceList.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year == renewalBaseYear ).length == 0">신규 가입</v-btn>
           <v-btn variant="flat" @click="onPageMove('renewal')" v-if="newInsrYN=='Y' && renewalInsrUUID !== null">계약 갱신</v-btn>
         </div>
       </div>
@@ -281,11 +281,11 @@
 
       console.log('renewalInsrYear', renewalInsrYear.value)
       console.log('maxInsrYear',maxInsrYear.value)
-    console.log('newInsrYN',newInsrYN)
-    console.log('renewalInsrUUID',renewalInsrUUID)
-      console.log(InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInsrYear)-1 ).length)
+    console.log('newInsrYN',newInsrYN.value)
+    console.log('renewalInsrUUID',renewalInsrUUID.value)
+    console.log(InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year == renewalBaseYear.value ) )
+      console.log(newInsrYN.value=='Y' && renewalInsrUUID.value == null && InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year == renewalBaseYear.value ).length == 0)
 
-console.log((renewalInsrYear.value - maxInsrYear.value > 1) || (newInsrYN.value=='Y' && renewalInsrUUID.value == null && InsuranceList.value.filter(item => (item.status_cd === '80'||item.status_cd === '90')&&item.insr_year> parseInt(maxInsrYear.value)-1 ).length == 0))
   });
 
   
