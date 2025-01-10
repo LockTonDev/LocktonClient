@@ -2017,6 +2017,10 @@ function onCancel() {
 }
 
 async function onNextPage(values: any) {
+  // if(insuranceDTO.value.insr_program_yn != 'Y') {
+  //   insuranceDTO.value.insr_program = ''
+  // }
+
   if (!await checkValidation()) return false;
   if (isDuplication.value) return false;
   let tabiValue = parseInt(tab.value);
